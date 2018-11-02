@@ -29,6 +29,7 @@ factory_boy = "*"
 [dev-packages]
 ipdb = "*"
 ipython = "*"
+pylint = "*"
 
 [requires]
 python_version = "3.7"
