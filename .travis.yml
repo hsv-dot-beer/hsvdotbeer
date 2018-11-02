@@ -7,9 +7,9 @@ python:
 before_script:
   - docker-compose build
 script:
-  - docker-compose run --rm web bash -c "flake8 . &&
-                                         python wait_for_postgres.py &&
-                                         ./manage.py test"
+  - docker-compose run --rm web bash -c "pipenv install --dev && pipenv run flake8 . &&
+                                         pipenv run python wait_for_postgres.py &&
+                                         pipenv run ./manage.py test"
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
