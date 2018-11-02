@@ -53,6 +53,8 @@ coverage.xml
 
 # Django stuff:
 *.log
+.static_storage/
+.media/
 local_settings.py
 db.sqlite3
 
@@ -99,6 +101,9 @@ venv.bak/
 
 # mkdocs documentation
 /site
+
+# django staticfiles
+/static
 
 # mypy
 .mypy_cache/

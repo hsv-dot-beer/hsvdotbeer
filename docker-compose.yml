@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  postgres:
+    image: postgres:11.0
+  web:
+    restart: always
+    environment:
+      - DJANGO_SECRET_KEY=local
+    image: web
+    build: ./
+    command: >
+      bash -c "pipenv run python wait_for_postgres.py &&
+               pipenv run ./manage.py migrate &&
+               pipenv run ./manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+  documentation:
+    restart: always
+    build: ./
+    command: >
+        bash -c "pipenv install && pipenv run mkdocs serve"
+    volumes:
+      - ./:/code
+    ports:
+      - "8001:8001"
