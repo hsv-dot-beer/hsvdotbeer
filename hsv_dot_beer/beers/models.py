@@ -9,15 +9,17 @@ class BeerStyle(models.Model):
 
     bjcp_class = models.CharField(max_length=10, choices=CLASS_CHOICES)
 
-    category_number = models.IntegerField()
+    category_id = models.CharField(max_length=2)
+    subcategory_id = models.CharField(max_length=1)
+
     category_name = models.CharField(max_length=100)
-    subcategory = models.CharField(max_length=1)
+    category_notes = models.CharField(max_length=100)
 
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
 
     ibu_min = models.FloatField()
-    ibu_max = modesl.FloatField()
+    ibu_max = models.FloatField()
     og_min = models.FloatField()
     og_max = models.FloatField()
     fg_min = models.FloatField()
