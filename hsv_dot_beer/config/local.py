@@ -14,7 +14,8 @@ class Local(Common):
         os.path.dirname(BASE_DIR),
         '--with-coverage',
         '--with-progressive',
-        '--cover-package=hsv_dot_beer'
+        '--cover-package=hsv_dot_beer',
+        '--cover-package=venues',
     ]
 
     # Mail
