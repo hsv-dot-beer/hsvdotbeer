@@ -1,9 +1,10 @@
+import decimal
 import urllib.request
 import xml.etree.ElementTree
 
 from django.core.management.base import BaseCommand, CommandError
 
-from beers.models import BeerStyle
+from beers.models import BeerStyle, BeerStyleTag
 
 
 def parse_subcategory(element):
@@ -34,9 +35,9 @@ def parse_subcategory(element):
             stat = stats.find(key)
             if stat is not None:
                 if stat.find('low') is not None:
-                    subcategory[key + '_low'] = float(stat.find('low').text)
+                    subcategory[key + '_low'] = decimal.Decimal(stat.find('low').text)
                 if stat.find('high') is not None:
-                    subcategory[key + '_high'] = float(stat.find('high').text)
+                    subcategory[key + '_high'] = decimal.Decimal(stat.find('high').text)
     return subcategory
 
 
@@ -99,11 +100,36 @@ def parse_styleguide_url(url):
 class Command(BaseCommand):
     help = 'Loads beers styles from BJCP Styleguide'
 
-    def handle(self, *args, **options):
-        url = 'https://raw.githubusercontent.com/meanphil/bjcp-guidelines-2015/master/styleguide.xml'
+    DEFAULT_URL = 'https://raw.githubusercontent.com/meanphil/bjcp-guidelines-2015/master/styleguide.xml'
 
-        styles = parse_styleguide_url(url)
+    def add_arguments(self, parser):
+        parser.add_argument('--url', default=self.DEFAULT_URL)
+        parser.add_argument('--clear', action='store_true')
+
+    def handle(self, *args, **options):
+        if options['clear']:
+            BeerStyle.objects.all().delete()
+            BeerStyleTag.objects.all().delete()
+
+        styles = parse_styleguide_url(options['url'])
+
+        all_tags = {}
         for style in styles:
+            if 'tags' in style:
+                style['tags'] = [t.strip() for t in style['tags'].split(',')]
+                for tag in style['tags']:
+                    t = BeerStyleTag(tag=tag)
+                    all_tags[tag] = t
+                    t.save()
+
+        for style in styles:
+            tags = []
+            if 'tags' in style:
+                tags = [all_tags[t] for t in style['tags']]
+                del style['tags']
             bs = BeerStyle(**style)
+            bs.save()
+            if len(tags):
+                bs.tags.set(tags)
             bs.save()
         self.stdout.write(self.style.SUCCESS('Successfully loaded %i styles' % len(styles)))

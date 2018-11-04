@@ -2,6 +2,10 @@ import string
 
 from django.db import models
 
+class BeerStyleTag(models.Model):
+    tag = models.CharField(max_length=50, unique=True)
+
+
 class BeerStyle(models.Model):
     CLASS_CHOICES = (
         ('beer', 'Beer'),
@@ -33,14 +37,14 @@ class BeerStyle(models.Model):
     abv_low = models.DecimalField(max_digits=3, decimal_places=1, default=0)
     abv_high = models.DecimalField(max_digits=3, decimal_places=1, default=0)
 
-    aroma = models.CharField(max_length=255, blank=True, default='')
-    appearance = models.CharField(max_length=255, blank=True, default='')
-    flavor = models.CharField(max_length=255, blank=True, default='')
-    mouthfeel = models.CharField(max_length=255, blank=True, default='')
-    impression = models.CharField(max_length=255, blank=True, default='')
-    comments = models.CharField(max_length=255, blank=True, default='')
-    history = models.CharField(max_length=255, blank=True, default='')
-    ingredients = models.CharField(max_length=255, blank=True, default='')
-    comparison = models.CharField(max_length=255, blank=True, default='')
-    examples = models.CharField(max_length=255, blank=True, default='')
-    tags = models.CharField(max_length=255, blank=True, default='')
+    aroma = models.TextField(default='')
+    appearance = models.TextField(default='')
+    flavor = models.TextField(default='')
+    mouthfeel = models.TextField(default='')
+    impression = models.TextField(default='')
+    comments = models.TextField(default='')
+    history = models.TextField(default='')
+    ingredients = models.TextField(default='')
+    comparison = models.TextField(default='')
+    examples = models.TextField(default='')
+    tags = models.ManyToManyField(BeerStyleTag)
