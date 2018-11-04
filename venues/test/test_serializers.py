@@ -22,3 +22,20 @@ class VenueSerializerTestCase(TestCase):
                     self.assertEqual(getattr(instance, field), value)
                 else:
                     self.assertEqual(instance.time_zone.zone, value)
+
+    def test_display_tap_list_provider(self):
+        data = {
+            'name': 'My bar',
+            'website': 'https://www.example.com',
+            'instagram_handle': 'example',
+            'time_zone': 'America/New_York',
+            'tap_list_provider': 'untappd',
+        }
+        serializer = VenueSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        instance = serializer.save()
+        self.assertIsInstance(instance, Venue)
+        serializer = VenueSerializer(instance=instance)
+        self.assertEqual(
+            serializer.data['tap_list_provider_display'], 'Untappd',
+        )

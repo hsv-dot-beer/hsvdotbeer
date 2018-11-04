@@ -13,6 +13,11 @@ class VenueSerializer(CountryFieldMixin, serializers.ModelSerializer):
     time_zone = TimeZoneField(
         required=False, allow_blank=False, allow_null=False,
     )
+    tap_list_provider_display = serializers.SerializerMethodField()
+
+    def get_tap_list_provider_display(self, obj):
+        # Give the user the fancy formatted version in read-only form
+        return obj.get_tap_list_provider_display()
 
     class Meta:
         model = models.Venue
