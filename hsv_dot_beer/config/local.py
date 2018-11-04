@@ -11,7 +11,7 @@ class Local(Common):
     INSTALLED_APPS += ('django_nose',)
     TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
     NOSE_ARGS = [
-        BASE_DIR,
+        os.path.dirname(BASE_DIR),
         '-s',
         '--nologcapture',
         '--with-coverage',
