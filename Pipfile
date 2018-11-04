@@ -20,6 +20,7 @@ django-storages = "*"
 Django = "*"
 Markdown = "*"
 django-nose = "*"
+django-timezone-field = "*"
 
 [dev-packages]
 ipdb = "*"
