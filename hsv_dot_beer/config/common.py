@@ -22,6 +22,7 @@ class Common(Configuration):
         'rest_framework',            # utilities for rest apis
         'rest_framework.authtoken',  # token authentication
         'django_filters',            # for filtering rest endpoints
+        'django_countries',          # for ease of using countries
 
         # Your apps
         'hsv_dot_beer.users',
