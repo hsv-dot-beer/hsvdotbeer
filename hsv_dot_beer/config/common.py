@@ -26,9 +26,9 @@ class Common(Configuration):
 
         # Your apps
         'hsv_dot_beer.users',
-        'hsv_dot_beer.beers',
         'venues',
         'events',
+        'beers',
     )
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
