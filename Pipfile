@@ -18,7 +18,7 @@ mkdocs = "*"
 django-storages = "*"
 "boto3" = "*"
 Django = "*"
-Markdown = "==3.0.1"
+Markdown = "*"
 django-nose = "*"
 
 [dev-packages]
