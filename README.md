@@ -20,7 +20,8 @@ Collate ALL the Huntsville beers. Check out the project's [documentation](http:/
 
 ### Installing software
 
-- [Python 3.7](https://www.python.org/downloads/)
+- [Python 3.6](https://www.python.org/downloads/)
+  - NOTE: We're stuck using Python 3.6 until [Celery 5.0](https://github.com/celery/celery/issues/4500) is released.
 - [Docker](https://docs.docker.com/docker-for-mac/install/) (Download for your platform)
   - NOTE: if you intend to develop on Windows, you need to have Windows 10 Pro or Enterprise to be able to use Docker, and you have to have at least a somewhat recent CPU that supports Hyper-V. Any non-Atom CPU from the past 5 years should more than suffice. Also, it'll break VirtualBox. 😿
 
