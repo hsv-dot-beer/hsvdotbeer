@@ -26,6 +26,7 @@ class Common(Configuration):
 
         # Your apps
         'hsv_dot_beer.users',
+        'venues',
 
     )
 
