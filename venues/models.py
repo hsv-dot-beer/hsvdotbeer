@@ -8,6 +8,16 @@ from django_countries.fields import CountryField
 
 class Venue(models.Model):
     """A location that serves alcohol"""
+
+    TAP_LIST_PROVIDERS = (
+        ('untappd', 'Untappd'),
+        ('digitalpour', 'DigitalPour'),
+        ('taphunter', 'TapHunter'),
+        ('nook_html', 'The Nook\'s static HTML'),
+        ('manual', 'Chalkboard/Whiteboard'),
+        ('', 'Unknown'),
+    )
+
     # NOTE if this ever grows beyond HSV, we'll have to revisit uniqueness
     name = models.CharField(max_length=50, unique=True)
     address = models.CharField(max_length=50, blank=True)
@@ -20,3 +30,7 @@ class Venue(models.Model):
     facebook_page = models.URLField(blank=True)
     twitter_handle = models.CharField(blank=True, max_length=25)
     instagram_handle = models.CharField(blank=True, max_length=25)
+    tap_list_provider = models.CharField(
+        'What service the venue uses for digital tap lists',
+        blank=True, max_length=30, choices=TAP_LIST_PROVIDERS,
+    )
