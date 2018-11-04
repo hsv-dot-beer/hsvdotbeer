@@ -1,14 +1,15 @@
-from django.db import migrations, models
-
 import os
 import xml.etree.ElementTree
+
+from django.db import migrations
+
 
 dirname = os.path.dirname(__file__)
 fixture_dir = os.path.abspath(os.path.join(dirname, '../fixtures'))
 
 def parse_subcategory(element):
+    """Parse subcategory element of styleguide xml."""
     subcategory = {}
-
     subcategory_id = element.get('id')
 
     if subcategory_id[0] in ['C', 'M']:
@@ -37,10 +38,11 @@ def parse_subcategory(element):
                     subcategory[key + '_low'] = float(stat.find('low').text)
                 if stat.find('high') is not None:
                     subcategory[key + '_high'] = float(stat.find('high').text)
-
     return subcategory
 
+
 def parse_category(element):
+    """Parse category element of styleguide xml."""
     entries = []
     cat_name = element.find('name').text
     cat_notes = element.find('notes').text
@@ -55,7 +57,9 @@ def parse_category(element):
             entries.append(subcat)
     return entries
 
+
 def parse_class(element):
+    """Parse class element of styleguide xml."""
     entries = []
     assert(element.tag == 'class')
     style_class = element.get('type')
@@ -70,18 +74,23 @@ def parse_class(element):
 
 
 def parse_styleguide(element):
+    """Parse styleguide element of styleguide xml."""
     assert(element.tag == 'styleguide')
     styles = []
     for child in element:
         styles.extend(parse_class(child))
     return styles
 
+
 def parse_styleguide_xml(filename):
+    """Parse XML file into styles."""
     tree = xml.etree.ElementTree.parse(filename)
     root = tree.getroot()
     return parse_styleguide(root)
 
+
 def load_styles(apps, schema_editor):
+    """Load styles from fixtures styleguide."""
     BeerStyle = apps.get_model('beers', 'BeerStyle')
     styleguide_file = os.path.join(fixture_dir, 'styleguide.xml')
     styles = parse_styleguide_xml(styleguide_file)
@@ -90,9 +99,12 @@ def load_styles(apps, schema_editor):
         bs = BeerStyle(**style)
         bs.save()
 
+
 def unload_styles(apps, schema_editor):
+    """Unload styles."""
     BeerStyle = apps.get_model('beers', 'BeerStyle')
     BeerStyle.objects.all().delete()
+
 
 class Migration(migrations.Migration):
     dependencies = [
