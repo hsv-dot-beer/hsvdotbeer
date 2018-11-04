@@ -1,13 +1,15 @@
-#!/usr/bin/env python3
+from django.db import migrations, models
 
+import os
 import xml.etree.ElementTree
-import yaml
+
+dirname = os.path.dirname(__file__)
+fixture_dir = os.path.abspath(os.path.join(dirname, '../fixtures'))
 
 def parse_subcategory(element):
     subcategory = {}
 
     subcategory_id = element.get('id')
-    subcategory['id'] = subcategory_id
 
     if subcategory_id[0] in ['C', 'M']:
         category_id = subcategory_id[0:2]
@@ -16,8 +18,8 @@ def parse_subcategory(element):
         category_id = subcategory_id[0]
         subcat_letter = subcategory_id[1]
 
-    subcategory['category_id'] = category_id
-    subcategory['subcategory_id'] = subcat_letter
+    subcategory['category'] = category_id
+    subcategory['subcategory'] = subcat_letter
 
     for key in ['name', 'aroma', 'appearance', 'flavor', 'mouthfeel',
                 'impression', 'comments', 'history', 'ingredients',
@@ -62,7 +64,7 @@ def parse_class(element):
             continue
         cat_entries = parse_category(child)
         for entry in cat_entries:
-            entry['class'] = style_class
+            entry['bjcp_class'] = style_class
             entries.append(entry)
     return entries
 
@@ -79,17 +81,24 @@ def parse_styleguide_xml(filename):
     root = tree.getroot()
     return parse_styleguide(root)
 
+def load_styles(apps, schema_editor):
+    BeerStyle = apps.get_model('beers', 'BeerStyle')
+    styleguide_file = os.path.join(fixture_dir, 'styleguide.xml')
+    styles = parse_styleguide_xml(styleguide_file)
 
-if __name__ == '__main__':
-    import argparse
+    for style in styles:
+        bs = BeerStyle(**style)
+        bs.save()
 
-    parser = argparse.ArgumentParser(description='Convert BJCP Styleguide to YAML or JSON')
-    parser.add_argument('input')
-    parser.add_argument('output')
+def unload_styles(apps, schema_editor):
+    BeerStyle = apps.get_model('beers', 'BeerStyle')
+    BeerStyle.objects.all().delete()
 
-    args = parser.parse_args()
+class Migration(migrations.Migration):
+    dependencies = [
+        ('beers', '0001_initial'),
+    ]
 
-    data = parse_styleguide_xml(args.input)
-
-    with open(args.output, 'w') as f:
-        f.write(yaml.dump(data, default_flow_style=False, allow_unicode=True))
+    operations = [
+        migrations.RunPython(load_styles, reverse_code=unload_styles)
+    ]
