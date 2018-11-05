@@ -34,3 +34,11 @@ class Venue(models.Model):
         'What service the venue uses for digital tap lists',
         blank=True, max_length=30, choices=TAP_LIST_PROVIDERS,
     )
+
+
+class VenueAPIConfiguration(models.Model):
+    venue = models.OneToOneField(
+        Venue, models.CASCADE, related_name='api_configuration',
+    )
+    url = models.URLField()
+    api_key = models.CharField(max_length=100, blank=True)
