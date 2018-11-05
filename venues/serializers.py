@@ -22,4 +22,10 @@ class VenueSerializer(CountryFieldMixin, serializers.ModelSerializer):
     class Meta:
         model = models.Venue
         fields = '__all__'
-        read_only_fields = ['id', ]
+
+
+class VenueAPIConfigurationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.VenueAPIConfiguration
+        fields = '__all__'
