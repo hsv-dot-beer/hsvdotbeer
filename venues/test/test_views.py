@@ -6,7 +6,7 @@ from rest_framework import status
 from faker import Faker
 
 from hsv_dot_beer.users.test.factories import UserFactory
-from venues.models import Venue
+from venues.models import Venue, VenueAPIConfiguration
 from .factories import VenueFactory
 
 fake = Faker()
@@ -61,3 +61,49 @@ class TestVenueDetailTestCase(APITestCase):
 
         venue = Venue.objects.get(pk=self.venue.id)
         eq_(venue.name, new_name)
+
+
+class VenueAPIConfigurationListTestCase(APITestCase):
+
+    def setUp(self):
+        self.venue = VenueFactory()
+        self.admin_user = UserFactory(is_staff=True)
+        self.url = reverse('venueapiconfiguration-list')
+        print(self.url)
+        self.client.credentials = self.client.credentials(
+            HTTP_AUTHORIZATION=f'Token {self.admin_user.auth_token}')
+        self.data = {
+            'venue': self.venue.id,
+            'url': 'https://example.com/',
+        }
+
+    def test_post_request_with_no_data_fails(self):
+        response = self.client.post(self.url, {})
+        eq_(response.status_code, status.HTTP_400_BAD_REQUEST, response.data)
+
+    def test_post_request_with_valid_data_succeeds(self):
+        response = self.client.post(self.url, self.data)
+        eq_(response.status_code, status.HTTP_201_CREATED, response.data)
+
+        venue_config = VenueAPIConfiguration.objects.get(
+            pk=response.data.get('id'))
+        eq_(venue_config.venue_id, self.venue.id)
+        eq_(venue_config.url, self.data['url'])
+
+
+class VenueAPIConfigurationNormalUserTestCase(APITestCase):
+
+    def setUp(self):
+        self.venue = VenueFactory()
+        self.admin_user = UserFactory(is_staff=False)
+        self.url = reverse('venueapiconfiguration-list')
+        self.client.credentials = self.client.credentials(
+            HTTP_AUTHORIZATION=f'Token {self.admin_user.auth_token}')
+        self.data = {
+            'venue': self.venue.id,
+            'url': 'https://example.com/',
+        }
+
+    def test_normal_user(self):
+        response = self.client.post(self.url, self.data)
+        eq_(response.status_code, status.HTTP_403_FORBIDDEN, response.data)

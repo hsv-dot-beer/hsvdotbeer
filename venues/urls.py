@@ -7,6 +7,7 @@ from . import views
 router = DefaultRouter()
 
 router.register(r'', views.VenueViewSet)
+router.register(r'apiconfiguration/', views.VenueAPIConfigurationViewSet)
 
 
 urlpatterns = [
