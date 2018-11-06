@@ -29,3 +29,10 @@ class VenueAPIConfigurationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.VenueAPIConfiguration
         fields = '__all__'
+
+
+class RoomSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Room
+        fields = '__all__'
