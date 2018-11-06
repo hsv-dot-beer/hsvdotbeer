@@ -42,3 +42,14 @@ class VenueAPIConfiguration(models.Model):
     )
     url = models.URLField()
     api_key = models.CharField(max_length=100, blank=True)
+
+
+class Room(models.Model):
+    venue = models.ForeignKey(Venue, models.CASCADE, related_name='rooms')
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True)
+
+    class Meta:
+        unique_together = (
+            ('venue', 'name'),
+        )
