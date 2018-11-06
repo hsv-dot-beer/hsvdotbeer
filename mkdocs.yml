@@ -5,8 +5,9 @@ site_dir: site
 copyright: Copyright &copy; 2018, <a href="https://github.com/hsv-dot-beer">hsv-dot-beer</a>.
 dev_addr: 0.0.0.0:8001
 
-pages:
+nav:
   - Home: 'index.md'
   - API:
     - Authentication: 'api/authentication.md'
     - Users: 'api/users.md'
+    - Venues: 'venues/venues.md'
