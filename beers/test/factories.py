@@ -2,7 +2,6 @@ import factory
 
 from beers.models import BeerStyle
 
-
 class BeerStyleFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = BeerStyle

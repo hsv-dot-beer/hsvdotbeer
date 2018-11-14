@@ -157,4 +157,3 @@ class Command(BaseCommand):
                 all_styles.extend(self.make_category(style['name'], category))
 
         self.stdout.write(self.style.SUCCESS('Successfully loaded %i styles' % len(all_styles)))
-

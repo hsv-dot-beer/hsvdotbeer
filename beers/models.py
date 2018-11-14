@@ -31,7 +31,7 @@ class BeerStyle(models.Model):
     subcategory = models.CharField(max_length=1, choices=zip(string.ascii_uppercase, string.ascii_uppercase))
 
     category = models.ForeignKey(BeerStyleCategory, on_delete='CASCADE')
-    tags = models.ManyToManyField(BeerStyleTag)
+    tags = models.ManyToManyField(BeerStyleTag, blank=True)
 
     ibu_low = models.PositiveSmallIntegerField(default=0)
     ibu_high = models.PositiveSmallIntegerField(default=0)
@@ -59,4 +59,3 @@ class BeerStyle(models.Model):
 
     def __str__(self):
         return self.name
-

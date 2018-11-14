@@ -16,5 +16,3 @@ class BeerStyleTagViewSet(ModelViewSet):
 class BeerStyleViewSet(ModelViewSet):
     serializer_class = serializers.BeerStyleSerializer
     queryset = models.BeerStyle.objects.order_by('name')
-
-
