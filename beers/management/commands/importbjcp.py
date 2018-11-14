@@ -57,7 +57,7 @@ def parse_category(element):
 
 def parse_class(element):
     """Parse class element of styleguide xml."""
-    assert(element.tag == 'class')
+    assert element.tag == 'class'
     style_class = {
         'name': element.get('type'),
         'entries': [],
@@ -72,7 +72,7 @@ def parse_class(element):
 
 def parse_styleguide(element):
     """Parse styleguide element of styleguide xml."""
-    assert(element.tag == 'styleguide')
+    assert element.tag == 'styleguide'
     styles = []
     for child in element:
         styles.append(parse_class(child))
