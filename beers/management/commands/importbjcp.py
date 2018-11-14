@@ -103,20 +103,6 @@ class Command(BaseCommand):
         parser.add_argument('--url', default=self.DEFAULT_URL)
         parser.add_argument('--clear', action='store_true')
 
-    def make_category(self, cls, category):
-        data = {
-            'name': category['name'],
-            'category_id': category['category_id'],
-            'bjcp_class': cls,
-            'notes': category['notes'],
-            'revision': category['revision'],
-        }
-        cat = BeerStyleCategory(**data)
-        cat.save()
-
-        for subcat in category['entries']:
-            self.make_subcat(cat, subcat)
-
     def make_subcat(self, cat, subcat):
         tags = []
         if 'tags' in subcat:
@@ -138,6 +124,19 @@ class Command(BaseCommand):
             bs.tags.set(tags)
             bs.save()
 
+    def make_category(self, cls, category):
+        data = {
+            'name': category['name'],
+            'category_id': category['category_id'],
+            'bjcp_class': cls,
+            'notes': category['notes'],
+            'revision': category['revision'],
+        }
+        cat = BeerStyleCategory(**data)
+        cat.save()
+
+        for subcat in category['entries']:
+            self.make_subcat(cat, subcat)
 
     def handle(self, *args, **options):
         if options['clear']:
@@ -146,12 +145,11 @@ class Command(BaseCommand):
             BeerStyleTag.objects.all().delete()
 
         styles = parse_styleguide_url(options['url'])
-        self.all_tags = {}
+        self.all_tags = BeerStyleTag.objects.in_bulk(field_name='tag')
 
         for style in styles:
             for category in style['entries']:
                 self.make_category(style['name'], category)
 
         self.stdout.write(self.style.SUCCESS('Successfully loaded %i styles' % len(styles)))
-
 
