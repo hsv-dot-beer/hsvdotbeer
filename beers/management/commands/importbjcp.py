@@ -2,9 +2,9 @@ import decimal
 import urllib.request
 import xml.etree.ElementTree
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
-from beers.models import BeerStyle, BeerStyleTag
+from beers.models import BeerStyle, BeerStyleTag, BeerStyleCategory
 
 
 def parse_subcategory(element):
@@ -13,13 +13,10 @@ def parse_subcategory(element):
     subcategory_id = element.get('id')
 
     if subcategory_id[0] in ['C', 'M']:
-        category_id = subcategory_id[0:2]
         subcat_letter = subcategory_id[2]
     else:
-        category_id = subcategory_id[0]
         subcat_letter = subcategory_id[1]
 
-    subcategory['category'] = category_id
     subcategory['subcategory'] = subcat_letter
 
     for key in ['name', 'aroma', 'appearance', 'flavor', 'mouthfeel',
@@ -43,34 +40,34 @@ def parse_subcategory(element):
 
 def parse_category(element):
     """Parse category element of styleguide xml."""
-    entries = []
-    cat_name = element.find('name').text
-    cat_notes = element.find('notes').text
-    cat_revision = element.find('revision').text
+    category = {
+        'name': element.find('name').text,
+        'notes': element.find('notes').text,
+        'revision': element.find('revision').text,
+        'category_id': element.get('id'),
+        'entries': [],
+    }
 
     for child in element:
         if child.tag == 'subcategory':
             subcat = parse_subcategory(child)
-            subcat['category_name'] = cat_name
-            subcat['category_notes'] = cat_notes
-            subcat['revision'] = cat_revision
-            entries.append(subcat)
-    return entries
+            category['entries'].append(subcat)
+    return category
 
 
 def parse_class(element):
     """Parse class element of styleguide xml."""
-    entries = []
     assert(element.tag == 'class')
-    style_class = element.get('type')
+    style_class = {
+        'name': element.get('type'),
+        'entries': [],
+    }
+
     for child in element:
         if child.tag != 'category':
             continue
-        cat_entries = parse_category(child)
-        for entry in cat_entries:
-            entry['bjcp_class'] = style_class
-            entries.append(entry)
-    return entries
+        style_class['entries'].append(parse_category(child))
+    return style_class
 
 
 def parse_styleguide(element):
@@ -78,7 +75,7 @@ def parse_styleguide(element):
     assert(element.tag == 'styleguide')
     styles = []
     for child in element:
-        styles.extend(parse_class(child))
+        styles.append(parse_class(child))
     return styles
 
 
@@ -106,30 +103,55 @@ class Command(BaseCommand):
         parser.add_argument('--url', default=self.DEFAULT_URL)
         parser.add_argument('--clear', action='store_true')
 
+    def make_category(self, cls, category):
+        data = {
+            'name': category['name'],
+            'category_id': category['category_id'],
+            'bjcp_class': cls,
+            'notes': category['notes'],
+            'revision': category['revision'],
+        }
+        cat = BeerStyleCategory(**data)
+        cat.save()
+
+        for subcat in category['entries']:
+            self.make_subcat(cat, subcat)
+
+    def make_subcat(self, cat, subcat):
+        tags = []
+        if 'tags' in subcat:
+            tags = [t.strip() for t in subcat['tags'].split(',')]
+            del subcat['tags']
+
+        for tag in tags:
+            if tag not in self.all_tags:
+                t = BeerStyleTag(tag=tag)
+                t.save()
+                self.all_tags[tag] = t
+
+        bs = BeerStyle(**subcat)
+        bs.category = cat
+        bs.save()
+
+        if len(tags):
+            tags = [self.all_tags[t] for t in tags]
+            bs.tags.set(tags)
+            bs.save()
+
+
     def handle(self, *args, **options):
         if options['clear']:
             BeerStyle.objects.all().delete()
+            BeerStyleCategory.objects.all().delete()
             BeerStyleTag.objects.all().delete()
 
         styles = parse_styleguide_url(options['url'])
-
-        all_tags = {}
-        for style in styles:
-            if 'tags' in style:
-                style['tags'] = [t.strip() for t in style['tags'].split(',')]
-                for tag in style['tags']:
-                    t = BeerStyleTag(tag=tag)
-                    all_tags[tag] = t
-                    t.save()
+        self.all_tags = {}
 
         for style in styles:
-            tags = []
-            if 'tags' in style:
-                tags = [all_tags[t] for t in style['tags']]
-                del style['tags']
-            bs = BeerStyle(**style)
-            bs.save()
-            if len(tags):
-                bs.tags.set(tags)
-            bs.save()
+            for category in style['entries']:
+                self.make_category(style['name'], category)
+
         self.stdout.write(self.style.SUCCESS('Successfully loaded %i styles' % len(styles)))
+
+

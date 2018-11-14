@@ -1,3 +1,20 @@
-from django.shortcuts import render
+from rest_framework.viewsets import ModelViewSet
 
-# Create your views here.
+from . import serializers
+from . import models
+
+class BeerStyleCategoryViewSet(ModelViewSet):
+    serializer_class = serializers.BeerStyleCategorySerializer
+    queryset = models.BeerStyleCategory.objects.order_by('id')
+
+
+class BeerStyleTagViewSet(ModelViewSet):
+    serializer_class = serializers.BeerStyleTagSerializer
+    queryset = models.BeerStyleTag.objects.order_by('tag')
+
+
+class BeerStyleViewSet(ModelViewSet):
+    serializer_class = serializers.BeerStyleSerializer
+    queryset = models.BeerStyle.objects.order_by('name')
+
+

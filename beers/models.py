@@ -2,27 +2,36 @@ import string
 
 from django.db import models
 
-class BeerStyleTag(models.Model):
-    tag = models.CharField(max_length=50, unique=True)
-
-
-class BeerStyle(models.Model):
+class BeerStyleCategory(models.Model):
     CLASS_CHOICES = (
         ('beer', 'Beer'),
         ('cider', 'Cider'),
         ('mead', 'Mead'),
     )
 
+    name = models.CharField(max_length=100, unique=True, db_index=True)
+    bjcp_class = models.CharField(max_length=10, choices=CLASS_CHOICES, default='beer')
+    notes = models.TextField(default='')
+    category_id = models.CharField(max_length=2, unique=True)
+    revision = models.CharField(max_length=10, default='2015')
+
+    def __str__(self):
+        return self.name
+
+
+class BeerStyleTag(models.Model):
+    tag = models.CharField(max_length=50, unique=True, db_index=True)
+
+    def __str__(self):
+        return self.tag
+
+
+class BeerStyle(models.Model):
     name = models.CharField(max_length=255)
-    revision = models.CharField(max_length=10)
-
-    bjcp_class = models.CharField(max_length=10, choices=CLASS_CHOICES)
-
-    category = models.CharField(max_length=2)
     subcategory = models.CharField(max_length=1, choices=zip(string.ascii_uppercase, string.ascii_uppercase))
 
-    category_name = models.CharField(max_length=255)
-    category_notes = models.CharField(max_length=255)
+    category = models.ForeignKey(BeerStyleCategory, on_delete='CASCADE')
+    tags = models.ManyToManyField(BeerStyleTag)
 
     ibu_low = models.PositiveSmallIntegerField(default=0)
     ibu_high = models.PositiveSmallIntegerField(default=0)
@@ -47,4 +56,7 @@ class BeerStyle(models.Model):
     ingredients = models.TextField(default='')
     comparison = models.TextField(default='')
     examples = models.TextField(default='')
-    tags = models.ManyToManyField(BeerStyleTag)
+
+    def __str__(self):
+        return self.name
+

@@ -16,6 +16,7 @@ class Local(Common):
         '--with-progressive',
         '--cover-package=hsv_dot_beer',
         '--cover-package=venues',
+        '--cover-package=beers',
     ]
 
     # Mail
