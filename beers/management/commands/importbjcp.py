@@ -124,6 +124,8 @@ class Command(BaseCommand):
             bs.tags.set(tags)
             bs.save()
 
+        return bs
+
     def make_category(self, cls, category):
         data = {
             'name': category['name'],
@@ -135,21 +137,24 @@ class Command(BaseCommand):
         cat = BeerStyleCategory(**data)
         cat.save()
 
+        subcategories = []
         for subcat in category['entries']:
-            self.make_subcat(cat, subcat)
+            subcategories.append(self.make_subcat(cat, subcat))
+        return subcategories
 
     def handle(self, *args, **options):
         if options['clear']:
             BeerStyle.objects.all().delete()
             BeerStyleCategory.objects.all().delete()
-            BeerStyleTag.objects.all().delete()
+            # BeerStyleTag.objects.all().delete()
 
         styles = parse_styleguide_url(options['url'])
         self.all_tags = BeerStyleTag.objects.in_bulk(field_name='tag')
 
+        all_styles = []
         for style in styles:
             for category in style['entries']:
-                self.make_category(style['name'], category)
+                all_styles.extend(self.make_category(style['name'], category))
 
-        self.stdout.write(self.style.SUCCESS('Successfully loaded %i styles' % len(styles)))
+        self.stdout.write(self.style.SUCCESS('Successfully loaded %i styles' % len(all_styles)))
 
