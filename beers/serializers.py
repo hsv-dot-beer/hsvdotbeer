@@ -46,7 +46,8 @@ class BeerStyleSerializer(serializers.ModelSerializer):
         tag_names = set(i['tag'] for i in tags)
         existing_tags = list(models.BeerStyleTag.objects.filter(tag__in=tag_names))
         missing_tags = tag_names.difference(set(i.tag for i in existing_tags))
-        new_tags = list(models.BeerStyleTag.objects.bulk_create(models.BeerStyleTag(tag=i) for i in missing_tags))
+        new_tags = list(models.BeerStyleTag.objects.bulk_create(
+            models.BeerStyleTag(tag=i) for i in missing_tags))
         instance = super().create(validated_data)
         instance.tags.set(existing_tags + new_tags)
         return instance
@@ -59,7 +60,8 @@ class BeerStyleSerializer(serializers.ModelSerializer):
         tag_names = set(i['tag'] for i in tags)
         existing_tags = list(models.BeerStyleTag.objects.filter(tag__in=tag_names))
         missing_tags = tag_names.difference(set(i.tag for i in existing_tags))
-        new_tags = list(models.BeerStyleTag.objects.bulk_create(models.BeerStyleTag(tag=i) for i in missing_tags))
+        new_tags = list(models.BeerStyleTag.objects.bulk_create(
+            models.BeerStyleTag(tag=i) for i in missing_tags))
         instance = super().update(validated_data)
         instance.tags.set(existing_tags + new_tags, clear=True)
         return instance

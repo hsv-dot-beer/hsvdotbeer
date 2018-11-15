@@ -163,4 +163,6 @@ class Command(BaseCommand):
                     all_categories.append(cat)
                     all_styles.extend(cat_styles)
 
-            self.stdout.write(self.style.SUCCESS('Successfully loaded {} styles in {} categories'.format(len(all_styles), len(all_categories))))
+            self.stdout.write(self.style.SUCCESS(
+                'Successfully loaded {} styles in {} categories'.format(
+                    len(all_styles), len(all_categories))))
