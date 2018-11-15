@@ -39,6 +39,18 @@ class BeerStyleSerializer(serializers.ModelSerializer):
         except KeyError:
             # not specified, which means we're ina PATCH, don't care.
             pass
+        for low_field, high_field in [('abv_low', 'abv_high'),
+                                      ('ibu_low', 'ibu_high'),
+                                      ('og_low', 'og_high'),
+                                      ('fg_low', 'fg_high')]:
+            try:
+                low_value = data[low_field]
+                high_value = data[high_field]
+            except KeyError:
+                pass
+            if low_value > high_value:
+                raise serializers.ValidationError(
+                    f'{low_field} cannot be greater than {high_field}')
         return data
 
     def create(self, validated_data):

@@ -8,8 +8,6 @@ import factories
 class BeerStyleSerializerTestCase(TestCase):
     def test_create(self):
         cat = factories.BeerStyleCategoryFactory()
-        print(cat)
-        print(cat.id)
         data = {
             'name': 'Test Style',
             'subcategory': 'A',

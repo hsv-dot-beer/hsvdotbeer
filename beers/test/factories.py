@@ -21,7 +21,7 @@ class BeerStyleFactory(factory.django.DjangoModelFactory):
     name = 'Super Light Beer'
     revision = '2015'
     bjcp_class = 'Beer'
-    category = BeerStyleCategoryFactory().id
+    category = factory.SubFactory(BeerStyleCategoryFactory)
     subcategory = 'A'
 
     abv_low = factory.fuzzy.FuzzyDecimal(0, 15, precision=1)
