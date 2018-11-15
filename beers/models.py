@@ -11,8 +11,8 @@ class BeerStyleCategory(models.Model):
 
     name = models.CharField(max_length=100, unique=True, db_index=True)
     bjcp_class = models.CharField(max_length=10, choices=CLASS_CHOICES, default='beer')
-    notes = models.TextField(default='')
-    category_id = models.CharField(max_length=2, unique=True)
+    notes = models.TextField(blank=True)
+    category_id = models.PositiveSmallIntegerField()
     revision = models.CharField(max_length=10, default='2015')
 
     def __str__(self):
@@ -28,7 +28,8 @@ class BeerStyleTag(models.Model):
 
 class BeerStyle(models.Model):
     name = models.CharField(max_length=255)
-    subcategory = models.CharField(max_length=1, choices=zip(string.ascii_uppercase, string.ascii_uppercase))
+    subcategory = models.CharField(max_length=1,
+                                   choices=zip(string.ascii_uppercase, string.ascii_uppercase))
 
     category = models.ForeignKey(BeerStyleCategory, on_delete='CASCADE')
     tags = models.ManyToManyField(BeerStyleTag, blank=True)
@@ -46,16 +47,16 @@ class BeerStyle(models.Model):
     abv_low = models.DecimalField(max_digits=3, decimal_places=1, default=0)
     abv_high = models.DecimalField(max_digits=3, decimal_places=1, default=0)
 
-    aroma = models.TextField(default='')
-    appearance = models.TextField(default='')
-    flavor = models.TextField(default='')
-    mouthfeel = models.TextField(default='')
-    impression = models.TextField(default='')
-    comments = models.TextField(default='')
-    history = models.TextField(default='')
-    ingredients = models.TextField(default='')
-    comparison = models.TextField(default='')
-    examples = models.TextField(default='')
+    aroma = models.TextField(blank=True)
+    appearance = models.TextField(blank=True)
+    flavor = models.TextField(blank=True)
+    mouthfeel = models.TextField(blank=True)
+    impression = models.TextField(blank=True)
+    comments = models.TextField(blank=True)
+    history = models.TextField(blank=True)
+    ingredients = models.TextField(blank=True)
+    comparison = models.TextField(blank=True)
+    examples = models.TextField(blank=True)
 
     def __str__(self):
         return self.name

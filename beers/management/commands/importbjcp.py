@@ -3,6 +3,7 @@ import urllib.request
 import xml.etree.ElementTree
 
 from django.core.management.base import BaseCommand
+from django.db import transaction
 
 from beers.models import BeerStyle, BeerStyleTag, BeerStyleCategory
 
@@ -119,14 +120,17 @@ class Command(BaseCommand):
         bs.category = cat
         bs.save()
 
-        if len(tags):
+        if tags:
             tags = [self.all_tags[t] for t in tags]
             bs.tags.set(tags)
-            bs.save()
 
         return bs
 
     def make_category(self, cls, category):
+        # Trim prefix letter off of Cider and Mead
+        if len(category['category_id']) == 2:
+            category['category_id'] = category['category_id'][1]
+
         data = {
             'name': category['name'],
             'category_id': category['category_id'],
@@ -140,20 +144,23 @@ class Command(BaseCommand):
         subcategories = []
         for subcat in category['entries']:
             subcategories.append(self.make_subcat(cat, subcat))
-        return subcategories
+        return cat, subcategories
 
     def handle(self, *args, **options):
-        if options['clear']:
-            BeerStyle.objects.all().delete()
-            BeerStyleCategory.objects.all().delete()
-            # BeerStyleTag.objects.all().delete()
+        with transaction.atomic():
+            if options['clear']:
+                BeerStyle.objects.all().delete()
+                BeerStyleCategory.objects.all().delete()
 
-        styles = parse_styleguide_url(options['url'])
-        self.all_tags = BeerStyleTag.objects.in_bulk(field_name='tag')
+            styles = parse_styleguide_url(options['url'])
+            self.all_tags = BeerStyleTag.objects.in_bulk(field_name='tag')
 
-        all_styles = []
-        for style in styles:
-            for category in style['entries']:
-                all_styles.extend(self.make_category(style['name'], category))
+            all_styles = []
+            all_categories = []
+            for style in styles:
+                for category in style['entries']:
+                    cat, cat_styles = self.make_category(style['name'], category)
+                    all_categories.append(cat)
+                    all_styles.extend(cat_styles)
 
-        self.stdout.write(self.style.SUCCESS('Successfully loaded %i styles' % len(all_styles)))
+            self.stdout.write(self.style.SUCCESS('Successfully loaded {} styles in {} categories'.format(len(all_styles), len(all_categories))))
