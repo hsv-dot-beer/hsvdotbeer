@@ -18,5 +18,5 @@ Parameters:
 Name              | Type        | Required | Description
 ------------------|-------------|----------|------------
 name              | string      | Yes      | A friendly name for the room (e.g. Patio)
-venue             | foreign key | Yes      | The primary key of the venue (e.g. 332)
+venue_id          | foreign key | Yes      | The primary key of the venue (e.g. 332)
 description       | string      | No       | More information about the room

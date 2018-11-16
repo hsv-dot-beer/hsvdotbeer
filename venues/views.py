@@ -18,4 +18,6 @@ class VenueAPIConfigurationViewSet(ModelViewSet):
 
 class RoomViewSet(ModelViewSet):
     serializer_class = serializers.RoomSerializer
-    queryset = models.Room.objects.all()
+    queryset = models.Room.objects.select_related('venue').order_by(
+        'venue__name', 'name',
+    )

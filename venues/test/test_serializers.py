@@ -75,31 +75,33 @@ class RoomSerializerTestCase(TestCase):
 
     def setUp(self):
         self.venue = VenueFactory()
+        # need to refresh from DB because the venue's time zone is a string
+        # on factory build
+        self.venue.refresh_from_db()
 
     def test_create(self):
         data = {
-            'venue': self.venue.id,
-            'name': 'Secret Gambling Den',
-            'description': 'Pay no attention to the man behind the curtain',
+            'venue_id': self.venue.id,
+            'name': 'The back room',
         }
         serializer = RoomSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         instance = serializer.save()
         self.assertIsInstance(instance, Room)
+        self.assertEqual(instance.description, '')
         self.assertEqual(instance.venue_id, self.venue.id)
         self.assertEqual(instance.name, data['name'])
-        self.assertEqual(instance.description, data['description'])
 
     def test_display(self):
         instance = Room.objects.create(
             venue=self.venue,
-            name='test room',
-            description='no',
+            name='The front room',
         )
         serializer = RoomSerializer(instance=instance)
-        self.assertEqual(serializer.data, {
-            'venue': self.venue.id,
-            'name': instance.name,
-            'description': instance.description,
-            'id': instance.id,
-        })
+        self.assertEqual(instance.id, serializer.data['id'])
+        venue = serializer.data['venue']
+        self.assertEqual(instance.venue.id, venue['id'])
+        self.assertEqual(
+            venue, VenueSerializer(instance=self.venue).data,
+        )
+        self.assertEqual(serializer.data['description'], '')

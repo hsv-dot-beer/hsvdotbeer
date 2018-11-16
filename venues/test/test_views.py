@@ -119,7 +119,7 @@ class RoomListTestCase(APITestCase):
         self.venue = VenueFactory()
         self.user = UserFactory()
         self.room_data = {
-            'venue': self.venue.id,
+            'venue_id': self.venue.id,
             'name': 'test room',
             'description': 'no',
         }
