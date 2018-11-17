@@ -15,12 +15,15 @@ class BeerStyleCategory(models.Model):
     category_id = models.PositiveSmallIntegerField()
     revision = models.CharField(max_length=10, default='2015')
 
+    class Meta:
+        unique_together = (('category_id', 'revision', 'bjcp_class'),)
+
     def __str__(self):
         return self.name
 
 
 class BeerStyleTag(models.Model):
-    tag = models.CharField(max_length=50, unique=True, db_index=True)
+    tag = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.tag
@@ -57,6 +60,9 @@ class BeerStyle(models.Model):
     ingredients = models.TextField(blank=True)
     comparison = models.TextField(blank=True)
     examples = models.TextField(blank=True)
+
+    class Meta:
+        unique_together = (('category', 'subcategory'),)
 
     def __str__(self):
         return self.name

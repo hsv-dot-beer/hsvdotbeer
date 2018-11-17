@@ -12,13 +12,7 @@ def parse_subcategory(element):
     """Parse subcategory element of styleguide xml."""
     subcategory = {}
     subcategory_id = element.get('id')
-
-    if subcategory_id[0] in ['C', 'M']:
-        subcat_letter = subcategory_id[2]
-    else:
-        subcat_letter = subcategory_id[1]
-
-    subcategory['subcategory'] = subcat_letter
+    subcategory['subcategory'] = subcategory_id[-1]
 
     for key in ['name', 'aroma', 'appearance', 'flavor', 'mouthfeel',
                 'impression', 'comments', 'history', 'ingredients',
@@ -111,6 +105,8 @@ class Command(BaseCommand):
             del subcat['tags']
 
         for tag in tags:
+            if len(tag) <= 2:
+                continue
             if tag not in self.all_tags:
                 t = BeerStyleTag(tag=tag)
                 t.save()
@@ -121,15 +117,17 @@ class Command(BaseCommand):
         bs.save()
 
         if tags:
-            tags = [self.all_tags[t] for t in tags]
+            tags = [self.all_tags[t] for t in tags if len(t) > 2]
             bs.tags.set(tags)
 
         return bs
 
     def make_category(self, cls, category):
         # Trim prefix letter off of Cider and Mead
-        if len(category['category_id']) == 2:
-            category['category_id'] = category['category_id'][1]
+        if not category['category_id'][0].isdigit():
+            category['category_id'] = category['category_id'][1:]
+
+        category['category_id'] = int(category['category_id'])
 
         data = {
             'name': category['name'],
