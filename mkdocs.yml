@@ -11,3 +11,4 @@ nav:
     - Authentication: 'api/authentication.md'
     - Users: 'api/users.md'
     - Venues: 'venues/venues.md'
+    - Rooms: 'venues/rooms.md'

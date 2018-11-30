@@ -14,3 +14,10 @@ class VenueAPIConfigurationViewSet(ModelViewSet):
     serializer_class = serializers.VenueAPIConfigurationSerializer
     queryset = models.VenueAPIConfiguration.objects.all()
     permission_classes = (IsAdminUser, )
+
+
+class RoomViewSet(ModelViewSet):
+    serializer_class = serializers.RoomSerializer
+    queryset = models.Room.objects.select_related('venue').order_by(
+        'venue__name', 'name',
+    )
