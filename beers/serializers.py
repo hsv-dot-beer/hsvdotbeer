@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+import logging
+
 from . import models
 
 class BeerStyleCategorySerializer(serializers.ModelSerializer):
@@ -46,11 +48,11 @@ class BeerStyleSerializer(serializers.ModelSerializer):
             try:
                 low_value = data[low_field]
                 high_value = data[high_field]
+                if low_value > high_value:
+                    raise serializers.ValidationError(
+                        f'{low_field} cannot be greater than {high_field}')
             except KeyError:
                 pass
-            if low_value > high_value:
-                raise serializers.ValidationError(
-                    f'{low_field} cannot be greater than {high_field}')
         return data
 
     def create(self, validated_data):
