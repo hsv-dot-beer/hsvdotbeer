@@ -3,6 +3,7 @@ from rest_framework.viewsets import ModelViewSet
 from . import serializers
 from . import models
 
+
 class BeerStyleCategoryViewSet(ModelViewSet):
     serializer_class = serializers.BeerStyleCategorySerializer
     queryset = models.BeerStyleCategory.objects.order_by('id')

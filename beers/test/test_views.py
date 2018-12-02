@@ -6,7 +6,7 @@ from rest_framework import status
 from faker import Faker
 
 from hsv_dot_beer.users.test.factories import UserFactory
-from beers.models import BeerStyle, BeerStyleTag, BeerStyleCategory
+from beers.models import BeerStyle
 from .factories import BeerStyleFactory, BeerStyleTagFactory
 
 fake = Faker()
@@ -22,7 +22,6 @@ class TestBeerStyleListTestCase(APITestCase):
         self.user = UserFactory()
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
-
 
     def test_get_request_returns_a_style(self):
         response = self.client.get(self.url)

@@ -2,6 +2,7 @@ import string
 
 from django.db import models
 
+
 class BeerStyleCategory(models.Model):
     CLASS_CHOICES = (
         ('beer', 'Beer'),

@@ -7,6 +7,7 @@ from beers.models import BeerStyle, BeerStyleCategory, BeerStyleTag
 
 CLASS_CHOICES = [x[0] for x in BeerStyleCategory.CLASS_CHOICES]
 
+
 class BeerStyleCategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = BeerStyleCategory

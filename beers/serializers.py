@@ -1,8 +1,7 @@
 from rest_framework import serializers
 
-import logging
-
 from . import models
+
 
 class BeerStyleCategorySerializer(serializers.ModelSerializer):
     class Meta:
