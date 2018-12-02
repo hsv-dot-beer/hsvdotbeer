@@ -67,3 +67,16 @@ class BeerStyle(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Manufacturer(models.Model):
+    name = models.CharField(unique=True, max_length=100)
+    url = models.URLField(blank=True)
+    location = models.CharField(blank=True, max_length=50)
+    logo_url = models.URLField(blank=True)
+    facebook_url = models.URLField(blank=True)
+    twitter_handle = models.CharField(max_length=50, blank=True)
+    instagram_handle = models.CharField(max_length=50, blank=True)
+
+    def __str__(self):
+        return self.name
