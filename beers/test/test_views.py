@@ -8,7 +8,9 @@ from faker import Faker
 
 from hsv_dot_beer.users.test.factories import UserFactory
 from beers.models import BeerStyle
-from .factories import BeerStyleFactory, BeerStyleTagFactory
+from beers.serializers import ManufacturerSerializer
+from .factories import BeerStyleFactory, BeerStyleTagFactory, \
+    ManufacturerFactory
 
 fake = Faker()
 
@@ -60,3 +62,52 @@ class TestBeerStyleDetailTestCase(APITestCase):
 
         style = BeerStyle.objects.get(pk=self.style.id)
         eq_(self.style.category, style.category)
+
+
+class ManufacturerListTestCase(APITestCase):
+    def setUp(self):
+        self.manufacturer = ManufacturerFactory()
+
+        self.url = reverse('manufacturer-list')
+        self.user = UserFactory()
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
+
+    def test_list(self):
+        response = self.client.get(self.url)
+        eq_(len(response.data['results']), 1, response.data)
+        eq_(
+            response.data['results'],
+            [ManufacturerSerializer(self.manufacturer).data],
+        )
+
+    def test_create(self):
+        data = {
+            'name': 'beer company',
+        }
+        response = self.client.post(self.url, data)
+        eq_(response.status_code, 201)
+        eq_(response.data['name'], data['name'])
+        self.assertNotEqual(response.data['id'], self.manufacturer.pk)
+
+
+class ManufacturerDetailTestCase(APITestCase):
+    def setUp(self):
+        self.manufacturer = ManufacturerFactory()
+
+        self.url = reverse(
+            'manufacturer-detail', kwargs={'pk': self.manufacturer.pk},
+        )
+        self.user = UserFactory()
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f'Token {self.user.auth_token}',
+        )
+
+    def test_patch(self):
+        data = {
+            'name': 'other beer company',
+        }
+        response = self.client.patch(self.url, data)
+        eq_(response.status_code, 200)
+        eq_(response.data['name'], data['name'])
+        eq_(response.data['id'], self.manufacturer.pk)
