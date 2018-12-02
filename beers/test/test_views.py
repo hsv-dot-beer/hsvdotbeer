@@ -13,7 +13,7 @@ from .factories import BeerStyleFactory, BeerStyleTagFactory
 fake = Faker()
 
 
-class TestBeerStyleListTestCase(APITestCase):
+class TestBeerStyleDetailTestCase(APITestCase):
     def setUp(self):
         self.tags = [BeerStyleTagFactory.create(),
                      BeerStyleTagFactory.create()]
