@@ -1,5 +1,6 @@
+import json
+
 from django.urls import reverse
-from django.forms.models import model_to_dict
 from nose.tools import eq_
 from rest_framework.test import APITestCase
 from rest_framework import status
@@ -38,14 +39,17 @@ class TestBeerStyleListTestCase(APITestCase):
         eq_(len(self.tags), style.tags.count())
 
     def test_patch_can_clear_tags(self):
-        payload = {'name': 'asdfadsfasdfadsf', 'tags': []}
+        payload = {
+            'name': 'asdfadsfasdfadsf',
+            'tags': [],
+        }
 
-        response = self.client.patch(self.url, payload)
+        response = self.client.patch(
+            self.url, json.dumps(payload), content_type='application/json')
         eq_(response.status_code, status.HTTP_200_OK, response.data)
-
-        style = BeerStyle.objects.get(pk=self.style.id)
-        #TODO Enable this test?
-        #eq_(0, style.tags.count())
+        eq_(response.data['tags'], [], response.data)
+        self.style.refresh_from_db()
+        eq_(0, self.style.tags.count())
 
     def test_patch_without_category_id(self):
         new_name = fake.first_name()
