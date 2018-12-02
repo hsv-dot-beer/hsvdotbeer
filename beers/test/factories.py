@@ -3,7 +3,8 @@ import factory.fuzzy
 
 import string
 
-from beers.models import BeerStyle, BeerStyleCategory, BeerStyleTag
+from beers.models import BeerStyle, BeerStyleCategory, BeerStyleTag, \
+    Manufacturer
 
 CLASS_CHOICES = [x[0] for x in BeerStyleCategory.CLASS_CHOICES]
 
@@ -67,3 +68,12 @@ class BeerStyleFactory(factory.django.DjangoModelFactory):
         if extracted:
             for tag in extracted:
                 self.tags.add(tag)
+
+
+class ManufacturerFactory(factory.django.DjangoModelFactory):
+    name = factory.fuzzy.FuzzyText(length=40)
+    instagram_handle = factory.fuzzy.FuzzyText(length=15)
+    twitter_handle = factory.fuzzy.FuzzyText(length=20)
+
+    class Meta:
+        model = Manufacturer

@@ -78,3 +78,9 @@ class BeerStyleSerializer(serializers.ModelSerializer):
         instance = super().update(instance, validated_data)
         instance.tags.set(existing_tags + new_tags, clear=True)
         return instance
+
+
+class ManufacturerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Manufacturer
+        fields = '__all__'
