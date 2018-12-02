@@ -2,7 +2,9 @@ from django.test import TestCase
 from beers.serializers import BeerStyleSerializer
 from beers.models import BeerStyle
 
-from .factories import BeerStyleCategoryFactory
+from .factories import BeerStyleCategoryFactory, BeerStyleFactory, \
+    BeerStyleTagFactory
+
 
 class BeerStyleSerializerTestCase(TestCase):
 
@@ -35,3 +37,16 @@ class BeerStyleSerializerTestCase(TestCase):
         }
         serializer = BeerStyleSerializer(data=data)
         self.assertFalse(serializer.is_valid(raise_exception=False))
+
+    def test_update(self):
+        style = BeerStyleFactory()
+        tags = [BeerStyleTagFactory() for dummy in range(5)]
+        self.assertEqual(style.tags.count(), 0)
+        style.tags.set(tags, clear=True)
+        self.assertEqual(style.tags.count(), 5)
+        data = {'tags': []}
+        serializer = BeerStyleSerializer(data=data, instance=style, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        style.refresh_from_db()
+        self.assertEqual(style.tags.count(), 0)
