@@ -16,4 +16,6 @@ class BeerStyleTagViewSet(ModelViewSet):
 
 class BeerStyleViewSet(ModelViewSet):
     serializer_class = serializers.BeerStyleSerializer
-    queryset = models.BeerStyle.objects.select_related('category').order_by('id')
+    queryset = models.BeerStyle.objects.select_related(
+        'category',
+    ).prefetch_related('tags').order_by('id')
