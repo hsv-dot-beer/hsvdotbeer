@@ -105,6 +105,11 @@ class BeerSerializer(serializers.ModelSerializer):
         max_value=500, allow_null=True, required=False,
     )
     color_srm_html = serializers.SerializerMethodField()
+    style = serializers.StringRelatedField()
+    style_id = serializers.PrimaryKeyRelatedField(
+        write_only=True, required=False, allow_null=True,
+        queryset=models.BeerStyle.objects.all()
+    )
 
     def get_color_srm_html(self, obj):
         return obj.render_srm()
@@ -114,6 +119,10 @@ class BeerSerializer(serializers.ModelSerializer):
             data['manufacturer'] = data.pop('manufacturer_id')
         except KeyError:
             # must be in a patch
+            pass
+        try:
+            data['style'] = data.pop('style_id')
+        except KeyError:
             pass
         return data
 

@@ -84,6 +84,11 @@ class Manufacturer(models.Model):
 
 class Beer(models.Model):
     name = models.CharField(max_length=25, db_index=True)
+    style = models.ForeignKey(
+        BeerStyle, models.DO_NOTHING, related_name='beers',
+        # TODO: prevent this being null?
+        blank=True, null=True,
+    )
     manufacturer = models.ForeignKey(
         Manufacturer, models.CASCADE, related_name='beers',
     )
