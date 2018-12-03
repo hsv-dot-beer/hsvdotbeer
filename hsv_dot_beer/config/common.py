@@ -28,7 +28,7 @@ class Common(Configuration):
         'hsv_dot_beer.users',
         'venues',
         'events',
-
+        'beers',
     )
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/

@@ -17,6 +17,7 @@ urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('api/v1/venues/', include('venues.urls')),
     path('api/v1/events/', include('events.urls')),
+    path('api/v1/beers/', include('beers.urls')),
     path('api-token-auth/', views.obtain_auth_token),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
