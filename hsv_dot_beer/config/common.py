@@ -29,6 +29,7 @@ class Common(Configuration):
         'venues',
         'events',
         'beers',
+        'taps',
     )
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
