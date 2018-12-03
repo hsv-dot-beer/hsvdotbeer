@@ -10,7 +10,7 @@ from hsv_dot_beer.users.test.factories import UserFactory
 from beers.models import BeerStyle
 from beers.serializers import ManufacturerSerializer
 from .factories import BeerStyleFactory, BeerStyleTagFactory, \
-    ManufacturerFactory
+    ManufacturerFactory, BeerFactory
 
 fake = Faker()
 
@@ -111,3 +111,24 @@ class ManufacturerDetailTestCase(APITestCase):
         eq_(response.status_code, 200)
         eq_(response.data['name'], data['name'])
         eq_(response.data['id'], self.manufacturer.pk)
+
+
+class BeerDetailTestCase(APITestCase):
+    def setUp(self):
+        self.beer = BeerFactory()
+        self.url = reverse(
+            'beer-detail', kwargs={'pk': self.beer.pk},
+        )
+        self.user = UserFactory()
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f'Token {self.user.auth_token}'
+        )
+
+    def test_patch(self):
+        data = {
+            'name': 'a beer',
+        }
+        response = self.client.patch(self.url, data)
+        eq_(response.status_code, 200)
+        eq_(response.data['name'], data['name'])
+        eq_(response.data['id'], self.beer.pk)
