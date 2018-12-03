@@ -8,6 +8,7 @@ router = DefaultRouter()
 router.register(r'styles', views.BeerStyleViewSet)
 router.register(r'style-tags', views.BeerStyleTagViewSet)
 router.register(r'categories', views.BeerStyleCategoryViewSet)
+router.register(r'manufacturers', views.ManufacturerViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

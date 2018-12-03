@@ -1,9 +1,9 @@
 from django.test import TestCase
-from beers.serializers import BeerStyleSerializer
-from beers.models import BeerStyle
+from beers.serializers import BeerStyleSerializer, ManufacturerSerializer
+from beers.models import BeerStyle, Manufacturer
 
 from .factories import BeerStyleCategoryFactory, BeerStyleFactory, \
-    BeerStyleTagFactory
+    BeerStyleTagFactory, ManufacturerFactory
 
 
 class BeerStyleSerializerTestCase(TestCase):
@@ -50,3 +50,31 @@ class BeerStyleSerializerTestCase(TestCase):
         serializer.save()
         style.refresh_from_db()
         self.assertEqual(style.tags.count(), 0)
+
+
+class ManufacturerTestCase(TestCase):
+
+    def test_create(self):
+        data = {
+            'name': 'your mother, Trebek',
+            'url': 'https://example.com',
+            'logo_url': 'https://example.com/logo.png',
+            'facebook_url': 'https://facebook.com/yourmothertrebekbeer',
+            'twitter_handle': 'yourmomtrebekbeer',
+            'instagram_handle': 'whyamihere',
+        }
+        serializer = ManufacturerSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        instance = serializer.save()
+        self.assertIsInstance(instance, Manufacturer)
+        for field, value in data.items():
+            self.assertEqual(value, getattr(instance, field), field)
+
+    def test_update(self):
+        instance = ManufacturerFactory()
+        data = {'name': 'beerco'}
+        serializer = ManufacturerSerializer(instance=instance, data=data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        instance.refresh_from_db()
+        self.assertEqual(instance.name, data['name'])
