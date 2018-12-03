@@ -80,3 +80,94 @@ class Manufacturer(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Beer(models.Model):
+    name = models.CharField(max_length=25, db_index=True)
+    manufacturer = models.ForeignKey(
+        Manufacturer, models.CASCADE, related_name='beers',
+    )
+    in_production = models.BooleanField(default=True)
+    abv = models.DecimalField(
+        'Alcohol content (% by volume)',
+        max_digits=4, decimal_places=2, blank=True, null=True,
+    )
+    ibu = models.PositiveSmallIntegerField(
+        'Bitterness (International Bitterness Units)',
+        blank=True, null=True,
+    )
+    color_srm = models.DecimalField(
+        'Color (Standard Reference Method)',
+        max_digits=4, decimal_places=1, blank=True, null=True,
+    )
+    untappd_id = models.CharField(
+        'Untappd ID (if known)', max_length=50, null=True, blank=True,
+        unique=True,
+    )
+    beer_advocate_id = models.CharField(
+        'BeerAdvocate ID (if known)', max_length=50, null=True, blank=True,
+        unique=True,
+    )
+    rate_beer_url = models.URLField(blank=True, null=True, unique=True)
+
+    def save(self, *args, **kwargs):
+        # force empty IDs to null to avoid running afoul of unique constraints
+        if not self.untappd_id:
+            self.untappd_id = None
+        if not self.beer_advocate_id:
+            self.beer_advocate_id = None
+        if not self.rate_beer_url:
+            self.rate_beer_url = None
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+    def render_srm(self):
+        """Convert the SRM to a valid HTML string (if known)"""
+        if not self.color_srm:
+            return '#ffffff'
+        # round the color to an int and put it in the inclusive range [1, 30]
+        int_color = min([int(self.color_srm), 30])
+        if int_color < 1:
+            int_color = 1
+        # source:
+        # https://www.homebrewtalk.com/forum/threads/ebc-or-srm-to-color-rgb.78018/#post-820969
+        color_map = {
+            1: '#F3F993',
+            2: '#F5F75C',
+            3: '#F6F513',
+            4: '#EAE615',
+            5: '#E0D01B',
+            6: '#D5BC26',
+            7: '#CDAA37',
+            8: '#C1963C',
+            9: '#BE8C3A',
+            10: '#BE823A',
+            11: '#C17A37',
+            12: '#BF7138',
+            13: '#BC6733',
+            14: '#B26033',
+            15: '#A85839',
+            16: '#985336',
+            17: '#8D4C32',
+            18: '#7C452D',
+            19: '#6B3A1E',
+            20: '#5D341A',
+            21: '#4E2A0C',
+            22: '#4A2727',
+            23: '#361F1B',
+            24: '#261716',
+            25: '#231716',
+            26: '#19100F',
+            27: '#16100F',
+            28: '#120D0C',
+            29: '#100B0A',
+            30: '#050B0A',
+        }
+        return color_map[int_color]
+
+    class Meta:
+        unique_together = [
+            ('name', 'manufacturer'),
+        ]
