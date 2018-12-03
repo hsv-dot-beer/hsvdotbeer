@@ -4,7 +4,7 @@ import factory.fuzzy
 import string
 
 from beers.models import BeerStyle, BeerStyleCategory, BeerStyleTag, \
-    Manufacturer
+    Manufacturer, Beer
 
 CLASS_CHOICES = [x[0] for x in BeerStyleCategory.CLASS_CHOICES]
 
@@ -77,3 +77,12 @@ class ManufacturerFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Manufacturer
+
+
+class BeerFactory(factory.django.DjangoModelFactory):
+    name = factory.fuzzy.FuzzyText(length=20)
+    manufacturer = factory.SubFactory(ManufacturerFactory)
+    color_srm = factory.Sequence(lambda n: n % 31 + 1)
+
+    class Meta:
+        model = Beer

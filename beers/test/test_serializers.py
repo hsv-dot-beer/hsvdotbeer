@@ -1,9 +1,13 @@
+from decimal import Decimal
+
 from django.test import TestCase
-from beers.serializers import BeerStyleSerializer, ManufacturerSerializer
-from beers.models import BeerStyle, Manufacturer
+
+from beers.serializers import BeerStyleSerializer, ManufacturerSerializer, \
+    BeerSerializer
+from beers.models import BeerStyle, Manufacturer, Beer
 
 from .factories import BeerStyleCategoryFactory, BeerStyleFactory, \
-    BeerStyleTagFactory, ManufacturerFactory
+    BeerStyleTagFactory, ManufacturerFactory, BeerFactory
 
 
 class BeerStyleSerializerTestCase(TestCase):
@@ -78,3 +82,47 @@ class ManufacturerTestCase(TestCase):
         serializer.save()
         instance.refresh_from_db()
         self.assertEqual(instance.name, data['name'])
+
+
+class BeerSerializerTestCase(TestCase):
+    def test_create(self):
+        manufacturer = ManufacturerFactory()
+        data = {
+            'manufacturer_id': manufacturer.id,
+            'name': 'A beer',
+            'color_srm': '27.7',
+            'abv': '14.3',
+            'ibu': 15,
+        }
+        serializer = BeerSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        instance = serializer.save()
+        self.assertIsInstance(instance, Beer)
+        self.assertEqual(instance.manufacturer, manufacturer)
+        self.assertEqual(instance.name, data['name'])
+        self.assertEqual(instance.color_srm, Decimal(data['color_srm']))
+        self.assertEqual(instance.render_srm(), '#16100F')
+        self.assertEqual(instance.abv, Decimal(data['abv']))
+        self.assertEqual(instance.ibu, data['ibu'])
+
+    def test_update(self):
+        beer = BeerFactory()
+        data = {
+            'name': 'adsfasdsfa',
+        }
+        serializer = BeerSerializer(data=data, instance=beer, partial=True)
+        serializer.is_valid()
+        serializer.save()
+        beer.refresh_from_db()
+        self.assertEqual(beer.name, data['name'])
+
+    def test_duplicate_beer(self):
+        beer = BeerFactory()
+        data = {
+            'name': beer.name,
+            'manufacturer_id': beer.manufacturer.id,
+        }
+        serializer = BeerSerializer(data=data)
+        self.assertFalse(
+            serializer.is_valid(raise_exception=False)
+        )
