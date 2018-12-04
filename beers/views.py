@@ -24,3 +24,10 @@ class BeerStyleViewSet(ModelViewSet):
 class ManufacturerViewSet(ModelViewSet):
     serializer_class = serializers.ManufacturerSerializer
     queryset = models.Manufacturer.objects.order_by('name')
+
+
+class BeerViewSet(ModelViewSet):
+    serializer_class = serializers.BeerSerializer
+    queryset = models.Beer.objects.select_related(
+        'manufacturer', 'style',
+    ).order_by('manufacturer__name', 'name')

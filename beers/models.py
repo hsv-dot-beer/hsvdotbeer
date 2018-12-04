@@ -2,6 +2,8 @@ import string
 
 from django.db import models
 
+from .utils import render_srm
+
 
 class BeerStyleCategory(models.Model):
     CLASS_CHOICES = (
@@ -80,3 +82,58 @@ class Manufacturer(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Beer(models.Model):
+    name = models.CharField(max_length=25, db_index=True)
+    style = models.ForeignKey(
+        BeerStyle, models.DO_NOTHING, related_name='beers',
+        # TODO: prevent this being null?
+        blank=True, null=True,
+    )
+    manufacturer = models.ForeignKey(
+        Manufacturer, models.CASCADE, related_name='beers',
+    )
+    in_production = models.BooleanField(default=True)
+    abv = models.DecimalField(
+        'Alcohol content (% by volume)',
+        max_digits=4, decimal_places=2, blank=True, null=True,
+    )
+    ibu = models.PositiveSmallIntegerField(
+        'Bitterness (International Bitterness Units)',
+        blank=True, null=True,
+    )
+    color_srm = models.DecimalField(
+        'Color (Standard Reference Method)',
+        max_digits=4, decimal_places=1, blank=True, null=True,
+    )
+    untappd_id = models.CharField(
+        'Untappd ID (if known)', max_length=50, null=True, blank=True,
+        unique=True,
+    )
+    beer_advocate_id = models.CharField(
+        'BeerAdvocate ID (if known)', max_length=50, null=True, blank=True,
+        unique=True,
+    )
+    rate_beer_url = models.URLField(blank=True, null=True, unique=True)
+
+    def save(self, *args, **kwargs):
+        # force empty IDs to null to avoid running afoul of unique constraints
+        if not self.untappd_id:
+            self.untappd_id = None
+        if not self.beer_advocate_id:
+            self.beer_advocate_id = None
+        if not self.rate_beer_url:
+            self.rate_beer_url = None
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+    def render_srm(self):
+        return render_srm(self.color_srm)
+
+    class Meta:
+        unique_together = [
+            ('name', 'manufacturer'),
+        ]
