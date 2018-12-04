@@ -64,6 +64,12 @@ class BeerStyle(models.Model):
     comparison = models.TextField(blank=True)
     examples = models.TextField(blank=True)
 
+    def render_srm_low(self):
+        return render_srm(self.srm_low)
+
+    def render_srm_high(self):
+        return render_srm(self.srm_high)
+
     class Meta:
         unique_together = (('category', 'subcategory'),)
 

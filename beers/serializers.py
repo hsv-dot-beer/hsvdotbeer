@@ -33,6 +33,15 @@ class BeerStyleSerializer(serializers.ModelSerializer):
     fg_low = serializers.DecimalField(min_value=0, max_value=2, max_digits=4, decimal_places=3, default=0)
     fg_high = serializers.DecimalField(min_value=0, max_value=2, max_digits=4, decimal_places=3, default=0)
 
+    srm_low_html = serializers.SerializerMethodField()
+    srm_high_html = serializers.SerializerMethodField()
+
+    def get_srm_low_html(self, obj):
+        return obj.render_srm_low()
+
+    def get_srm_high_html(self, obj):
+        return obj.render_srm_high()
+
     class Meta:
         model = models.BeerStyle
         fields = '__all__'
