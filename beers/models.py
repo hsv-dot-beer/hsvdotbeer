@@ -40,18 +40,45 @@ class BeerStyle(models.Model):
     category = models.ForeignKey(BeerStyleCategory, on_delete='CASCADE')
     tags = models.ManyToManyField(BeerStyleTag, blank=True)
 
-    ibu_low = models.PositiveSmallIntegerField(default=0)
-    ibu_high = models.PositiveSmallIntegerField(default=0)
-    srm_low = models.PositiveSmallIntegerField(default=0)
-    srm_high = models.PositiveSmallIntegerField(default=0)
+    ibu_low = models.PositiveSmallIntegerField(
+        'Minimum bitterness (International Bitterness Units)', default=0,
+    )
+    ibu_high = models.PositiveSmallIntegerField(
+        'Maximum bitterness (International Bitterness Units)', default=0,
+    )
+    srm_low = models.PositiveSmallIntegerField(
+        'Minimum color (Standard Reference Method)',
+        default=0,
+    )
+    srm_high = models.PositiveSmallIntegerField(
+        'Maximum color (Standard Reference Method)', default=0,
+    )
 
-    og_low = models.DecimalField(max_digits=4, decimal_places=3, default=0)
-    og_high = models.DecimalField(max_digits=4, decimal_places=3, default=0)
-    fg_low = models.DecimalField(max_digits=4, decimal_places=3, default=0)
-    fg_high = models.DecimalField(max_digits=4, decimal_places=3, default=0)
+    og_low = models.DecimalField(
+        'Minimum original specific gravity',
+        max_digits=4, decimal_places=3, default=0,
+    )
+    og_high = models.DecimalField(
+        'Maximum original specific gravity',
+        max_digits=4, decimal_places=3, default=0,
+    )
+    fg_low = models.DecimalField(
+        'Minimum final specific gravity',
+        max_digits=4, decimal_places=3, default=0,
+    )
+    fg_high = models.DecimalField(
+        'Maximum final specific gravity',
+        max_digits=4, decimal_places=3, default=0,
+    )
 
-    abv_low = models.DecimalField(max_digits=3, decimal_places=1, default=0)
-    abv_high = models.DecimalField(max_digits=3, decimal_places=1, default=0)
+    abv_low = models.DecimalField(
+        'Maximum alcohol content (% by volume)',
+        max_digits=3, decimal_places=1, default=0,
+    )
+    abv_high = models.DecimalField(
+        'Minimum alcohol content (% by volume)',
+        max_digits=3, decimal_places=1, default=0,
+    )
 
     aroma = models.TextField(blank=True)
     appearance = models.TextField(blank=True)
@@ -63,6 +90,12 @@ class BeerStyle(models.Model):
     ingredients = models.TextField(blank=True)
     comparison = models.TextField(blank=True)
     examples = models.TextField(blank=True)
+
+    def render_srm_low(self):
+        return render_srm(self.srm_low)
+
+    def render_srm_high(self):
+        return render_srm(self.srm_high)
 
     class Meta:
         unique_together = (('category', 'subcategory'),)
@@ -85,7 +118,7 @@ class Manufacturer(models.Model):
 
 
 class Beer(models.Model):
-    name = models.CharField(max_length=25, db_index=True)
+    name = models.CharField(max_length=100, db_index=True)
     style = models.ForeignKey(
         BeerStyle, models.DO_NOTHING, related_name='beers',
         # TODO: prevent this being null?
