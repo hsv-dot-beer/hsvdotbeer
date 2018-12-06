@@ -6,7 +6,6 @@ from django.db import transaction
 
 from beers.models import BeerStyle
 from hsv_dot_beer.config.local import BASE_DIR
-from venues.models import Venue
 from tap_list_providers.example import ExampleTapListProvider
 
 
