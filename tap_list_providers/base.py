@@ -11,6 +11,7 @@ TODO: implement those models.
 from django.db.models import Prefetch
 
 from venues.models import Venue, Room
+from beers.model import Beer
 from taps.models import Tap
 
 
@@ -52,3 +53,15 @@ class BaseTapListProvider():
     def handle_venues(self, venues):
         for venue in venues:
             self.handle_venue(venue)
+
+    def get_beer(self, name, manufacturer, **defaults):
+        field_names = {i.name for i in Beer._meta.fields}
+        bogus_defaults = set(defaults).difference(field_names)
+        if bogus_defaults:
+            raise ValueError(f'Unknown fields f{",".join(sorted(defaults))}')
+        beer = Beer.objects.get_or_create(
+            name=name,
+            manufacturer=manufacturer,
+            defaults=defaults,
+        )[0]
+        return beer
