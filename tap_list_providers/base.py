@@ -4,8 +4,6 @@ Children should subclass this and implement handle_venue()
 which takes a single argument: a Venue object.
 
 It'll have API configuration, rooms, taps, and existing beers prefetched.
-
-TODO: implement those models.
 """
 
 from django.db.models import Prefetch
