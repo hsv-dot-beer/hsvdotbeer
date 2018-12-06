@@ -16,6 +16,7 @@ class Venue(models.Model):
         ('nook_html', 'The Nook\'s static HTML'),
         ('manual', 'Chalkboard/Whiteboard'),
         ('', 'Unknown'),
+        ('test', 'TEST LOCAL PROVIDER'),
     )
 
     # NOTE if this ever grows beyond HSV, we'll have to revisit uniqueness
