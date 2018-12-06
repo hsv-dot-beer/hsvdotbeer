@@ -30,6 +30,7 @@ class Common(Configuration):
         'events',
         'beers',
         'taps',
+        'tap_list_providers',
     )
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
