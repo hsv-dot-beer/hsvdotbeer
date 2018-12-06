@@ -8,7 +8,10 @@ It'll have API configuration, rooms, taps, and existing beers prefetched.
 TODO: implement those models.
 """
 
-from venues.models import Venue
+from django.db.models import Prefetch
+
+from venues.models import Venue, Room
+from taps.models import Tap
 
 
 class BaseTapListProvider():
@@ -30,6 +33,19 @@ class BaseTapListProvider():
         ).filter(
             tap_list_provider=self.provider_name,
             api_configuration__isnull=False,
+        ).prefetch_related(
+            Prefetch(
+                'rooms',
+                queryset=Room.objects.prefetch_related(
+                    Prefetch(
+                        'taps__beer__manufacturer',
+                        queryset=Tap.objects.select_related(
+                            'beer__manufacturer',
+                            'beer__style__category',
+                        ),
+                    ),
+                ),
+            ),
         )
         return queryset
 
