@@ -9,7 +9,7 @@ It'll have API configuration, rooms, taps, and existing beers prefetched.
 from django.db.models import Prefetch
 
 from venues.models import Venue, Room
-from beers.model import Beer
+from beers.models import Beer
 from taps.models import Tap
 
 
