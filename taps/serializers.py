@@ -16,6 +16,8 @@ class TapSerializer(serializers.ModelSerializer):
         min_value=0, max_value=100, allow_null=True, required=False,
     )
     room = RoomSerializer(read_only=True)
+    time_added = serializers.DateTimeField()
+    time_updated = serializers.DateTimeField()
 
     def validate(self, data):
         try:

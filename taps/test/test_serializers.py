@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.utils import timezone
 
 from venues.test.factories import RoomFactory
 from taps.serializers import TapSerializer
@@ -13,6 +14,8 @@ class TapSerializerTestCase(TestCase):
         data = {
             'tap_number': 42,
             'room_id': room.id,
+            'time_added': timezone.now(),
+            'time_updated': timezone.now()
         }
         serializer = TapSerializer(data=data)
         serializer.is_valid(raise_exception=True)

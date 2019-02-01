@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Tap(models.Model):
@@ -22,6 +23,8 @@ class Tap(models.Model):
     )
     gas_type = models.CharField(max_length=5, choices=GAS_CHOICES, blank=True)
     estimated_percent_remaining = models.FloatField(blank=True, null=True)
+    time_added = models.DateTimeField(default=timezone.now)
+    time_updated = models.DateTimeField(default=timezone.now)
 
     class Meta:
         unique_together = (
