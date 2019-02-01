@@ -22,6 +22,8 @@ Markdown = "*"
 django-nose = "*"
 django-timezone-field = "*"
 django-countries = "*"
+"beautifulsoup4" = "*"
+lxml = "*"
 
 [dev-packages]
 ipdb = "*"
