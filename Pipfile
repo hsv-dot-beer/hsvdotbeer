@@ -32,6 +32,7 @@ mock = "*"
 nose-progressive = "*"
 coverage = "*"
 factory_boy = "*"
+pylint-django = "*"
 
 [requires]
 python_version = "3.6"
