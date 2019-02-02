@@ -36,6 +36,9 @@ class Venue(models.Model):
         blank=True, max_length=30, choices=TAP_LIST_PROVIDERS,
     )
 
+    def __str__(self):
+        return self.name
+
 
 class VenueAPIConfiguration(models.Model):
     venue = models.OneToOneField(
