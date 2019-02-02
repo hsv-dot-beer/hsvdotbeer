@@ -1,0 +1,474 @@
+[
+{
+  "model": "beers.beerstyle",
+  "pk": 48,
+  "fields": {
+    "name": "Sweet Stout",
+    "subcategory": "A",
+    "category": 16,
+    "ibu_low": 20,
+    "ibu_high": 40,
+    "srm_low": 30,
+    "srm_high": 40,
+    "og_low": "1.044",
+    "og_high": "1.060",
+    "fg_low": "1.012",
+    "fg_high": "1.024",
+    "abv_low": "4.0",
+    "abv_high": "6.0",
+    "aroma": "Mild roasted grain aroma, sometimes with coffee and/or chocolate notes. An impression of cream-like sweetness often exists. Fruitiness can be low to moderately high. Diacetyl low to none. Hop aroma low to none, with floral or earthy notes.",
+    "appearance": "Very dark brown to black in color. Can be opaque (if not, it should be clear). Creamy tan to brown head.",
+    "flavor": "Dark roasted grain/malt impression with coffee and/or chocolate flavors dominate the palate. Hop bitterness is moderate. Medium to high sweetness provides a counterpoint to the roasted character and hop bitterness, and lasts into the finish. Low to moderate fruity esters. Diacetyl low to none. The balance between dark grains/malts and sweetness can vary, from quite sweet to moderately dry and somewhat roasty.",
+    "mouthfeel": "Medium-full to full-bodied and creamy. Low to moderate carbonation. High residual sweetness from unfermented sugars enhances the full-tasting mouthfeel.",
+    "impression": "A very dark, sweet, full-bodied, slightly roasty ale that can suggest coffee-and-cream, or sweetened espresso.",
+    "comments": "Gravities are low in England, higher in exported and US products. Variations exist, with the level of residual sweetness, the intensity of the roast character, and the balance between the two being the variables most subject to interpretation. Some versions in England are very sweet (low attenuation) and also low in ABV (Tennent's Sweetheart Stout is 2%), but is an outlier compared to the other examples. These guidelines mostly describe the higher gravity, more balanced, export versions rather than the low alcohol, very sweet versions that many find quite difficult to drink.",
+    "history": "An English style of stout developed in the early 1900s. Historically known as \"Milk\" or \"Cream\" stouts, legally this designation is no longer permitted in England (but is acceptable elsewhere). The \"milk\" name is derived from the use of lactose, or milk sugar, as a sweetener. Originally marketed as a tonic for invalids and nursing mothers.",
+    "ingredients": "The sweetness in most Sweet Stouts comes from a lower bitterness level than most other stouts and a high percentage of unfermentable dextrins. Lactose, an unfermentable sugar, is frequently added to provide additional residual sweetness. Base of pale malt, and may use roasted barley, black malt, chocolate malt, crystal malt, and adjuncts such as maize or brewing sugars.",
+    "comparison": "Much sweeter and less bitter than other stouts (except the stronger tropical stout). The roast character is mild, not burnt like other stouts. Somewhat similar in balance to oatmeal stouts, albeit with more sweetness.",
+    "examples": "Bristol Beer Factory Milk Stout, Left Hand Milk Stout, Lancaster Milk Stout, Mackeson's XXX Stout, Marston's Oyster Stout, Samuel Adams Cream Stout",
+    "tags": [
+      6,
+      9,
+      16,
+      17,
+      25,
+      32,
+      36,
+      37,
+      38
+    ]
+  }
+},
+{
+  "model": "beers.beerstyle",
+  "pk": 64,
+  "fields": {
+    "name": "American IPA",
+    "subcategory": "A",
+    "category": 21,
+    "ibu_low": 40,
+    "ibu_high": 70,
+    "srm_low": 6,
+    "srm_high": 14,
+    "og_low": "1.056",
+    "og_high": "1.070",
+    "fg_low": "1.008",
+    "fg_high": "1.014",
+    "abv_low": "5.5",
+    "abv_high": "7.5",
+    "aroma": "A prominent to intense hop aroma featuring one or more characteristics of American or New World hops, such as citrus, floral, pine, resinous, spicy, tropical fruit, stone fruit, berry, melon, etc. Many versions are dry hopped and can have an additional fresh hop aroma; this is desirable but not required. Grassiness should be minimal, if present. A low to medium-low clean, grainy-malty aroma may be found in the background. Fruitiness from yeast may also be detected in some versions, although a neutral fermentation character is also acceptable. A restrained alcohol note may be present, but this character should be minimal at best. Any American or New World hop character is acceptable; new hop varieties continue to be released and should not constrain this style.",
+    "appearance": "Color ranges from medium gold to light reddish-amber. Should be clear, although unfiltered dry-hopped versions may be a bit hazy. Medium-sized, white to off-white head with good persistence.",
+    "flavor": "Hop flavor is medium to very high, and should reflect an American or New World hop character, such as citrus, floral, pine, resinous, spicy, tropical fruit, stone fruit, berry, melon, etc. Medium-high to very high hop bitterness. Malt flavor should be low to medium-low, and is generally clean and grainy-malty although some light caramel or toasty flavors are acceptable. Low yeast-derived fruitiness is acceptable but not required. Dry to medium-dry finish; residual sweetness should be low to none. The bitterness and hop flavor may linger into the aftertaste but should not be harsh. A very light, clean alcohol flavor may be noted in stronger versions. May be slightly sulfury, but most examples do not exhibit this character.",
+    "mouthfeel": "Medium-light to medium body, with a smooth texture. Medium to medium-high carbonation. No harsh hop-derived astringency. Very light, smooth alcohol warming not a fault if it does not intrude into overall balance.",
+    "impression": "A decidedly hoppy and bitter, moderately strong American pale ale, showcasing modern American or New World hop varieties. The balance is hop-forward, with a clean fermentation profile, dryish finish, and clean, supporting malt allowing a creative range of hop character to shine through.",
+    "comments": "A modern American craft beer interpretation of the historical English style, brewed using American ingredients and attitude. The basis for many modern variations, including the stronger Double IPA as well as IPAs with various other ingredients. Those other IPAs should generally be entered in the Specialty IPA style. Oak is inappropriate in this style; if noticeably oaked, enter in wood-aged category.",
+    "history": "The first modern American craft beer example is generally believed to be Anchor Liberty Ale, first brewed in 1975 and using whole Cascade hops; the style has pushed beyond that original beer, which now tastes more like an American Pale Ale in comparison. American-made IPAs from earlier eras were not unknown (particularly the well-regarded Ballantine's IPA, an oak-aged beer using an old English recipe). This style is based on the modern craft beer examples.",
+    "ingredients": "Pale ale or 2-row brewers malt as the base, American or New World hops, American or English yeast with a clean or slightly fruity profile. Generally all-malt, but mashed at lower temperatures for high attenuation. Sugar additions to aid attenuation are acceptable. Restrained use of crystal malts, if any, as high amounts can lead to a sweet finish and clash with the hop character.",
+    "comparison": "Stronger and more highly hopped than an American Pale Ale. Compared to an English IPA, has less of the \"English\" character from malt, hops, and yeast (less caramel, bread, and toast; more American/New World hops than English; less yeast-derived esters), less body, and often has a more hoppy balance and is slightly stronger than most examples. Less alcohol than a Double IPA, but with a similar balance.",
+    "examples": "Alpine Duet, Bell's Two-Hearted Ale, Fat Heads Head Hunter IPA, Firestone Walker Union Jack, Lagunitas IPA, Russian River Blind Pig IPA, Stone IPA",
+    "tags": [
+      2,
+      5,
+      12,
+      20,
+      21,
+      23,
+      25,
+      34
+    ]
+  }
+},
+{
+  "model": "beers.beerstylecategory",
+  "pk": 16,
+  "fields": {
+    "name": "Dark British Beer",
+    "bjcp_class": "beer",
+    "notes": "This category contains average to strong, bitter to sweet, modern British and Irish stouts that originated in England even if some are now more widely associated with Ireland. In this case, \"British\" means the broader British Isles not Great Britain.",
+    "category_id": 16,
+    "revision": "2015"
+  }
+},
+{
+  "model": "beers.beerstylecategory",
+  "pk": 21,
+  "fields": {
+    "name": "IPA",
+    "bjcp_class": "beer",
+    "notes": "The IPA category is for modern American IPAs and their derivatives. This does not imply that English IPAs aren't proper IPAs or that there isn't a relationship between them. This is simply a method of grouping similar styles for competition purposes. English IPAs are grouped with other English-derived beers, and the stronger Double IPA is grouped with stronger American beers. The term \"IPA\" is intentionally not spelled out as \"India Pale Ale\" since none of these beers historically went to India, and many aren't pale. However, the term IPA has come to be a balance-defined style in modern craft beer.",
+    "category_id": 21,
+    "revision": "2015"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 1,
+  "fields": {
+    "tag": "session-strength"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 2,
+  "fields": {
+    "tag": "pale-color"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 3,
+  "fields": {
+    "tag": "bottom-fermented"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 4,
+  "fields": {
+    "tag": "lagered"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 5,
+  "fields": {
+    "tag": "north-america"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 6,
+  "fields": {
+    "tag": "traditional-style"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 7,
+  "fields": {
+    "tag": "pale-lager-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 8,
+  "fields": {
+    "tag": "balanced"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 9,
+  "fields": {
+    "tag": "standard-strength"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 10,
+  "fields": {
+    "tag": "any-fermentation"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 11,
+  "fields": {
+    "tag": "pale-ale-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 12,
+  "fields": {
+    "tag": "craft-style"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 13,
+  "fields": {
+    "tag": "wheat-beer-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 14,
+  "fields": {
+    "tag": "amber-color"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 15,
+  "fields": {
+    "tag": "amber-lager-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 16,
+  "fields": {
+    "tag": "malty"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 17,
+  "fields": {
+    "tag": "dark-color"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 18,
+  "fields": {
+    "tag": "dark-lager-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 19,
+  "fields": {
+    "tag": "central-europe"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 20,
+  "fields": {
+    "tag": "bitter"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 21,
+  "fields": {
+    "tag": "hoppy"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 22,
+  "fields": {
+    "tag": "pilsner-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 23,
+  "fields": {
+    "tag": "high-strength"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 24,
+  "fields": {
+    "tag": "bock-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 25,
+  "fields": {
+    "tag": "top-fermented"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 26,
+  "fields": {
+    "tag": "smoke"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 27,
+  "fields": {
+    "tag": "amber-ale-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 28,
+  "fields": {
+    "tag": "bottom-fermenting"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 29,
+  "fields": {
+    "tag": "very-high-strength"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 30,
+  "fields": {
+    "tag": "eastern-europe"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 31,
+  "fields": {
+    "tag": "porter-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 32,
+  "fields": {
+    "tag": "british-isles"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 33,
+  "fields": {
+    "tag": "pacific"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 34,
+  "fields": {
+    "tag": "ipa-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 35,
+  "fields": {
+    "tag": "brown-ale-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 36,
+  "fields": {
+    "tag": "roasty"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 37,
+  "fields": {
+    "tag": "stout-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 38,
+  "fields": {
+    "tag": "sweet"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 39,
+  "fields": {
+    "tag": "strong-ale-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 40,
+  "fields": {
+    "tag": "aged"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 41,
+  "fields": {
+    "tag": "session-beer"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 42,
+  "fields": {
+    "tag": "sour"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 43,
+  "fields": {
+    "tag": "top-fermenting"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 44,
+  "fields": {
+    "tag": "western-europe"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 45,
+  "fields": {
+    "tag": "sour-ale-family"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 46,
+  "fields": {
+    "tag": "wood"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 47,
+  "fields": {
+    "tag": "wild-fermented"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 48,
+  "fields": {
+    "tag": "fruit"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 49,
+  "fields": {
+    "tag": "spice"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 50,
+  "fields": {
+    "tag": "historical-style"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 51,
+  "fields": {
+    "tag": "spic"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 52,
+  "fields": {
+    "tag": "wild-fermentation"
+  }
+},
+{
+  "model": "beers.beerstyletag",
+  "pk": 53,
+  "fields": {
+    "tag": "specialty-beer"
+  }
+}
+]
