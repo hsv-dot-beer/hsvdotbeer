@@ -8,7 +8,7 @@ class UntappdParser:
     URL = 'https://business.untappd.com/locations/{}/themes/{}/js'
     SEARCH = 'container.innerHTML = "'
 
-    def __init__(self, location, theme):
+    def __init__(self, location, theme, cats):
         self.location_url = self.URL.format(location, theme)
         data = requests.get(self.location_url).text
 
@@ -26,12 +26,15 @@ class UntappdParser:
         self.soup = BeautifulSoup(html, 'lxml')
 
         info_elements = self.soup.find_all('div', {'class': 'section'})
-        for e in info_elements:
-            text = e.find('div', {'class': 'section-name'}).text
-            if text == 'Tap List':
-                self.taplist = e
-            if text == 'On Tap':
-                self.taplist = e
+
+        self.taplists = []
+
+        for element in info_elements:
+            text = element.find('div', {'class': 'section-name'}).text
+            if text in cats:
+                self.taplists.append(element)
+
+
 
     def parse_style(self, style):
         if '-' in style:
@@ -74,7 +77,8 @@ class UntappdParser:
 
     def parse_tap(self, entry):
         beer_info  = entry.find('p', {'class': 'beer-name'}).text
-        tap_num = entry.find('span', {'class': 'tap-number-hideable'}).text
+        tap_num = entry.find('span', {'class': 'tap-number-hideable'}).text.strip()
+
         beer_style = entry.find('span', {'class': 'beer-style'}).text
         brewery = entry.find('span', {'class': 'brewery'}).text
         loc = entry.find('span', {'class': 'location'}).text
@@ -95,7 +99,7 @@ class UntappdParser:
             'pricing': self.parse_pricing(entry),
             'added': None,
             'updated': None,
-            'tap_number': int(tap_num.replace('.', ''))
+            'tap_number': int(tap_num.replace('.', '')) if tap_num else None
         }
 
         abv = entry.find('span', {'class': 'abv'}).text
@@ -113,19 +117,21 @@ class UntappdParser:
         return t
 
     def taps(self):
-        entries = self.taplist.find_all('div', {'class': 'beer'})
-
-        updated = None
-        menus = self.soup.find_all('div', {'class': 'menu-info'})
-        for menu in menus:
-            if 'Tap List' in menu.text:
-                updated = menu.find('time').text
 
         ret = []
-        for entry in entries:
-            tap_info = self.parse_tap(entry)
-            tap_info['updated'] = updated
-            ret.append(tap_info)
+
+        for taplist in self.taplists:
+            entries = taplist.find_all('div', {'class': 'beer'})
+            updated = None
+            menus = self.soup.find_all('div', {'class': 'menu-info'})
+            for menu in menus:
+                if 'Tap List' in menu.text:
+                    updated = menu.find('time').text
+
+            for entry in entries:
+                tap_info = self.parse_tap(entry)
+                tap_info['updated'] = updated
+                ret.append(tap_info)
         return ret
 
 
@@ -133,8 +139,10 @@ if __name__ == '__main__':
     import argparse
 
     locations = {
-        'dsb': ('3884', '11913'),
-        'cpp': ('18351', '69229')
+        'dsb': ('3884', '11913', ['Tap List']),
+        'cpp': ('18351', '69229', ['On Tap']),
+        'yh': ('5949', '20074', ['YEAR-ROUND', 'SEASONALS', 'Beer']),
+        'mm': ('8588', '30573', ['Favorites', 'Seasonals', 'Exclusives'])
     }
 
     parser = argparse.ArgumentParser()
@@ -144,6 +152,11 @@ if __name__ == '__main__':
 
     t = UntappdParser(*locations[args.location])
 
+    if args.dump:
+        print(t.soup.prettify())
+
     for tap in t.taps():
         print(json.dumps(tap, indent=4))
         pass
+
+    print(len(t.taps()))
