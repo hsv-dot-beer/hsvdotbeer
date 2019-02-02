@@ -5,12 +5,16 @@ which takes a single argument: a Venue object.
 
 It'll have API configuration, rooms, taps, and existing beers prefetched.
 """
+from decimal import Decimal
+import logging
 
 from django.db.models import Prefetch
 
 from venues.models import Venue, Room
 from beers.models import Beer
 from taps.models import Tap
+
+LOG = logging.getLogger(__name__)
 
 
 class BaseTapListProvider():
@@ -27,6 +31,8 @@ class BaseTapListProvider():
         if not self.provider_name:
             raise ValueError(
                 'You must define `provider_name` in your __init__()')
+        LOG.debug(
+            'Looking for venues with tap list provider %s', self.provider_name)
         queryset = Venue.objects.select_related(
             'api_configuration',
         ).filter(
@@ -57,6 +63,16 @@ class BaseTapListProvider():
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:
             raise ValueError(f'Unknown fields f{",".join(sorted(defaults))}')
+        try:
+            abv = defaults.pop('abv')
+        except KeyError:
+            pass
+        else:
+            if isinstance(abv, str):
+                if abv.endswith('%'):
+                    abv = abv[:-1]
+                abv = Decimal(abv)
+            defaults['abv'] = abv
         beer = Beer.objects.get_or_create(
             name=name,
             manufacturer=manufacturer,
