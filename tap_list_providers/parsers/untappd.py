@@ -1,5 +1,6 @@
 import json
 
+import dateutil.parser
 import requests
 from bs4 import BeautifulSoup
 
@@ -33,8 +34,6 @@ class UntappdParser:
             text = element.find('div', {'class': 'section-name'}).text
             if text in cats:
                 self.taplists.append(element)
-
-
 
     def parse_style(self, style):
         if '-' in style:
@@ -88,14 +87,16 @@ class UntappdParser:
         beer_info = beer_info.strip()
 
         t = {
-            'beer': {
+            'beer':
+            {
                 'name': beer_info,
                 'style': self.parse_style(beer_style)
-             },
-            'manufacturer': {
+            },
+            'manufacturer':
+            {
                 'name': brewery,
                 'location': loc,
-             },
+            },
             'pricing': self.parse_pricing(entry),
             'added': None,
             'updated': None,
@@ -117,16 +118,15 @@ class UntappdParser:
         return t
 
     def taps(self):
-
         ret = []
-
         for taplist in self.taplists:
             entries = taplist.find_all('div', {'class': 'beer'})
             updated = None
             menus = self.soup.find_all('div', {'class': 'menu-info'})
             for menu in menus:
                 if 'Tap List' in menu.text:
-                    updated = menu.find('time').text
+                    updated = dateutil.parser.parse(menu.find('time').text)
+                    updated = updated.isoformat()
 
             for entry in entries:
                 tap_info = self.parse_tap(entry)
