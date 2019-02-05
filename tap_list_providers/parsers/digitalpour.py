@@ -1,18 +1,102 @@
+import logging
+import os
 import json
 
-import datetime
 import dateutil.parser
 import requests
+import configurations
+from django.utils.timezone import now
+from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
 
-class DigitalPourParser:
+# boilerplate code necessary for launching outside manage.py
+try:
+    from ..base import BaseTapListProvider
+except (ImproperlyConfigured, AppRegistryNotReady):
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'hsv_dot_beer.config'
+    os.environ.setdefault("DJANGO_CONFIGURATION", "Local")
+    configurations.setup()
+    from ..base import BaseTapListProvider
+
+from beers.models import Manufacturer
+from taps.models import Tap
+
+
+LOG = logging.getLogger(__name__)
+
+
+class DigitalPourParser(BaseTapListProvider):
     """Parser for DigitalPour based vendors."""
 
     URL = 'https://mobile.digitalpour.com/DashboardServer/v4/MobileApp/MenuItems/{}/{}/Tap?ApiKey={}'
     APIKEY = '574725e55e002c0b7cf0cf19'
+    provider_name = 'digitalpour'
 
-    def __init__(self, location):
+    def __init__(self, location=None):
         """Constructor."""
-        self.url = self.URL.format(location[0], location[1], self.APIKEY)
+        self.url = None
+        if location:
+            self.url = self.URL.format(location[0], location[1], self.APIKEY)
+        super().__init__()
+
+    def handle_venue(self, venue):
+        venue_id = venue.api_configuration.digital_pour_venue_id
+        location_number = venue.api_configuration.digital_pour_location_number
+        self.url = self.URL.format(venue_id, location_number, self.APIKEY)
+        data = self.fetch()
+        rooms = list(venue.rooms.all())
+        if not rooms:
+            raise ValueError(f'You must create a room for {venue} first.')
+        if len(rooms) != 1:
+            raise ValueError(
+                f'DigitalPour does not support rooms! {len(rooms)} found',
+            )
+        room = rooms[0]
+        taps = {tap.tap_number: tap for tap in room.taps.all()}
+        manufacturers = {}
+        for entry in data:
+            if not entry['Active']:
+                # in the cooler, not on tap
+                continue
+            # 1. parse the tap
+            tap_info = self.parse_tap(entry)
+            try:
+                tap = taps[tap_info['tap_number']]
+            except KeyError:
+                tap = Tap(room=room, tap_number=tap_info['tap_number'])
+            tap.time_added = tap_info['added']
+            tap.time_updated = tap_info['updated']
+            tap.estimated_percent_remaining = tap_info['percent_full']
+            if tap_info['gas_type'] in [i[0] for i in Tap.GAS_CHOICES]:
+                tap.gas_type = tap_info['gas_type']
+            else:
+                tap.gas_type = ''
+            # 2. parse the manufacturer, creating if needed
+            parsed_manufacturer = self.parse_manufacturer(entry)
+            try:
+                manufacturer = manufacturers[parsed_manufacturer['name']]
+            except KeyError:
+                manufacturer = Manufacturer.objects.get_or_create(
+                    name=parsed_manufacturer['name'],
+                    defaults={
+                        'location': parsed_manufacturer['location'],
+                    }
+                )[0]
+                manufacturers[manufacturer.name] = manufacturer
+            # 3. get the beer, creating if necessary
+            parsed_beer = self.parse_beer(entry)
+            name = parsed_beer.pop('name')
+            # TODO (#37): map styles
+            parsed_beer.pop('style', '')
+            # TODO (#38): handle color
+            parsed_beer.pop('color', '')
+            LOG.debug(
+                'looking up beer: name %s, mfg %s, other data %s',
+                name, manufacturer, parsed_beer,
+            )
+            beer = self.get_beer(name, manufacturer, **parsed_beer)
+            # 4. assign the beer to the tap
+            tap.beer = beer
+            tap.save()
 
     def parse_beer(self, entry):
         """Parse beer info from JSON entry."""
@@ -53,10 +137,11 @@ class DigitalPourParser:
     def parse_tap(self, tap):
         """Parse tap info from JSON entry."""
         ret = {
-            'added': dateutil.parser.parse(tap['DatePutOn']).isoformat(),
-            'updated': datetime.datetime.utcnow().isoformat(),
+            'added': dateutil.parser.parse(tap['DatePutOn']),
+            'updated': now(),
             'tap_number': tap['MenuItemDisplayDetail']['DisplayOrder'],
-            'percent_full': tap['MenuItemProductDetail']['PercentFull']
+            'percent_full': tap['MenuItemProductDetail']['PercentFull'],
+            'gas_type': (tap['MenuItemProductDetail']['KegType'] or '').lower(),
         }
         return ret
 
@@ -75,8 +160,7 @@ class DigitalPourParser:
 
     def fetch(self):
         """Fetch the most recent taplist"""
-        data = requests.get(self.url).text
-        data = json.loads(data)
+        data = requests.get(self.url).json()
         return data
 
     def taps(self):
