@@ -75,7 +75,7 @@ class UntappdParser:
         return pricing
 
     def parse_tap(self, entry):
-        beer_info  = entry.find('p', {'class': 'beer-name'}).text
+        beer_info = entry.find('p', {'class': 'beer-name'}).text
         tap_num = entry.find('span', {'class': 'tap-number-hideable'}).text.strip()
 
         beer_style = entry.find('span', {'class': 'beer-style'}).text
@@ -138,7 +138,7 @@ class UntappdParser:
 if __name__ == '__main__':
     import argparse
 
-    locations = {
+    LOCATIONS = {
         'dsb': ('3884', '11913', ['Tap List']),
         'cpp': ('18351', '69229', ['On Tap']),
         'yh': ('5949', '20074', ['YEAR-ROUND', 'SEASONALS', 'Beer']),
@@ -150,7 +150,7 @@ if __name__ == '__main__':
     parser.add_argument('location')
     args = parser.parse_args()
 
-    t = UntappdParser(*locations[args.location])
+    t = UntappdParser(*LOCATIONS[args.location])
 
     if args.dump:
         print(t.soup.prettify())
