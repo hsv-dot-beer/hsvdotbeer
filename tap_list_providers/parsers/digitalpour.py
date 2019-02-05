@@ -73,7 +73,6 @@ class DigitalPourParser:
             pricing.append(p)
         return pricing
 
-
     def fetch(self):
         """Fetch the most recent taplist"""
         data = requests.get(self.url).text
