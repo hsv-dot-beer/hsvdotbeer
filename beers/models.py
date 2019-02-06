@@ -151,6 +151,7 @@ class Beer(models.Model):
         unique=True,
     )
     rate_beer_url = models.URLField(blank=True, null=True, unique=True)
+    logo_url = models.URLField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
