@@ -22,6 +22,9 @@ Markdown = "*"
 django-nose = "*"
 django-timezone-field = "*"
 django-countries = "*"
+"beautifulsoup4" = "*"
+lxml = "*"
+requests = "*"
 
 [dev-packages]
 ipdb = "*"
@@ -33,6 +36,7 @@ nose-progressive = "*"
 coverage = "*"
 factory_boy = "*"
 pylint-django = "*"
+responses = "*"
 
 [requires]
 python_version = "3.6"

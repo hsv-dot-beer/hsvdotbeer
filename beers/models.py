@@ -37,7 +37,9 @@ class BeerStyle(models.Model):
     subcategory = models.CharField(max_length=1,
                                    choices=zip(string.ascii_uppercase, string.ascii_uppercase))
 
-    category = models.ForeignKey(BeerStyleCategory, on_delete='CASCADE')
+    category = models.ForeignKey(
+        BeerStyleCategory, on_delete='CASCADE', related_name='styles',
+    )
     tags = models.ManyToManyField(BeerStyleTag, blank=True)
 
     ibu_low = models.PositiveSmallIntegerField(
@@ -149,6 +151,7 @@ class Beer(models.Model):
         unique=True,
     )
     rate_beer_url = models.URLField(blank=True, null=True, unique=True)
+    logo_url = models.URLField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints

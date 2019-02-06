@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
+from django.utils import timezone
+
 from venues.models import Room
 from venues.serializers import RoomSerializer
 
@@ -16,6 +18,12 @@ class TapSerializer(serializers.ModelSerializer):
         min_value=0, max_value=100, allow_null=True, required=False,
     )
     room = RoomSerializer(read_only=True)
+    time_added = serializers.DateTimeField(read_only=True)
+    time_updated = serializers.DateTimeField(read_only=True)
+
+    def update(self, instance, validated_data):
+        instance.time_updated = timezone.now()
+        return super().update(instance, validated_data)
 
     def validate(self, data):
         try:
