@@ -17,6 +17,7 @@ class Local(Common):
         '--cover-package=hsv_dot_beer',
         '--cover-package=venues',
         '--cover-package=beers',
+        '--cover-package=tap_list_providers',
     ]
 
     # Mail
