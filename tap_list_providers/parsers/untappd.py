@@ -157,6 +157,5 @@ if __name__ == '__main__':
 
     for tap in t.taps():
         print(json.dumps(tap, indent=4))
-        pass
 
     print(len(t.taps()))
