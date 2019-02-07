@@ -1,18 +1,106 @@
 import json
+import logging
+import os
 
 import dateutil.parser
 import requests
 from bs4 import BeautifulSoup
+import configurations
+from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
+
+# boilerplate code necessary for launching outside manage.py
+try:
+    from ..base import BaseTapListProvider
+except (ImproperlyConfigured, AppRegistryNotReady):
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'hsv_dot_beer.config'
+    os.environ.setdefault("DJANGO_CONFIGURATION", "Local")
+    configurations.setup()
+    from ..base import BaseTapListProvider
+
+from beers.models import Manufacturer
+from taps.models import Tap
+
+LOG = logging.getLogger(__name__)
 
 
-class UntappdParser:
+class UntappdParser(BaseTapListProvider):
     URL = 'https://business.untappd.com/locations/{}/themes/{}/js'
     SEARCH = 'container.innerHTML = "'
+    provider_name = 'untappd'
 
-    def __init__(self, location, theme, cats):
-        self.location_url = self.URL.format(location, theme)
+    def __init__(self, location=None, theme=None, cats=None):
+        self.location_url = None
+        if location and theme:
+            self.location_url = self.URL.format(location, theme)
+
+        self.categories = cats or []
+        super().__init__()
+
+    def fetch_data(self):
+        if not self.location_url:
+            raise ValueError('You must configure the location URL')
         data = requests.get(self.location_url).text
+        return data
 
+    def handle_venue(self, venue):
+        self.categories = venue.api_configuration.untappd_categories
+        self.location_url = self.URL.format(
+            venue.api_configuration.untappd_location,
+            venue.api_configuration.untappd_theme,
+        )
+        data = self.fetch_data()
+        self.parse_html_and_js(data)
+        rooms = list(venue.rooms.all())
+        if not rooms:
+            raise ValueError(f'You must create a room for {venue} first.')
+        if len(rooms) != 1:
+            raise ValueError(
+                f'Untappd does not support rooms! {len(rooms)} found',
+            )
+        room = rooms[0]
+
+        taps = {tap.tap_number: tap for tap in room.taps.all()}
+        manufacturers = {}
+        tap_list = self.taps()
+        use_sequential_taps = any(
+            tap_info['tap_number'] is None for tap_info in tap_list
+        )
+        for index, tap_info in enumerate(tap_list):
+            # 1. get the tap
+            # if the venue doesn't give tap numbers, just use a 1-based
+            # counter
+            if use_sequential_taps:
+                tap_number = index + 1
+            else:
+                tap_number = tap_info['tap_number']
+            try:
+                tap = taps[tap_number]
+            except KeyError:
+                tap = Tap(room=room, tap_number=tap_number)
+            if tap_info['added']:
+                tap.time_added = tap_info['added']
+            if tap_info['updated']:
+                tap.time_updated = tap_info['updated']
+            # 2. parse the manufacturer
+            try:
+                manufacturer = manufacturers[tap_info['manufacturer']['name']]
+            except KeyError:
+                manufacturer = Manufacturer.objects.get_or_create(
+                    **tap_info['manufacturer']
+                )[0]
+                manufacturers[manufacturer.name] = manufacturer
+            # 3. get the beer, creating if necessary
+            beer_name = tap_info['beer'].pop('name')
+            # TODO (#37): map styles
+            tap_info['beer'].pop('style', '')
+            beer = self.get_beer(
+                beer_name, manufacturer, **tap_info['beer']
+            )
+            # 4. assign the beer to the tap
+            tap.beer = beer
+            tap.save()
+
+    def parse_html_and_js(self, data):
         # Pull the relevant HTML from the JS.
         start_idx = data.find(self.SEARCH)
         end_idx = data.find(';\n\n')
@@ -32,7 +120,7 @@ class UntappdParser:
 
         for element in info_elements:
             text = element.find('div', {'class': 'section-name'}).text
-            if text in cats:
+            if text in self.categories:
                 self.taplists.append(element)
 
     def parse_style(self, style):
@@ -151,12 +239,13 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     t = UntappdParser(*LOCATIONS[args.location])
+    data = t.fetch_data()
+    t.parse_html_and_js(data)
 
     if args.dump:
         print(t.soup.prettify())
 
     for tap in t.taps():
         print(json.dumps(tap, indent=4))
-        pass
 
     print(len(t.taps()))
