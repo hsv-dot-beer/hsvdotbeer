@@ -28,7 +28,7 @@ class TestEventListTestCase(APITestCase):
         self.event_data['venue_id'] = self.event.venue.id
         del self.event_data['venue']
         # last, create the user
-        self.user = UserFactory()
+        self.user = UserFactory(is_staff=True)
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
 
@@ -54,7 +54,7 @@ class TestEventDetailTestCase(APITestCase):
     def setUp(self):
         self.event = EventFactory()
         self.url = reverse('event-detail', kwargs={'pk': self.event.pk})
-        self.user = UserFactory()
+        self.user = UserFactory(is_staff=True)
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
 

@@ -17,7 +17,7 @@ class TestTapDetailTestCase(APITestCase):
         self.tap = TapFactory(room=self.room)
 
         self.url = reverse('tap-detail', kwargs={'pk': self.tap.pk})
-        self.user = UserFactory()
+        self.user = UserFactory(is_staff=True)
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
 

@@ -22,7 +22,7 @@ class TestBeerStyleDetailTestCase(APITestCase):
         self.style = BeerStyleFactory.create(tags=self.tags)
 
         self.url = reverse('beerstyle-detail', kwargs={'pk': self.style.pk})
-        self.user = UserFactory()
+        self.user = UserFactory(is_staff=True)
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
 
@@ -69,7 +69,7 @@ class ManufacturerListTestCase(APITestCase):
         self.manufacturer = ManufacturerFactory()
 
         self.url = reverse('manufacturer-list')
-        self.user = UserFactory()
+        self.user = UserFactory(is_staff=True)
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
 
@@ -98,7 +98,7 @@ class ManufacturerDetailTestCase(APITestCase):
         self.url = reverse(
             'manufacturer-detail', kwargs={'pk': self.manufacturer.pk},
         )
-        self.user = UserFactory()
+        self.user = UserFactory(is_staff=True)
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}',
         )
@@ -119,7 +119,7 @@ class BeerDetailTestCase(APITestCase):
         self.url = reverse(
             'beer-detail', kwargs={'pk': self.beer.pk},
         )
-        self.user = UserFactory()
+        self.user = UserFactory(is_staff=True)
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}'
         )
