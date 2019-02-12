@@ -21,16 +21,24 @@ class TestUserListTestCase(APITestCase):
         self.user_data = model_to_dict(UserFactory.build())
 
     def test_post_request_with_no_data_fails(self):
+        user = UserFactory(is_staff=True)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Token {user.auth_token}')
         response = self.client.post(self.url, {})
         eq_(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_request_with_valid_data_succeeds(self):
+        user = UserFactory(is_staff=True)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Token {user.auth_token}')
         response = self.client.post(self.url, self.user_data)
         eq_(response.status_code, status.HTTP_201_CREATED)
 
         user = User.objects.get(pk=response.data.get('id'))
         eq_(user.username, self.user_data.get('username'))
         ok_(check_password(self.user_data.get('password'), user.password))
+
+    def test_post_request_unauthorized(self):
+        response = self.client.post(self.url, self.user_data)
+        eq_(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
 class TestUserDetailTestCase(APITestCase):
