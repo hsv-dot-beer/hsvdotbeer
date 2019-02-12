@@ -20,7 +20,7 @@ class TestVenueListTestCase(APITestCase):
     def setUp(self):
         self.url = reverse('venue-list')
         self.venue_data = model_to_dict(VenueFactory.build())
-        self.user = UserFactory()
+        self.user = UserFactory(is_staff=True)
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
 
@@ -45,7 +45,7 @@ class TestVenueDetailTestCase(APITestCase):
     def setUp(self):
         self.venue = VenueFactory()
         self.url = reverse('venue-detail', kwargs={'pk': self.venue.pk})
-        self.user = UserFactory()
+        self.user = UserFactory(is_staff=True)
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
 
@@ -117,7 +117,7 @@ class RoomListTestCase(APITestCase):
     def setUp(self):
         self.url = reverse('room-list')
         self.venue = VenueFactory()
-        self.user = UserFactory()
+        self.user = UserFactory(is_staff=True)
         self.room_data = {
             'venue_id': self.venue.id,
             'name': 'test room',
@@ -149,7 +149,7 @@ class RoomDetailTestCase(APITestCase):
         self.venue = VenueFactory()
         self.room = Room.objects.create(venue=self.venue, name='foo')
         self.url = reverse('room-detail', kwargs={'pk': self.room.pk})
-        self.user = UserFactory()
+        self.user = UserFactory(is_staff=True)
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
 
