@@ -8,7 +8,7 @@ from tap_list_providers.parsers.taphunter import TaphunterParser
 
 
 class Command(BaseCommand):
-    help = 'Populates any venues using the Untappd tap list provider with' \
+    help = 'Populates any venues using the TapHunter tap list provider with' \
         ' beers'
 
     def add_arguments(self, parser):

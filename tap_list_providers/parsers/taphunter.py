@@ -4,7 +4,6 @@ import json
 
 import configurations
 import requests
-from django.utils.timezone import now
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
 
 # boilerplate code necessary for launching outside manage.py
@@ -45,7 +44,7 @@ class TaphunterParser(BaseTapListProvider):
             raise ValueError(f'You must create a room for {venue} first.')
         if len(rooms) != 1:
             raise ValueError(
-                f'DigitalPour does not support rooms! {len(rooms)} found',
+                f'TapHunter does not support rooms! {len(rooms)} found',
             )
         room = rooms[0]
         taps = {tap.tap_number: tap for tap in room.taps.all()}
@@ -65,6 +64,9 @@ class TaphunterParser(BaseTapListProvider):
             tap.time_updated = tap_info['updated']
             if 'percent_full' in tap_info:
                 tap.estimated_percent_remaining = tap_info['percent_full']
+            else:
+                tap.estimated_percent_remaining = None
+
             if 'gas_type' in tap_info and tap_info['gas_type'] in [i[0] for i in Tap.GAS_CHOICES]:
                 tap.gas_type = tap_info['gas_type']
             else:
@@ -107,7 +109,7 @@ class TaphunterParser(BaseTapListProvider):
         }
 
         if tap['beer']['abv']:
-            beer['abv'] = float(tap['beer']['abv'])
+            beer['abv'] = decimal.Decimal(tap['beer']['abv'])
 
         if tap['beer']['srm']:
             beer['srm'] = int(tap['beer']['srm'])
