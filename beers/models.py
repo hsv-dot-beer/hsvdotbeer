@@ -152,6 +152,14 @@ class Beer(models.Model):
     )
     rate_beer_url = models.URLField(blank=True, null=True, unique=True)
     logo_url = models.URLField(blank=True, null=True)
+    color_html = models.CharField(
+        'HTML Color (in hex)', max_length=9,  # #00112233 -> RGBA
+        blank=True,
+    )
+    api_vendor_style = models.CharField(
+        'API vendor-provided style (hidden from API)', max_length=100,
+        blank=True,
+    )
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
@@ -167,6 +175,8 @@ class Beer(models.Model):
         return self.name
 
     def render_srm(self):
+        if self.color_html:
+            return self.color_html
         return render_srm(self.color_srm)
 
     class Meta:
