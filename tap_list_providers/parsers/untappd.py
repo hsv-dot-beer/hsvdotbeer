@@ -92,7 +92,10 @@ class UntappdParser(BaseTapListProvider):
             # 3. get the beer, creating if necessary
             beer_name = tap_info['beer'].pop('name')
             # TODO (#37): map styles
-            tap_info['beer'].pop('style', '')
+            style = tap_info['beer'].pop('style', {})
+            if style:
+                tap_info['beer']['api_vendor_style'] = \
+                    f"{style['category']} - {style['name']}"
             beer = self.get_beer(
                 beer_name, manufacturer, **tap_info['beer']
             )
