@@ -72,3 +72,5 @@ class CommandsTestCase(TestCase):
             self.assertEqual(tap.beer.abv, Decimal('9.4'))
             self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, '')
+            self.assertEqual(
+                tap.beer.api_vendor_style, 'Red Ale - Imperial / Double')

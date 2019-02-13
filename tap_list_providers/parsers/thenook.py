@@ -65,8 +65,17 @@ class NookParser(BaseTapListProvider):
             self.parser.find(id=self.BREWERY_COLUMN_ID).find_all('p')
         )
 
+    def get_styles(self):
+        return list(
+            i.contents[0].strip()
+            for i in self.parser.find(id=self.STYLE_COLUMN_ID).find_all('p')
+        )
+
     def venue_details(self):
-        return enumerate(zip(self.get_names(), self.get_manufacturers(), self.get_abvs()))
+        return enumerate(zip(
+            self.get_names(), self.get_manufacturers(), self.get_abvs(),
+            self.get_styles(),
+        ))
 
     def handle_venue(self, venue):
         url = venue.api_configuration.url
@@ -83,7 +92,7 @@ class NookParser(BaseTapListProvider):
         manufacturers = {mfg.name: mfg for mfg in Manufacturer.objects.filter(
             name__in=self.get_manufacturers()
         )}
-        for index, (name, mfg, abv) in self.venue_details():
+        for index, (name, mfg, abv, style) in self.venue_details():
             tap_number = index + 1
             # 1. get the tap
             try:
@@ -99,7 +108,9 @@ class NookParser(BaseTapListProvider):
                 )[0]
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer
-            beer = self.get_beer(name, manufacturer, abv=abv)
+            beer = self.get_beer(
+                name, manufacturer, abv=abv, api_vendor_style=style,
+            )
             if tap.beer_id != beer.id:
                 tap.beer = beer
                 # only save if beer changed so as not to disturb updated time

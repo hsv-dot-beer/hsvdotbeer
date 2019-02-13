@@ -137,7 +137,7 @@ class BeerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Beer
-        fields = '__all__'
+        exclude = ('api_vendor_style', 'color_html')
         validators = [
             UniqueTogetherValidator(
                 fields=['name', 'manufacturer_id'],
