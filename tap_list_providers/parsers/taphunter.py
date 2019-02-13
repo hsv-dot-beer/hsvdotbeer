@@ -1,15 +1,101 @@
+import logging
+import os
 import json
 
+import configurations
 import requests
+from django.utils.timezone import now
+from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
+
+# boilerplate code necessary for launching outside manage.py
+try:
+    from ..base import BaseTapListProvider
+except (ImproperlyConfigured, AppRegistryNotReady):
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'hsv_dot_beer.config'
+    os.environ.setdefault("DJANGO_CONFIGURATION", "Local")
+    configurations.setup()
+    from ..base import BaseTapListProvider
+
+from beers.models import Manufacturer
+from taps.models import Tap
 
 
-class TaphunterParser:
-    URL = 'https://www.taphunter.com/widgets/location/v3/'
+LOG = logging.getLogger(__name__)
 
-    def __init__(self, location):
-        self.location_url = self.URL + location + '.json'
-        data = requests.get(self.location_url).text
-        self.json = json.loads(data)
+
+class TaphunterParser(BaseTapListProvider):
+    """Parser for TapHunter based vendors."""
+
+    URL = 'https://www.taphunter.com/widgets/location/v3/{}.json'
+    provider_name = 'taphunter'
+
+    def __init__(self, location=None):
+        """Constructor."""
+        self.url = None
+        if location:
+            self.url = self.URL.format(location)
+        super().__init__()
+
+    def handle_venue(self, venue):
+        location = venue.api_configuration.taphunter_location
+        self.url = self.URL.format(location)
+        data = self.fetch()
+        rooms = list(venue.rooms.all())
+        if not rooms:
+            raise ValueError(f'You must create a room for {venue} first.')
+        if len(rooms) != 1:
+            raise ValueError(
+                f'DigitalPour does not support rooms! {len(rooms)} found',
+            )
+        room = rooms[0]
+        taps = {tap.tap_number: tap for tap in room.taps.all()}
+        manufacturers = {}
+        for ii, entry in enumerate(data['taps']):
+            # 1. parse the tap
+            tap_info = self.parse_tap(entry)
+            if 'tap_number' in tap_info:
+                tap_number = tap_info['tap_number']
+            else:
+                tap_number = ii
+            try:
+                tap = taps[tap_number]
+            except KeyError:
+                tap = Tap(room=room, tap_number=tap_number)
+            tap.time_added = tap_info['added']
+            tap.time_updated = tap_info['updated']
+            if 'percent_full' in tap_info:
+                tap.estimated_percent_remaining = tap_info['percent_full']
+            if 'gas_type' in tap_info and tap_info['gas_type'] in [i[0] for i in Tap.GAS_CHOICES]:
+                tap.gas_type = tap_info['gas_type']
+            else:
+                tap.gas_type = ''
+            # 2. parse the manufacturer, creating if needed
+            parsed_manufacturer = self.parse_manufacturer(entry)
+            try:
+                manufacturer = manufacturers[parsed_manufacturer['name']]
+            except KeyError:
+                manufacturer = Manufacturer.objects.get_or_create(
+                    name=parsed_manufacturer['name'],
+                    defaults={
+                        'location': parsed_manufacturer['location'],
+                    }
+                )[0]
+                manufacturers[manufacturer.name] = manufacturer
+            # 3. get the beer, creating if necessary
+            parsed_beer = self.parse_beer(entry)
+            name = parsed_beer.pop('name')
+            # TODO (#37): map styles
+            parsed_beer.pop('style', '')
+            # TODO (#38): handle color
+            parsed_beer.pop('color', '')
+            LOG.debug(
+                'looking up beer: name %s, mfg %s, other data %s',
+                name, manufacturer, parsed_beer,
+            )
+            beer = self.get_beer(name, manufacturer, **parsed_beer)
+            # 4. assign the beer to the tap
+            tap.beer = beer
+            tap.save()
 
     def parse_beer(self, tap):
         beer = {
@@ -74,6 +160,10 @@ class TaphunterParser:
                     price['per_ounce'] = price['price'] / price['size']
                     pricing.append(price)
         return pricing
+
+    def fetch(self):
+        data = requests.get(self.url).json()
+        return data
 
     def taps(self):
         ret = []

@@ -57,6 +57,7 @@ class VenueAPIConfiguration(models.Model):
         models.CharField(max_length=50),
         default=list,
     )
+    taphunter_location = models.CharField(max_length=50, blank=True)
 
 
 class Room(models.Model):
