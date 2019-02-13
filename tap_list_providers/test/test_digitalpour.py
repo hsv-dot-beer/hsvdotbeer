@@ -64,11 +64,16 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Beer.objects.count(), 4)
             self.assertEqual(Manufacturer.objects.count(), 4)
             self.assertEqual(Tap.objects.count(), 4)
-            tap = Tap.objects.filter(
-                room=self.room, tap_number=22,
+            taps = Tap.objects.filter(
+                room=self.room, tap_number__in=[22, 1],
             ).select_related(
                 'beer__style',
-            ).get()
+            ).order_by('tap_number')
+            tap = taps[0]
+            self.assertEqual(tap.beer.name, 'Hopslam')
+            # location nulled out in test data
+            self.assertEqual(tap.beer.manufacturer.location, '')
+            tap = taps[1]
             self.assertEqual(tap.beer.name, "Milk Stout Nitro")
             self.assertEqual(tap.beer.abv, Decimal('6.0'))
             self.assertIsNone(tap.beer.style)
