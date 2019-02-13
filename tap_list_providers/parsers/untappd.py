@@ -86,7 +86,8 @@ class UntappdParser(BaseTapListProvider):
                 manufacturer = manufacturers[tap_info['manufacturer']['name']]
             except KeyError:
                 manufacturer = Manufacturer.objects.get_or_create(
-                    **tap_info['manufacturer']
+                    name=tap_info['manufacturer']['name'],
+                    defaults={'location': tap_info['manufacturer']['location']}
                 )[0]
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer, creating if necessary
