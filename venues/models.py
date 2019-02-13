@@ -45,7 +45,7 @@ class VenueAPIConfiguration(models.Model):
     venue = models.OneToOneField(
         Venue, models.CASCADE, related_name='api_configuration',
     )
-    url = models.URLField()
+    url = models.URLField(blank=True, null=True)
     api_key = models.CharField(max_length=100, blank=True)
     digital_pour_venue_id = models.CharField(max_length=50, blank=True)
     digital_pour_location_number = models.PositiveSmallIntegerField(
@@ -56,6 +56,7 @@ class VenueAPIConfiguration(models.Model):
     untappd_categories = ArrayField(
         models.CharField(max_length=50),
         default=list,
+        blank=True,
         null=True,
     )
     taphunter_location = models.CharField(max_length=50, blank=True)

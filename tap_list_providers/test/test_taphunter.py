@@ -34,7 +34,7 @@ class CommandsTestCase(TestCase):
             'example_data',
             'liquor_express.json',
         ), 'rb') as json_file:
-            cls.json_data= json_file.read()
+            cls.json_data = json_file.read()
 
     @responses.activate
     def test_import_data(self):
@@ -69,4 +69,3 @@ class CommandsTestCase(TestCase):
             self.assertEqual(tap.beer.abv, Decimal('5.00'))
             self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, '')
-
