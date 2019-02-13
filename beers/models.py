@@ -172,7 +172,7 @@ class Beer(models.Model):
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return str(self.manufacturer) + " - " + self.name
 
     def render_srm(self):
         if self.color_html:

@@ -1,3 +1,4 @@
+import decimal
 import logging
 import os
 import json
@@ -52,10 +53,10 @@ class TaphunterParser(BaseTapListProvider):
         for ii, entry in enumerate(data['taps']):
             # 1. parse the tap
             tap_info = self.parse_tap(entry)
-            if 'tap_number' in tap_info:
+            if 'tap_number' in tap_info and tap_info['tap_number'] != '':
                 tap_number = tap_info['tap_number']
             else:
-                tap_number = ii
+                tap_number = ii + 100
             try:
                 tap = taps[tap_number]
             except KeyError:

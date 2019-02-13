@@ -30,3 +30,6 @@ class Tap(models.Model):
         unique_together = (
             ('room', 'tap_number'),
         )
+
+    def __str__(self):
+        return '{} {} ({})'.format(self.room, self.tap_number, self.beer)

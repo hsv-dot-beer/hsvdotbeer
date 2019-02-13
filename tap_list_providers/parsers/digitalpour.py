@@ -42,6 +42,7 @@ class DigitalPourParser(BaseTapListProvider):
         venue_id = venue.api_configuration.digital_pour_venue_id
         location_number = venue.api_configuration.digital_pour_location_number
         self.url = self.URL.format(venue_id, location_number, self.APIKEY)
+        LOG.debug(self.url)
         data = self.fetch()
         rooms = list(venue.rooms.all())
         if not rooms:
@@ -138,6 +139,10 @@ class DigitalPourParser(BaseTapListProvider):
             'name': name,
             'location': producer['Location']
         }
+
+        if manufacturer['location'] is None:
+            manufacturer['location'] = 'Not Available'
+
         return manufacturer
 
     def parse_tap(self, tap):

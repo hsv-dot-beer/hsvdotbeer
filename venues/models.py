@@ -61,6 +61,8 @@ class VenueAPIConfiguration(models.Model):
     )
     taphunter_location = models.CharField(max_length=50, blank=True)
 
+    def __str__(self):
+        return str(self.venue) + " VenueAPIConfiguration"
 
 class Room(models.Model):
     venue = models.ForeignKey(Venue, models.CASCADE, related_name='rooms')
@@ -71,3 +73,6 @@ class Room(models.Model):
         unique_together = (
             ('venue', 'name'),
         )
+
+    def __str__(self):
+        return str(self.venue) + " - " + self.name
