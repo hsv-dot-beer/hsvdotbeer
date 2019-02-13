@@ -92,7 +92,8 @@ if __name__ == '__main__':
     locations = {
         'wholefoods': '5963904507707392',
         'lexpress': '6200813693698048',
-        'wagonwheel': '6082279375634432'
+        'wagonwheel': '6082279375634432',
+        'openbottle': '6032598809837568',
     }
 
     parser = argparse.ArgumentParser()
