@@ -2,12 +2,6 @@ import json
 
 import requests
 
-locations = {
-    'wholefoods': '5963904507707392',
-    'lexpress': '6200813693698048',
-    'wagonwheel': '6082279375634432'
-}
-
 
 class TaphunterParser:
     URL = 'https://www.taphunter.com/widgets/location/v3/'
@@ -51,8 +45,15 @@ class TaphunterParser:
             ret.append(tap_info)
         return ret
 
+
 if __name__ == '__main__':
     import argparse
+
+    locations = {
+        'wholefoods': '5963904507707392',
+        'lexpress': '6200813693698048',
+        'wagonwheel': '6082279375634432'
+    }
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--dump', action='store_true')
