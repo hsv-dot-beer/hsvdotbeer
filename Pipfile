@@ -25,6 +25,8 @@ django-countries = "*"
 "beautifulsoup4" = "*"
 lxml = "*"
 requests = "*"
+celery = "*"
+django-celery-beat = "*"
 
 [dev-packages]
 ipdb = "*"
