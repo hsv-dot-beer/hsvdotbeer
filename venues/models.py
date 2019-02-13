@@ -56,6 +56,7 @@ class VenueAPIConfiguration(models.Model):
     untappd_categories = ArrayField(
         models.CharField(max_length=50),
         default=list,
+        null=True,
     )
     taphunter_location = models.CharField(max_length=50, blank=True)
 
