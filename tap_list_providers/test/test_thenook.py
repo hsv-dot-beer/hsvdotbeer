@@ -59,13 +59,17 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Beer.objects.count(), 80)
             self.assertLess(Manufacturer.objects.count(), 80)
             self.assertEqual(Tap.objects.count(), 80)
-            tap = Tap.objects.filter(
-                room=self.room, tap_number=1,
+            taps = Tap.objects.filter(
+                room=self.room, tap_number__in=[1, 18],
             ).select_related(
                 'beer__style',
-            ).get()
+            ).order_by('tap_number')
+            tap = taps[0]
             self.assertEqual(tap.beer.name, 'Angry Orchard Crisp Apple')
             self.assertEqual(tap.beer.abv, Decimal('5.0'))
             self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, '')
             self.assertEqual(tap.beer.api_vendor_style, 'Hard Cider')
+            tap = taps[1]
+            # this one ends with an asterisk. Make sure it's stripped.
+            self.assertEqual(tap.beer.name, 'Delirium Tremens')
