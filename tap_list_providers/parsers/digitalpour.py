@@ -75,11 +75,15 @@ class DigitalPourParser(BaseTapListProvider):
             try:
                 manufacturer = manufacturers[parsed_manufacturer['name']]
             except KeyError:
-                manufacturer = Manufacturer.objects.get_or_create(
-                    name=parsed_manufacturer['name'],
-                    defaults={
+                if parsed_manufacturer['location']:
+                    defaults = {
                         'location': parsed_manufacturer['location'],
                     }
+                else:
+                    defaults = {}
+                manufacturer = Manufacturer.objects.get_or_create(
+                    name=parsed_manufacturer['name'],
+                    defaults=defaults,
                 )[0]
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer, creating if necessary
@@ -136,7 +140,7 @@ class DigitalPourParser(BaseTapListProvider):
 
         manufacturer = {
             'name': name,
-            'location': producer['Location']
+            'location': producer['Location'] or ''
         }
         return manufacturer
 
