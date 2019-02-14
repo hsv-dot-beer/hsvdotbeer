@@ -1,3 +1,4 @@
+import decimal
 import logging
 import os
 import json
