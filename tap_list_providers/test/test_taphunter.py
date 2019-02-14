@@ -65,7 +65,7 @@ class CommandsTestCase(TestCase):
             ).select_related(
                 'beer__style',
             ).get()
-            self.assertEqual(tap.beer.name, "Something Cold")
-            self.assertEqual(tap.beer.abv, Decimal('5.00'))
+            self.assertEqual(tap.beer.name, "Bound By Time")
+            self.assertEqual(tap.beer.abv, Decimal('7.00'))
             self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, '')

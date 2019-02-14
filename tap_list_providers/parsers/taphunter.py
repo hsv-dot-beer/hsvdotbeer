@@ -50,13 +50,17 @@ class TaphunterParser(BaseTapListProvider):
         room = rooms[0]
         taps = {tap.tap_number: tap for tap in room.taps.all()}
         manufacturers = {}
-        for ii, entry in enumerate(data['taps']):
+
+        use_sequential_taps = any(
+            (tap_info['serving_info']['tap_number'] == '' for tap_info in data['taps'])
+        )
+        for index, entry in enumerate(data['taps']):
             # 1. parse the tap
             tap_info = self.parse_tap(entry)
-            if 'tap_number' in tap_info:
-                tap_number = tap_info['tap_number']
+            if use_sequential_taps:
+                tap_number = index + 1
             else:
-                tap_number = ii
+                tap_number = tap_info['tap_number']
             try:
                 tap = taps[tap_number]
             except KeyError:
@@ -88,9 +92,14 @@ class TaphunterParser(BaseTapListProvider):
             parsed_beer = self.parse_beer(entry)
             name = parsed_beer.pop('name')
             # TODO (#37): map styles
-            parsed_beer.pop('style', '')
+            style = parsed_beer.pop('style', {})
+            if style:
+                parsed_beer['api_vendor_style'] = \
+                    f"{style['category']} - {style['name']}"
             # TODO (#38): handle color
-            parsed_beer.pop('color', '')
+            color_srm = parsed_beer.pop('srm', '')
+            if color_srm:
+                parsed_beer['color_srm'] = color_srm
             LOG.debug(
                 'looking up beer: name %s, mfg %s, other data %s',
                 name, manufacturer, parsed_beer,
