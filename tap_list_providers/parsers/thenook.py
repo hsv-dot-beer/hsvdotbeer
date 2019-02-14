@@ -48,7 +48,7 @@ class NookParser(BaseTapListProvider):
 
     def get_names(self):
         return list(
-            i.contents[0] for i in
+            i.contents[0].replace('*', '').strip() for i in
             self.parser.find(id=self.NAME_COLUMN_ID).find_all('p')
         )
 
