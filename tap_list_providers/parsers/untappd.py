@@ -174,19 +174,29 @@ class UntappdParser(BaseTapListProvider):
 
     def parse_tap(self, entry):
         beer_info = entry.find('p', {'class': 'beer-name'}).text
-        beer_link = entry.find('div', {'class': 'label-image-hideable beer-label pull-left'})
+        LOG.debug('parsing beer %s', beer_info)
+        tap_num = entry.find(
+            'span', {'class': 'tap-number-hideable'},
+        ).text.strip()
+        beer_link = entry.find(
+            'div', {'class': 'label-image-hideable beer-label pull-left'},
+        )
         beer_link_tag = beer_link.find('a')
         if beer_link_tag:
             url = beer_link_tag.attrs['href']
         else:
             url = None
-        tap_num = entry.find('span', {'class': 'tap-number-hideable'}).text.strip()
 
         beer_style = entry.find('span', {'class': 'beer-style'}).text
         brewery_span = entry.find('span', {'class': 'brewery'})
         brewery = brewery_span.text
         brewery_url = brewery_span.find('a').attrs['href']
-        loc = entry.find('span', {'class': 'location'}).text
+
+        location_span = entry.find('span', {'class': 'location'})
+        if location_span:
+            loc = location_span.text
+        else:
+            loc = ''
 
         beer_info = beer_info.replace(tap_num, '')
         beer_info = beer_info.replace(beer_style, '')
@@ -211,9 +221,13 @@ class UntappdParser(BaseTapListProvider):
             'tap_number': int(tap_num.replace('.', '')) if tap_num else None
         }
 
-        abv = entry.find('span', {'class': 'abv'}).text
-        abv = abv.replace('ABV', '')
-        abv = float(abv.replace('%', ''))
+        abv_span = entry.find('span', {'class': 'abv'})
+        if abv_span:
+            abv = abv_span.text
+            abv = abv.replace('ABV', '')
+            abv = float(abv.replace('%', ''))
+        else:
+            abv = None
 
         t['beer']['abv'] = abv
 
