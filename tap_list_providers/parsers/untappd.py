@@ -85,9 +85,15 @@ class UntappdParser(BaseTapListProvider):
             try:
                 manufacturer = manufacturers[tap_info['manufacturer']['name']]
             except KeyError:
-                manufacturer = Manufacturer.objects.get_or_create(
+                location = tap_info['manufacturer']['location']
+                defaults = {
+                    'untappd_url': tap_info['manufacturer']['untappd_url'],
+                }
+                if location:
+                    defaults['location'] = location
+                manufacturer = Manufacturer.objects.update_or_create(
                     name=tap_info['manufacturer']['name'],
-                    defaults={'location': tap_info['manufacturer']['location']}
+                    defaults=defaults,
                 )[0]
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer, creating if necessary
@@ -168,10 +174,18 @@ class UntappdParser(BaseTapListProvider):
 
     def parse_tap(self, entry):
         beer_info = entry.find('p', {'class': 'beer-name'}).text
+        beer_link = entry.find('div', {'class': 'label-image-hideable beer-label pull-left'})
+        beer_link_tag = beer_link.find('a')
+        if beer_link_tag:
+            url = beer_link_tag.attrs['href']
+        else:
+            url = None
         tap_num = entry.find('span', {'class': 'tap-number-hideable'}).text.strip()
 
         beer_style = entry.find('span', {'class': 'beer-style'}).text
-        brewery = entry.find('span', {'class': 'brewery'}).text
+        brewery_span = entry.find('span', {'class': 'brewery'})
+        brewery = brewery_span.text
+        brewery_url = brewery_span.find('a').attrs['href']
         loc = entry.find('span', {'class': 'location'}).text
 
         beer_info = beer_info.replace(tap_num, '')
@@ -182,12 +196,14 @@ class UntappdParser(BaseTapListProvider):
             'beer':
             {
                 'name': beer_info,
-                'style': self.parse_style(beer_style)
+                'untappd_url': url,
+                'style': self.parse_style(beer_style),
             },
             'manufacturer':
             {
                 'name': brewery,
                 'location': loc,
+                'untappd_url': brewery_url,
             },
             'pricing': self.parse_pricing(entry),
             'added': None,

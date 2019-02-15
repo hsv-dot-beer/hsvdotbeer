@@ -74,3 +74,11 @@ class CommandsTestCase(TestCase):
             self.assertEqual(tap.gas_type, '')
             self.assertEqual(
                 tap.beer.api_vendor_style, 'Red Ale - Imperial / Double')
+            self.assertEqual(
+                tap.beer.untappd_url,
+                'https://untappd.com/b/yellowhammer-brewing-tobacco-road/32727',
+            )
+            self.assertEqual(
+                tap.beer.manufacturer.untappd_url,
+                'https://untappd.com/brewery/8036',
+            )

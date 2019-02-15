@@ -78,4 +78,16 @@ class BaseTapListProvider():
             manufacturer=manufacturer,
             defaults=defaults,
         )[0]
+        needs_update = False
+        for field, value in defaults.items():
+            # instead of using update_or_create(), only update fields *if*
+            # they're set in `defaults`
+            if value not in {None, ''}:
+                saved_value = getattr(beer, field)
+                if value != saved_value:
+                    # TODO mark as unmoderated
+                    setattr(beer, field, value)
+                    needs_update = True
+        if needs_update:
+            beer.save()
         return beer
