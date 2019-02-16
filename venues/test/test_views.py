@@ -7,7 +7,9 @@ from faker import Faker
 
 from hsv_dot_beer.users.test.factories import UserFactory
 from venues.models import Venue, VenueAPIConfiguration, Room
-from .factories import VenueFactory
+from beers.test.factories import BeerFactory, BeerStyleTagFactory, BeerStyleFactory
+from taps.test.factories import TapFactory
+from .factories import VenueFactory, RoomFactory
 
 fake = Faker()
 
@@ -35,6 +37,23 @@ class TestVenueListTestCase(APITestCase):
         venue = Venue.objects.get(pk=response.data.get('id'))
         eq_(venue.name, self.venue_data.get('name'))
         eq_(venue.time_zone.zone, self.venue_data.get('time_zone'))
+
+    def test_filtering(self):
+        tags = [
+            BeerStyleTagFactory.create(), BeerStyleTagFactory.create(),
+        ]
+        style = BeerStyleFactory.create(tags=tags)
+        beer = BeerFactory(style=style)
+        venue = VenueFactory()
+        room = RoomFactory(venue=venue)
+        TapFactory(room=room, beer=beer)
+        url = f'{self.url}?rooms__taps__beer__name__istartswith={beer.name.lower()[:5]}'
+        response = self.client.get(url)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['id'], venue.id, response.data)
+        url = f'{self.url}?rooms__taps__beer__name={beer.name.lower()}aaaaa'
+        response = self.client.get(url)
+        self.assertEqual(len(response.data['results']), 0, response.data)
 
 
 class TestVenueDetailTestCase(APITestCase):
