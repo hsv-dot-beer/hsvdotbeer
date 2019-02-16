@@ -132,3 +132,33 @@ class BeerDetailTestCase(APITestCase):
         eq_(response.status_code, 200)
         eq_(response.data['name'], data['name'])
         eq_(response.data['id'], self.beer.pk)
+
+
+class BeerListTestCase(APITestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.tags = [
+            BeerStyleTagFactory.create(), BeerStyleTagFactory.create(),
+        ]
+        cls.style = BeerStyleFactory.create(tags=cls.tags)
+
+        cls.url = reverse('beer-list')
+        cls.beer = BeerFactory(style=cls.style)
+
+    def test_filter_no_match(self):
+        response = self.client.get(
+            f'{self.url}?name={self.beer.name}zzz'
+        )
+        eq_(response.status_code, 200)
+        eq_(response.data['results'], [])
+
+    def test_filter_match(self):
+        BeerFactory(name=f'aaaaaaa{self.beer.name[:10]}')
+        response = self.client.get(
+            f'{self.url}?name__istartswith={self.beer.name[:5].lower()}'
+        )
+        eq_(response.status_code, 200)
+        print('result', response.data)
+        eq_(len(response.data['results']), 1, response.data)
+        eq_(response.data['results'][0]['name'], self.beer.name, response.data)
