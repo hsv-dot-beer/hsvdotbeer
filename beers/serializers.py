@@ -3,6 +3,8 @@ from decimal import Decimal
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
+from venues.serializers import VenueSerializer
+
 from . import models
 
 
@@ -144,3 +146,16 @@ class BeerSerializer(serializers.ModelSerializer):
                 queryset=models.Beer.objects.all(),
             ),
         ]
+
+
+class BeerVenueSerializer(serializers.ModelSerializer):
+    places_currently_available = serializers.SerializerMethodField()
+    manufacturer = ManufacturerSerializer(read_only=True)
+
+    def get_places_currently_available(self, obj):
+        taps = list(obj.taps.all())
+        return VenueSerializer(instance=[i.room.venue for i in taps], many=True).data
+
+    class Meta:
+        model = models.Beer
+        fields = ['id', 'name', 'places_currently_available', 'manufacturer']

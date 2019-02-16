@@ -1,4 +1,10 @@
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from django.db.models import Prefetch
+
+from taps.models import Tap
 
 from . import serializers
 from . import models
@@ -33,3 +39,15 @@ class BeerViewSet(ModelViewSet):
         'manufacturer', 'style',
     ).order_by('manufacturer__name', 'name')
     filterset_class = filters.BeerFilterSet
+
+    @action(detail=False, methods=['GET'])
+    def places_available(self, request):
+        queryset = models.Beer.objects.select_related('manufacturer').prefetch_related(Prefetch('taps', queryset=Tap.objects.select_related('room__venue')))
+        serializer = serializers.BeerVenueSerializer(queryset, many=True)
+
+        return Response(serializer.data)
+
+
+
+
+

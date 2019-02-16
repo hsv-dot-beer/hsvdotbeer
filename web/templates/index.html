@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>HSV.beer v2.1</title>
+  <link href="https://fonts.googleapis.com/css?family=Lekton|Montserrat|Oswald:500" rel="stylesheet">
+
+  <link rel='stylesheet' href='https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css'>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+</head>
+
+<body>
+
+  <div class="header">
+
+  <div class="container-fluid container-header">
+
+    <nav class="navbar navbar-expand-md navbar">
+      <a class="navbar-brand navbar-logo" href="#">
+        <span class="particletext bubbles"><img class="brand-logo" src="{% static 'svg/hsv-beer-logo.svg' %}" alt="hsv.beer">
+      </a>
+    </nav>
+    <p class="text-intro lead text-center">Find draft beer in Huntsville</p>
+
+    <div id="search" class="search-container">
+      <div class="search-icon-container">
+        <div class="search-icon dark small">
+          <div class="mug-top"></div>
+          <div class="mug-sides"></div>
+          <div class="mug-bottom"></div>
+          <div class="mug-handle">
+            <div class="mug-handle-inner"></div>
+          </div>
+        </div>
+      </div>
+
+      <input type="text" class="form-control search" placeholder="Search beers, brewers, or styles" aria-label="Search beers, brewers, or styles">
+      <button class="btn btn-clearsearch btn-secondary" type="button"><img src="{% static 'svg/close.svg' %}" alt="close"></button>
+    </div>
+
+    <div class="taphouse-select-container">
+      <select data-placeholder="Select a taphouse" id="taphouseSelect" class="chosen-select">
+        <option>Select a taphouse</option>
+        <option>Das Stahl Bierhaus</option>
+        <option>Liquor Express</option>
+        <option>OTBX</option>
+        <option>Straight to Ale</option>
+        <option>Yellowhammer</option>
+      </select>
+    </div>
+  </div>
+
+</div>
+
+<main>
+
+  <div class="container-fluid">
+
+    <div class="results-header">
+      <h2 class="results-number"><span class="beer-total">{{ tap_count }}</span> <span class="d-none">matching</span> beers on tap</h2>
+    </div>
+    <div class="container-list" id="beer-container">
+      <ul id="beer-list">
+
+        <li v-for="beer of beers" class="beer">
+          <div class="beer-intro">
+            <div class="beer-logo srm-20"><img src=""></div>
+            <div class="beer-info">
+              <a class="beer-link" data-toggle="collapse" :href="makeHrefDetails(beer.id)" role="button" aria-expanded="false" :aria-controls="makeDetails(beer.id)">
+                <h2 class="beer-name">${ beer.name }</h2>
+              </a>
+              <div class="beer-brewer">${ beer.manufacturer.name }</div>
+              <div class="beer-style">TODO</div>
+              <div class="beer-availability">${ beer.places_currently_available.length }</div>
+            </div>
+          </div>
+          <div class="beer-details-container collapse" :id="makeDetails(beer.id)">
+            <div class="beer-details">
+              <div class="find-it">
+                <h3 class="find-it-header">Find it on tap at:</h3>
+                <ul class="find-it-list">
+                  <li v-for="place of beer.places_currently_available">
+                    <a href="#">${ place.name }</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="learn-more">
+                <h3 class="learn-more-header">Learn more</h3>
+                <a href="#" class="btn btn-outline-primary">untappd</a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+</main>
+
+<footer>
+  <div class="container-fluid">
+    <ul class="list-inline">
+      <li><a href="">About</a></li>
+      <li><a href="mailto:contact@hsv.beer">Contact</a></li>
+      <li><a href="">Buy us a beer</a></li>
+    </ul>
+  </div>
+</footer>
+
+  <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+  <script src='https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js'></script>
+  <script src='https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.proto.min.js'></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
+  <script src="{% static 'js/index.js' %}"></script>
+  <script>
+    $(function() {
+      var app = new Vue({
+        delimiters: ['${', '}'],
+        el: '#beer-container',
+        created() {
+          this.fetchData();
+        },
+        data: {
+          beers: []
+        },
+        methods: {
+          fetchData() {
+            axios.get('api/v1/beers/places_available/').then(response => {
+              this.beers = response.data;
+            });
+          },
+          makeDetails(id)
+          {
+            return "beer" + id + "Details";
+          },
+          makeHrefDetails(id)
+          {
+            return "#beer" + id + "Details";
+          },
+        }
+    });
+  });
+  </script>
+</body>
+</html>
