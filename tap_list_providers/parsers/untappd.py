@@ -217,7 +217,23 @@ class UntappdParser(BaseTapListProvider):
             menus = self.soup.find_all('div', {'class': 'menu-info'})
             for menu in menus:
                 if 'Tap List' in menu.text:
-                    updated = dateutil.parser.parse(menu.find('time').text)
+                    updated_str = menu.find('time').text
+                    if updated_str.endswith('ST') or updated_str.endswith('DT'):
+                        # it isn't in UTC. Grr.
+                        # for now, just support CONUS time zones
+                        tzinfos = {
+                            'EST': -5 * 3600,
+                            'EDT': -4 * 3600,
+                            'CST': -6 * 3600,
+                            'CDT': -5 * 3600,
+                            'MST': -7 * 3600,
+                            'MDT': -6 * 3600,
+                            'PST': -8 * 3600,
+                            'PDT': -7 * 3600,
+                        }
+                        updated = dateutil.parser.parse(updated_str, tzinfos=tzinfos)
+                    else:
+                        updated = dateutil.parser.parse(updated_str)
                     updated = updated.isoformat()
 
             for entry in entries:
