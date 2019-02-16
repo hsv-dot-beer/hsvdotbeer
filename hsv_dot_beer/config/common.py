@@ -212,3 +212,10 @@ class Common(Configuration):
 
     # Default Venue time zone
     DEFAULT_VENUE_TIME_ZONE = 'America/Chicago'
+
+    # Celery info
+    CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://redis:6379/')
+    CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+    CELERY_IMPORTS = (
+        'tap_list_providers.tasks',
+    )
