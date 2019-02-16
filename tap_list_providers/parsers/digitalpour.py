@@ -17,7 +17,6 @@ except (ImproperlyConfigured, AppRegistryNotReady):
     configurations.setup()
     from ..base import BaseTapListProvider
 
-from beers.models import Manufacturer
 from taps.models import Tap
 
 
@@ -81,10 +80,10 @@ class DigitalPourParser(BaseTapListProvider):
                     }
                 else:
                     defaults = {}
-                manufacturer = Manufacturer.objects.get_or_create(
+                manufacturer = self.get_manufacturer(
                     name=parsed_manufacturer['name'],
-                    defaults=defaults,
-                )[0]
+                    **defaults,
+                )
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer, creating if necessary
             parsed_beer = self.parse_beer(entry)

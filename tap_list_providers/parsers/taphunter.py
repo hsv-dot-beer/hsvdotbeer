@@ -16,7 +16,6 @@ except (ImproperlyConfigured, AppRegistryNotReady):
     configurations.setup()
     from ..base import BaseTapListProvider
 
-from beers.models import Manufacturer
 from taps.models import Tap
 
 
@@ -81,12 +80,10 @@ class TaphunterParser(BaseTapListProvider):
             try:
                 manufacturer = manufacturers[parsed_manufacturer['name']]
             except KeyError:
-                manufacturer = Manufacturer.objects.get_or_create(
+                manufacturer = self.get_manufacturer(
                     name=parsed_manufacturer['name'],
-                    defaults={
-                        'location': parsed_manufacturer['location'],
-                    }
-                )[0]
+                    location=parsed_manufacturer['location'],
+                )
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer, creating if necessary
             parsed_beer = self.parse_beer(entry)
