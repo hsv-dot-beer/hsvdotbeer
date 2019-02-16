@@ -2,6 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from . import serializers
 from . import models
+from . import filters
 
 
 class BeerStyleCategoryViewSet(ModelViewSet):
@@ -31,3 +32,4 @@ class BeerViewSet(ModelViewSet):
     queryset = models.Beer.objects.select_related(
         'manufacturer', 'style',
     ).order_by('manufacturer__name', 'name')
+    filterset_class = filters.BeerFilterSet
