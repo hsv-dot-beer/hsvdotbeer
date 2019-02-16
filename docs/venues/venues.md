@@ -31,3 +31,40 @@ tap_list_provider | string | No       | Who provides the venue's digital tap lis
 - `"untappd"` (Untappd)
 - `""` (Unknown)
 - `"nook_html"` (The Nook in Huntsville has its own static HTML tap list that requires scraping)
+
+## Filtering
+
+You can look up venues by the following fields:
+
+- `name` (Venue name)
+- `rooms__taps__beer__name` (Beer name)
+- `rooms__taps__beer__style__name` (what specific style, e.g. American IPA)
+- `rooms__taps__beer__style__category__name` (what style categor, e.g. IPA)
+
+You can also attach specific lookups to narrow/widen your search:
+
+- For numeric fields:
+   - (Nothing appended): exact match
+   - `__lte`: less than or equal to
+   - `__gte`: greater than or equal to
+   - `__lt`: less than
+   - `__gt`: greater than
+   - `__isnull`: boolean (give a value of `True` or `False`)
+   - `__in`: comma-separated list of values
+- For string fields:
+   - (Nothing appended): exact match
+   - `__iexact`: case-insensitive exact match
+   - `__icontains`: case-insensitive contains
+   - `__istartswith`: case-insensitive starts with
+   - `__iendswith`: case-insensitive ends with
+   - `__startswith`: case-sensitive starts with
+   - `__endswith`: case-sensitive ends with
+   - `__contains`: case-sensitive contains
+   - `__regex`: matches case-sensitive regex
+   - `__iregex`: matches case-insensitive regex
+   - `__isnull`: boolean (give a value of `True` or `False`)
+   - `__in`: comma-separated list of values
+
+
+To do the filtering, simply GET
+`/venues/?name__icontains=das+stahl&rooms__taps__beer__name__icontains=monkey`

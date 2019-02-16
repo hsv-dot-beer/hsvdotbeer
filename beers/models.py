@@ -114,6 +114,7 @@ class Manufacturer(models.Model):
     facebook_url = models.URLField(blank=True)
     twitter_handle = models.CharField(max_length=50, blank=True)
     instagram_handle = models.CharField(max_length=50, blank=True)
+    untappd_url = models.URLField(blank=True, unique=True, null=True)
 
     def __str__(self):
         return self.name
@@ -142,10 +143,7 @@ class Beer(models.Model):
         'Color (Standard Reference Method)',
         max_digits=4, decimal_places=1, blank=True, null=True,
     )
-    untappd_id = models.CharField(
-        'Untappd ID (if known)', max_length=50, null=True, blank=True,
-        unique=True,
-    )
+    untappd_url = models.URLField(blank=True, null=True, unique=True)
     beer_advocate_id = models.CharField(
         'BeerAdvocate ID (if known)', max_length=50, null=True, blank=True,
         unique=True,
@@ -163,8 +161,8 @@ class Beer(models.Model):
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
-        if not self.untappd_id:
-            self.untappd_id = None
+        if not self.untappd_url:
+            self.untappd_url = None
         if not self.beer_advocate_id:
             self.beer_advocate_id = None
         if not self.rate_beer_url:
