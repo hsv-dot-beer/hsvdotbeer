@@ -22,6 +22,9 @@ class VenueSerializer(CountryFieldMixin, serializers.ModelSerializer):
     class Meta:
         model = models.Venue
         fields = '__all__'
+        # something is not interacting well between nullable urls and DRF's
+        # validation. Marking this read-only for now.
+        read_only_fields = ['untappd_url']
 
 
 class VenueAPIConfigurationSerializer(serializers.ModelSerializer):

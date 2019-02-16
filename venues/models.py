@@ -36,6 +36,7 @@ class Venue(models.Model):
         'What service the venue uses for digital tap lists',
         blank=True, max_length=30, choices=TAP_LIST_PROVIDERS,
     )
+    untappd_url = models.URLField(blank=True, null=True, unique=True)
 
     def __str__(self):
         return self.name
