@@ -80,9 +80,13 @@ class TaphunterParser(BaseTapListProvider):
             try:
                 manufacturer = manufacturers[parsed_manufacturer['name']]
             except KeyError:
+                kwargs = {
+                    key: val for key, val in parsed_manufacturer.items()
+                    if key != 'name' and val
+                }
                 manufacturer = self.get_manufacturer(
                     name=parsed_manufacturer['name'],
-                    location=parsed_manufacturer['location'],
+                    **kwargs,
                 )
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer, creating if necessary
@@ -112,7 +116,8 @@ class TaphunterParser(BaseTapListProvider):
             'style': {
                 'name': tap['beer']['style'],
                 'category': tap['beer']['style_category'],
-            }
+            },
+            'logo_url': tap['beer'].get('logo_url') or None,
         }
 
         if tap['beer']['abv']:
@@ -129,7 +134,8 @@ class TaphunterParser(BaseTapListProvider):
     def parse_manufacturer(self, tap):
         manufacturer = {
             'name': tap['brewery']['name'],
-            'location': tap['brewery']['origin']
+            'location': tap['brewery']['origin'],
+            'logo_url': tap['brewery'].get('logo_url') or None,
         }
         return manufacturer
 
