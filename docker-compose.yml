@@ -7,6 +7,7 @@ services:
     restart: always
     environment:
       - DJANGO_SECRET_KEY=local
+      - REDIS_URL=redis://redis:6379/
     image: web
     build: ./
     command: >
@@ -28,3 +29,33 @@ services:
       - ./:/code
     ports:
       - "8001:8001"
+  redis:
+    image: "redis:alpine"
+  worker:
+    restart: always
+    image: web
+    environment:
+      - DJANGO_SECRET_KEY=local
+      - REDIS_URL=redis://redis:6379/
+    depends_on:
+      - postgres
+      - redis
+    build: ./
+    command: >
+      bash -c "pipenv run python wait_for_postgres.py &&
+               pipenv run ./manage.py migrate &&
+               pipenv run celery -A hsv_dot_beer worker"
+  beat:
+    restart: always
+    image: web
+    environment:
+      - DJANGO_SECRET_KEY=local
+      - REDIS_URL=redis://redis:6379/
+    depends_on:
+      - postgres
+      - redis
+    build: ./
+    command: >
+      bash -c "pipenv run python wait_for_postgres.py &&
+               pipenv run ./manage.py migrate &&
+               pipenv run celery -A hsv_dot_beer beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler"

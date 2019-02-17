@@ -23,6 +23,7 @@ class Common(Configuration):
         'rest_framework.authtoken',  # token authentication
         'django_filters',            # for filtering rest endpoints
         'django_countries',          # for ease of using countries
+        'django_celery_beat',        # use django admin to set up scheduled tasks
 
         # Your apps
         'hsv_dot_beer.users',
@@ -211,3 +212,10 @@ class Common(Configuration):
 
     # Default Venue time zone
     DEFAULT_VENUE_TIME_ZONE = 'America/Chicago'
+
+    # Celery info
+    CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://redis:6379/')
+    CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+    CELERY_IMPORTS = (
+        'tap_list_providers.tasks',
+    )

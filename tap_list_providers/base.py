@@ -27,6 +27,18 @@ class BaseTapListProvider():
     def handle_venue(self, venue):
         raise NotImplementedError('You need to implement this yourself')
 
+    @classmethod
+    def get_provider(cls, provider_name):
+        """Get the class of provider that handles provider_name"""
+        subclasses = {
+            i.provider_name: i for i in cls.__subclasses__()
+        }
+        print(subclasses)
+        try:
+            return subclasses[provider_name]
+        except KeyError:
+            raise ValueError(f'Unknown prover name {provider_name}')
+
     def get_venues(self):
         if not self.provider_name:
             raise ValueError(
@@ -56,6 +68,7 @@ class BaseTapListProvider():
 
     def handle_venues(self, venues):
         for venue in venues:
+            LOG.debug('Fetching beers at %s', venue)
             self.handle_venue(venue)
 
     def get_beer(self, name, manufacturer, **defaults):
