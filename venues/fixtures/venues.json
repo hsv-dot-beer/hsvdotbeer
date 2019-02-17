@@ -1,0 +1,590 @@
+[
+{
+    "model": "venues.venue",
+    "pk": 1,
+    "fields": {
+        "name": "Straight to Ale",
+        "address": "2610 Clinton Avenue",
+        "city": "Huntsville",
+        "state": "Alabama",
+        "postal_code": "35805",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "https://straighttoale.com/",
+        "facebook_page": "https://www.facebook.com/straighttoale/",
+        "twitter_handle": "StraightToAle",
+        "instagram_handle": "straighttoale",
+        "tap_list_provider": "digitalpour"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 2,
+    "fields": {
+        "name": "Wish You Were Beer Madison",
+        "address": "7407 Highway 72 W",
+        "city": "Madison",
+        "state": "Alabama",
+        "postal_code": "35758",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "http://www.wishyouwerebeer.net/",
+        "facebook_page": "https://www.facebook.com/wishyouwerebeerllc/",
+        "twitter_handle": "",
+        "instagram_handle": "",
+        "tap_list_provider": "digitalpour"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 3,
+    "fields": {
+        "name": "Wish You Were Beer Campus 805",
+        "address": "2500 Clinton Ave W",
+        "city": "Huntsville",
+        "state": "Alabama",
+        "postal_code": "35805",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "http://www.wishyouwerebeer.net/",
+        "facebook_page": "https://www.facebook.com/wywbcampus805/",
+        "twitter_handle": "",
+        "instagram_handle": "",
+        "tap_list_provider": "digitalpour"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 4,
+    "fields": {
+        "name": "Old Town Beer Exchange",
+        "address": "301 Holmes Avenue",
+        "city": "Huntsville",
+        "state": "Alabama",
+        "postal_code": "35801",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "http://otbxhsv.com",
+        "facebook_page": "https://www.facebook.com/OTBXHSV",
+        "twitter_handle": "OTBXHSV",
+        "instagram_handle": "otbxhsv",
+        "tap_list_provider": "digitalpour"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 5,
+    "fields": {
+        "name": "Rocket City Craft Beer",
+        "address": "1079 Balch Road, Suite F",
+        "city": "Madison",
+        "state": "Alabama",
+        "postal_code": "35758",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "https://www.rocketcitycraftbeer.com/",
+        "facebook_page": "http://www.facebook.com/rocketcitycraftbeer",
+        "twitter_handle": "rccbh",
+        "instagram_handle": "rocketcitycraftbeer",
+        "tap_list_provider": "digitalpour"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 6,
+    "fields": {
+        "name": "Whole Foods",
+        "address": "",
+        "city": "",
+        "state": "",
+        "postal_code": "",
+        "country": "",
+        "time_zone": "America/Chicago",
+        "website": "",
+        "facebook_page": "",
+        "twitter_handle": "",
+        "instagram_handle": "",
+        "tap_list_provider": "taphunter"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 7,
+    "fields": {
+        "name": "Liquor Express",
+        "address": "1812 University Dr NW",
+        "city": "Huntsville",
+        "state": "Alabama",
+        "postal_code": "35801",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "http://liquorexpress.net/",
+        "facebook_page": "https://www.facebook.com/liquorexpresshsv/",
+        "twitter_handle": "LiquorExpressAL",
+        "instagram_handle": "liquorexpress",
+        "tap_list_provider": "taphunter"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 8,
+    "fields": {
+        "name": "Wagon Wheel",
+        "address": "6846 Hwy 431 S.",
+        "city": "Owens Cross Roads",
+        "state": "Alabama",
+        "postal_code": "35763",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "http://www.wagonwheelliquorsal.com/",
+        "facebook_page": "https://www.facebook.com/Wagon-Wheel-Liquors-325048740219/",
+        "twitter_handle": "",
+        "instagram_handle": "wagonwheelliquors",
+        "tap_list_provider": "taphunter"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 9,
+    "fields": {
+        "name": "The Open Bottle",
+        "address": "7061 Highway 72 West",
+        "city": "Huntsville",
+        "state": "Alabama",
+        "postal_code": "35806",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "",
+        "facebook_page": "https://www.facebook.com/TheOpenBottleMadison/",
+        "twitter_handle": "",
+        "instagram_handle": "",
+        "tap_list_provider": "taphunter"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 10,
+    "fields": {
+        "name": "The Nook",
+        "address": "3305 Bob Wallace Ave SW",
+        "city": "Huntsville",
+        "state": "Alabama",
+        "postal_code": "35805",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "http://www.thenooktavern.com",
+        "facebook_page": "",
+        "twitter_handle": "",
+        "instagram_handle": "",
+        "tap_list_provider": "nook_html"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 11,
+    "fields": {
+        "name": "Das Stahl Bierhaus",
+        "address": "7914 Memorial Parkway SW",
+        "city": "Huntsville",
+        "state": "Alabama",
+        "postal_code": "35802",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "http://www.dsb-hsv.com/",
+        "facebook_page": "https://www.facebook.com/DSBHSV/",
+        "twitter_handle": "",
+        "instagram_handle": "",
+        "tap_list_provider": "untappd"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 12,
+    "fields": {
+        "name": "The Casual Pint - Providence",
+        "address": "2 Off Broadway St NW, Ste 100",
+        "city": "Huntsville",
+        "state": "Alabama",
+        "postal_code": "35806",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "https://huntsville.thecasualpint.com/",
+        "facebook_page": "https://www.facebook.com/casualpinthsv",
+        "twitter_handle": "casualpinthsv",
+        "instagram_handle": "casualpinthsv",
+        "tap_list_provider": "untappd"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 13,
+    "fields": {
+        "name": "Yellowhammer Brewery",
+        "address": "2600 Clinton Ave West",
+        "city": "Huntsville",
+        "state": "Alabama",
+        "postal_code": "35805",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "https://www.yellowhammerbrewery.com/",
+        "facebook_page": "https://www.facebook.com/yellowhammerbrewing/",
+        "twitter_handle": "yellowhammerale",
+        "instagram_handle": "yellowhammer_brewing",
+        "tap_list_provider": "untappd"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 14,
+    "fields": {
+        "name": "Mad Malts Brewery",
+        "address": "109 Maple Ave NW",
+        "city": "Huntsville",
+        "state": "Alabama",
+        "postal_code": "35801",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "http://madmaltsbrewing.com/",
+        "facebook_page": "https://www.facebook.com/MadMaltsBrewing1/",
+        "twitter_handle": "",
+        "instagram_handle": "",
+        "tap_list_provider": "untappd"
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 1,
+    "fields": {
+        "venue": 1,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 2,
+    "fields": {
+        "venue": 2,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 3,
+    "fields": {
+        "venue": 3,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 4,
+    "fields": {
+        "venue": 4,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 5,
+    "fields": {
+        "venue": 5,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 6,
+    "fields": {
+        "venue": 6,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 7,
+    "fields": {
+        "venue": 7,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 8,
+    "fields": {
+        "venue": 8,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 9,
+    "fields": {
+        "venue": 9,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 10,
+    "fields": {
+        "venue": 10,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 11,
+    "fields": {
+        "venue": 11,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 12,
+    "fields": {
+        "venue": 12,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 13,
+    "fields": {
+        "venue": 13,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.room",
+    "pk": 14,
+    "fields": {
+        "venue": 14,
+        "name": "Main",
+        "description": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 1,
+    "fields": {
+        "venue": 1,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "5761f0a45e002c13703ed811",
+        "digital_pour_location_number": 1,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 2,
+    "fields": {
+        "venue": 2,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "57b130dd5e002c0388f8b686",
+        "digital_pour_location_number": 1,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 3,
+    "fields": {
+        "venue": 3,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "57b130dd5e002c0388f8b686",
+        "digital_pour_location_number": 2,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 4,
+    "fields": {
+        "venue": 4,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "5502506cb3b70304a8f2e0d2",
+        "digital_pour_location_number": 1,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 5,
+    "fields": {
+        "venue": 5,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "5aa1a8135e002c0924805971",
+        "digital_pour_location_number": 1,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 6,
+    "fields": {
+        "venue": 6,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": "5963904507707392"
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 7,
+    "fields": {
+        "venue": 7,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": "6200813693698048"
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 8,
+    "fields": {
+        "venue": 8,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": "6082279375634432"
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 9,
+    "fields": {
+        "venue": 9,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": "6032598809837568"
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 10,
+    "fields": {
+        "venue": 10,
+        "url": "http://www.thenooktavern.com/TheNook/Beers.html",
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 11,
+    "fields": {
+        "venue": 11,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": 3884,
+        "untappd_theme": 11913,
+        "untappd_categories": "[\"Tap List\"]",
+        "taphunter_location": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 12,
+    "fields": {
+        "venue": 12,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": 18351,
+        "untappd_theme": 69229,
+        "untappd_categories": "[\"On Tap\"]",
+        "taphunter_location": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 13,
+    "fields": {
+        "venue": 13,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": 5949,
+        "untappd_theme": 20074,
+        "untappd_categories": "[\"YEAR-ROUND\", \"SEASONALS\", \"Beer\"]",
+        "taphunter_location": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 14,
+    "fields": {
+        "venue": 14,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": 8588,
+        "untappd_theme": 30573,
+        "untappd_categories": "[\"Favorites\", \"Seasonals\", \"Exclusives\"]",
+        "taphunter_location": ""
+    }
+}
+]
