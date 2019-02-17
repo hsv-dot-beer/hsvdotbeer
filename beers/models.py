@@ -115,6 +115,7 @@ class Manufacturer(models.Model):
     twitter_handle = models.CharField(max_length=50, blank=True)
     instagram_handle = models.CharField(max_length=50, blank=True)
     untappd_url = models.URLField(blank=True, unique=True, null=True)
+    automatic_updates_blocked = models.NullBooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -158,6 +159,7 @@ class Beer(models.Model):
         blank=True,
     )
     manufacturer_url = models.URLField(blank=True, null=True, unique=True)
+    automatic_updates_blocked = models.NullBooleanField(default=False)
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
@@ -183,3 +185,14 @@ class Beer(models.Model):
         unique_together = [
             ('name', 'manufacturer'),
         ]
+
+
+class BeerAlternateName(models.Model):
+    beer = models.ForeignKey(Beer, models.CASCADE, related_name='alternate_names')
+    name = models.CharField(max_length=100, unique=True)
+
+
+class ManufacturerAlternateName(models.Model):
+    manufacturer = models.ForeignKey(
+        Manufacturer, models.CASCADE, related_name='alternate_names')
+    name = models.CharField(max_length=100, unique=True)
