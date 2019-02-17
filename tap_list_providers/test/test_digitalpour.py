@@ -80,3 +80,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(tap.gas_type, 'nitro')
             self.assertEqual(tap.beer.render_srm(), '#241206')
             self.assertEqual(tap.beer.api_vendor_style, 'Milk Stout')
+            self.assertEqual(
+                tap.beer.manufacturer.logo_url,
+                'https://s3.amazonaws.com/digitalpourproducerlogos/4f7de8502595f5153887e925.png',
+            )

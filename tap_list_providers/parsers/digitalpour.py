@@ -74,12 +74,11 @@ class DigitalPourParser(BaseTapListProvider):
             try:
                 manufacturer = manufacturers[parsed_manufacturer['name']]
             except KeyError:
+                defaults = {}
                 if parsed_manufacturer['location']:
-                    defaults = {
-                        'location': parsed_manufacturer['location'],
-                    }
-                else:
-                    defaults = {}
+                    defaults['location'] = parsed_manufacturer['location']
+                if parsed_manufacturer['logo_url']:
+                    defaults['logo_url'] = parsed_manufacturer['logo_url']
                 manufacturer = self.get_manufacturer(
                     name=parsed_manufacturer['name'],
                     **defaults,
@@ -139,7 +138,8 @@ class DigitalPourParser(BaseTapListProvider):
 
         manufacturer = {
             'name': name,
-            'location': producer['Location'] or ''
+            'location': producer['Location'] or '',
+            'logo_url': producer.get('LogoImageUrl'),
         }
         return manufacturer
 
