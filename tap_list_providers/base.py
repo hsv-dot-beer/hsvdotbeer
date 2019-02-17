@@ -33,7 +33,6 @@ class BaseTapListProvider():
         subclasses = {
             i.provider_name: i for i in cls.__subclasses__()
         }
-        print(subclasses)
         try:
             return subclasses[provider_name]
         except KeyError:
@@ -111,32 +110,41 @@ class BaseTapListProvider():
                 abv = Decimal(abv)
             defaults['abv'] = abv
         if not beer:
-            beer = Beer.objects.get_or_create(
-                name=name,
-                manufacturer=manufacturer,
-                defaults=defaults,
-            )[0]
+            try:
+                beer = Beer.objects.get(
+                    Q(name=name) | Q(alternate_names__name=name),
+                    manufacturer=manufacturer,
+                    **defaults,
+                )
+            except Beer.DoesNotExist:
+                beer = Beer.objects.create(
+                    name=name,
+                    manufacturer=manufacturer,
+                    **defaults,
+                )
         needs_update = False
-        for field, value in defaults.items():
-            # instead of using update_or_create(), only update fields *if*
-            # they're set in `defaults`
-            if value:
-                if field.endswith('_url'):
-                    if Beer.objects.exclude(id=beer.id).filter(
-                        **{field: value}
-                    ).exists():
-                        LOG.warning(
-                            'skipping updating %s (%s) for %s (PK %s) because it would'
-                            ' conflict', field, value, beer.name, beer.id,
-                        )
-                        continue
-                saved_value = getattr(beer, field)
-                if value != saved_value:
-                    # TODO mark as unmoderated
-                    setattr(beer, field, value)
-                    needs_update = True
-        if needs_update:
-            beer.save()
+        if not beer.automatic_updates_blocked:
+            for field, value in defaults.items():
+                # instead of using update_or_create(), only update fields *if*
+                # they're set in `defaults`
+                if value:
+                    if field.endswith('_url'):
+                        if Beer.objects.exclude(id=beer.id).filter(
+                            **{field: value}
+                        ).exists():
+                            LOG.warning(
+                                'skipping updating %s (%s) for %s (PK %s)'
+                                ' because it would conflict',
+                                field, value, beer.name, beer.id,
+                            )
+                            continue
+                    saved_value = getattr(beer, field)
+                    if value != saved_value:
+                        # TODO mark as unmoderated
+                        setattr(beer, field, value)
+                        needs_update = True
+            if needs_update:
+                beer.save()
         return beer
 
     def get_manufacturer(self, name, untappd_url=None, **defaults):
@@ -144,10 +152,9 @@ class BaseTapListProvider():
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:
             raise ValueError(f'Unknown fields f{",".join(sorted(defaults))}')
-        kwargs = {
-            'defaults': defaults,
-        }
+        kwargs = defaults.copy()
         manufacturer = None
+        filter_expr = Q()
         if untappd_url:
             options = list(Manufacturer.objects.filter(
                 Q(untappd_url=untappd_url) | Q(name=name)
@@ -159,26 +166,32 @@ class BaseTapListProvider():
             elif options:
                 manufacturer = options[0]
             # prefer untappd url over name
-            kwargs['defaults']['name'] = name
             kwargs['untappd_url'] = untappd_url
         else:
-            kwargs['name'] = name
+            filter_expr = Q(name=name) | Q(alternate_names__name=name)
         if not manufacturer:
-            # TODO: #30 mark moderation needed if updated
-            LOG.debug('looking up manufacturer with args %s', kwargs)
-            manufacturer = Manufacturer.objects.get_or_create(**kwargs)[0]
+            LOG.debug(
+                'looking up manufacturer with filter %s, args %s',
+                filter_expr, kwargs,
+            )
+            try:
+                manufacturer = Manufacturer.objects.get(filter_expr)
+            except Manufacturer.DoesNotExist:
+                manufacturer = Manufacturer.objects.create(
+                    name=name, **kwargs)
 
         needs_update = False
         LOG.debug('Found manufacturer %s', manufacturer)
-        for field, value in defaults.items():
-            if field == 'name':
-                # don't touch name
-                continue
-            saved_value = getattr(manufacturer, field)
-            if saved_value != value:
-                setattr(manufacturer, field, value)
-                needs_update = True
-        if needs_update:
-            LOG.debug('updating %s', manufacturer.name)
-            manufacturer.save()
+        if not manufacturer.automatic_updates_blocked:
+            for field, value in defaults.items():
+                if field == 'name':
+                    # don't touch name
+                    continue
+                saved_value = getattr(manufacturer, field)
+                if saved_value != value:
+                    setattr(manufacturer, field, value)
+                    needs_update = True
+            if needs_update:
+                LOG.debug('updating %s', manufacturer.name)
+                manufacturer.save()
         return manufacturer
