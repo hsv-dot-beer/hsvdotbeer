@@ -61,7 +61,7 @@ class CommandsTestCase(TestCase):
             opts = {}
             call_command('parsedigitalpour', *args, **opts)
 
-            self.assertEqual(Beer.objects.count(), 4)
+            self.assertEqual(Beer.objects.count(), 4, list(Beer.objects.all()))
             self.assertEqual(Manufacturer.objects.count(), 4)
             self.assertEqual(Tap.objects.count(), 4)
             taps = Tap.objects.filter(
@@ -71,6 +71,14 @@ class CommandsTestCase(TestCase):
             ).order_by('tap_number')
             tap = taps[0]
             self.assertEqual(tap.beer.name, 'Hopslam')
+            self.assertEqual(
+                tap.beer.manufacturer_url,
+                'https://www.bellsbeer.com/beer/specialty/hopslam-ale',
+            )
+            self.assertEqual(
+                tap.beer.beer_advocate_url,
+                "https://www.beeradvocate.com/beer/profile/287/17112/",
+            )
             # location nulled out in test data
             self.assertEqual(tap.beer.manufacturer.location, '')
             tap = taps[1]
