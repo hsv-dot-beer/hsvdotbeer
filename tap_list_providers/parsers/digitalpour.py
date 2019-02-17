@@ -17,7 +17,6 @@ except (ImproperlyConfigured, AppRegistryNotReady):
     configurations.setup()
     from ..base import BaseTapListProvider
 
-from beers.models import Manufacturer
 from taps.models import Tap
 
 
@@ -75,16 +74,15 @@ class DigitalPourParser(BaseTapListProvider):
             try:
                 manufacturer = manufacturers[parsed_manufacturer['name']]
             except KeyError:
+                defaults = {}
                 if parsed_manufacturer['location']:
-                    defaults = {
-                        'location': parsed_manufacturer['location'],
-                    }
-                else:
-                    defaults = {}
-                manufacturer = Manufacturer.objects.get_or_create(
+                    defaults['location'] = parsed_manufacturer['location']
+                if parsed_manufacturer['logo_url']:
+                    defaults['logo_url'] = parsed_manufacturer['logo_url']
+                manufacturer = self.get_manufacturer(
                     name=parsed_manufacturer['name'],
-                    defaults=defaults,
-                )[0]
+                    **defaults,
+                )
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer, creating if necessary
             parsed_beer = self.parse_beer(entry)
@@ -140,7 +138,8 @@ class DigitalPourParser(BaseTapListProvider):
 
         manufacturer = {
             'name': name,
-            'location': producer['Location'] or ''
+            'location': producer['Location'] or '',
+            'logo_url': producer.get('LogoImageUrl'),
         }
         return manufacturer
 

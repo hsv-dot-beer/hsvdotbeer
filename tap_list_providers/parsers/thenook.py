@@ -107,9 +107,7 @@ class NookParser(BaseTapListProvider):
             try:
                 manufacturer = manufacturers[mfg]
             except KeyError:
-                manufacturer = Manufacturer.objects.get_or_create(
-                    name=mfg,
-                )[0]
+                manufacturer = self.get_manufacturer(name=mfg)
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer
             beer = self.get_beer(

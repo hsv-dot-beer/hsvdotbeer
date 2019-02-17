@@ -17,7 +17,6 @@ except (ImproperlyConfigured, AppRegistryNotReady):
     configurations.setup()
     from ..base import BaseTapListProvider
 
-from beers.models import Manufacturer
 from taps.models import Tap
 
 LOG = logging.getLogger(__name__)
@@ -91,10 +90,9 @@ class UntappdParser(BaseTapListProvider):
                 }
                 if location:
                     defaults['location'] = location
-                manufacturer = Manufacturer.objects.update_or_create(
-                    name=tap_info['manufacturer']['name'],
-                    defaults=defaults,
-                )[0]
+                manufacturer = self.get_manufacturer(
+                    tap_info['manufacturer']['name'], **defaults,
+                )
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer, creating if necessary
             beer_name = tap_info['beer'].pop('name')
