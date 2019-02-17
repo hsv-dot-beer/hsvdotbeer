@@ -7,6 +7,7 @@ from rest_framework import status
 from faker import Faker
 
 from hsv_dot_beer.users.test.factories import UserFactory
+from taps.test.factories import TapFactory
 from beers.models import BeerStyle
 from beers.serializers import ManufacturerSerializer
 from .factories import BeerStyleFactory, BeerStyleTagFactory, \
@@ -133,6 +134,23 @@ class BeerDetailTestCase(APITestCase):
         eq_(response.data['name'], data['name'])
         eq_(response.data['id'], self.beer.pk)
 
+    def test_venues_at(self):
+        # two where it's attached and one where it isn't
+        taps = [
+            TapFactory(beer=self.beer), TapFactory(beer=self.beer),
+            TapFactory(),
+        ]
+        url = f'{self.url}placesavailable/'
+        response = self.client.get(url)
+        eq_(response.status_code, 200)
+        eq_(len(response.data['results']), 2, response.data)
+        venues = [i.room.venue for i in taps if i.beer == self.beer]
+        eq_(
+            {i.name for i in venues},
+            {i['name'] for i in response.data['results']},
+            response.data,
+        )
+
 
 class BeerListTestCase(APITestCase):
 
@@ -155,10 +173,16 @@ class BeerListTestCase(APITestCase):
 
     def test_filter_match(self):
         BeerFactory(name=f'aaaaaaa{self.beer.name[:10]}')
+        tap = TapFactory(beer=self.beer)
         response = self.client.get(
             f'{self.url}?name__istartswith={self.beer.name[:5].lower()}'
         )
         eq_(response.status_code, 200)
-        print('result', response.data)
         eq_(len(response.data['results']), 1, response.data)
         eq_(response.data['results'][0]['name'], self.beer.name, response.data)
+        eq_(
+            response.data['results'][0]['venues'][0]['id'],
+            tap.room.venue.id,
+            response.data,
+        )
+        eq_(len(response.data['results'][0]['venues']), 1, response.data)

@@ -16,10 +16,6 @@ DEFAULT_STRING_FILTER_OPERATORS = [
 
 class BeerFilterSet(FilterSet):
 
-    def __init__(self, *args, **kwargs):
-        print('init!', args, kwargs)
-        super().__init__(*args, **kwargs)
-
     o = OrderingFilter(
         fields=[
             'name', 'abv', 'ibu', 'style__name', 'style__category__name',
