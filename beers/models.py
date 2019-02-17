@@ -144,9 +144,8 @@ class Beer(models.Model):
         max_digits=4, decimal_places=1, blank=True, null=True,
     )
     untappd_url = models.URLField(blank=True, null=True, unique=True)
-    beer_advocate_id = models.CharField(
-        'BeerAdvocate ID (if known)', max_length=50, null=True, blank=True,
-        unique=True,
+    beer_advocate_url = models.URLField(
+        'BeerAdvocate URL (if known)', null=True, blank=True, unique=True,
     )
     rate_beer_url = models.URLField(blank=True, null=True, unique=True)
     logo_url = models.URLField(blank=True, null=True)
@@ -158,15 +157,18 @@ class Beer(models.Model):
         'API vendor-provided style (hidden from API)', max_length=100,
         blank=True,
     )
+    manufacturer_url = models.URLField(blank=True, null=True, unique=True)
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
         if not self.untappd_url:
             self.untappd_url = None
-        if not self.beer_advocate_id:
-            self.beer_advocate_id = None
+        if not self.beer_advocate_url:
+            self.beer_advocate_url = None
         if not self.rate_beer_url:
             self.rate_beer_url = None
+        if not self.manufacturer_url:
+            self.manufacturer_url = None
         return super().save(*args, **kwargs)
 
     def __str__(self):
