@@ -1,7 +1,9 @@
+from django.db.models import Prefetch
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from taps.models import Tap
 from venues.serializers import VenueSerializer
 from venues.models import Venue
 from venues.filters import VenueFilterSet
@@ -37,6 +39,13 @@ class BeerViewSet(ModelViewSet):
     serializer_class = serializers.BeerSerializer
     queryset = models.Beer.objects.select_related(
         'manufacturer', 'style',
+    ).prefetch_related(
+        Prefetch(
+            'taps',
+            queryset=Tap.objects.select_related(
+                'room__venue',
+            ),
+        ),
     ).order_by('manufacturer__name', 'name')
     filterset_class = filters.BeerFilterSet
 

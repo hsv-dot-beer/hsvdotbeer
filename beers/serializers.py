@@ -119,9 +119,21 @@ class BeerSerializer(serializers.ModelSerializer):
         write_only=True, required=False, allow_null=True,
         queryset=models.BeerStyle.objects.all()
     )
+    venues = serializers.SerializerMethodField()
 
     def get_color_srm_html(self, obj):
         return obj.render_srm()
+
+    def get_venues(self, obj):
+        from venues.serializers import VenueSerializer
+        taps = list(obj.taps.all())
+        if not taps:
+            return []
+        venues = {i.room.venue for i in taps}
+        return VenueSerializer(
+            instance=list(sorted(venues, key=lambda v: v.name)),
+            many=True,
+        ).data
 
     def validate(self, data):
         try:

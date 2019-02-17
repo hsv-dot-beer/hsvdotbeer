@@ -173,10 +173,16 @@ class BeerListTestCase(APITestCase):
 
     def test_filter_match(self):
         BeerFactory(name=f'aaaaaaa{self.beer.name[:10]}')
+        tap = TapFactory(beer=self.beer)
         response = self.client.get(
             f'{self.url}?name__istartswith={self.beer.name[:5].lower()}'
         )
         eq_(response.status_code, 200)
-        print('result', response.data)
         eq_(len(response.data['results']), 1, response.data)
         eq_(response.data['results'][0]['name'], self.beer.name, response.data)
+        eq_(
+            response.data['results'][0]['venues'][0]['id'],
+            tap.room.venue.id,
+            response.data,
+        )
+        eq_(len(response.data['results'][0]['venues']), 1, response.data)
