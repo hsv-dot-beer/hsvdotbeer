@@ -11,7 +11,7 @@ import logging
 from django.db.models import Prefetch, Q
 
 from venues.models import Venue, Room
-from beers.models import Beer
+from beers.models import Beer, Manufacturer
 from taps.models import Tap
 
 LOG = logging.getLogger(__name__)
@@ -26,6 +26,18 @@ class BaseTapListProvider():
 
     def handle_venue(self, venue):
         raise NotImplementedError('You need to implement this yourself')
+
+    @classmethod
+    def get_provider(cls, provider_name):
+        """Get the class of provider that handles provider_name"""
+        subclasses = {
+            i.provider_name: i for i in cls.__subclasses__()
+        }
+        print(subclasses)
+        try:
+            return subclasses[provider_name]
+        except KeyError:
+            raise ValueError(f'Unknown prover name {provider_name}')
 
     def get_venues(self):
         if not self.provider_name:
@@ -56,6 +68,7 @@ class BaseTapListProvider():
 
     def handle_venues(self, venues):
         for venue in venues:
+            LOG.debug('Fetching beers at %s', venue)
             self.handle_venue(venue)
 
     def get_beer(self, name, manufacturer, **defaults):
@@ -133,3 +146,47 @@ class BaseTapListProvider():
         if needs_update:
             beer.save()
         return beer
+
+    def get_manufacturer(self, name, untappd_url=None, **defaults):
+        field_names = {i.name for i in Manufacturer._meta.fields}
+        bogus_defaults = set(defaults).difference(field_names)
+        if bogus_defaults:
+            raise ValueError(f'Unknown fields f{",".join(sorted(defaults))}')
+        kwargs = {
+            'defaults': defaults,
+        }
+        manufacturer = None
+        if untappd_url:
+            options = list(Manufacturer.objects.filter(
+                Q(untappd_url=untappd_url) | Q(name=name)
+            ))
+            if len(options) > 1:
+                LOG.info('Found multiple options for %s (URL %s)', name, untappd_url)
+                # pick the one where the name matches
+                manufacturer = [i for i in options if i.untappd_url][0]
+            elif options:
+                manufacturer = options[0]
+            # prefer untappd url over name
+            kwargs['defaults']['name'] = name
+            kwargs['untappd_url'] = untappd_url
+        else:
+            kwargs['name'] = name
+        if not manufacturer:
+            # TODO: #30 mark moderation needed if updated
+            LOG.debug('looking up manufacturer with args %s', kwargs)
+            manufacturer = Manufacturer.objects.get_or_create(**kwargs)[0]
+
+        needs_update = False
+        LOG.debug('Found manufacturer %s', manufacturer)
+        for field, value in defaults.items():
+            if field == 'name':
+                # don't touch name
+                continue
+            saved_value = getattr(manufacturer, field)
+            if saved_value != value:
+                setattr(manufacturer, field, value)
+                needs_update = True
+        if needs_update:
+            LOG.debug('updating %s', manufacturer.name)
+            manufacturer.save()
+        return manufacturer

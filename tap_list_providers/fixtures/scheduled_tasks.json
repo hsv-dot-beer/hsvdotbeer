@@ -1,0 +1,202 @@
+[
+{
+  "model": "django_celery_beat.periodictasks",
+  "pk": 1,
+  "fields": {
+    "last_update": "2019-02-16T21:57:54.902Z"
+  }
+},
+{
+  "model": "django_celery_beat.periodictask",
+  "pk": 1,
+  "fields": {
+    "name": "celery.backend_cleanup",
+    "task": "celery.backend_cleanup",
+    "interval": null,
+    "crontab": 1,
+    "solar": null,
+    "args": "[]",
+    "kwargs": "{}",
+    "queue": null,
+    "exchange": null,
+    "routing_key": null,
+    "priority": null,
+    "expires": null,
+    "one_off": false,
+    "start_time": null,
+    "enabled": true,
+    "last_run_at": null,
+    "total_run_count": 0,
+    "date_changed": "2019-02-16T21:57:54.905Z",
+    "description": ""
+  }
+},
+{
+  "model": "django_celery_beat.periodictask",
+  "pk": 2,
+  "fields": {
+    "name": "Parse untappd",
+    "task": "tap_list_providers.tasks.parse_provider",
+    "interval": null,
+    "crontab": 2,
+    "solar": null,
+    "args": "[\"untappd\"]",
+    "kwargs": "{}",
+    "queue": null,
+    "exchange": null,
+    "routing_key": null,
+    "priority": null,
+    "expires": null,
+    "one_off": false,
+    "start_time": "2019-02-16T21:39:37Z",
+    "enabled": true,
+    "last_run_at": "2019-02-16T22:00:00.003Z",
+    "total_run_count": 1,
+    "date_changed": "2019-02-16T22:00:18.105Z",
+    "description": "Parse beers from untappd"
+  }
+},
+{
+  "model": "django_celery_beat.periodictask",
+  "pk": 3,
+  "fields": {
+    "name": "Parse digitalpour",
+    "task": "tap_list_providers.tasks.parse_provider",
+    "interval": null,
+    "crontab": 3,
+    "solar": null,
+    "args": "[\"digitalpour\"]",
+    "kwargs": "{}",
+    "queue": null,
+    "exchange": null,
+    "routing_key": null,
+    "priority": null,
+    "expires": null,
+    "one_off": false,
+    "start_time": "2019-02-16T21:40:29Z",
+    "enabled": true,
+    "last_run_at": null,
+    "total_run_count": 0,
+    "date_changed": "2019-02-16T21:40:37.138Z",
+    "description": ""
+  }
+},
+{
+  "model": "django_celery_beat.periodictask",
+  "pk": 4,
+  "fields": {
+    "name": "Parse taphunter",
+    "task": "tap_list_providers.tasks.parse_provider",
+    "interval": null,
+    "crontab": 4,
+    "solar": null,
+    "args": "[\"taphunter\"]",
+    "kwargs": "{}",
+    "queue": null,
+    "exchange": null,
+    "routing_key": null,
+    "priority": null,
+    "expires": null,
+    "one_off": false,
+    "start_time": "2019-02-16T21:40:59Z",
+    "enabled": true,
+    "last_run_at": "2019-02-16T21:45:00.000Z",
+    "total_run_count": 1,
+    "date_changed": "2019-02-16T21:46:50.116Z",
+    "description": ""
+  }
+},
+{
+  "model": "django_celery_beat.periodictask",
+  "pk": 5,
+  "fields": {
+    "name": "Parse The Nook",
+    "task": "tap_list_providers.tasks.parse_provider",
+    "interval": null,
+    "crontab": 5,
+    "solar": null,
+    "args": "[\"nook_html\"]",
+    "kwargs": "{}",
+    "queue": null,
+    "exchange": null,
+    "routing_key": null,
+    "priority": null,
+    "expires": null,
+    "one_off": false,
+    "start_time": "2019-02-16T21:41:30Z",
+    "enabled": true,
+    "last_run_at": null,
+    "total_run_count": 0,
+    "date_changed": "2019-02-16T21:41:38.449Z",
+    "description": ""
+  }
+},
+{
+  "model": "django_celery_beat.intervalschedule",
+  "pk": 1,
+  "fields": {
+    "every": 1,
+    "period": "hours"
+  }
+},
+{
+  "model": "django_celery_beat.crontabschedule",
+  "pk": 1,
+  "fields": {
+    "minute": "0",
+    "hour": "4",
+    "day_of_week": "*",
+    "day_of_month": "*",
+    "month_of_year": "*",
+    "timezone": "UTC"
+  }
+},
+{
+  "model": "django_celery_beat.crontabschedule",
+  "pk": 2,
+  "fields": {
+    "minute": "0",
+    "hour": "*",
+    "day_of_week": "*",
+    "day_of_month": "*",
+    "month_of_year": "*",
+    "timezone": "UTC"
+  }
+},
+{
+  "model": "django_celery_beat.crontabschedule",
+  "pk": 3,
+  "fields": {
+    "minute": "15",
+    "hour": "*",
+    "day_of_week": "*",
+    "day_of_month": "*",
+    "month_of_year": "*",
+    "timezone": "UTC"
+  }
+},
+{
+  "model": "django_celery_beat.crontabschedule",
+  "pk": 4,
+  "fields": {
+    "minute": "45",
+    "hour": "*",
+    "day_of_week": "*",
+    "day_of_month": "*",
+    "month_of_year": "*",
+    "timezone": "UTC"
+  }
+},
+{
+  "model": "django_celery_beat.crontabschedule",
+  "pk": 5,
+  "fields": {
+    "minute": "30",
+    "hour": "*",
+    "day_of_week": "*",
+    "day_of_month": "*",
+    "month_of_year": "*",
+    "timezone": "UTC"
+  }
+}
+]

@@ -60,11 +60,24 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Beer.objects.count(), 93)
             self.assertEqual(Manufacturer.objects.count(), 52)
             self.assertEqual(Tap.objects.count(), 93)
-            tap = Tap.objects.filter(
-                room=self.room, tap_number=22,
+            taps = Tap.objects.filter(
+                room=self.room, tap_number__in=[6, 22],
             ).select_related(
                 'beer__style',
-            ).get()
+            ).order_by('tap_number')
+            tap = taps[0]
+            self.assertEqual(tap.beer.name, 'Crisp Apple Cider', tap.beer)
+            self.assertEqual(
+                tap.beer.logo_url,
+                "https://lh3.googleusercontent.com/Pd6YLv5-aHD6nkNnTZBA1VzjHgYkf"
+                "-Y7axHi0d6EvSOlV-0OEbI4FIn7CHssVtuFN4l7FzKZztU_X_c8rgAclWlEylvCvqs=s150",
+            )
+            self.assertEqual(
+                tap.beer.manufacturer.logo_url,
+                "https://lh5.ggpht.com/gUNebXp4obondztO0FPSxhFGr1JFMKMv2TnXvk5I"
+                "_A4UQpd4YSs-PTjWBHP1HDivT8O10rPENIwfMXjg9NaaMsrAp6p6Rw=s150",
+            )
+            tap = taps[1]
             self.assertEqual(tap.beer.name, "Bound By Time")
             self.assertEqual(tap.beer.abv, Decimal('7.00'))
             self.assertIsNone(tap.beer.style)

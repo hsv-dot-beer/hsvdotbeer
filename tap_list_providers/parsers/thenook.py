@@ -1,5 +1,6 @@
 """HTML scraper for The Nook"""
 from decimal import Decimal
+import logging
 import os
 
 from bs4 import BeautifulSoup
@@ -18,6 +19,9 @@ except (ImproperlyConfigured, AppRegistryNotReady):
 
 from beers.models import Manufacturer
 from taps.models import Tap
+
+
+LOG = logging.getLogger(__name__)
 
 
 class NookParser(BaseTapListProvider):
@@ -103,9 +107,7 @@ class NookParser(BaseTapListProvider):
             try:
                 manufacturer = manufacturers[mfg]
             except KeyError:
-                manufacturer = Manufacturer.objects.get_or_create(
-                    name=mfg,
-                )[0]
+                manufacturer = self.get_manufacturer(name=mfg)
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer
             beer = self.get_beer(
@@ -114,4 +116,9 @@ class NookParser(BaseTapListProvider):
             if tap.beer_id != beer.id:
                 tap.beer = beer
                 # only save if beer changed so as not to disturb updated time
+                LOG.debug('Saving %s on tap %s', beer, tap.tap_number)
                 tap.save()
+            else:
+                LOG.debug(
+                    'Not saving changes to beer %s on tap %s', beer, tap.tap_number,
+                )
