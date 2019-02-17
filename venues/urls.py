@@ -8,7 +8,6 @@ router = DefaultRouter()
 
 router.register(r'', views.VenueViewSet)
 router.register(r'apiconfiguration/', views.VenueAPIConfigurationViewSet)
-router.register(r'rooms/', views.RoomViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

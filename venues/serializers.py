@@ -32,23 +32,3 @@ class VenueAPIConfigurationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.VenueAPIConfiguration
         fields = '__all__'
-
-
-class RoomSerializer(serializers.ModelSerializer):
-    venue_id = serializers.PrimaryKeyRelatedField(
-        write_only=True, allow_null=False, required=True,
-        queryset=models.Venue.objects.all(),
-    )
-    venue = VenueSerializer(read_only=True)
-
-    def validate(self, data):
-        try:
-            data['venue'] = data.pop('venue_id')
-        except KeyError:
-            # in a PATCH; don't care
-            pass
-        return data
-
-    class Meta:
-        model = models.Room
-        fields = '__all__'

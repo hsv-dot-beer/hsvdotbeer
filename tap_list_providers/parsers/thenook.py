@@ -84,15 +84,7 @@ class NookParser(BaseTapListProvider):
     def handle_venue(self, venue):
         url = venue.api_configuration.url
         self.fetch_html(url)
-        rooms = list(venue.rooms.all())
-        if not rooms:
-            raise ValueError(f'You must create a room for {venue} first.')
-        if len(rooms) != 1:
-            raise ValueError(
-                f'DigitalPour does not support rooms! {len(rooms)} found',
-            )
-        room = rooms[0]
-        taps = {tap.tap_number: tap for tap in room.taps.all()}
+        taps = {tap.tap_number: tap for tap in venue.taps.all()}
         manufacturers = {mfg.name: mfg for mfg in Manufacturer.objects.filter(
             name__in=self.get_manufacturers()
         )}
@@ -102,7 +94,7 @@ class NookParser(BaseTapListProvider):
             try:
                 tap = taps[tap_number]
             except KeyError:
-                tap = Tap(room=room, tap_number=tap_number)
+                tap = Tap(venue=venue, tap_number=tap_number)
             # 2. get the mfg
             try:
                 manufacturer = manufacturers[mfg]

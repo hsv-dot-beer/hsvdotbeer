@@ -7,7 +7,7 @@ from django.test import TestCase
 import responses
 
 from beers.models import Beer, Manufacturer
-from venues.test.factories import VenueFactory, RoomFactory
+from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
 from tap_list_providers.parsers.untappd import UntappdParser
@@ -23,7 +23,6 @@ class CommandsTestCase(TestCase):
         super().setUpTestData()
         cls.venue = VenueFactory(
             tap_list_provider=UntappdParser.provider_name)
-        cls.room = RoomFactory(venue=cls.venue)
         cls.venue_cfg = VenueAPIConfiguration.objects.create(
             venue=cls.venue, url='https://localhost:8000',
             untappd_location=12345,
@@ -64,7 +63,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Manufacturer.objects.count(), 1)
             self.assertEqual(Tap.objects.count(), 22)
             tap = Tap.objects.filter(
-                room=self.room, tap_number=22,
+                venue=self.venue, tap_number=22,
             ).select_related(
                 'beer__style',
             ).get()

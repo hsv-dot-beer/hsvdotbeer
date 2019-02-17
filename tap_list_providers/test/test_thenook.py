@@ -7,7 +7,7 @@ from django.test import TestCase
 import responses
 
 from beers.models import Beer, Manufacturer
-from venues.test.factories import VenueFactory, RoomFactory
+from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
 from tap_list_providers.parsers.thenook import NookParser
@@ -23,7 +23,6 @@ class CommandsTestCase(TestCase):
         super().setUpTestData()
         cls.venue = VenueFactory(
             tap_list_provider=NookParser.provider_name)
-        cls.room = RoomFactory(venue=cls.venue)
         cls.venue_cfg = VenueAPIConfiguration.objects.create(
             venue=cls.venue, url='https://localhost:8000',
             digital_pour_venue_id=12345,
@@ -60,7 +59,7 @@ class CommandsTestCase(TestCase):
             self.assertLess(Manufacturer.objects.count(), 80)
             self.assertEqual(Tap.objects.count(), 80)
             taps = Tap.objects.filter(
-                room=self.room, tap_number__in=[1, 18],
+                venue=self.venue, tap_number__in=[1, 18],
             ).select_related(
                 'beer__style',
             ).order_by('tap_number')

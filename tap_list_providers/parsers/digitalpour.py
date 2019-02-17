@@ -42,15 +42,7 @@ class DigitalPourParser(BaseTapListProvider):
         location_number = venue.api_configuration.digital_pour_location_number
         self.url = self.URL.format(venue_id, location_number, self.APIKEY)
         data = self.fetch()
-        rooms = list(venue.rooms.all())
-        if not rooms:
-            raise ValueError(f'You must create a room for {venue} first.')
-        if len(rooms) != 1:
-            raise ValueError(
-                f'DigitalPour does not support rooms! {len(rooms)} found',
-            )
-        room = rooms[0]
-        taps = {tap.tap_number: tap for tap in room.taps.all()}
+        taps = {tap.tap_number: tap for tap in venue.taps.all()}
         manufacturers = {}
         for entry in data:
             if not entry['Active']:
@@ -61,7 +53,7 @@ class DigitalPourParser(BaseTapListProvider):
             try:
                 tap = taps[tap_info['tap_number']]
             except KeyError:
-                tap = Tap(room=room, tap_number=tap_info['tap_number'])
+                tap = Tap(venue=venue, tap_number=tap_info['tap_number'])
             tap.time_added = tap_info['added']
             tap.time_updated = tap_info['updated']
             tap.estimated_percent_remaining = tap_info['percent_full']

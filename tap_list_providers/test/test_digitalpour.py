@@ -8,7 +8,7 @@ from django.test import TestCase
 import responses
 
 from beers.models import Beer, Manufacturer
-from venues.test.factories import VenueFactory, RoomFactory
+from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
 from tap_list_providers.parsers.digitalpour import DigitalPourParser
@@ -24,7 +24,6 @@ class CommandsTestCase(TestCase):
         super().setUpTestData()
         cls.venue = VenueFactory(
             tap_list_provider=DigitalPourParser.provider_name)
-        cls.room = RoomFactory(venue=cls.venue)
         cls.venue_cfg = VenueAPIConfiguration.objects.create(
             venue=cls.venue, url='https://localhost:8000',
             digital_pour_venue_id=12345,
@@ -65,7 +64,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Manufacturer.objects.count(), 4)
             self.assertEqual(Tap.objects.count(), 4)
             taps = Tap.objects.filter(
-                room=self.room, tap_number__in=[22, 1],
+                venue=self.venue, tap_number__in=[22, 1],
             ).select_related(
                 'beer__style',
             ).order_by('tap_number')

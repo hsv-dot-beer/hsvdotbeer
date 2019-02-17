@@ -5,7 +5,7 @@ from django.core.management import call_command
 from django.test import TestCase
 
 from beers.models import Beer, Manufacturer
-from venues.test.factories import VenueFactory, RoomFactory
+from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
 from tap_list_providers.example import ExampleTapListProvider
@@ -20,7 +20,6 @@ class CommandsTestCase(TestCase):
         super().setUpTestData()
         cls.venue = VenueFactory(
             tap_list_provider=ExampleTapListProvider.provider_name)
-        cls.room = RoomFactory(venue=cls.venue)
         VenueAPIConfiguration.objects.create(
             venue=cls.venue, url='https://localhost:8000',
         )
@@ -41,7 +40,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Manufacturer.objects.count(), 3)
             self.assertEqual(Tap.objects.count(), 3)
             tap = Tap.objects.filter(
-                room=self.room, tap_number=1,
+                venue=self.venue, tap_number=1,
             ).select_related(
                 'beer__style',
             ).get()
