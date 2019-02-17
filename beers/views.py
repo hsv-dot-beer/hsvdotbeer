@@ -1,4 +1,10 @@
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from venues.serializers import VenueSerializer
+from venues.models import Venue
+from venues.filters import VenueFilterSet
 
 from . import serializers
 from . import models
@@ -33,3 +39,20 @@ class BeerViewSet(ModelViewSet):
         'manufacturer', 'style',
     ).order_by('manufacturer__name', 'name')
     filterset_class = filters.BeerFilterSet
+
+    @action(detail=True, methods=['GET'])
+    def placesavailable(self, request, pk):
+        """Get all the venues at which the given beer is on tap"""
+        queryset = Venue.objects.filter(
+            rooms__taps__beer__id=pk,
+        ).distinct().order_by('name')
+        # let the user use all the venue filters just for kicks
+        queryset = VenueFilterSet(request.query_params, queryset=queryset).qs
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = VenueSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = VenueSerializer(queryset, many=True)
+        return Response(serializer.data)
