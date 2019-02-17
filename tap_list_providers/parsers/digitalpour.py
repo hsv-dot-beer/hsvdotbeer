@@ -108,14 +108,18 @@ class DigitalPourParser(BaseTapListProvider):
 
     def parse_beer(self, entry):
         """Parse beer info from JSON entry."""
-        b = entry['MenuItemProductDetail']['Beverage']
+        detail = entry['MenuItemProductDetail']
+        b = detail['Beverage']
         if 'Cider' in b['$type']:
             beer = {
                 'name': b['CiderName'],
                 'style': b['CiderStyle']['StyleName'],
                 'abv': b['Abv'],
                 'ibu': b['Ibu'],
-                'color': hex(b['CiderStyle']['Color'])
+                'color': hex(b['CiderStyle']['Color']),
+                'logo_url': b.get('LogoImageUrl'),
+                'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'manufacturer_url': b.get('BeerUrl'),
             }
         else:
             beer = {
@@ -123,7 +127,10 @@ class DigitalPourParser(BaseTapListProvider):
                 'style': b['BeerStyle']['StyleName'],
                 'abv': b['Abv'],
                 'ibu': b['Ibu'],
-                'color': hex(b['BeerStyle']['Color'])
+                'color': hex(b['BeerStyle']['Color']),
+                'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'manufacturer_url': b.get('BeerUrl'),
+                'logo_url': b.get('LogoImageUrl'),
             }
         return beer
 

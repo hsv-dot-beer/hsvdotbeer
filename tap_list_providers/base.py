@@ -72,10 +72,42 @@ class BaseTapListProvider():
             self.handle_venue(venue)
 
     def get_beer(self, name, manufacturer, **defaults):
+        LOG.debug(
+            'get_beer(): name %s, mfg %s, defaults %s',
+            name, manufacturer, defaults,
+        )
+        unique_fields = (
+            'manufacturer_url', 'untappd_url', 'beer_advocate_url',
+        )
         field_names = {i.name for i in Beer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:
             raise ValueError(f'Unknown fields f{",".join(sorted(defaults))}')
+        unique_fields_present = {
+            field: value for field, value in defaults.items()
+            if field in set(unique_fields) and value
+        }
+        beer = None
+        if unique_fields_present:
+            filter_expr = Q()
+            for field, value in unique_fields_present.items():
+                if value:
+                    filter_expr |= Q(**{field: value})
+            # get all possible matches
+            # after moderation, this should only be one
+            queryset = Beer.objects.filter(filter_expr)
+            options = list(queryset)
+            if len(options) > 1:
+                # pick the one which has the preferred field set based on order
+                for field in unique_fields_present:
+                    for option in options:
+                        if getattr(option, field):
+                            beer = option
+                            break
+            elif options:
+                beer = options[0]
+            else:
+                LOG.debug('No match found based on URL')
         try:
             abv = defaults.pop('abv')
         except KeyError:
@@ -86,16 +118,26 @@ class BaseTapListProvider():
                     abv = abv[:-1]
                 abv = Decimal(abv)
             defaults['abv'] = abv
-        beer = Beer.objects.get_or_create(
-            name=name,
-            manufacturer=manufacturer,
-            defaults=defaults,
-        )[0]
+        if not beer:
+            beer = Beer.objects.get_or_create(
+                name=name,
+                manufacturer=manufacturer,
+                defaults=defaults,
+            )[0]
         needs_update = False
         for field, value in defaults.items():
             # instead of using update_or_create(), only update fields *if*
             # they're set in `defaults`
-            if value not in {None, ''}:
+            if value:
+                if field.endswith('_url'):
+                    if Beer.objects.exclude(id=beer.id).filter(
+                        **{field: value}
+                    ).exists():
+                        LOG.warning(
+                            'skipping updating %s (%s) for %s (PK %s) because it would'
+                            ' conflict', field, value, beer.name, beer.id,
+                        )
+                        continue
                 saved_value = getattr(beer, field)
                 if value != saved_value:
                     # TODO mark as unmoderated
