@@ -18,7 +18,7 @@ class VenueFilterSet(FilterSet):
 
     o = OrderingFilter(
         fields=[
-            'name', 'rooms__taps__beer__name'
+            'name', 'taps__beer__name'
             'taps__beer__style__name',
             'taps__beer__style__category__name',
         ],

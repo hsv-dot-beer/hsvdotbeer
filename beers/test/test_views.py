@@ -144,7 +144,7 @@ class BeerDetailTestCase(APITestCase):
         response = self.client.get(url)
         eq_(response.status_code, 200)
         eq_(len(response.data['results']), 2, response.data)
-        venues = [i.room.venue for i in taps if i.beer == self.beer]
+        venues = [i.venue for i in taps if i.beer == self.beer]
         eq_(
             {i.name for i in venues},
             {i['name'] for i in response.data['results']},
@@ -182,7 +182,7 @@ class BeerListTestCase(APITestCase):
         eq_(response.data['results'][0]['name'], self.beer.name, response.data)
         eq_(
             response.data['results'][0]['venues'][0]['id'],
-            tap.room.venue.id,
+            tap.venue.id,
             response.data,
         )
         eq_(len(response.data['results'][0]['venues']), 1, response.data)
