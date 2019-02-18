@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.db.models import Subquery
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser
@@ -14,6 +15,18 @@ class TapListProviderStyleMappingViewSet(ModelViewSet):
     queryset = models.TapListProviderStyleMapping.objects.all()
     permission_classes = (IsAdminUser, )
     serializer_class = serializers.TapListProviderStyleMappingSerializer
+
+    def create(self, request):
+        with transaction.atomic():
+            result = super().create(request)
+            # update all beers which are assigned to that text style
+            Beer.objects.filter(
+                api_vendor_style=request.data['provider_style_name'],
+                style__isnull=True,
+            ).update(
+                style_id=result.data['style']['id'],
+            )
+        return result
 
     @action(detail=False, methods=['GET'])
     def unmapped(self, request):
