@@ -89,8 +89,7 @@ class TaphunterParser(BaseTapListProvider):
             if style:
                 parsed_beer['api_vendor_style'] = \
                     f"{style['category']} - {style['name']}"
-            # TODO (#38): handle color
-            color_srm = parsed_beer.pop('srm', '')
+            color_srm = parsed_beer.pop('srm', 0)
             if color_srm:
                 parsed_beer['color_srm'] = color_srm
             LOG.debug(
