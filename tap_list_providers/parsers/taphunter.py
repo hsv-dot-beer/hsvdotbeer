@@ -109,6 +109,7 @@ class TaphunterParser(BaseTapListProvider):
                 'category': tap['beer']['style_category'],
             },
             'logo_url': tap['beer'].get('logo_url') or None,
+            'taphunter_url': tap['beer'].get('public_url') or None,
         }
 
         if tap['beer']['abv']:

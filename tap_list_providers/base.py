@@ -69,6 +69,7 @@ class BaseTapListProvider():
         )
         unique_fields = (
             'manufacturer_url', 'untappd_url', 'beer_advocate_url',
+            'taphunter_url',
         )
         field_names = {i.name for i in Beer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
