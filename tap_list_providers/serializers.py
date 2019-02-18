@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
 
 from beers.serializers import BeerStyleSerializer
 from beers.models import BeerStyle
@@ -25,9 +24,3 @@ class TapListProviderStyleMappingSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = models.TapListProviderStyleMapping
-        validators = [
-            UniqueTogetherValidator(
-                fields=('style_id', 'provider_name'),
-                queryset=models.TapListProviderStyleMapping.objects.all(),
-            ),
-        ]
