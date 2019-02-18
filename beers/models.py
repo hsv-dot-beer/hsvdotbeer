@@ -1,6 +1,6 @@
 import string
 
-from django.db import models
+from django.db import models, transaction
 
 from .utils import render_srm
 
@@ -117,6 +117,44 @@ class Manufacturer(models.Model):
     untappd_url = models.URLField(blank=True, unique=True, null=True)
     automatic_updates_blocked = models.NullBooleanField(default=False)
 
+    def merge_from(self, other):
+        print(f'merging {other.id} into {self.id}')
+        with transaction.atomic():
+            other_beers = list(other.beers.all())
+            my_beers = {i.name: i for i in self.beers.all()}
+            for beer in other_beers:
+                beer.manufacturer = self
+                if beer.name in my_beers:
+                    # we have a duplicate beer. Merge those two first.
+                    # merge_from takes care of saving my_beer and deleting
+                    # beer
+                    # keep the one that was already present
+                    my_beer = my_beers[beer.name]
+                    my_beer.merge_from(beer)
+                else:
+                    # good
+                    beer.save()
+
+            for alternate_name in other.alternate_names.all():
+                alternate_name.beer = self
+                alternate_name.save()
+            excluded_fields = {
+                'name', 'automatic_updates_blocked', 'id',
+            }
+            for field in self._meta.fields:
+                field_name = field.name
+                if field_name in excluded_fields:
+                    continue
+                other_value = getattr(other, field_name)
+                if getattr(self, field_name) or not other_value:
+                    # don't overwrite data that's already there
+                    # or isn't set in the other one
+                    continue
+                setattr(self, field_name, other_value)
+            self.automatic_updates_blocked = True
+            other.delete()
+            self.save()
+
     def __str__(self):
         return self.name
 
@@ -180,6 +218,34 @@ class Beer(models.Model):
         if self.color_html:
             return self.color_html
         return render_srm(self.color_srm)
+
+    def merge_from(self, other):
+        print(f'merging {other.id} into {self.id}')
+        with transaction.atomic():
+            for tap in other.taps.all():
+                tap.beer = self
+                tap.save()
+            for alternate_name in other.alternate_names.all():
+                alternate_name.beer = self
+                alternate_name.save()
+            excluded_fields = {
+                'name' 'in_production', 'automatic_updates_blocked',
+                'manufacturer', 'id',
+            }
+            for field in self._meta.fields:
+                field_name = field.name
+                print(field, field_name)
+                if field_name in excluded_fields:
+                    continue
+                other_value = getattr(other, field_name)
+                if getattr(self, field_name) or not other_value:
+                    # don't overwrite data that's already there
+                    # or isn't set in the other one
+                    continue
+                setattr(self, field_name, other_value)
+            self.automatic_updates_blocked = True
+            other.delete()
+            self.save()
 
     class Meta:
         unique_together = [
