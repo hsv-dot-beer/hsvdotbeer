@@ -81,6 +81,11 @@ class CommandsTestCase(TestCase):
                 "https://lh5.ggpht.com/gUNebXp4obondztO0FPSxhFGr1JFMKMv2TnXvk5I"
                 "_A4UQpd4YSs-PTjWBHP1HDivT8O10rPENIwfMXjg9NaaMsrAp6p6Rw=s150",
             )
+            self.assertEqual(
+                tap.beer.manufacturer.taphunter_url,
+                'https://www.taphunter.com/brewery/angry-orchard-cidery/'
+                '35527549',
+            )
             tap = taps[1]
             self.assertEqual(tap.beer.name, "Bound By Time")
             self.assertEqual(tap.beer.abv, Decimal('7.00'))

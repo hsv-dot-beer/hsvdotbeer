@@ -128,6 +128,7 @@ class TaphunterParser(BaseTapListProvider):
             'name': tap['brewery']['name'],
             'location': tap['brewery']['origin'],
             'logo_url': tap['brewery'].get('logo_url') or None,
+            'taphunter_url': tap['brewery'].get('public_url') or None,
         }
         return manufacturer
 
