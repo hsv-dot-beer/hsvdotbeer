@@ -5,7 +5,7 @@ from rest_framework import status
 from faker import Faker
 
 from hsv_dot_beer.users.test.factories import UserFactory
-from venues.test.factories import RoomFactory
+from venues.test.factories import VenueFactory
 from .factories import TapFactory
 
 fake = Faker()
@@ -13,8 +13,8 @@ fake = Faker()
 
 class TestTapDetailTestCase(APITestCase):
     def setUp(self):
-        self.room = RoomFactory()
-        self.tap = TapFactory(room=self.room)
+        self.venue = VenueFactory()
+        self.tap = TapFactory(venue=self.venue)
 
         self.url = reverse('tap-detail', kwargs={'pk': self.tap.pk})
         self.user = UserFactory(is_staff=True)
@@ -26,7 +26,7 @@ class TestTapDetailTestCase(APITestCase):
         eq_(response.status_code, status.HTTP_200_OK)
 
     def test_patch_rejects_default(self):
-        other = TapFactory(room=self.room)
+        other = TapFactory(venue=self.venue)
         payload = {'tap_number': other.tap_number}
 
         response = self.client.patch(self.url, payload)

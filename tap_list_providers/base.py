@@ -3,14 +3,14 @@
 Children should subclass this and implement handle_venue()
 which takes a single argument: a Venue object.
 
-It'll have API configuration, rooms, taps, and existing beers prefetched.
+It'll have API configuration, taps, and existing beers prefetched.
 """
 from decimal import Decimal
 import logging
 
 from django.db.models import Prefetch, Q
 
-from venues.models import Venue, Room
+from venues.models import Venue
 from beers.models import Beer, Manufacturer
 from taps.models import Tap
 
@@ -52,16 +52,8 @@ class BaseTapListProvider():
             api_configuration__isnull=False,
         ).prefetch_related(
             Prefetch(
-                'rooms',
-                queryset=Room.objects.prefetch_related(
-                    Prefetch(
-                        'taps__beer__manufacturer',
-                        queryset=Tap.objects.select_related(
-                            'beer__manufacturer',
-                            'beer__style__category',
-                        ),
-                    ),
-                ),
+                'taps',
+                queryset=Tap.objects.select_related('beer__manufacturer'),
             ),
         )
         return queryset

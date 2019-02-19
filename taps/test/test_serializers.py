@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.utils import timezone
 
-from venues.test.factories import RoomFactory
+from venues.test.factories import VenueFactory
 from taps.serializers import TapSerializer
 from taps.models import Tap
 from .factories import TapFactory
@@ -10,10 +10,10 @@ from .factories import TapFactory
 class TapSerializerTestCase(TestCase):
 
     def test_create(self):
-        room = RoomFactory()
+        venue = VenueFactory()
         data = {
             'tap_number': 42,
-            'room_id': room.id,
+            'venue_id': venue.id,
             'time_added': timezone.now(),
             'time_updated': timezone.now()
         }
@@ -22,15 +22,15 @@ class TapSerializerTestCase(TestCase):
         instance = serializer.save()
         self.assertIsInstance(instance, Tap)
         self.assertEqual(instance.tap_number, data['tap_number'])
-        self.assertEqual(instance.room, room)
+        self.assertEqual(instance.venue, venue)
         self.assertEqual(instance.gas_type, '')
         self.assertIsNone(instance.estimated_percent_remaining)
 
     def test_create_invalid_pct(self):
-        room = RoomFactory()
+        venue = VenueFactory()
         data = {
             'tap_number': 42,
-            'room_id': room.id,
+            'venue_id': venue.id,
             'estimated_percent_remaining': -1,
         }
         serializer = TapSerializer(data=data)
@@ -40,7 +40,7 @@ class TapSerializerTestCase(TestCase):
         other = TapFactory()
         data = {
             'tap_number': other.tap_number,
-            'room_id': other.room_id,
+            'venue_id': other.venue_id,
         }
         serializer = TapSerializer(data=data)
         self.assertFalse(serializer.is_valid(raise_exception=False))

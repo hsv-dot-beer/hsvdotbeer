@@ -3,21 +3,21 @@ from rest_framework.validators import UniqueTogetherValidator
 
 from django.utils import timezone
 
-from venues.models import Room
-from venues.serializers import RoomSerializer
+from venues.models import Venue
+from venues.serializers import VenueSerializer
 
 from . import models
 
 
 class TapSerializer(serializers.ModelSerializer):
-    room_id = serializers.PrimaryKeyRelatedField(
+    venue_id = serializers.PrimaryKeyRelatedField(
         write_only=True, allow_null=False, required=True,
-        queryset=Room.objects.all(),
+        queryset=Venue.objects.all(),
     )
     estimated_percent_remaining = serializers.FloatField(
         min_value=0, max_value=100, allow_null=True, required=False,
     )
-    room = RoomSerializer(read_only=True)
+    venue = VenueSerializer(read_only=True)
     time_added = serializers.DateTimeField(read_only=True)
     time_updated = serializers.DateTimeField(read_only=True)
 
@@ -27,7 +27,7 @@ class TapSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         try:
-            data['room'] = data.pop('room_id')
+            data['venue'] = data.pop('venue_id')
         except KeyError:
             pass
         return data
@@ -38,6 +38,6 @@ class TapSerializer(serializers.ModelSerializer):
         validators = [
             UniqueTogetherValidator(
                 queryset=models.Tap.objects.all(),
-                fields=('tap_number', 'room_id'),
+                fields=('tap_number', 'venue_id'),
             ),
         ]

@@ -29,7 +29,7 @@ class BeerFilterSet(FilterSet):
             'abv': DEFAULT_NUMERIC_FILTER_OPERATORS,
             'ibu': DEFAULT_NUMERIC_FILTER_OPERATORS,
             'manufacturer__name': DEFAULT_NUMERIC_FILTER_OPERATORS,
-            'taps__room__venue__name': DEFAULT_STRING_FILTER_OPERATORS,
+            'taps__venue__name': DEFAULT_STRING_FILTER_OPERATORS,
             'style__name': DEFAULT_STRING_FILTER_OPERATORS,
             'style__category__name': DEFAULT_STRING_FILTER_OPERATORS,
         }

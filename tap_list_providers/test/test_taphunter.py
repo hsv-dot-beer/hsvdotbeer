@@ -7,7 +7,7 @@ from django.test import TestCase
 import responses
 
 from beers.models import Beer, Manufacturer
-from venues.test.factories import VenueFactory, RoomFactory
+from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
 from tap_list_providers.parsers.taphunter import TaphunterParser
@@ -23,7 +23,6 @@ class CommandsTestCase(TestCase):
         super().setUpTestData()
         cls.venue = VenueFactory(
             tap_list_provider=TaphunterParser.provider_name)
-        cls.room = RoomFactory(venue=cls.venue)
         cls.venue_cfg = VenueAPIConfiguration.objects.create(
             venue=cls.venue, url='https://localhost:8000',
             taphunter_location=12345,
@@ -61,7 +60,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Manufacturer.objects.count(), 52)
             self.assertEqual(Tap.objects.count(), 93)
             taps = Tap.objects.filter(
-                room=self.room, tap_number__in=[6, 22],
+                venue=self.venue, tap_number__in=[6, 22],
             ).select_related(
                 'beer__style',
             ).order_by('tap_number')

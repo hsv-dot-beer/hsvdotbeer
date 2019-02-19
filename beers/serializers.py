@@ -129,7 +129,7 @@ class BeerSerializer(serializers.ModelSerializer):
         taps = list(obj.taps.all())
         if not taps:
             return []
-        venues = {i.room.venue for i in taps}
+        venues = {i.venue for i in taps}
         return VenueSerializer(
             instance=list(sorted(venues, key=lambda v: v.name)),
             many=True,

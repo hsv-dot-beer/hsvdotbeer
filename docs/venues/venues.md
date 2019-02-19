@@ -37,9 +37,9 @@ tap_list_provider | string | No       | Who provides the venue's digital tap lis
 You can look up venues by the following fields:
 
 - `name` (Venue name)
-- `rooms__taps__beer__name` (Beer name)
-- `rooms__taps__beer__style__name` (what specific style, e.g. American IPA)
-- `rooms__taps__beer__style__category__name` (what style categor, e.g. IPA)
+- `taps__beer__name` (Beer name)
+- `taps__beer__style__name` (what specific style, e.g. American IPA)
+- `taps__beer__style__category__name` (what style categor, e.g. IPA)
 
 You can also attach specific lookups to narrow/widen your search:
 
@@ -67,4 +67,4 @@ You can also attach specific lookups to narrow/widen your search:
 
 
 To do the filtering, simply GET
-`/venues/?name__icontains=das+stahl&rooms__taps__beer__name__icontains=monkey`
+`/venues/?name__icontains=das+stahl&taps__beer__name__icontains=monkey`

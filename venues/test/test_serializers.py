@@ -1,7 +1,6 @@
 from django.test import TestCase
-from venues.serializers import VenueSerializer, RoomSerializer, \
-    VenueAPIConfigurationSerializer
-from venues.models import Venue, VenueAPIConfiguration, Room
+from venues.serializers import VenueSerializer, VenueAPIConfigurationSerializer
+from venues.models import Venue, VenueAPIConfiguration
 from .factories import VenueFactory
 
 
@@ -69,39 +68,3 @@ class VenueAPIConfigurationSerializerTestCase(TestCase):
         self.assertEqual(serializer.data['id'], instance.id)
         self.assertEqual(serializer.data['url'], instance.url)
         self.assertEqual(serializer.data['venue'], self.venue.id)
-
-
-class RoomSerializerTestCase(TestCase):
-
-    def setUp(self):
-        self.venue = VenueFactory()
-        # need to refresh from DB because the venue's time zone is a string
-        # on factory build
-        self.venue.refresh_from_db()
-
-    def test_create(self):
-        data = {
-            'venue_id': self.venue.id,
-            'name': 'The back room',
-        }
-        serializer = RoomSerializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        instance = serializer.save()
-        self.assertIsInstance(instance, Room)
-        self.assertEqual(instance.description, '')
-        self.assertEqual(instance.venue_id, self.venue.id)
-        self.assertEqual(instance.name, data['name'])
-
-    def test_display(self):
-        instance = Room.objects.create(
-            venue=self.venue,
-            name='The front room',
-        )
-        serializer = RoomSerializer(instance=instance)
-        self.assertEqual(instance.id, serializer.data['id'])
-        venue = serializer.data['venue']
-        self.assertEqual(instance.venue.id, venue['id'])
-        self.assertEqual(
-            venue, VenueSerializer(instance=self.venue).data,
-        )
-        self.assertEqual(serializer.data['description'], '')
