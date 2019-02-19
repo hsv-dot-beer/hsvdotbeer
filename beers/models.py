@@ -1,8 +1,11 @@
+import logging
 import string
 
 from django.db import models, transaction
 
 from .utils import render_srm
+
+LOG = logging.getLogger(__name__)
 
 
 class BeerStyleCategory(models.Model):
@@ -118,7 +121,7 @@ class Manufacturer(models.Model):
     automatic_updates_blocked = models.NullBooleanField(default=False)
 
     def merge_from(self, other):
-        print(f'merging {other.id} into {self.id}')
+        LOG.info('merging %s into %s', other, self)
         with transaction.atomic():
             other_beers = list(other.beers.all())
             my_beers = {i.name: i for i in self.beers.all()}
@@ -220,7 +223,7 @@ class Beer(models.Model):
         return render_srm(self.color_srm)
 
     def merge_from(self, other):
-        print(f'merging {other.id} into {self.id}')
+        LOG.info('merging %s into %s', other, self)
         with transaction.atomic():
             for tap in other.taps.all():
                 tap.beer = self
@@ -234,7 +237,6 @@ class Beer(models.Model):
             }
             for field in self._meta.fields:
                 field_name = field.name
-                print(field, field_name)
                 if field_name in excluded_fields:
                     continue
                 other_value = getattr(other, field_name)
