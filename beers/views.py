@@ -43,7 +43,7 @@ class BeerViewSet(ModelViewSet):
         Prefetch(
             'taps',
             queryset=Tap.objects.select_related(
-                'room__venue',
+                'venue',
             ),
         ),
     ).order_by('manufacturer__name', 'name')
@@ -52,9 +52,9 @@ class BeerViewSet(ModelViewSet):
     @action(detail=True, methods=['GET'])
     def placesavailable(self, request, pk):
         """Get all the venues at which the given beer is on tap"""
-        queryset = Venue.objects.filter(
-            rooms__taps__beer__id=pk,
-        ).distinct().order_by('name')
+        queryset = Venue.objects.filter(taps__beer__id=pk).distinct().order_by(
+            'name',
+        )
         # let the user use all the venue filters just for kicks
         queryset = VenueFilterSet(request.query_params, queryset=queryset).qs
 

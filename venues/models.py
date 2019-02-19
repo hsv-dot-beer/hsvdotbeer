@@ -61,14 +61,3 @@ class VenueAPIConfiguration(models.Model):
         null=True,
     )
     taphunter_location = models.CharField(max_length=50, blank=True)
-
-
-class Room(models.Model):
-    venue = models.ForeignKey(Venue, models.CASCADE, related_name='rooms')
-    name = models.CharField(max_length=50)
-    description = models.TextField(blank=True)
-
-    class Meta:
-        unique_together = (
-            ('venue', 'name'),
-        )

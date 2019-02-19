@@ -39,15 +39,7 @@ class TaphunterParser(BaseTapListProvider):
         location = venue.api_configuration.taphunter_location
         self.url = self.URL.format(location)
         data = self.fetch()
-        rooms = list(venue.rooms.all())
-        if not rooms:
-            raise ValueError(f'You must create a room for {venue} first.')
-        if len(rooms) != 1:
-            raise ValueError(
-                f'TapHunter does not support rooms! {len(rooms)} found',
-            )
-        room = rooms[0]
-        taps = {tap.tap_number: tap for tap in room.taps.all()}
+        taps = {tap.tap_number: tap for tap in venue.taps.all()}
         manufacturers = {}
 
         use_sequential_taps = any(
@@ -63,7 +55,7 @@ class TaphunterParser(BaseTapListProvider):
             try:
                 tap = taps[tap_number]
             except KeyError:
-                tap = Tap(room=room, tap_number=tap_number)
+                tap = Tap(venue=venue, tap_number=tap_number)
             tap.time_added = tap_info['added']
             tap.time_updated = tap_info['updated']
             if 'percent_full' in tap_info:

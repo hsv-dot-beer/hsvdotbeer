@@ -8,7 +8,7 @@ You can look up beers by the following fields:
 - `abv` (Alcohol by volume)
 - `__ibu` (International Bitterness Units)
 - `manufacturer__name` (who makes the beer)
-- `taps__room__venue__name` (what venue/venues has/have it on tap)
+- `taps__venue__name` (what venue/venues has/have it on tap)
 - `style__name` (what specific style, e.g. American IPA)
 - `style__category__name` (what style categor, e.g. IPA)
 
@@ -38,4 +38,4 @@ You can also attach specific lookups to narrow/widen your search:
 
 
 To do the filtering, simply GET
-`/beers/?name__icontains=monkey&taps__room__venue__name__icontains=straight`
+`/beers/?name__icontains=monkey&taps__venue__name__icontains=straight`

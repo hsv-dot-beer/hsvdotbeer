@@ -11,7 +11,6 @@ nav:
     - Authentication: 'api/authentication.md'
     - Users: 'api/users.md'
     - Venues: 'venues/venues.md'
-    - Rooms: 'venues/rooms.md'
     - Beers: 'beers/beers.md'
   - Tap List Providers:
     - Parsers: 'tap_list_providers/parsers.md'

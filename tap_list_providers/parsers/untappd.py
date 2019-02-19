@@ -49,16 +49,8 @@ class UntappdParser(BaseTapListProvider):
         )
         data = self.fetch_data()
         self.parse_html_and_js(data)
-        rooms = list(venue.rooms.all())
-        if not rooms:
-            raise ValueError(f'You must create a room for {venue} first.')
-        if len(rooms) != 1:
-            raise ValueError(
-                f'Untappd does not support rooms! {len(rooms)} found',
-            )
-        room = rooms[0]
 
-        taps = {tap.tap_number: tap for tap in room.taps.all()}
+        taps = {tap.tap_number: tap for tap in venue.taps.all()}
         manufacturers = {}
         tap_list = self.taps()
         use_sequential_taps = any(
@@ -75,7 +67,7 @@ class UntappdParser(BaseTapListProvider):
             try:
                 tap = taps[tap_number]
             except KeyError:
-                tap = Tap(room=room, tap_number=tap_number)
+                tap = Tap(venue=venue, tap_number=tap_number)
             if tap_info['added']:
                 tap.time_added = tap_info['added']
             if tap_info['updated']:

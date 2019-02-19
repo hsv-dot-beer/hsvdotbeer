@@ -6,10 +6,10 @@ from rest_framework import status
 from faker import Faker
 
 from hsv_dot_beer.users.test.factories import UserFactory
-from venues.models import Venue, VenueAPIConfiguration, Room
+from venues.models import Venue, VenueAPIConfiguration
 from beers.test.factories import BeerFactory, BeerStyleTagFactory, BeerStyleFactory
 from taps.test.factories import TapFactory
-from .factories import VenueFactory, RoomFactory
+from .factories import VenueFactory
 
 fake = Faker()
 
@@ -45,13 +45,12 @@ class TestVenueListTestCase(APITestCase):
         style = BeerStyleFactory.create(tags=tags)
         beer = BeerFactory(style=style)
         venue = VenueFactory()
-        room = RoomFactory(venue=venue)
-        TapFactory(room=room, beer=beer)
-        url = f'{self.url}?rooms__taps__beer__name__istartswith={beer.name.lower()[:5]}'
+        TapFactory(venue=venue, beer=beer)
+        url = f'{self.url}?taps__beer__name__istartswith={beer.name.lower()[:5]}'
         response = self.client.get(url)
         self.assertEqual(len(response.data['results']), 1)
         self.assertEqual(response.data['results'][0]['id'], venue.id, response.data)
-        url = f'{self.url}?rooms__taps__beer__name={beer.name.lower()}aaaaa'
+        url = f'{self.url}?taps__beer__name={beer.name.lower()}aaaaa'
         response = self.client.get(url)
         self.assertEqual(len(response.data['results']), 0, response.data)
 
@@ -126,61 +125,3 @@ class VenueAPIConfigurationNormalUserTestCase(APITestCase):
     def test_normal_user(self):
         response = self.client.post(self.url, self.data)
         eq_(response.status_code, status.HTTP_403_FORBIDDEN, response.data)
-
-
-class RoomListTestCase(APITestCase):
-    """
-    Tests /venues/rooms list operations.
-    """
-
-    def setUp(self):
-        self.url = reverse('room-list')
-        self.venue = VenueFactory()
-        self.user = UserFactory(is_staff=True)
-        self.room_data = {
-            'venue_id': self.venue.id,
-            'name': 'test room',
-            'description': 'no',
-        }
-        self.client.credentials(
-            HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
-
-    def test_post_request_with_no_data_fails(self):
-        response = self.client.post(self.url, {})
-        eq_(response.status_code, status.HTTP_400_BAD_REQUEST, response.data)
-
-    def test_post_request_with_valid_data_succeeds(self):
-        response = self.client.post(self.url, self.room_data)
-        eq_(response.status_code, status.HTTP_201_CREATED, response.data)
-
-        room = Room.objects.get(pk=response.data.get('id'))
-        eq_(room.name, self.room_data.get('name'))
-        eq_(room.venue_id, self.venue.id)
-        eq_(room.description, self.room_data['description'])
-
-
-class RoomDetailTestCase(APITestCase):
-    """
-    Tests /venues/rooms detail operations.
-    """
-
-    def setUp(self):
-        self.venue = VenueFactory()
-        self.room = Room.objects.create(venue=self.venue, name='foo')
-        self.url = reverse('room-detail', kwargs={'pk': self.room.pk})
-        self.user = UserFactory(is_staff=True)
-        self.client.credentials(
-            HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
-
-    def test_get_request_returns_a_given_venue(self):
-        response = self.client.get(self.url)
-        eq_(response.status_code, status.HTTP_200_OK)
-
-    def test_patch_request_updates_a_venue(self):
-        new_name = fake.first_name()
-        payload = {'name': new_name}
-        response = self.client.patch(self.url, payload)
-        eq_(response.status_code, status.HTTP_200_OK, response.data)
-
-        room = Room.objects.get(pk=self.room.id)
-        eq_(room.name, new_name)

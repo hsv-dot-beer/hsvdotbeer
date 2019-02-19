@@ -25,38 +25,37 @@ class ExampleTapListProvider(BaseTapListProvider):
 
     def handle_venue(self, venue):
         LOG.info('Handling venue %s', venue)
-        for room in venue.rooms.all():
-            taps = {tap.tap_number: tap for tap in room.taps.all()}
-            names = set(i['brewery'] for i in self.json_dict['taps'].values())
-            LOG.debug('Breweries: %s', names)
-            manufacturers_qs = Manufacturer.objects.filter(
-                name__in=list(names),
-            )
-            manufacturers = {i.name: i for i in manufacturers_qs.all()}
-            LOG.debug('manufacturers: %s', list(manufacturers))
-            for tap_number, beer_info in self.json_dict['taps'].items():
-                try:
-                    tap = taps[int(tap_number)]
-                except KeyError:
-                    tap = Tap.objects.create(
-                        room=room,
-                        tap_number=int(tap_number),
-                    )
-                    taps[tap.tap_number] = tap
-                try:
-                    manufacturer = manufacturers[beer_info['brewery']]
-                except KeyError:
-                    manufacturer = Manufacturer.objects.create(
-                        name=beer_info['brewery'],
-                    )
-                    # cache it for next time
-                    manufacturers[manufacturer.name] = manufacturer
-                name = beer_info.pop('beer')
-                del beer_info['brewery']
-                beer_info['style'] = self.guess_style(beer_info['style'])
-                beer = self.get_beer(name, manufacturer, **beer_info)
-                tap.beer = beer
-                tap.save()
+        taps = {tap.tap_number: tap for tap in venue.taps.all()}
+        names = set(i['brewery'] for i in self.json_dict['taps'].values())
+        LOG.debug('Breweries: %s', names)
+        manufacturers_qs = Manufacturer.objects.filter(
+            name__in=list(names),
+        )
+        manufacturers = {i.name: i for i in manufacturers_qs.all()}
+        LOG.debug('manufacturers: %s', list(manufacturers))
+        for tap_number, beer_info in self.json_dict['taps'].items():
+            try:
+                tap = taps[int(tap_number)]
+            except KeyError:
+                tap = Tap.objects.create(
+                    venue=venue,
+                    tap_number=int(tap_number),
+                )
+                taps[tap.tap_number] = tap
+            try:
+                manufacturer = manufacturers[beer_info['brewery']]
+            except KeyError:
+                manufacturer = Manufacturer.objects.create(
+                    name=beer_info['brewery'],
+                )
+                # cache it for next time
+                manufacturers[manufacturer.name] = manufacturer
+            name = beer_info.pop('beer')
+            del beer_info['brewery']
+            beer_info['style'] = self.guess_style(beer_info['style'])
+            beer = self.get_beer(name, manufacturer, **beer_info)
+            tap.beer = beer
+            tap.save()
 
     def guess_style(self, style_name):
         """Attempt to guess a style based on the given name"""
