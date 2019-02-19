@@ -64,6 +64,20 @@ class TestBeerStyleDetailTestCase(APITestCase):
         style = BeerStyle.objects.get(pk=self.style.id)
         eq_(self.style.category, style.category)
 
+    def test_beers_on_tap(self):
+        beer = BeerFactory(style=self.style)
+        # link it to *a* tap (doesn't matter which one) so that it shows up
+        # as being on tap
+        TapFactory(beer=beer)
+        # create another dummy tap and beer so we can be sure filtering works
+        TapFactory(beer=BeerFactory())
+        url = f'{self.url}beersontap/'
+        response = self.client.get(url)
+        eq_(response.status_code, status.HTTP_200_OK, response.data)
+        self.assertIn('results', response.data, response.data)
+        eq_(len(response.data['results']), 1, response.data)
+        eq_(response.data['results'][0]['id'], beer.id, response.data)
+
 
 class ManufacturerListTestCase(APITestCase):
     def setUp(self):

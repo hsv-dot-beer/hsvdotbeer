@@ -29,6 +29,20 @@ class BeerStyleViewSet(ModelViewSet):
         'category',
     ).prefetch_related('tags').order_by('id')
 
+    @action(detail=True, methods=['GET'])
+    def beersontap(self, request, pk):
+        """Get a list of beers on tap for this style"""
+        queryset = BeerViewSet.queryset.filter(
+            style__id=pk,
+            taps__isnull=False,
+        ).distinct()
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = BeerViewSet.serializer_class(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = BeerViewSet.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
 
 class ManufacturerViewSet(ModelViewSet):
     serializer_class = serializers.ManufacturerSerializer
