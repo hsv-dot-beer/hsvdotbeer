@@ -200,3 +200,26 @@ class BeerListTestCase(APITestCase):
             response.data,
         )
         eq_(len(response.data['results'][0]['venues']), 1, response.data)
+
+
+class BeerStyleCategoryTestCase(APITestCase):
+
+    def test_beers_on_tap(self):
+        user = UserFactory(is_staff=True)
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f'Token {user.auth_token}')
+
+        beer = BeerFactory(style=BeerStyleFactory())
+        url = reverse(
+            'beerstylecategory-detail', kwargs={'pk': beer.style.category.pk})
+        # link it to *a* tap (doesn't matter which one) so that it shows up
+        # as being on tap
+        TapFactory(beer=beer)
+        # create another dummy tap and beer so we can be sure filtering works
+        TapFactory(beer=BeerFactory())
+        url = f'{url}beersontap/'
+        response = self.client.get(url)
+        eq_(response.status_code, status.HTTP_200_OK, response.data)
+        self.assertIn('results', response.data, response.data)
+        eq_(len(response.data['results']), 1, response.data)
+        eq_(response.data['results'][0]['id'], beer.id, response.data)
