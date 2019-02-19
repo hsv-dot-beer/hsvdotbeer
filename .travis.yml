@@ -10,7 +10,10 @@ script:
   - docker-compose run --rm web bash -c "pipenv install --dev && pipenv run flake8 . &&
                                          pipenv run python wait_for_postgres.py &&
                                          pipenv run ./manage.py test"
-
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      pipenv install && pipenv run mkdocs gh-deploy
+    fi
 notifications:
   email: false
 
