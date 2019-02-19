@@ -37,7 +37,6 @@ class TestEventListTestCase(APITestCase):
         eq_(response.status_code, status.HTTP_400_BAD_REQUEST, response.data)
 
     def test_post_request_with_valid_data_succeeds(self):
-        print(self.event_data)
         response = self.client.post(self.url, self.event_data)
         eq_(response.status_code, status.HTTP_201_CREATED, response.data)
 
