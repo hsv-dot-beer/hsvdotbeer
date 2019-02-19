@@ -80,6 +80,15 @@ class TestVenueDetailTestCase(APITestCase):
         venue = Venue.objects.get(pk=self.venue.id)
         eq_(venue.name, new_name)
 
+    def test_beers(self):
+        tap = TapFactory(venue=self.venue, beer=BeerFactory())
+        BeerFactory()
+        url = f'{self.url}beers/'
+        response = self.client.get(url)
+        eq_(response.status_code, status.HTTP_200_OK, response.data)
+        eq_(len(response.data['results']), 1, response.data)
+        eq_(response.data['results'][0]['id'], tap.beer_id)
+
 
 class VenueAPIConfigurationListTestCase(APITestCase):
 
