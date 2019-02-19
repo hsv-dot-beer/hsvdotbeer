@@ -156,3 +156,9 @@ class BeerSerializer(serializers.ModelSerializer):
                 queryset=models.Beer.objects.all(),
             ),
         ]
+
+
+class OtherPKSerializer(serializers.Serializer):
+
+    # we'll take care of validating during the view
+    id = serializers.IntegerField(min_value=0)
