@@ -39,3 +39,68 @@ You can also attach specific lookups to narrow/widen your search:
 
 To do the filtering, simply GET
 `/beers/?name__icontains=monkey&taps__venue__name__icontains=straight`
+
+
+## Moderation
+
+Have you spotted two beers which should be merged into one?
+
+Well you're in luck!
+
+Simply fill out this HTTP request:
+
+`POST /api/v1/beers/<pk>/mergefrom/` (replace `<pk>` with the ID of the beer
+you want to **keep**, described below as "kept beer")
+
+Body:
+
+```json
+{"id": 123}
+```
+
+Replace 123 with the ID of the beer you want to get rid of (described below as
+"other beer")
+
+The process:
+
+1. All taps assigned to the other beer are assigned to the kept beer.
+2. All fields which are unset (i.e. null or zero) on the kept beer and are
+   set on the other beer will have their values copied over to the kept beer.
+3. All fields which are set on the kept beer are untouched.
+
+Example:
+
+- Beer ID 123
+   - Name: "Hoptastic IPA"
+   - Manufacturer: "Drew's Basement Brewery"
+   - IBU: 73
+   - ABV: 5.7
+   - Manufacturer URL: http://example.com/beer/Hoptastic
+- Beer ID 456
+   - Name: "Hoptastic"
+   - Manufacturer: "Drew's Basement"
+   - IBU: 75
+   - ABV: 6
+   - Color: `#abcdef`
+   - Untappd URL: http://untappd.example.com/beer/122334
+
+Request:
+
+`POST /api/v1/beers/123/mergefrom/`
+
+Body:
+```json
+{"id": 456}
+```
+
+Result:
+
+- Beer 456 is deleted
+- Taps assigned to 456 are moved to 123
+- Fields copied to 123:
+   - Color
+   - Untappd URL
+- Fields left alone on 123:
+   - ABV
+   - IBU
+   - Manufacturer
