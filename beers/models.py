@@ -1,8 +1,11 @@
+import logging
 import string
 
-from django.db import models
+from django.db import models, transaction
 
 from .utils import render_srm
+
+LOG = logging.getLogger(__name__)
 
 
 class BeerStyleCategory(models.Model):
@@ -115,6 +118,45 @@ class Manufacturer(models.Model):
     twitter_handle = models.CharField(max_length=50, blank=True)
     instagram_handle = models.CharField(max_length=50, blank=True)
     untappd_url = models.URLField(blank=True, unique=True, null=True)
+    automatic_updates_blocked = models.NullBooleanField(default=False)
+
+    def merge_from(self, other):
+        LOG.info('merging %s into %s', other, self)
+        with transaction.atomic():
+            other_beers = list(other.beers.all())
+            my_beers = {i.name: i for i in self.beers.all()}
+            for beer in other_beers:
+                beer.manufacturer = self
+                if beer.name in my_beers:
+                    # we have a duplicate beer. Merge those two first.
+                    # merge_from takes care of saving my_beer and deleting
+                    # beer
+                    # keep the one that was already present
+                    my_beer = my_beers[beer.name]
+                    my_beer.merge_from(beer)
+                else:
+                    # good
+                    beer.save()
+
+            for alternate_name in other.alternate_names.all():
+                alternate_name.beer = self
+                alternate_name.save()
+            excluded_fields = {
+                'name', 'automatic_updates_blocked', 'id',
+            }
+            for field in self._meta.fields:
+                field_name = field.name
+                if field_name in excluded_fields:
+                    continue
+                other_value = getattr(other, field_name)
+                if getattr(self, field_name) or not other_value:
+                    # don't overwrite data that's already there
+                    # or isn't set in the other one
+                    continue
+                setattr(self, field_name, other_value)
+            self.automatic_updates_blocked = True
+            other.delete()
+            self.save()
 
     def __str__(self):
         return self.name
@@ -158,6 +200,7 @@ class Beer(models.Model):
         blank=True,
     )
     manufacturer_url = models.URLField(blank=True, null=True, unique=True)
+    automatic_updates_blocked = models.NullBooleanField(default=False)
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
@@ -179,7 +222,45 @@ class Beer(models.Model):
             return self.color_html
         return render_srm(self.color_srm)
 
+    def merge_from(self, other):
+        LOG.info('merging %s into %s', other, self)
+        with transaction.atomic():
+            for tap in other.taps.all():
+                tap.beer = self
+                tap.save()
+            for alternate_name in other.alternate_names.all():
+                alternate_name.beer = self
+                alternate_name.save()
+            excluded_fields = {
+                'name' 'in_production', 'automatic_updates_blocked',
+                'manufacturer', 'id',
+            }
+            for field in self._meta.fields:
+                field_name = field.name
+                if field_name in excluded_fields:
+                    continue
+                other_value = getattr(other, field_name)
+                if getattr(self, field_name) or not other_value:
+                    # don't overwrite data that's already there
+                    # or isn't set in the other one
+                    continue
+                setattr(self, field_name, other_value)
+            self.automatic_updates_blocked = True
+            other.delete()
+            self.save()
+
     class Meta:
         unique_together = [
             ('name', 'manufacturer'),
         ]
+
+
+class BeerAlternateName(models.Model):
+    beer = models.ForeignKey(Beer, models.CASCADE, related_name='alternate_names')
+    name = models.CharField(max_length=100, unique=True)
+
+
+class ManufacturerAlternateName(models.Model):
+    manufacturer = models.ForeignKey(
+        Manufacturer, models.CASCADE, related_name='alternate_names')
+    name = models.CharField(max_length=100, unique=True)
