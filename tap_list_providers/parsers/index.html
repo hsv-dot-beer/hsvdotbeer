@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Parsers - hsv_dot_beer</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">hsv_dot_beer</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../api/authentication/">Authentication</a>
+</li>
+                                    
+<li >
+    <a href="../../api/users/">Users</a>
+</li>
+                                    
+<li >
+    <a href="../../venues/venues/">Venues</a>
+</li>
+                                    
+<li >
+    <a href="../../beers/beers/">Beers</a>
+</li>
+                                    
+<li >
+    <a href="../../beers/manufacturers/">Manufacturers</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tap List Providers <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li class="active">
+    <a href="./">Parsers</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../../beers/manufacturers/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="disabled">
+                                <a rel="prev" >
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/hsv-dot-beer/hsvdotbeer/edit/master/docs/tap_list_providers/parsers.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#parsers">Parsers</a></li>
+            <li><a href="#what-are-these">What are these?</a></li>
+            <li><a href="#how-does-this-work">How does this work?</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="parsers">Parsers</h1>
+<h2 id="what-are-these">What are these?</h2>
+<p>Parsers are a way of taking the data provided by the various API providers and
+converting them into our format. Some are user-friendly (e.g. they give us
+raw JSON), but some are not so nice (HTML embedded within a JS object).</p>
+<h2 id="how-does-this-work">How does this work?</h2>
+<p>All parsers inherit from the BaseTapListProvider class in
+<code>tap_list_providers/base.py</code>.</p>
+<p>To make your own, you need to:</p>
+<ol>
+<li>Declare a string that identifies your provider, e.g. <code>mybeer</code>.</li>
+<li>In <code>venues/models.py</code>, edit the <code>TAP_LIST_PROVIDERS</code> attribute of the <code>Venue</code>
+   class to add an entry for your provider in the form
+   (<code>internal_name</code>, <code>Friendly display name</code>).</li>
+<li>If necessary, add fields to the <code>VenueAPIConfiguration</code> model that detail
+   what configuration data is required for your provider (URL, API key, etc.).</li>
+<li>Create a migration for both of the above: <code>pipenv run ./manage.py makemigrations</code></li>
+<li>Create a file named after your provider in <code>tap_list_providers/parsers/</code>.</li>
+<li>Your class should inherit from BaseTapListProvider and define the class-level
+   (<em>not</em> instance-level) attribute <code>provider_name</code>. That attribute must match
+   the <code>internal_name</code> from step 2.</li>
+<li>You need to implement the method <code>def handle_venue(self, venue)</code>. From there,
+   iterate over the rooms in that venue and fill in data from what you get from
+   the API provider.</li>
+<li>Utilize the <code>get_beer</code> and <code>get_manufacturer</code> methods from the base class to
+   simplify beer and manufacturer lookup, respectively. Those will automatically
+   create the beers/manufacturers if no match is found (and eventually put them
+   in a moderation queue).</li>
+<li>If your provider has some sort of unique beer/manufacturer ID (or URL):</li>
+<li>Add that field to the beer/manufacturer model and create a migration for it.</li>
+<li>Create a migration for that new field.</li>
+<li>For beer fields, add that field to the <code>unique_fields</code> local variable in
+      the <code>get_beer()</code> method of the base class.</li>
+<li>For manufacturer fields, either implement a spacial case as in the
+      <code>if untappd_url</code> block of the <code>get_manufacturer()</code> method or (preferably)
+      refactor the method to use the similar <code>unique_fields</code> logic as <code>get_beer()</code>
+      and then update these docs accordingly.</li>
+<li>Create a management command to parse all venues for your provider:</li>
+<li>Create a file called <code>parse&lt;myprovider&gt;.py</code> in <code>tap_list_providers/management/commands/</code>.</li>
+<li>Copy and paste the logic from one of the other files and change the
+      references to refer to your code.</li>
+<li>Save example data in <code>tap_list_providers/example_data</code>. This should be the
+    same data you would get from making the HTTP call to get your data. This
+    way you can use the <code>responses</code> library to fake the result of the HTTP call.</li>
+<li>Create test code in <code>tap_list_providers/test/</code> that parses real data
+    (calling the management command) and validates a few of the taps to make
+    sure you get the right example data.</li>
+<li>Schedule your task:</li>
+<li>Open http://localhost:8000/admin/ and under Periodic Tasks, select
+   the <code>Add</code> link next to Periodic Tasks.</li>
+<li>Fields to fill in:<ul>
+<li>Name: <code>Parse &lt;my provider&gt;</code></li>
+<li>Task (registered): <code>tap_list_providers.tasks.parse_provider</code></li>
+<li>Description: <code>Update all venues from &lt;my provider&gt;</code></li>
+<li>Schedule block:<ul>
+<li>Crontab: click the green plus icon<ul>
+<li>Set minute to some value that is not currently used (0, 15, 30,
+  45)</li>
+<li>Leave the rest as defaults</li>
+<li>Click Save</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Click <code>show</code> next to <code>Arguments</code>.</li>
+<li>Set the arguments block to <code>["internal_name"]</code> (double quotes are
+    essential)</li>
+<li>Click <code>SAVE</code></li>
+</ul>
+</li>
+<li>Export the updated schedule:
+   <code>bash
+   pipenv run ./manage.py dumpdata --indent 2 -o tap_list_providers/fixtures/scheduled_tasks.json django_celery_beat.solarschedule django_celery_beat.periodictasks django_celery_beat.periodictask django_celery_beat.intervalschedule django_celery_beat.crontabschedule</code></li>
+<li>Commit your changes and create a PR!</li>
+</ol></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2018-19, <a href="https://github.com/hsv-dot-beer">hsv-dot-beer</a>.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
