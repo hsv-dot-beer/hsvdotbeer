@@ -172,6 +172,7 @@ class UntappdParser(BaseTapListProvider):
             'div', {'class': 'label-image-hideable beer-label pull-left'},
         )
         beer_link_tag = beer_link.find('a')
+        beer_image = beer_link.find('img').attrs['src']
         if beer_link_tag:
             url = beer_link_tag.attrs['href']
         else:
@@ -198,6 +199,7 @@ class UntappdParser(BaseTapListProvider):
                 'name': beer_info,
                 'untappd_url': url,
                 'style': self.parse_style(beer_style),
+                'logo_url': beer_image,
             },
             'manufacturer':
             {
