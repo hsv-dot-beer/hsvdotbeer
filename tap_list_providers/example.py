@@ -45,13 +45,12 @@ class ExampleTapListProvider(BaseTapListProvider):
             try:
                 manufacturer = manufacturers[beer_info['brewery']]
             except KeyError:
-                manufacturer = Manufacturer.objects.create(
-                    name=beer_info['brewery'],
-                )
+                manufacturer = self.get_manufacturer(name=beer_info['brewery'])
                 # cache it for next time
                 manufacturers[manufacturer.name] = manufacturer
             name = beer_info.pop('beer')
             del beer_info['brewery']
+            beer_info['api_vendor_style'] = beer_info['style']
             beer_info['style'] = self.guess_style(beer_info['style'])
             beer = self.get_beer(name, manufacturer, **beer_info)
             tap.beer = beer

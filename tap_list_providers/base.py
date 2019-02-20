@@ -13,6 +13,7 @@ from django.db.models import Prefetch, Q
 from venues.models import Venue
 from beers.models import Beer, Manufacturer
 from taps.models import Tap
+from .models import TapListProviderStyleMapping
 
 LOG = logging.getLogger(__name__)
 
@@ -69,6 +70,7 @@ class BaseTapListProvider():
         )
         unique_fields = (
             'manufacturer_url', 'untappd_url', 'beer_advocate_url',
+            'taphunter_url',
         )
         field_names = {i.name for i in Beer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
@@ -78,6 +80,23 @@ class BaseTapListProvider():
             field: value for field, value in defaults.items()
             if field in set(unique_fields) and value
         }
+        try:
+            api_vendor_style = defaults['api_vendor_style']
+        except KeyError:
+            # don't care; ignore it
+            pass
+        else:
+            try:
+                mapping = TapListProviderStyleMapping.objects.filter(
+                    provider_style_name=api_vendor_style
+                ).select_related('style').get()
+            except TapListProviderStyleMapping.DoesNotExist:
+                # oh well, it was worth a shot
+                pass
+            else:
+                # go ahead and try to assign it to the style if possible
+                defaults['style'] = mapping.style
+                del defaults['api_vendor_style']
         beer = None
         if unique_fields_present:
             filter_expr = Q()
@@ -147,7 +166,7 @@ class BaseTapListProvider():
                 beer.save()
         return beer
 
-    def get_manufacturer(self, name, untappd_url=None, **defaults):
+    def get_manufacturer(self, name, **defaults):
         field_names = {i.name for i in Manufacturer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:
@@ -155,18 +174,28 @@ class BaseTapListProvider():
         kwargs = defaults.copy()
         manufacturer = None
         filter_expr = Q()
-        if untappd_url:
-            options = list(Manufacturer.objects.filter(
-                Q(untappd_url=untappd_url) | Q(name=name)
-            ))
-            if len(options) > 1:
-                LOG.info('Found multiple options for %s (URL %s)', name, untappd_url)
-                # pick the one where the name matches
-                manufacturer = [i for i in options if i.untappd_url][0]
-            elif options:
-                manufacturer = options[0]
-            # prefer untappd url over name
-            kwargs['untappd_url'] = untappd_url
+        unique_fields = {
+            'untappd_url', 'taphunter_url',
+        }
+        for field in unique_fields:
+            value = kwargs.get(field)
+            if not value:
+                continue
+            if not manufacturer:
+                options = list(Manufacturer.objects.filter(
+                    Q(**{field: value}) | Q(name=name)
+                ))
+                if len(options) > 1:
+                    LOG.info(
+                        'Found multiple options for %s (%s %s)',
+                        name, field, value,
+                    )
+                    # pick the one where the name matches
+                    manufacturer = [
+                        i for i in options if getattr(i, field)
+                    ][0]
+                elif options:
+                    manufacturer = options[0]
         else:
             filter_expr = Q(name=name) | Q(alternate_names__name=name)
         if not manufacturer:

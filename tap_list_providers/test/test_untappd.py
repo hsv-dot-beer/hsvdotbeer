@@ -81,3 +81,8 @@ class CommandsTestCase(TestCase):
                 tap.beer.manufacturer.untappd_url,
                 'https://untappd.com/brewery/8036',
             )
+            self.assertEqual(
+                tap.beer.logo_url,
+                'https://untappd.akamaized.net/site/beer_logos/'
+                'beer-_32727_63923de6f1587043d09e3a967cce.jpeg',
+            )
