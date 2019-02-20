@@ -13,6 +13,7 @@ from django.db.models import Prefetch, Q
 from venues.models import Venue
 from beers.models import Beer, Manufacturer
 from taps.models import Tap
+from .models import TapListProviderStyleMapping
 
 LOG = logging.getLogger(__name__)
 
@@ -78,6 +79,23 @@ class BaseTapListProvider():
             field: value for field, value in defaults.items()
             if field in set(unique_fields) and value
         }
+        try:
+            api_vendor_style = defaults['api_vendor_style']
+        except KeyError:
+            # don't care; ignore it
+            pass
+        else:
+            try:
+                mapping = TapListProviderStyleMapping.objects.filter(
+                    provider_style_name=api_vendor_style
+                ).select_related('style').get()
+            except TapListProviderStyleMapping.DoesNotExist:
+                # oh well, it was worth a shot
+                pass
+            else:
+                # go ahead and try to assign it to the style if possible
+                defaults['style'] = mapping.style
+                del defaults['api_vendor_style']
         beer = None
         if unique_fields_present:
             filter_expr = Q()
