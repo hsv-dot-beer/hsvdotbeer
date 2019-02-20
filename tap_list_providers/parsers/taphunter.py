@@ -89,8 +89,7 @@ class TaphunterParser(BaseTapListProvider):
             if style:
                 parsed_beer['api_vendor_style'] = \
                     f"{style['category']} - {style['name']}"
-            # TODO (#38): handle color
-            color_srm = parsed_beer.pop('srm', '')
+            color_srm = parsed_beer.pop('srm', 0)
             if color_srm:
                 parsed_beer['color_srm'] = color_srm
             LOG.debug(
@@ -110,6 +109,7 @@ class TaphunterParser(BaseTapListProvider):
                 'category': tap['beer']['style_category'],
             },
             'logo_url': tap['beer'].get('logo_url') or None,
+            'taphunter_url': tap['beer'].get('public_url') or None,
         }
 
         if tap['beer']['abv']:
@@ -128,6 +128,7 @@ class TaphunterParser(BaseTapListProvider):
             'name': tap['brewery']['name'],
             'location': tap['brewery']['origin'],
             'logo_url': tap['brewery'].get('logo_url') or None,
+            'taphunter_url': tap['brewery'].get('public_url') or None,
         }
         return manufacturer
 
