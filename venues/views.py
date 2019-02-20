@@ -32,6 +32,38 @@ class VenueViewSet(ModelViewSet):
         serializer = BeerViewSet.serializer_class(queryset, many=True)
         return Response(serializer.data)
 
+    @action(detail=True, methods=['GET'])
+    def styles(self, request, pk):
+        from beers.views import BeerStyleViewSet
+        queryset = BeerStyleViewSet.queryset.filter(
+            beers__taps__venue__id=pk,
+        ).distinct()
+
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = BeerStyleViewSet.serializer_class(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = BeerStyleViewSet.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['GET'])
+    def stylecategories(self, request, pk):
+        from beers.views import BeerStyleCategoryViewSet
+        queryset = BeerStyleCategoryViewSet.queryset.filter(
+            styles__beers__taps__venue__id=pk,
+        ).distinct()
+
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = BeerStyleCategoryViewSet.serializer_class(
+                page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = BeerStyleCategoryViewSet.serializer_class(
+            queryset, many=True)
+        return Response(serializer.data)
+
 
 class VenueAPIConfigurationViewSet(ModelViewSet):
     serializer_class = serializers.VenueAPIConfigurationSerializer
