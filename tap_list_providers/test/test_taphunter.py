@@ -72,9 +72,19 @@ class CommandsTestCase(TestCase):
                 "-Y7axHi0d6EvSOlV-0OEbI4FIn7CHssVtuFN4l7FzKZztU_X_c8rgAclWlEylvCvqs=s150",
             )
             self.assertEqual(
+                tap.beer.taphunter_url,
+                "https://www.taphunter.com/beer/"
+                "angry-orchard-crisp-apple-cider/48961206",
+            )
+            self.assertEqual(
                 tap.beer.manufacturer.logo_url,
                 "https://lh5.ggpht.com/gUNebXp4obondztO0FPSxhFGr1JFMKMv2TnXvk5I"
                 "_A4UQpd4YSs-PTjWBHP1HDivT8O10rPENIwfMXjg9NaaMsrAp6p6Rw=s150",
+            )
+            self.assertEqual(
+                tap.beer.manufacturer.taphunter_url,
+                'https://www.taphunter.com/brewery/angry-orchard-cidery/'
+                '35527549',
             )
             tap = taps[1]
             self.assertEqual(tap.beer.name, "Bound By Time")

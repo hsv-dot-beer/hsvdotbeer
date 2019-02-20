@@ -119,6 +119,7 @@ class Manufacturer(models.Model):
     instagram_handle = models.CharField(max_length=50, blank=True)
     untappd_url = models.URLField(blank=True, unique=True, null=True)
     automatic_updates_blocked = models.NullBooleanField(default=False)
+    taphunter_url = models.URLField(blank=True, null=True, unique=True)
 
     def merge_from(self, other):
         LOG.info('merging %s into %s', other, self)
@@ -201,6 +202,7 @@ class Beer(models.Model):
     )
     manufacturer_url = models.URLField(blank=True, null=True, unique=True)
     automatic_updates_blocked = models.NullBooleanField(default=False)
+    taphunter_url = models.URLField(blank=True, null=True, unique=True)
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
@@ -212,6 +214,8 @@ class Beer(models.Model):
             self.rate_beer_url = None
         if not self.manufacturer_url:
             self.manufacturer_url = None
+        if not self.taphunter_url:
+            self.taphunter_url = None
         return super().save(*args, **kwargs)
 
     def __str__(self):

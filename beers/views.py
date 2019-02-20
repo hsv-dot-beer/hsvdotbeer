@@ -36,6 +36,20 @@ class ModerationMixin():
 
 
 class BeerStyleCategoryViewSet(ModelViewSet):
+    @action(detail=True, methods=['GET'])
+    def beersontap(self, request, pk):
+        """Get a list of beers on tap for this style category"""
+        queryset = BeerViewSet.queryset.filter(
+            style__category__id=pk,
+            taps__isnull=False,
+        ).distinct()
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = BeerViewSet.serializer_class(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = BeerViewSet.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
     serializer_class = serializers.BeerStyleCategorySerializer
     queryset = models.BeerStyleCategory.objects.order_by('id')
 
