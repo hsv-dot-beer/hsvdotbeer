@@ -12,6 +12,18 @@ class BeerStyleCategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class BeerStyleCategoryWithBeersSerializer(BeerStyleCategorySerializer):
+    beers = serializers.SerializerMethodField()
+
+    def get_beers(self, obj):
+        styles = list(obj.styles.all())
+        if not styles:
+            return []
+        # NOTE: relying on Prefetch() here to remove beers not on tap
+        beers = set(sum((list(i.beers.all()) for i in styles), []))
+        return BeerSerializer(beers, many=True).data
+
+
 class BeerStyleTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.BeerStyleTag
@@ -162,3 +174,7 @@ class OtherPKSerializer(serializers.Serializer):
 
     # we'll take care of validating during the view
     id = serializers.IntegerField(min_value=0)
+
+
+class BeerStyleWithBeersSerializer(BeerStyleSerializer):
+    beers = BeerSerializer(many=True, read_only=True)

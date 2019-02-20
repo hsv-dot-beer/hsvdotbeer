@@ -1,7 +1,12 @@
+from django.db.models import Prefetch
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.response import Response
+
+from beers.serializers import BeerStyleWithBeersSerializer, \
+    BeerStyleCategoryWithBeersSerializer
+from beers.models import Beer
 
 from . import serializers
 from . import models
@@ -37,14 +42,19 @@ class VenueViewSet(ModelViewSet):
         from beers.views import BeerStyleViewSet
         queryset = BeerStyleViewSet.queryset.filter(
             beers__taps__venue__id=pk,
+        ).prefetch_related(
+            Prefetch(
+                'beers',
+                queryset=Beer.objects.filter(taps__isnull=False).distinct(),
+            ),
         ).distinct()
 
         page = self.paginate_queryset(queryset)
 
         if page is not None:
-            serializer = BeerStyleViewSet.serializer_class(page, many=True)
+            serializer = BeerStyleWithBeersSerializer(page, many=True)
             return self.get_paginated_response(serializer.data)
-        serializer = BeerStyleViewSet.serializer_class(queryset, many=True)
+        serializer = BeerStyleWithBeersSerializer(queryset, many=True)
         return Response(serializer.data)
 
     @action(detail=True, methods=['GET'])
@@ -52,15 +62,20 @@ class VenueViewSet(ModelViewSet):
         from beers.views import BeerStyleCategoryViewSet
         queryset = BeerStyleCategoryViewSet.queryset.filter(
             styles__beers__taps__venue__id=pk,
+        ).prefetch_related(
+            Prefetch(
+                'styles__beers',
+                queryset=Beer.objects.filter(taps__isnull=False).distinct(),
+            ),
         ).distinct()
 
         page = self.paginate_queryset(queryset)
 
         if page is not None:
-            serializer = BeerStyleCategoryViewSet.serializer_class(
+            serializer = BeerStyleCategoryWithBeersSerializer(
                 page, many=True)
             return self.get_paginated_response(serializer.data)
-        serializer = BeerStyleCategoryViewSet.serializer_class(
+        serializer = BeerStyleCategoryWithBeersSerializer(
             queryset, many=True)
         return Response(serializer.data)
 

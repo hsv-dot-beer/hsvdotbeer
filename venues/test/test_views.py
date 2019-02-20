@@ -98,6 +98,9 @@ class TestVenueDetailTestCase(APITestCase):
         eq_(response.status_code, status.HTTP_200_OK, response.data)
         eq_(len(response.data['results']), 1, response.data)
         eq_(response.data['results'][0]['id'], style.id)
+        beers = response.data['results'][0]['beers']
+        eq_(len(beers), 1, beers)
+        eq_(beers[0]['id'], tap.beer_id, beers[0])
 
     def test_style_categories(self):
         style = BeerStyleFactory()
@@ -108,6 +111,9 @@ class TestVenueDetailTestCase(APITestCase):
         eq_(response.status_code, status.HTTP_200_OK, response.data)
         eq_(len(response.data['results']), 1, response.data)
         eq_(response.data['results'][0]['id'], style.category_id)
+        beers = response.data['results'][0]['beers']
+        eq_(len(beers), 1, beers)
+        eq_(beers[0]['id'], tap.beer_id, beers[0])
 
 
 class VenueAPIConfigurationListTestCase(APITestCase):
