@@ -133,7 +133,6 @@ class BaseTapListProvider():
                 beer = Beer.objects.get(
                     Q(name=name) | Q(alternate_names__name=name),
                     manufacturer=manufacturer,
-                    **defaults,
                 )
             except Beer.DoesNotExist:
                 beer = Beer.objects.create(
