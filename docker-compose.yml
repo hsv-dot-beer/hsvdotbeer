@@ -44,18 +44,4 @@ services:
     command: >
       bash -c "pipenv run python wait_for_postgres.py &&
                pipenv run ./manage.py migrate &&
-               pipenv run celery -A hsv_dot_beer worker"
-  beat:
-    restart: always
-    image: web
-    environment:
-      - DJANGO_SECRET_KEY=local
-      - REDIS_URL=redis://redis:6379/
-    depends_on:
-      - postgres
-      - redis
-    build: ./
-    command: >
-      bash -c "pipenv run python wait_for_postgres.py &&
-               pipenv run ./manage.py migrate &&
-               pipenv run celery -A hsv_dot_beer beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
+               pipenv run celery -A hsv_dot_beer worker -l info --beat --scheduler django_celery_beat.schedulers:DatabaseScheduler"
