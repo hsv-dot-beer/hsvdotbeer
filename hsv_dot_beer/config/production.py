@@ -36,4 +36,5 @@ class Production(Common):
         'localhost:8000',
         'hsv.beer',
         'dev.hsv.beer',
+        's.codepen.io',
     )
