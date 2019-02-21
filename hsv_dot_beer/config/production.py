@@ -30,3 +30,11 @@ class Production(Common):
     AWS_HEADERS = {
         'Cache-Control': 'max-age=86400, s-maxage=86400, must-revalidate',
     }
+
+    # cross-origin request sharing
+    CORS_ORIGIN_WHITELIST = (
+        'localhost:8000',
+        'hsv.beer',
+        'dev.hsv.beer',
+        's.codepen.io',
+    )

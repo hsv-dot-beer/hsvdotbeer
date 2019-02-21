@@ -27,6 +27,7 @@ lxml = "*"
 requests = "*"
 celery = {extras = ["redis"],version = "*"}
 django-celery-beat = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 ipdb = "*"
