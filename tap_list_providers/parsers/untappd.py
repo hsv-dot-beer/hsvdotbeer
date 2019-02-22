@@ -32,8 +32,8 @@ class UntappdParser(BaseTapListProvider):
         self.location_url = None
         if location and theme:
             self.location_url = self.URL.format(location, theme)
-
-        self.categories = cats or []
+        LOG.debug('categories: %s', cats)
+        self.categories = [i.casefold() for i in cats] if cats else []
         super().__init__()
 
     def fetch_data(self):
@@ -43,7 +43,10 @@ class UntappdParser(BaseTapListProvider):
         return data
 
     def handle_venue(self, venue):
-        self.categories = venue.api_configuration.untappd_categories
+        self.categories = [
+            i.casefold() for i in venue.api_configuration.untappd_categories
+        ]
+        LOG.debug('Categories: %s', self.categories)
         self.location_url = self.URL.format(
             venue.api_configuration.untappd_location,
             venue.api_configuration.untappd_theme,
@@ -123,8 +126,11 @@ class UntappdParser(BaseTapListProvider):
 
         for element in info_elements:
             text = element.find('div', {'class': 'section-name'}).text
-            if text in self.categories:
+            if text.casefold() in self.categories:
+                LOG.debug('Adding tap list %s', text)
                 self.taplists.append(element)
+            else:
+                LOG.debug('Ignoring tap list %s', text)
 
     def parse_style(self, style):
         if '-' in style:
@@ -238,7 +244,9 @@ class UntappdParser(BaseTapListProvider):
     def taps(self):
         ret = []
         for taplist in self.taplists:
+            LOG.debug('Opening tap list')
             entries = taplist.find_all('div', {'class': 'beer'})
+            LOG.debug('Found %s entries', len(entries))
             updated = None
             menus = self.soup.find_all('div', {'class': 'menu-info'})
             for menu in menus:
