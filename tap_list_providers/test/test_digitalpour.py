@@ -87,6 +87,27 @@ class CommandsTestCase(TestCase):
             self.assertEqual(tap.gas_type, 'nitro')
             self.assertEqual(tap.beer.render_srm(), '#241206')
             self.assertEqual(tap.beer.api_vendor_style, 'Milk Stout')
+            prices = {
+                Decimal(6.0): Decimal(3.0),
+                Decimal(10.0): Decimal(5.0),
+                Decimal(16.0): Decimal(8.0),
+                Decimal(32.0): Decimal(13.5),
+                Decimal(64.0): Decimal(25.0),
+            }
+            price_instances = list(tap.beer.prices.select_related('serving_size', 'venue'))
+            self.assertEqual(
+                len(price_instances),
+                len(prices),
+                price_instances,
+            )
+            for price_instance in price_instances:
+                self.assertEqual(price_instance.venue, self.venue, price_instance)
+                self.assertIn(price_instance.serving_size.volume_oz, prices, price_instance)
+                self.assertEqual(
+                    prices[price_instance.serving_size.volume_oz],
+                    price_instance.price,
+                    price_instance,
+                )
             self.assertEqual(
                 tap.beer.manufacturer.logo_url,
                 'https://s3.amazonaws.com/digitalpourproducerlogos/4f7de8502595f5153887e925.png',

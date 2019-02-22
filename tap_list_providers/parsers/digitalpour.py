@@ -1,3 +1,4 @@
+from decimal import Decimal
 import logging
 import os
 import json
@@ -93,7 +94,10 @@ class DigitalPourParser(BaseTapListProvider):
                 'looking up beer: name %s, mfg %s, other data %s',
                 name, manufacturer, parsed_beer,
             )
-            beer = self.get_beer(name, manufacturer, **parsed_beer)
+            beer = self.get_beer(
+                name, manufacturer, pricing=self.parse_pricing(entry),
+                venue=venue, **parsed_beer,
+            )
             # 4. assign the beer to the tap
             tap.beer = beer
             tap.save()
@@ -159,9 +163,12 @@ class DigitalPourParser(BaseTapListProvider):
         prices = tap['MenuItemProductDetail']['Prices']
         for price in prices:
             p = {
-                'size': price['Size'],
+                'volume_oz': Decimal(price['DisplaySize']),
+                # 6oz --> 6 oz
+                'name': f'{price["DisplayName"][:-2]} '
+                f'{price["DisplayName"][-2:]}',
                 'price': price['Price'],
-                'per_ounce': price['Price']/price['Size']
+                'per_ounce': price['Price'] / price['Size'],
             }
             pricing.append(p)
         return pricing

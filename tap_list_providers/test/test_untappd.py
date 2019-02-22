@@ -86,3 +86,22 @@ class CommandsTestCase(TestCase):
                 'https://untappd.akamaized.net/site/beer_logos/'
                 'beer-_32727_63923de6f1587043d09e3a967cce.jpeg',
             )
+            prices = {
+                Decimal(12): Decimal(6.0),
+                Decimal(4): Decimal(3.0),
+                Decimal(8): Decimal(5.0),
+            }
+            price_instances = list(tap.beer.prices.select_related('serving_size', 'venue'))
+            self.assertEqual(
+                len(price_instances),
+                len(prices),
+                price_instances,
+            )
+            for price_instance in price_instances:
+                self.assertEqual(price_instance.venue, self.venue, price_instance)
+                self.assertIn(price_instance.serving_size.volume_oz, prices, price_instance)
+                self.assertEqual(
+                    prices[price_instance.serving_size.volume_oz],
+                    price_instance.price,
+                    price_instance,
+                )

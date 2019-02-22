@@ -1,3 +1,4 @@
+from decimal import Decimal
 import json
 import logging
 import os
@@ -94,7 +95,9 @@ class UntappdParser(BaseTapListProvider):
                 tap_info['beer']['api_vendor_style'] = \
                     f"{style['category']} - {style['name']}"
             beer = self.get_beer(
-                beer_name, manufacturer, **tap_info['beer']
+                beer_name, manufacturer, venue=venue,
+                pricing=tap_info['pricing'],
+                **tap_info['beer']
             )
             # 4. assign the beer to the tap
             tap.beer = beer
@@ -155,10 +158,11 @@ class UntappdParser(BaseTapListProvider):
                 size = row.find('span', {'class': 'type'}).text
                 price = row.find('span', {'class': 'price'}).text
                 price = {
-                    'size': self.parse_size(size),
-                    'price': self.parse_price(price)
+                    'volume_oz': Decimal(self.parse_size(size)),
+                    'name': size,
+                    'price': self.parse_price(price),
                 }
-                price['per_ounce'] = price['price'] / price['size']
+                price['per_ounce'] = Decimal(price['price']) / price['volume_oz']
                 pricing.append(price)
         return pricing
 

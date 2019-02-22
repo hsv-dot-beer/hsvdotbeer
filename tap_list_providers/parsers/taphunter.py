@@ -96,7 +96,10 @@ class TaphunterParser(BaseTapListProvider):
                 'looking up beer: name %s, mfg %s, other data %s',
                 name, manufacturer, parsed_beer,
             )
-            beer = self.get_beer(name, manufacturer, **parsed_beer)
+            beer = self.get_beer(
+                name, manufacturer, pricing=self.parse_pricing(entry),
+                venue=venue, **parsed_beer,
+            )
             # 4. assign the beer to the tap
             tap.beer = beer
             tap.save()
@@ -153,7 +156,7 @@ class TaphunterParser(BaseTapListProvider):
 
     def parse_price(self, price):
         price = price.replace('$', '')
-        return float(price)
+        return round(decimal.Decimal(price), 2)
 
     def parse_pricing(self, tap):
         pricing = []
@@ -162,10 +165,11 @@ class TaphunterParser(BaseTapListProvider):
                 p = tap['serving_info']['sized_pricing']
                 for entry in p:
                     price = {
-                        'size': self.parse_size(entry['size']),
-                        'price': self.parse_price(entry['price'])
+                        'volume_oz': self.parse_size(entry['size']),
+                        'name': entry['size'],
+                        'price': self.parse_price(entry['price']),
                     }
-                    price['per_ounce'] = price['price'] / price['size']
+                    price['per_ounce'] = price['price'] / price['volume_oz']
                     pricing.append(price)
         return pricing
 

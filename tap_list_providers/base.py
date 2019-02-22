@@ -11,7 +11,7 @@ import logging
 from django.db.models import Prefetch, Q
 
 from venues.models import Venue
-from beers.models import Beer, Manufacturer
+from beers.models import Beer, Manufacturer, BeerPrice, ServingSize
 from taps.models import Tap
 from .models import TapListProviderStyleMapping
 
@@ -63,7 +63,7 @@ class BaseTapListProvider():
             LOG.debug('Fetching beers at %s', venue)
             self.handle_venue(venue)
 
-    def get_beer(self, name, manufacturer, **defaults):
+    def get_beer(self, name, manufacturer, pricing=None, venue=None, **defaults):
         LOG.debug(
             'get_beer(): name %s, mfg %s, defaults %s',
             name, manufacturer, defaults,
@@ -80,6 +80,7 @@ class BaseTapListProvider():
             field: value for field, value in defaults.items()
             if field in set(unique_fields) and value
         }
+        serving_sizes = {i.volume_oz: i for i in ServingSize.objects.all()}
         try:
             api_vendor_style = defaults['api_vendor_style']
         except KeyError:
@@ -163,6 +164,25 @@ class BaseTapListProvider():
                         needs_update = True
             if needs_update:
                 beer.save()
+        if pricing:
+            if not venue:
+                raise ValueError('You must specify a venue with a price')
+            for price_info in pricing:
+                try:
+                    serving_size = serving_sizes[price_info['volume_oz']]
+                except KeyError:
+                    serving_size = ServingSize.objects.get_or_create(
+                        volume_oz=price_info['volume_oz'],
+                        defaults={'name': price_info['name']},
+                    )[0]
+                    serving_sizes[price_info['volume_oz']] = serving_size
+
+                BeerPrice.objects.update_or_create(
+                    serving_size=serving_size,
+                    beer=beer,
+                    venue=venue,
+                    defaults={'price': price_info['price']}
+                )
         return beer
 
     def get_manufacturer(self, name, **defaults):
