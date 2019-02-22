@@ -5,7 +5,7 @@ which takes a single argument: a Venue object.
 
 It'll have API configuration, taps, and existing beers prefetched.
 """
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 import logging
 
 from django.db.models import Prefetch, Q
@@ -168,6 +168,14 @@ class BaseTapListProvider():
             if not venue:
                 raise ValueError('You must specify a venue with a price')
             for price_info in pricing:
+                if price_info['price'] > 500:
+                    LOG.warning(
+                        'Skipping bogus price %s for %s oz of %s',
+                        price_info['price'],
+                        price_info['volume_oz'],
+                        beer,
+                    )
+                    continue
                 try:
                     serving_size = serving_sizes[price_info['volume_oz']]
                 except KeyError:
@@ -176,13 +184,18 @@ class BaseTapListProvider():
                         defaults={'name': price_info['name']},
                     )[0]
                     serving_sizes[price_info['volume_oz']] = serving_size
-
-                BeerPrice.objects.update_or_create(
-                    serving_size=serving_size,
-                    beer=beer,
-                    venue=venue,
-                    defaults={'price': price_info['price']}
-                )
+                try:
+                    BeerPrice.objects.update_or_create(
+                        serving_size=serving_size,
+                        beer=beer,
+                        venue=venue,
+                        defaults={'price': price_info['price']}
+                    )
+                except InvalidOperation:
+                    LOG.error(
+                        'Unable to handle price %s for beer %s capacity %s',
+                        price_info['price'], beer, serving_size)
+                    raise
         return beer
 
     def get_manufacturer(self, name, **defaults):
