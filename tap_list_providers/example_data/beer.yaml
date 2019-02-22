@@ -1,0 +1,19 @@
+# example data that we would use
+taps:
+  1:
+    brewery: Straight to Ale
+    beer: Monkeynaut
+    abv: 7.25%
+    style: IPA - American
+  2:
+    brewery: Green Bus Brewing
+    beer: Tiramisu Milk Stout
+    style: Stout - Milk
+    abv: 5.5%
+    ibu: 20
+  3:
+    brewery: Rocket Republic Brewing Company
+    beer: Grapefruit Mach 1
+    style: IPA - Other
+    abv: 7.5%
+    ibu: 60

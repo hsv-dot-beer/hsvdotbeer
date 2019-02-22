@@ -263,8 +263,48 @@ class BeerAlternateName(models.Model):
     beer = models.ForeignKey(Beer, models.CASCADE, related_name='alternate_names')
     name = models.CharField(max_length=100, unique=True)
 
+    def __str__(self):
+        return f'{self.name} for {self.beer_id}'
+
 
 class ManufacturerAlternateName(models.Model):
     manufacturer = models.ForeignKey(
         Manufacturer, models.CASCADE, related_name='alternate_names')
     name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return f'{self.name} for {self.manufacturer_id}'
+
+
+class ServingSize(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    # max 9999.9 oz
+    volume_oz = models.DecimalField(
+        unique=True, null=True, blank=True,
+        max_digits=5, decimal_places=1,
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class BeerPrice(models.Model):
+    beer = models.ForeignKey(Beer, models.CASCADE, related_name='prices')
+    venue = models.ForeignKey(
+        'venues.Venue', models.DO_NOTHING, related_name='beer_prices',
+    )
+    serving_size = models.ForeignKey(
+        ServingSize, models.DO_NOTHING, related_name='beer_prices',
+    )
+    # max $999.99
+    price = models.DecimalField(
+        max_digits=5, decimal_places=2,
+    )
+
+    def __str__(self):
+        return f'${self.price} for {self.beer_id} at {self.venue_id}'
+
+    class Meta:
+        unique_together = (
+            ('beer', 'venue', 'serving_size'),
+        )

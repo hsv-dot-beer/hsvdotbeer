@@ -91,3 +91,26 @@ class CommandsTestCase(TestCase):
             self.assertEqual(tap.beer.abv, Decimal('7.00'))
             self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, '')
+            prices = {
+                Decimal(12): Decimal(5.99),
+                Decimal(16): Decimal(7.99),
+                Decimal(32): Decimal(9.59),
+            }
+            price_instances = list(tap.beer.prices.select_related('serving_size', 'venue'))
+            self.assertEqual(
+                len(price_instances),
+                len(prices),
+                price_instances,
+            )
+            for price_instance in price_instances:
+                self.assertEqual(price_instance.venue, self.venue, price_instance)
+                self.assertIn(price_instance.serving_size.volume_oz, prices, price_instance)
+                # because DigitalPour passes prices as floats, we will have
+                # floating-point errors in test. These won't show in production
+                # because the database rounds for us
+                self.assertAlmostEqual(
+                    prices[price_instance.serving_size.volume_oz],
+                    price_instance.price,
+                    3,
+                    price_instance,
+                )

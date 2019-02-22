@@ -110,6 +110,23 @@ class ManufacturerSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ServingSizeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ServingSize
+        # since this is a read-only serializer, exclude id
+        exclude = ['id']
+
+
+class BeerPriceSerializer(serializers.ModelSerializer):
+    venue = serializers.StringRelatedField()
+    serving_size = ServingSizeSerializer(read_only=True)
+
+    class Meta:
+        model = models.BeerPrice
+        # since this is a read-only serializer, exclude id and beer
+        exclude = ['id', 'beer']
+
+
 class BeerSerializer(serializers.ModelSerializer):
     manufacturer = ManufacturerSerializer(read_only=True)
     manufacturer_id = serializers.PrimaryKeyRelatedField(
@@ -132,6 +149,7 @@ class BeerSerializer(serializers.ModelSerializer):
         queryset=models.BeerStyle.objects.all()
     )
     venues = serializers.SerializerMethodField()
+    prices = BeerPriceSerializer(many=True, read_only=True)
 
     def get_color_srm_html(self, obj):
         return obj.render_srm()

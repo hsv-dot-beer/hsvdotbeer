@@ -96,6 +96,12 @@ class BeerViewSet(ModerationMixin, ModelViewSet):
                 'venue',
             ),
         ),
+        Prefetch(
+            'prices',
+            queryset=models.BeerPrice.objects.select_related(
+                'venue', 'serving_size',
+            )
+        ),
     ).order_by('manufacturer__name', 'name')
     filterset_class = filters.BeerFilterSet
 
