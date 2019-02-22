@@ -1,0 +1,106 @@
+[
+{
+  "model": "beers.servingsize",
+  "pk": 1,
+  "fields": {
+    "name": "Pint",
+    "volume_oz": "16.0"
+  }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 2,
+  "fields": {
+    "name": "Half Pint",
+    "volume_oz": "8.0"
+  }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 3,
+  "fields": {
+    "name": "10 oz",
+    "volume_oz": "10.0"
+  }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 4,
+  "fields": {
+    "name": "4 oz Taster",
+    "volume_oz": "4.0"
+  }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 5,
+  "fields": {
+    "name": "5 oz Taster",
+    "volume_oz": "5.0"
+  }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 6,
+  "fields": {
+    "name": "Growler",
+    "volume_oz": "64.0"
+  }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 7,
+  "fields": {
+    "name": "Crowler/Half Growler",
+    "volume_oz": "32.0"
+  }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 8,
+  "fields": {
+    "name": "12 oz",
+    "volume_oz": "12.0"
+  }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 9,
+  "fields": {
+    "name": "14.5 oz",
+    "volume_oz": "14.5"
+  }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 13,
+  "fields": {
+    "name": "6 oz",
+    "volume_oz": "6.0"
+  }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 14,
+  "fields": {
+    "name": "1/6 Barrel",
+    "volume_oz": "660.0"
+  }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 15,
+  "fields": {
+    "name": "1/2 Barrel",
+    "volume_oz": "1980.0"
+  }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 16,
+  "fields": {
+    "name": "1/4 Barrel",
+    "volume_oz": "996.0"
+  }
+}
+]
