@@ -203,6 +203,9 @@ class Beer(models.Model):
     manufacturer_url = models.URLField(blank=True, null=True, unique=True)
     automatic_updates_blocked = models.NullBooleanField(default=False)
     taphunter_url = models.URLField(blank=True, null=True, unique=True)
+    stem_and_stein_pk = models.PositiveIntegerField(
+        blank=True, null=True, unique=True,
+    )
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
