@@ -3,7 +3,7 @@
   "model": "django_celery_beat.periodictasks",
   "pk": 1,
   "fields": {
-    "last_update": "2019-02-16T21:57:54.902Z"
+    "last_update": "2019-02-23T19:39:55.397Z"
   }
 },
 {
@@ -25,9 +25,9 @@
     "one_off": false,
     "start_time": null,
     "enabled": true,
-    "last_run_at": null,
-    "total_run_count": 0,
-    "date_changed": "2019-02-16T21:57:54.905Z",
+    "last_run_at": "2019-02-23T04:00:00.029Z",
+    "total_run_count": 7,
+    "date_changed": "2019-02-23T19:39:55.403Z",
     "description": ""
   }
 },
@@ -50,9 +50,9 @@
     "one_off": false,
     "start_time": "2019-02-16T21:39:37Z",
     "enabled": true,
-    "last_run_at": "2019-02-16T22:00:00.003Z",
-    "total_run_count": 1,
-    "date_changed": "2019-02-16T22:00:18.105Z",
+    "last_run_at": "2019-02-23T19:00:00.002Z",
+    "total_run_count": 105,
+    "date_changed": "2019-02-23T19:01:00.079Z",
     "description": "Parse beers from untappd"
   }
 },
@@ -75,9 +75,9 @@
     "one_off": false,
     "start_time": "2019-02-16T21:40:29Z",
     "enabled": true,
-    "last_run_at": null,
-    "total_run_count": 0,
-    "date_changed": "2019-02-16T21:40:37.138Z",
+    "last_run_at": "2019-02-23T19:15:00.000Z",
+    "total_run_count": 105,
+    "date_changed": "2019-02-23T19:16:05.054Z",
     "description": ""
   }
 },
@@ -100,9 +100,9 @@
     "one_off": false,
     "start_time": "2019-02-16T21:40:59Z",
     "enabled": true,
-    "last_run_at": "2019-02-16T21:45:00.000Z",
-    "total_run_count": 1,
-    "date_changed": "2019-02-16T21:46:50.116Z",
+    "last_run_at": "2019-02-23T18:52:14.764Z",
+    "total_run_count": 101,
+    "date_changed": "2019-02-23T18:54:56.595Z",
     "description": ""
   }
 },
@@ -125,10 +125,35 @@
     "one_off": false,
     "start_time": "2019-02-16T21:41:30Z",
     "enabled": true,
+    "last_run_at": "2019-02-23T19:30:00.001Z",
+    "total_run_count": 100,
+    "date_changed": "2019-02-23T19:31:10.066Z",
+    "description": ""
+  }
+},
+{
+  "model": "django_celery_beat.periodictask",
+  "pk": 6,
+  "fields": {
+    "name": "Parse Stem & Stein",
+    "task": "tap_list_providers.tasks.parse_provider",
+    "interval": null,
+    "crontab": 6,
+    "solar": null,
+    "args": "[\"stemandstein\"]",
+    "kwargs": "{}",
+    "queue": null,
+    "exchange": null,
+    "routing_key": null,
+    "priority": null,
+    "expires": null,
+    "one_off": false,
+    "start_time": "2019-02-23T19:37:22Z",
+    "enabled": true,
     "last_run_at": null,
     "total_run_count": 0,
-    "date_changed": "2019-02-16T21:41:38.449Z",
-    "description": ""
+    "date_changed": "2019-02-23T19:37:37.729Z",
+    "description": "Parse beers for Stem & Stein"
   }
 },
 {
@@ -192,6 +217,18 @@
   "pk": 5,
   "fields": {
     "minute": "30",
+    "hour": "*",
+    "day_of_week": "*",
+    "day_of_month": "*",
+    "month_of_year": "*",
+    "timezone": "UTC"
+  }
+},
+{
+  "model": "django_celery_beat.crontabschedule",
+  "pk": 6,
+  "fields": {
+    "minute": "35",
     "hour": "*",
     "day_of_week": "*",
     "day_of_month": "*",
