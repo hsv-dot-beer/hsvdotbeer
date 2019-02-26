@@ -220,4 +220,5 @@ class Common(Configuration):
     CELERY_RESULT_BACKEND = CELERY_BROKER_URL
     CELERY_IMPORTS = (
         'tap_list_providers.tasks',
+        'beers.tasks',
     )
