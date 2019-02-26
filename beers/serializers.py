@@ -12,6 +12,12 @@ class BeerStyleCategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class UntappdMetadataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UntappdMetadata
+        exclude = ('beer', 'id')
+
+
 class BeerStyleCategoryWithBeersSerializer(BeerStyleCategorySerializer):
     beers = serializers.SerializerMethodField()
 
@@ -150,6 +156,7 @@ class BeerSerializer(serializers.ModelSerializer):
     )
     venues = serializers.SerializerMethodField()
     prices = BeerPriceSerializer(many=True, read_only=True)
+    untappd_metadata = UntappdMetadataSerializer(read_only=True)
 
     def get_color_srm_html(self, obj):
         return obj.render_srm()
