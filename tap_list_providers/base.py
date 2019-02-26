@@ -156,9 +156,9 @@ class BaseTapListProvider():
                         if beer.logo_url:
                             if venue and venue.tap_list_provider == 'taphunter':
                                 LOG.info(
-                                    'Not trusting beer logos from TapHunter'
+                                    'Not trusting beer logo for %s from TapHunter'
                                     ' because TH does not distinguish between '
-                                    'beer and brewery logos',
+                                    'beer and brewery logos', beer
                                 )
                                 continue
                             found = False
