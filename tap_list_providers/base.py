@@ -147,7 +147,16 @@ class BaseTapListProvider():
                 # instead of using update_or_create(), only update fields *if*
                 # they're set in `defaults`
                 if value:
-                    if field.endswith('_url'):
+                    if field == 'logo_url':
+                        # these don't have to be unique
+                        if beer.logo_url and 'digitalpourproducerlogos' in value:
+                            LOG.info(
+                                'Not overwriting logo for beer %s (%s) with brewery logo'
+                                ' from DigitalPour',
+                                beer, beer.logo_url,
+                            )
+                            continue
+                    elif field.endswith('_url'):
                         if Beer.objects.exclude(id=beer.id).filter(
                             **{field: value}
                         ).exists():
