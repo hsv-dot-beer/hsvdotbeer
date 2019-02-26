@@ -17,6 +17,10 @@ from .models import TapListProviderStyleMapping
 
 LOG = logging.getLogger(__name__)
 
+PROVIDER_BREWERY_LOGO_STRINGS = {
+    'brewery_logos': 'Untappd',
+    'digitalpourproducerlogos': 'DigitalPour',
+}
 
 class BaseTapListProvider():
 
@@ -149,13 +153,19 @@ class BaseTapListProvider():
                 if value:
                     if field == 'logo_url':
                         # these don't have to be unique
-                        if beer.logo_url and 'digitalpourproducerlogos' in value:
-                            LOG.info(
-                                'Not overwriting logo for beer %s (%s) with brewery logo'
-                                ' from DigitalPour',
-                                beer, beer.logo_url,
-                            )
-                            continue
+                        if beer.logo_url:
+                            found = False
+                            for target, provider in PROVIDER_BREWERY_LOGO_STRINGS.items():
+                                if target in value:
+                                    LOG.info(
+                                        'Not overwriting logo for beer %s (%s) with brewery logo'
+                                        ' from %s',
+                                        beer, beer.logo_url, provider,
+                                    )
+                                    found = True
+                                    break
+                            if found:
+                                continue
                     elif field.endswith('_url'):
                         if Beer.objects.exclude(id=beer.id).filter(
                             **{field: value}
