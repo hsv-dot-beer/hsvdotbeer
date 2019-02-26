@@ -154,6 +154,13 @@ class BaseTapListProvider():
                     if field == 'logo_url':
                         # these don't have to be unique
                         if beer.logo_url:
+                            if venue and venue.tap_list_provider == 'taphunter':
+                                LOG.info(
+                                    'Not trusting beer logos from TapHunter'
+                                    ' because TH does not distinguish between '
+                                    'beer and brewery logos',
+                                )
+                                continue
                             found = False
                             for target, provider in PROVIDER_BREWERY_LOGO_STRINGS.items():
                                 if target in value:

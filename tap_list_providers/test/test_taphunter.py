@@ -91,6 +91,12 @@ class CommandsTestCase(TestCase):
             self.assertEqual(tap.beer.abv, Decimal('7.00'))
             self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, '')
+            self.assertEqual(
+                tap.beer.logo_url,
+                "https://lh3.googleusercontent.com/"
+                "1vjvIHZY1bAHPNvP6-z74EaZWVx3IfJU6wO3VFhSJlvVKuBmJ68ZOKI6r"
+                "Y1c6uyGluAVvK2Qhpq5WfdbO7ArKF4ZS9OdZA=s150",
+            )
             prices = {
                 Decimal(12): Decimal(5.99),
                 Decimal(16): Decimal(7.99),
