@@ -146,6 +146,9 @@ class BaseTapListProvider():
                     **defaults,
                 )
         needs_update = False
+        if beer.logo_url and beer.logo_url == manufacturer.logo_url:
+            beer.logo_url = None
+            needs_update = True
         if not beer.automatic_updates_blocked:
             for field, value in defaults.items():
                 # instead of using update_or_create(), only update fields *if*
@@ -188,8 +191,11 @@ class BaseTapListProvider():
                         # TODO mark as unmoderated
                         setattr(beer, field, value)
                         needs_update = True
-            if needs_update:
-                beer.save()
+        if manufacturer.logo_url and not beer.logo_url:
+            beer.logo_url = manufacturer.logo_url
+            needs_update = True
+        if needs_update:
+            beer.save()
         if pricing:
             if not venue:
                 raise ValueError('You must specify a venue with a price')
