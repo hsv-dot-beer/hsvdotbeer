@@ -13,6 +13,7 @@ from django.db.models import Prefetch, Q
 
 from venues.models import Venue
 from beers.models import Beer, Manufacturer, BeerPrice, ServingSize
+from beers.tasks import look_up_beer
 from taps.models import Tap
 from .models import TapListProviderStyleMapping
 
@@ -230,6 +231,9 @@ class BaseTapListProvider():
                         'Unable to handle price %s for beer %s capacity %s',
                         price_info['price'], beer, serving_size)
                     raise
+        if beer.untappd_url:
+            # queue up an async fetch
+            look_up_beer.delay(beer.id)
         return beer
 
     def get_manufacturer(self, name, **defaults):
