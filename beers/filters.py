@@ -1,6 +1,7 @@
 from django_filters.rest_framework import (
-    FilterSet, OrderingFilter,
+    FilterSet, OrderingFilter, CharFilter,
 )
+from django.db.models import Q
 
 from . import models
 
@@ -23,6 +24,15 @@ class BeerFilterSet(FilterSet):
         ],
     )
 
+    search = CharFilter(method='filter_search')
+
+    def filter_search(self, queryset, name, value):
+        return self.queryset.filter(
+            Q(name__icontains=value) | Q(alternate_names__name__icontains=value) | Q(
+                manufacturer__name__icontains=value
+            ) | Q(style__name__icontains=value) | Q(style__category__name__icontains=value),
+        ).distinct()
+
     class Meta:
         fields = {
             'name': DEFAULT_STRING_FILTER_OPERATORS,
@@ -32,5 +42,6 @@ class BeerFilterSet(FilterSet):
             'taps__venue__name': DEFAULT_STRING_FILTER_OPERATORS,
             'style__name': DEFAULT_STRING_FILTER_OPERATORS,
             'style__category__name': DEFAULT_STRING_FILTER_OPERATORS,
+            'search': ['exact'],
         }
         model = models.Beer
