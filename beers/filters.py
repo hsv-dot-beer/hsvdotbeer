@@ -1,5 +1,5 @@
 from django_filters.rest_framework import (
-    FilterSet, OrderingFilter, CharFilter,
+    FilterSet, OrderingFilter, CharFilter, BooleanFilter,
 )
 from django.db.models import Q
 
@@ -25,6 +25,7 @@ class BeerFilterSet(FilterSet):
     )
 
     search = CharFilter(method='filter_search')
+    on_tap = BooleanFilter(method='filter_on_tap')
 
     def filter_search(self, queryset, name, value):
         return self.queryset.filter(
@@ -32,6 +33,9 @@ class BeerFilterSet(FilterSet):
                 manufacturer__name__icontains=value
             ) | Q(style__name__icontains=value) | Q(style__category__name__icontains=value),
         ).distinct()
+
+    def filter_on_tap(self, queryset, name, value):
+        return queryset.filter(taps__isnull=not value)
 
     class Meta:
         fields = {
@@ -43,5 +47,6 @@ class BeerFilterSet(FilterSet):
             'style__name': DEFAULT_STRING_FILTER_OPERATORS,
             'style__category__name': DEFAULT_STRING_FILTER_OPERATORS,
             'search': ['exact'],
+            'on_tap': ['exact'],
         }
         model = models.Beer
