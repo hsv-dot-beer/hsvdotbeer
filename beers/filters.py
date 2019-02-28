@@ -29,9 +29,19 @@ class BeerFilterSet(FilterSet):
 
     def filter_search(self, queryset, name, value):
         return self.queryset.filter(
-            Q(name__icontains=value) | Q(alternate_names__name__icontains=value) | Q(
-                manufacturer__name__icontains=value
-            ) | Q(style__name__icontains=value) | Q(style__category__name__icontains=value),
+            Q(
+                name__icontains=value,
+            ) | Q(
+                alternate_names__name__icontains=value,
+            ) | Q(
+                manufacturer__name__icontains=value,
+            ) | Q(
+                style__name__icontains=value,
+            ) | Q(
+                style__category__name__icontains=value,
+            ) | Q(
+                manufacturer__alternate_names__name__icontains=value,
+            ),
         ).distinct()
 
     def filter_on_tap(self, queryset, name, value):
