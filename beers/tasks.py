@@ -21,10 +21,11 @@ class UnexpectedResponseError(Exception):
 
 
 @shared_task(
+    bind=True,
     autoretry_for=(RequestException, UnexpectedResponseError, JSONDecodeError),
     default_retry_delay=600,
 )
-def look_up_beer(beer_pk):
+def look_up_beer(self, beer_pk):
     LOG.debug('Looking up Untappd data for %s', beer_pk)
     try:
         beer = Beer.objects.filter(
@@ -39,7 +40,7 @@ def look_up_beer(beer_pk):
         # not updated recently; don't care
         pass
     else:
-        if now() - untappd_metadata.timestamp <= datetime.timedelta(minutes=30):
+        if now() - untappd_metadata.timestamp <= datetime.timedelta(minutes=60):
             LOG.debug('skipping recently updated data for %s', beer)
             return
     LOG.debug('Looking up Untappd data for %s', beer)
@@ -60,6 +61,11 @@ def look_up_beer(beer_pk):
     untappd_pk = beer.untappd_url.rsplit('/', 1)[-1]
     untappd_url = f'https://api.untappd.com/v4/beer/info/{untappd_pk}'
     result = requests.get(untappd_url, params=untappd_args)
+    if result.status_code == 429:
+        LOG.error('Hit Untappd API rate limit! Headers %s', result.headers)
+        # retry in 1 hour
+        self.retry(countdown=3600)
+    # retry sooner for all other status codes
     result.raise_for_status()
     json_body = result.json()
     beer_data = {}
