@@ -40,7 +40,7 @@ def look_up_beer(self, beer_pk):
         # not updated recently; don't care
         pass
     else:
-        if now() - untappd_metadata.timestamp <= datetime.timedelta(minutes=60):
+        if now() - untappd_metadata.timestamp <= datetime.timedelta(minutes=360):
             LOG.debug('skipping recently updated data for %s', beer)
             return
     LOG.debug('Looking up Untappd data for %s', beer)
