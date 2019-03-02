@@ -5,7 +5,7 @@ import datetime
 from json import JSONDecodeError
 
 import requests
-from requests.exceptions import RequestsException
+from requests.exceptions import RequestException
 from django.utils.timezone import now
 from celery import shared_task
 
@@ -21,7 +21,7 @@ class UnexpectedResponseError(Exception):
 
 
 @shared_task(
-    autoretry_for=(RequestsException, JSONDecodeError),
+    autoretry_for=(RequestException, UnexpectedResponseError, JSONDecodeError),
     retry_backoff=True,
 )
 def look_up_beer(beer_pk):
@@ -61,10 +61,23 @@ def look_up_beer(beer_pk):
     untappd_url = f'https://api.untappd.com/v4/beer/info/{untappd_pk}'
     result = requests.get(untappd_url, params=untappd_args)
     result.raise_for_status()
+    json_body = result.json()
+    beer_data = {}
+    try:
+        if json_body['meta']['code'] != 200:
+            raise UnexpectedResponseError(
+                f'Received unexpected body from Untappd: {json_body}',
+            )
+        beer_data = json_body['response']['beer']
+    except KeyError:
+        raise UnexpectedResponseError(
+            f'Received unexpected body from Untappd: {json_body}',
+        )
+    LOG.debug('Got Untappd data for %s: %s', beer, beer_data)
     UntappdMetadata.objects.update_or_create(
         beer=beer,
         defaults={
-            'json_data': result.json(),
+            'json_data': beer_data,
         },
     )
 
