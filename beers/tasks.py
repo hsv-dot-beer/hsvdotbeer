@@ -2,8 +2,10 @@
 import os
 import logging
 import datetime
+from json import JSONDecodeError
 
 import requests
+from requests.exceptions import RequestsException
 from django.utils.timezone import now
 from celery import shared_task
 
@@ -14,7 +16,14 @@ from beers.models import Beer, UntappdMetadata
 LOG = logging.getLogger(__name__)
 
 
-@shared_task
+class UnexpectedResponseError(Exception):
+    """Received an unexpected response from Untappd"""
+
+
+@shared_task(
+    autoretry_for=(RequestsException, JSONDecodeError),
+    retry_backoff=True,
+)
 def look_up_beer(beer_pk):
     LOG.debug('Looking up Untappd data for %s', beer_pk)
     try:
