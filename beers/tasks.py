@@ -87,6 +87,11 @@ def look_up_beer(beer_pk):
             'json_data': beer_data,
         },
     )
+    if beer_data.get('beer_label_hd') and beer.logo_url != beer_data[
+            'beer_label_hd']:
+        LOG.info('Saving HD logo for %s', beer)
+        beer.logo_url = beer_data['beer_label_hd']
+        beer.save()
 
 
 @shared_task
