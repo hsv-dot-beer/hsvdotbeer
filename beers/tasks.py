@@ -22,7 +22,7 @@ class UnexpectedResponseError(Exception):
 
 @shared_task(
     autoretry_for=(RequestException, UnexpectedResponseError, JSONDecodeError),
-    retry_backoff=True,
+    default_retry_delay=600,
 )
 def look_up_beer(beer_pk):
     LOG.debug('Looking up Untappd data for %s', beer_pk)
