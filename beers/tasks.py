@@ -73,6 +73,13 @@ def look_up_beer(beer_pk):
         raise UnexpectedResponseError(
             f'Received unexpected body from Untappd: {json_body}',
         )
+    for key in ['checkins', 'media']:
+        # scrap some big objects
+        try:
+            del beer_data[key]
+        except KeyError:
+            # don't care
+            pass
     LOG.debug('Got Untappd data for %s: %s', beer, beer_data)
     UntappdMetadata.objects.update_or_create(
         beer=beer,
