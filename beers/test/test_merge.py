@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from beers.models import Beer, Manufacturer
+from beers.models import Beer, Manufacturer, BeerAlternateName, ManufacturerAlternateName
 from taps.test.factories import TapFactory
 
 from .factories import BeerFactory, ManufacturerFactory
@@ -23,6 +23,9 @@ class BeerTestCase(TestCase):
         tap.refresh_from_db()
         self.assertEqual(tap.beer, beer1)
         self.assertFalse(Beer.objects.filter(id=beer2.id).exists())
+        self.assertTrue(BeerAlternateName.objects.filter(
+            name=beer2.name, beer=beer1,
+        ).exists())
 
 
 class ManufacturerTestCase(TestCase):
@@ -37,3 +40,6 @@ class ManufacturerTestCase(TestCase):
         beer2.refresh_from_db()
         self.assertEqual(beer2.manufacturer, mfg1)
         self.assertFalse(Manufacturer.objects.filter(id=mfg2.id).exists())
+        self.assertTrue(ManufacturerAlternateName.objects.filter(
+            name=mfg2.name, manufacturer=mfg1,
+        ).exists())
