@@ -156,6 +156,10 @@ class Manufacturer(models.Model):
                     continue
                 setattr(self, field_name, other_value)
             self.automatic_updates_blocked = True
+            ManufacturerAlternateName.objects.update_or_create(
+                name=other.name,
+                manufacturer=self,
+            )
             other.delete()
             self.save()
 
@@ -253,6 +257,12 @@ class Beer(models.Model):
                     continue
                 setattr(self, field_name, other_value)
             self.automatic_updates_blocked = True
+            if other.name != self.name:
+                # this will only not happen if manufacturers aren't the same
+                BeerAlternateName.objects.update_or_create(
+                    name=other.name,
+                    beer=self,
+                )
             other.delete()
             self.save()
 

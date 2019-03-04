@@ -6,6 +6,7 @@ which takes a single argument: a Venue object.
 It'll have API configuration, taps, and existing beers prefetched.
 """
 from decimal import Decimal, InvalidOperation
+from urllib.parse import urlparse
 import logging
 
 from django.db.models import Prefetch, Q
@@ -76,6 +77,7 @@ class BaseTapListProvider():
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:
             raise ValueError(f'Unknown fields f{",".join(sorted(defaults))}')
+        fix_urls(defaults)
         unique_fields_present = {
             field: value for field, value in defaults.items()
             if field in set(unique_fields) and value
@@ -256,3 +258,44 @@ class BaseTapListProvider():
                 LOG.debug('updating %s', manufacturer.name)
                 manufacturer.save()
         return manufacturer
+
+
+def fix_urls(defaults):
+    """Make the URLs point to the right domains"""
+    domain_map = {
+        'rate_beer_url': 'ratebeer.com',
+        'beer_advocate_url': 'beeradvocate.com',
+        'untappd_url': 'untappd.com',
+        'taphunter_url': 'taphunter.com',
+    }
+
+    for field, expected_domain in domain_map.items():
+        try:
+            given_value = defaults[field]
+        except KeyError:
+            # not given
+            continue
+        given_domain = urlparse(given_value).netloc
+        if isinstance(given_domain, bytes):
+            given_domain = given_domain.decode('utf-8')
+        LOG.debug('Testing %s against %s', given_domain, expected_domain)
+        if expected_domain not in given_domain:
+            LOG.debug('no match')
+            try:
+                real_field = [
+                    key for key, val in domain_map.items()
+                    if val in given_domain
+                ][0]
+            except IndexError:
+                LOG.warning(
+                    'Unable to match %s to a known domain for %s',
+                    given_value, field,
+                )
+            else:
+                LOG.info(
+                    'Switching %s from %s to %s',
+                    given_value, field, real_field,
+                )
+                # don't care about handling the existing value;
+                # odds are that data is bad too
+                defaults[real_field] = defaults.pop(field)
