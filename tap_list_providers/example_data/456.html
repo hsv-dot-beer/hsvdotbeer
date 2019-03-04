@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+  <div id="fb-root"></div>
+  <script>
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=122734144489056";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+
+  <div class="container">
+
+    <div class="masthead">
+
+      <img class="img-responsive" src="/Content/logoSS.png" style="margin:auto" />
+
+      <ul class="nav nav-justified">
+        <li><a href="/">Home</a></li>
+        <li><a href="/Menu">Menu</a></li>
+
+        <li><a href="/Home/Keglist">Keg List</a></li>
+        <li><a href="/Home/Contact">Contact us</a></li>
+      </ul>
+    </div>
+
+
+
+    <div class="container-fluid">
+      <div class="jumbotron">
+        <div class="container">
+          <div style="display:table-row">
+            <div style="display:table-cell;vertical-align:top;width:17px;"><img style="width:17px;padding-top:2px" src="/Display/GlassWare?color=%23c1963c&amp;glassware=Pint" /></div>
+            <div style="display: table-cell; padding: 3px; font-size: 22px; vertical-align: top; width:42px">$5 </div>
+            <div style="display:table-cell">
+              <div class="fill" style="color:white; font-size:30px"><span>Founders Azacca IPA</span></div>
+              <div style="color:slategray; font-size:18px;padding-left:20px">ABV 7% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Grand Rapids, MI</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="panel panel-default col-md-12">
+        <div class="panel-heading">On Tap Calendar</div>
+        <div class="panel-body" style="overflow: auto;">
+          <div id="calendar_basic" style="width: 1000px; height: 380px;overflow:auto"></div>
+        </div>
+      </div>
+      <div class="col-md-12" style="background-color: white; color: black; padding: 10px; border-radius: 10px; margin: 10px; ">
+        <table id="tapList" class="display" cellspacing="0">
+          <thead>
+            <tr>
+
+              <th>On Tap</th>
+              <th>Off Tap</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+
+
+          <tbody style="text-align:center">
+            <tr>
+              <td>1/22/2016 6:02:45 PM</td>
+
+              <td>2/2/2016 5:07:17 PM</td>
+              <td>10.96 Days</td>
+
+            </tr>
+            <tr>
+              <td>2/12/2019 9:16:32 PM</td>
+
+              <td>Still on</td>
+              <td>9.81 Days (so far)</td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- Site footer -->
+    <div class="footer">
+      <p>&copy; 2019 - The Stem And Stein, LLC</p>
+    </div>
+
+  </div> <!-- /container -->
+
+</body>
+
+</html>

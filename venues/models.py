@@ -18,6 +18,7 @@ class Venue(models.Model):
         ('manual', 'Chalkboard/Whiteboard'),
         ('', 'Unknown'),
         ('test', 'TEST LOCAL PROVIDER'),
+        ('stemandstein', 'The Stem & Stein\'s HTML'),
     )
 
     # NOTE if this ever grows beyond HSV, we'll have to revisit uniqueness
