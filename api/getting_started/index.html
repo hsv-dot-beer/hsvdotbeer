@@ -4,14 +4,14 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Collate ALL the Huntsville beers">
         
         
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <title>hsv_dot_beer</title>
-        <link href="css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/base.css" rel="stylesheet">
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Getting Started - hsv_dot_beer</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -19,13 +19,13 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <script src="js/jquery-1.10.2.min.js" defer></script>
-        <script src="js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
-    <body class="homepage">
+    <body>
 
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
@@ -39,42 +39,42 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href=".">hsv_dot_beer</a>
+                    <a class="navbar-brand" href="../..">hsv_dot_beer</a>
                 </div>
 
                 <!-- Expanded navigation -->
                 <div class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="active">
-                                <a href=".">Home</a>
+                            <li >
+                                <a href="../..">Home</a>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li >
-    <a href="api/getting_started/">Getting Started</a>
+<li class="active">
+    <a href="./">Getting Started</a>
 </li>
                                     
 <li >
-    <a href="api/authentication/">Authentication</a>
+    <a href="../authentication/">Authentication</a>
 </li>
                                     
 <li >
-    <a href="api/users/">Users</a>
+    <a href="../users/">Users</a>
 </li>
                                     
 <li >
-    <a href="venues/venues/">Venues</a>
+    <a href="../../venues/venues/">Venues</a>
 </li>
                                     
 <li >
-    <a href="beers/beers/">Beers</a>
+    <a href="../../beers/beers/">Beers</a>
 </li>
                                     
 <li >
-    <a href="beers/manufacturers/">Manufacturers</a>
+    <a href="../../beers/manufacturers/">Manufacturers</a>
 </li>
                                 </ul>
                             </li>
@@ -83,7 +83,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="tap_list_providers/parsers/">Parsers</a>
+    <a href="../../tap_list_providers/parsers/">Parsers</a>
 </li>
                                 </ul>
                             </li>
@@ -95,18 +95,18 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li class="disabled">
-                                <a rel="next" >
+                            <li >
+                                <a rel="next" href="../..">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="api/getting_started/">
+                                <a rel="prev" href="../authentication/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://github.com/hsv-dot-beer/hsvdotbeer/edit/master/docs/index.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/hsv-dot-beer/hsvdotbeer/edit/master/docs/api/getting_started.md"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -116,68 +116,56 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#hsvdotbeer">hsvdotbeer</a></li>
-        <li class="main "><a href="#prerequisites">Prerequisites</a></li>
-        <li class="main "><a href="#initialize-the-project">Initialize the project</a></li>
-        <li class="main "><a href="#continuous-deployment">Continuous Deployment</a></li>
+        <li class="main active"><a href="#getting-started">Getting Started</a></li>
+            <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#installing-dependencies">Installing dependencies</a></li>
+            <li><a href="#loading-fixtures">Loading fixtures</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="hsvdotbeer">hsvdotbeer</h1>
-<p><a href="https://travis-ci.org/hsv-dot-beer/hsvdotbeer"><img alt="Build Status" src="https://travis-ci.org/hsv-dot-beer/hsvdotbeer.svg?branch=master" /></a>
-<a href="https://github.com/agconti/cookiecutter-django-rest"><img alt="Built with" src="https://img.shields.io/badge/Built_with-Cookiecutter_Django_Rest-F7B633.svg" /></a></p>
-<p>Collate ALL the Huntsville beers. Check out the project's <a href="http://hsv-dot-beer.github.io/hsvdotbeer/">documentation</a>.</p>
-<h1 id="prerequisites">Prerequisites</h1>
+<h1 id="getting-started">Getting Started</h1>
+<h2 id="prerequisites">Prerequisites</h2>
+<h3 id="linux">Linux</h3>
+<p>Install these packages from your distribution's package manager</p>
 <ul>
-<li><a href="https://docs.docker.com/docker-for-mac/install/">Docker</a>  </li>
-<li><a href="http://blog.travis-ci.com/2013-01-14-new-client/">Travis CLI</a></li>
-<li><a href="https://toolbelt.heroku.com/">Heroku Toolbelt</a></li>
+<li>docker</li>
+<li>docker-compose</li>
+<li>python3.6</li>
+<li>pipenv</li>
 </ul>
-<h1 id="initialize-the-project">Initialize the project</h1>
-<p>Start the dev server for local development:</p>
-<pre><code class="bash">docker-compose up
+<h3 id="windows">Windows</h3>
+<p>The devs have run into all sorts of weirdness running inside Docker for Windows.</p>
+<p>Avoid this if you can.</p>
+<h3 id="macos">macOS</h3>
+<p>Install <a href="https://hub.docker.com/editions/community/docker-ce-desktop-mac">Docker Desktop for Mac</a>.</p>
+<p>Install <a href="https://brew.sh/">Homebrew</a> and install these packages:</p>
+<ul>
+<li>pipenv</li>
+</ul>
+<p>Install the latest 64-bit macOS Installer of Python 3.6 from
+<a href="https://www.python.org/downloads/mac-osx/">python.org</a>. <strong>NOTE</strong>: Due to an
+incompatibility in one of our dependencies, you <em>cannot</em> run this with Python
+3.7 or later.</p>
+<h2 id="installing-dependencies">Installing dependencies</h2>
+<ol>
+<li>Clone the repository.</li>
+<li>Run from the terminal: <code>pipenv install --dev</code></li>
+<li>Run tests to make sure everything works:
+   <code>bash
+   docker-compose run --rm web pipenv run ./manage.py test</code></li>
+<li>Run the API:
+   <code>bash
+   docker-compose up</code></li>
+</ol>
+<h2 id="loading-fixtures">Loading fixtures</h2>
+<p>Seed your database with important values:</p>
+<pre><code class="bash">docker-compose run --rm web ./manage.py loaddata */fixtures/*.json
 </code></pre>
 
-<p>Create a superuser to login to the admin:</p>
-<pre><code class="bash">docker-compose run --rm web ./manage.py createsuperuser
-</code></pre>
-
-<h1 id="continuous-deployment">Continuous Deployment</h1>
-<p>Deployment automated via Travis. When builds pass on the master or qa branch, Travis will deploy that branch to Heroku. Enable this by:</p>
-<p>Creating the production sever:</p>
-<pre><code>heroku create hsv_dot_beer-prod --remote prod &amp;&amp; \
-    heroku addons:create newrelic:wayne --app hsv_dot_beer-prod &amp;&amp; \
-    heroku addons:create heroku-postgresql:hobby-dev --app hsv_dot_beer-prod &amp;&amp; \
-    heroku config:set DJANGO_SECRET=`openssl rand -base64 32` \
-        DJANGO_AWS_ACCESS_KEY_ID=&quot;Add your id&quot; \
-        DJANGO_AWS_SECRET_ACCESS_KEY=&quot;Add your key&quot; \
-        DJANGO_AWS_STORAGE_BUCKET_NAME=&quot;hsv_dot_beer-prod&quot; \
-        --app hsv_dot_beer-prod
-</code></pre>
-
-<p>Creating the qa sever:</p>
-<pre><code>heroku create `hsv_dot_beer-qa --remote qa &amp;&amp; \
-    heroku addons:create newrelic:wayne &amp;&amp; \
-    heroku addons:create heroku-postgresql:hobby-dev &amp;&amp; \
-    heroku config:set DJANGO_SECRET=`openssl rand -base64 32` \
-        DJANGO_AWS_ACCESS_KEY_ID=&quot;Add your id&quot; \
-        DJANGO_AWS_SECRET_ACCESS_KEY=&quot;Add your key&quot; \
-        DJANGO_AWS_STORAGE_BUCKET_NAME=&quot;hsv_dot_beer-qa&quot; \
-</code></pre>
-
-<p>Securely add your heroku credentials to travis so it can automatically deploy your changes.</p>
-<pre><code class="bash">travis encrypt HEROKU_AUTH_TOKEN=&quot;$(heroku auth:token)&quot; --add
-</code></pre>
-
-<p>Commit your changes and push to master and qa to trigger your first deploys:</p>
-<pre><code class="bash">git commit -m &quot;ci(travis): added heroku credentials&quot; &amp;&amp; \
-git push origin master &amp;&amp; \
-git checkout -b qa &amp;&amp; \
-git push -u origin qa
-</code></pre>
-
-<p>You're ready to continuously ship! ✨ 💅 🛳</p></div>
+<h3 id="importing-styles">Importing styles</h3>
+<pre><code class="bash">docker-compose run --rm web ./manage.py import bjcp
+</code></pre></div>
         </div>
 
         <footer class="col-md-12">
@@ -186,11 +174,11 @@ git push -u origin qa
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>
-            var base_url = ".",
+            var base_url = "../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="js/base.js" defer></script>
-        <script src="search/main.js" defer></script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
     <div class="modal-dialog">
@@ -258,8 +246,3 @@ git push -u origin qa
 
     </body>
 </html>
-
-<!--
-MkDocs version : 1.0.4
-Build Date UTC : 2019-03-05 16:29:40
--->
