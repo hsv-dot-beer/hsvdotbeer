@@ -24,6 +24,7 @@ PROVIDER_BREWERY_LOGO_STRINGS = {
     'digitalpourproducerlogos': 'DigitalPour',
 }
 
+
 class BaseTapListProvider():
 
     def __init__(self):
