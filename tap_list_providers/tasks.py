@@ -8,7 +8,9 @@ from celery import shared_task
 
 from tap_list_providers.base import BaseTapListProvider
 # this import is needed for the subclass lookup to work
-from tap_list_providers.parsers import digitalpour, thenook, taphunter, untappd  # noqa
+from tap_list_providers.parsers import (  # noqa
+    digitalpour, thenook, taphunter, untappd, stemandstein,
+)
 
 
 LOG = logging.getLogger(__name__)
