@@ -1,5 +1,5 @@
 from decimal import Decimal
-import json
+from pprint import PrettyPrinter
 import logging
 import os
 
@@ -289,6 +289,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--dump', action='store_true')
+    parser.add_argument('--print-logo-url', action='store_true')
     parser.add_argument('location')
     args = parser.parse_args()
 
@@ -300,6 +301,4 @@ if __name__ == '__main__':
         print(t.soup.prettify())
 
     for tap in t.taps():
-        print(json.dumps(tap, indent=4))
-
-    print(len(t.taps()))
+        PrettyPrinter(indent=4).pprint(tap)

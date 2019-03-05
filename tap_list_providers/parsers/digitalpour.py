@@ -126,7 +126,7 @@ class DigitalPourParser(BaseTapListProvider):
                 'color': hex(b['BeerStyle']['Color']),
                 'beer_advocate_url': b.get('BeerAdvocateUrl'),
                 'manufacturer_url': b.get('BeerUrl'),
-                'logo_url': b.get('LogoImageUrl'),
+                'logo_url': b.get('LogoImageUrl') or b.get('ResolvedLogoImageUrl') or None,
             }
         return beer
 
@@ -207,6 +207,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--dump', action='store_true')
+    parser.add_argument('--print-logo-url', action='store_true')
     parser.add_argument('location')
     args = parser.parse_args()
 
@@ -216,4 +217,7 @@ if __name__ == '__main__':
         print(json.dumps(t.fetch(), indent=4))
     else:
         for tap in t.taps():
-            print(tap['beer']['name'])
+            if args.print_logo_url:
+                print(f'{tap["beer"]["name"]}\t{tap["beer"]["logo_url"]}')
+            else:
+                print(tap['beer']['name'])
