@@ -312,6 +312,8 @@ def fix_urls(defaults):
         except KeyError:
             # not given
             continue
+        if not given_value:
+            continue
         given_domain = urlparse(given_value).netloc
         if isinstance(given_domain, bytes):
             given_domain = given_domain.decode('utf-8')
