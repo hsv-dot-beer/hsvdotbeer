@@ -8,6 +8,7 @@ dev_addr: 0.0.0.0:8001
 nav:
   - Home: 'index.md'
   - API:
+    - Getting Started: 'api/getting_started.md'
     - Authentication: 'api/authentication.md'
     - Users: 'api/users.md'
     - Venues: 'venues/venues.md'
