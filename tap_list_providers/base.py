@@ -18,6 +18,10 @@ from .models import TapListProviderStyleMapping
 
 LOG = logging.getLogger(__name__)
 
+PROVIDER_BREWERY_LOGO_STRINGS = {
+    'brewery_logos': 'Untappd',
+    'digitalpourproducerlogos': 'DigitalPour',
+}
 
 class BaseTapListProvider():
 
@@ -144,12 +148,37 @@ class BaseTapListProvider():
                     **defaults,
                 )
         needs_update = False
+        if beer.logo_url and beer.logo_url == manufacturer.logo_url:
+            beer.logo_url = None
+            needs_update = True
         if not beer.automatic_updates_blocked:
             for field, value in defaults.items():
                 # instead of using update_or_create(), only update fields *if*
                 # they're set in `defaults`
                 if value:
-                    if field.endswith('_url'):
+                    if field == 'logo_url':
+                        # these don't have to be unique
+                        if beer.logo_url:
+                            if venue and venue.tap_list_provider == 'taphunter':
+                                LOG.info(
+                                    'Not trusting beer logo for %s from TapHunter'
+                                    ' because TH does not distinguish between '
+                                    'beer and brewery logos', beer
+                                )
+                                continue
+                            found = False
+                            for target, provider in PROVIDER_BREWERY_LOGO_STRINGS.items():
+                                if target in value:
+                                    LOG.info(
+                                        'Not overwriting logo for beer %s (%s) with brewery logo'
+                                        ' from %s',
+                                        beer, beer.logo_url, provider,
+                                    )
+                                    found = True
+                                    break
+                            if found:
+                                continue
+                    elif field.endswith('_url'):
                         if Beer.objects.exclude(id=beer.id).filter(
                             **{field: value}
                         ).exists():
@@ -164,8 +193,11 @@ class BaseTapListProvider():
                         # TODO mark as unmoderated
                         setattr(beer, field, value)
                         needs_update = True
-            if needs_update:
-                beer.save()
+        if manufacturer.logo_url and not beer.logo_url:
+            beer.logo_url = manufacturer.logo_url
+            needs_update = True
+        if needs_update:
+            beer.save()
         if pricing:
             if not venue:
                 raise ValueError('You must specify a venue with a price')

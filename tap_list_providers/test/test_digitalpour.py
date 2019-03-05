@@ -64,7 +64,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Manufacturer.objects.count(), 4)
             self.assertEqual(Tap.objects.count(), 4)
             taps = Tap.objects.filter(
-                venue=self.venue, tap_number__in=[22, 1],
+                venue=self.venue, tap_number__in=[22, 1, 2],
             ).select_related(
                 'beer__style',
             ).order_by('tap_number')
@@ -80,7 +80,7 @@ class CommandsTestCase(TestCase):
             )
             # location nulled out in test data
             self.assertEqual(tap.beer.manufacturer.location, '')
-            tap = taps[1]
+            tap = taps[2]
             self.assertEqual(tap.beer.name, "Milk Stout Nitro")
             self.assertEqual(tap.beer.abv, Decimal('6.0'))
             self.assertIsNone(tap.beer.style)
@@ -111,4 +111,11 @@ class CommandsTestCase(TestCase):
             self.assertEqual(
                 tap.beer.manufacturer.logo_url,
                 'https://s3.amazonaws.com/digitalpourproducerlogos/4f7de8502595f5153887e925.png',
+            )
+            tap = taps[1]
+            # This one has a ResolvedLogoImageUrl but LogoImageUrl is null
+            self.assertEqual(tap.beer.name, 'POG Basement')
+            self.assertEqual(
+                tap.beer.logo_url,
+                'https://s3.amazonaws.com/digitalpourproducerlogos/57ac9c3c5e002c172c8a6ede.jpg',
             )
