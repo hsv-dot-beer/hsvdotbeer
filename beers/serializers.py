@@ -1,9 +1,14 @@
 from decimal import Decimal
+import logging
 
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
+from kombu.exceptions import OperationalError
 
 from . import models
+
+
+LOG = logging.getLogger(__name__)
 
 
 class BeerStyleCategorySerializer(serializers.ModelSerializer):
@@ -190,8 +195,14 @@ class BeerSerializer(serializers.ModelSerializer):
             untappd_metadata = obj.untappd_metadata
         except models.UntappdMetadata.DoesNotExist:
             if obj.untappd_url:
-                # if it has an untappd URL, queue a lookup for the next in line
-                look_up_beer.delay(obj.id)
+                try:
+                    # if it has an untappd URL, queue a lookup for the next in line
+                    look_up_beer.delay(obj.id)
+                except OperationalError as exc:
+                    if str(exc).casefold() == 'max number of clients reached'.casefold():
+                        LOG.error('Reached redis limit!')
+                    else:
+                        raise
             return None
         return UntappdMetadataSerializer(instance=untappd_metadata).data
 
