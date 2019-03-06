@@ -285,6 +285,25 @@
     }
 },
 {
+    "model": "venues.venue",
+    "pk": 16,
+    "fields": {
+        "name": "Blue Pants Brewery",
+        "address": "500 Lanier Road, Building 1, Suite A",
+        "city": "Madison",
+        "state": "AL",
+        "postal_code": "35758",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "http://bluepantsbrew.com",
+        "facebook_page": "https://www.facebook.com/bluepantsbrewery/",
+        "twitter_handle": "bluepantsbrew",
+        "instagram_handle": "",
+        "tap_list_provider": "untappd",
+        "untappd_url": null
+    }
+},
+{
     "model": "venues.venueapiconfiguration",
     "pk": 1,
     "fields": {
@@ -506,6 +525,21 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
+        "taphunter_location": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 16,
+    "fields": {
+        "venue": 16,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": 18301,
+        "untappd_theme": 69029,
+        "untappd_categories": "[\"Taproom Draft List\"]",
         "taphunter_location": ""
     }
 }
