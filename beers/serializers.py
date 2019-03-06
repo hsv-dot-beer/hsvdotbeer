@@ -12,6 +12,12 @@ class BeerStyleCategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class UntappdMetadataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UntappdMetadata
+        exclude = ('beer', 'id')
+
+
 class BeerStyleCategoryWithBeersSerializer(BeerStyleCategorySerializer):
     beers = serializers.SerializerMethodField()
 
@@ -150,6 +156,7 @@ class BeerSerializer(serializers.ModelSerializer):
     )
     venues = serializers.SerializerMethodField()
     prices = BeerPriceSerializer(many=True, read_only=True)
+    untappd_metadata = serializers.SerializerMethodField()
 
     def get_color_srm_html(self, obj):
         return obj.render_srm()
@@ -176,6 +183,17 @@ class BeerSerializer(serializers.ModelSerializer):
         except KeyError:
             pass
         return data
+
+    def get_untappd_metadata(self, obj):
+        from beers.tasks import look_up_beer
+        try:
+            untappd_metadata = obj.untappd_metadata
+        except models.UntappdMetadata.DoesNotExist:
+            if obj.untappd_url:
+                # if it has an untappd URL, queue a lookup for the next in line
+                look_up_beer.delay(obj.id)
+            return None
+        return UntappdMetadataSerializer(instance=untappd_metadata).data
 
     class Meta:
         model = models.Beer

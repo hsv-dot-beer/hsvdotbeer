@@ -1,6 +1,7 @@
 import logging
 import string
 
+from django.contrib.postgres.fields import JSONField
 from django.db import models, transaction
 
 from .utils import render_srm
@@ -321,3 +322,11 @@ class BeerPrice(models.Model):
         unique_together = (
             ('beer', 'venue', 'serving_size'),
         )
+
+
+class UntappdMetadata(models.Model):
+    json_data = JSONField()
+    timestamp = models.DateTimeField(auto_now=True)
+    beer = models.OneToOneField(
+        Beer, models.CASCADE, related_name='untappd_metadata',
+    )

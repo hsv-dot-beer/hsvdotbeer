@@ -1,6 +1,7 @@
 """Test the parsing of untappd data"""
 import os
 from decimal import Decimal
+from unittest import mock
 
 from django.core.management import call_command
 from django.test import TestCase
@@ -38,7 +39,8 @@ class CommandsTestCase(TestCase):
             cls.js_data = js_file.read()
 
     @responses.activate
-    def test_import_data(self):
+    @mock.patch('tap_list_providers.base.look_up_beer')
+    def test_import_data(self, mock_beer_lookup):
         """Test parsing the JSON data"""
         responses.add(
             responses.GET,
@@ -105,3 +107,4 @@ class CommandsTestCase(TestCase):
                     price_instance.price,
                     price_instance,
                 )
+            mock_beer_lookup.delay.assert_called_with(tap.beer.id)

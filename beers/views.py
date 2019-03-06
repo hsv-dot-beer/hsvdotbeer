@@ -88,7 +88,7 @@ class ManufacturerViewSet(ModerationMixin, ModelViewSet):
 class BeerViewSet(ModerationMixin, ModelViewSet):
     serializer_class = serializers.BeerSerializer
     queryset = models.Beer.objects.select_related(
-        'manufacturer', 'style',
+        'manufacturer', 'style', 'untappd_metadata',
     ).prefetch_related(
         Prefetch(
             'taps',
