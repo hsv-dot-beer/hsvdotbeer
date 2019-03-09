@@ -44,6 +44,7 @@ steps:
 
 - script: |
     pushd '$(projectRoot)'
+    export DJANGO_SECRET_KEY=testtesttest
     pipenv run python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
   condition: succeededOrFailed()
   displayName: 'Run Django tests'
