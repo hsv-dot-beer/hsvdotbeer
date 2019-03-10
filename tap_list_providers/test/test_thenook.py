@@ -37,7 +37,7 @@ class CommandsTestCase(TestCase):
             cls.html_data = html_file.read()
 
     @responses.activate
-    def test_import_data(self):
+    def test_import_nook_data(self):
         """Test parsing the JSON data"""
         responses.add(
             responses.GET,

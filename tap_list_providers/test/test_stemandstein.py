@@ -48,7 +48,7 @@ class CommandsTestCase(TestCase):
                 cls.html_data[pk] = html_file.read()
 
     @responses.activate
-    def test_import_data(self):
+    def test_import_stemandstein_data(self):
         """Test parsing the JSON data"""
         for pk, html_data in self.html_data.items():
             if pk == 'root':

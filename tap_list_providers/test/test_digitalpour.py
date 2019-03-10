@@ -38,7 +38,7 @@ class CommandsTestCase(TestCase):
             cls.json_data = json.loads(json_file.read())
 
     @responses.activate
-    def test_import_data(self):
+    def test_import_digitalpour_data(self):
         """Test parsing the JSON data"""
         responses.add(
             responses.GET,

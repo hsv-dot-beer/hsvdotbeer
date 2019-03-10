@@ -40,7 +40,7 @@ class CommandsTestCase(TestCase):
 
     @responses.activate
     @mock.patch('tap_list_providers.base.look_up_beer')
-    def test_import_data(self, mock_beer_lookup):
+    def test_import_untappd_data(self, mock_beer_lookup):
         """Test parsing the JSON data"""
         responses.add(
             responses.GET,
