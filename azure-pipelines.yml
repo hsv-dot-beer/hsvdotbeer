@@ -37,21 +37,9 @@ steps:
       print('##vso[task.setvariable variable=projectRoot]{}'.format(project_location))
 
 - script: |
-    python -m pip install --upgrade pip setuptools wheel pipenv
-    pipenv install --dev
-    pipenv install --dev unittest-xml-reporting
-  displayName: 'Install prerequisites'
-
-- script: |
-    pushd '$(projectRoot)'
-    export DJANGO_SECRET_KEY=testtesttest
-    pipenv run python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
+    docker-compose run --rm web bash -c 'pipenv install --dev && pipenv install --dev unittest-xml-reporting && pipenv run flake8 && pipenv run python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input'
   condition: succeededOrFailed()
-  displayName: 'Run Django tests'
-
-- script: pipenv run flake8
-  condition: succeededOrFailed()
-  displayName: 'Lint'
+  displayName: 'Run tests'
 
 - task: PublishTestResults@2
   inputs:
