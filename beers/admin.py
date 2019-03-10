@@ -163,11 +163,17 @@ class ManufacturerAlternateNameAdmin(admin.ModelAdmin):
     search_fields = ('name', 'manufacturer__name')
 
 
+class BeerPriceAdmin(admin.ModelAdmin):
+    list_display = ('beer', 'serving_size', 'venue', 'price', 'id')
+    list_select_related = ('beer', 'venue', 'serving_size')
+    search_fields = ('beer__name', 'serving_size__name', )
+
+
 admin.site.register(models.BeerStyleCategory)
 admin.site.register(models.BeerStyleTag)
 admin.site.register(models.BeerStyle)
 admin.site.register(models.Manufacturer, ManufacturerAdmin)
-admin.site.register(models.BeerPrice)
+admin.site.register(models.BeerPrice, BeerPriceAdmin)
 admin.site.register(models.ServingSize)
 admin.site.register(models.BeerAlternateName, BeerAlternateNameAdmin)
 admin.site.register(
