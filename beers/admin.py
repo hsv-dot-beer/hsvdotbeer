@@ -150,13 +150,27 @@ class ManufacturerAdmin(admin.ModelAdmin):
     search_fields = ('name', )
 
 
+class BeerAlternateNameAdmin(admin.ModelAdmin):
+    list_display = ('name', 'beer', 'id')
+    list_select_related = ('beer', 'beer__manufacturer')
+    list_filter = ('beer__name', 'beer__manufacturer__name')
+    search_fields = ('name', 'beer__name', 'beer__manufacturer__name')
+
+
+class ManufacturerAlternateNameAdmin(admin.ModelAdmin):
+    list_display = ('name', 'manufacturer')
+    list_select_related = ('manufacturer', )
+    search_fields = ('name', 'manufacturer__name')
+
+
 admin.site.register(models.BeerStyleCategory)
 admin.site.register(models.BeerStyleTag)
 admin.site.register(models.BeerStyle)
 admin.site.register(models.Manufacturer, ManufacturerAdmin)
 admin.site.register(models.BeerPrice)
 admin.site.register(models.ServingSize)
-admin.site.register(models.BeerAlternateName)
-admin.site.register(models.ManufacturerAlternateName)
+admin.site.register(models.BeerAlternateName, BeerAlternateNameAdmin)
+admin.site.register(
+    models.ManufacturerAlternateName, ManufacturerAlternateNameAdmin)
 admin.site.register(models.Beer, BeerAdmin)
 admin.site.register(models.UntappdMetadata)
