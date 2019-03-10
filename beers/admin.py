@@ -80,10 +80,80 @@ class BeerAdmin(admin.ModelAdmin):
     search_fields = ('name', 'manufacturer__name')
 
 
+class ManufacturerAdmin(admin.ModelAdmin):
+
+    def url_fields_set(self, manufacturer):
+        fields = [
+            i.name
+            for i in manufacturer._meta.fields
+            if i.name.endswith('_url')
+        ]
+        return sum(
+            bool(
+                getattr(manufacturer, field)
+            ) for field in fields
+        )
+
+    def merge_manufacturers(self, request, queryset):
+        """
+        Merge multiple manufacturers into one.
+
+        Takes the best guess as to which mfg to keep based on these criteria:
+        1. MFG with the most beers gets the nod.
+        2. If tied, mfg with the most *_url fields gets the nod.`
+        3. If still tied, lowest PK wins.
+        """
+        manufacturers = list(queryset)
+        if len(manufacturers) == 1:
+            self.message_user(
+                request,
+                message='Nothing to do; you only selected one manufacturer.',
+            )
+            return
+        keeper = None
+        most_beers = -1
+        most_url_fields_set = -1
+        for manufacturer in manufacturers:
+            beers = manufacturer.beers.count()
+            url_fields_set = self.url_fields_set(manufacturer)
+            if beers > most_beers or (beers == most_beers and (
+                    url_fields_set > most_url_fields_set
+            ) or (
+                    url_fields_set == most_url_fields_set and
+                    manufacturer.id < keeper.id
+            )):
+                keeper = manufacturer
+                most_url_fields_set = url_fields_set
+                most_beers = beers
+        if not keeper:
+            self.message_user(
+                request,
+                message='Unable to determine which manufacturer to keep!',
+                level=messages.ERROR,
+            )
+            return
+        with transaction.atomic():
+            for manufacturer in manufacturers:
+                if manufacturer == keeper:
+                    continue
+                keeper.merge_from(manufacturer)
+        self.message_user(
+            request,
+            message=f'Merged {", ".join(str(i) for i in manufacturers if i != keeper)} into '
+            f'{manufacturer}'
+        )
+
+    merge_manufacturers.short_description = 'Merge manufacturers'
+    actions = ['merge_manufacturers']
+    list_display = ('name', 'id')
+    list_filter = ('name', )
+    search_fields = ('name', )
+
+
 admin.site.register(models.BeerStyleCategory)
 admin.site.register(models.BeerStyleTag)
 admin.site.register(models.BeerStyle)
-admin.site.register(models.Manufacturer)
+admin.site.register(models.Manufacturer, ManufacturerAdmin)
 admin.site.register(models.BeerPrice)
 admin.site.register(models.ServingSize)
 admin.site.register(models.BeerAlternateName)
