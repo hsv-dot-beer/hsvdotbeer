@@ -162,20 +162,24 @@ class BaseTapListProvider():
                         # these don't have to be unique
                         if beer.logo_url:
                             if venue and venue.tap_list_provider == 'taphunter':
-                                LOG.info(
-                                    'Not trusting beer logo for %s from TapHunter'
-                                    ' because TH does not distinguish between '
-                                    'beer and brewery logos', beer
-                                )
+                                if beer.logo_url != value:
+                                    LOG.info(
+                                        'Not trusting beer logo for %s from '
+                                        'TapHunter because TH does not '
+                                        'distinguish between beer and brewery '
+                                        'logos', beer
+                                    )
                                 continue
                             found = False
                             for target, provider in PROVIDER_BREWERY_LOGO_STRINGS.items():
                                 if target in value:
-                                    LOG.info(
-                                        'Not overwriting logo for beer %s (%s) with brewery logo'
-                                        ' from %s',
-                                        beer, beer.logo_url, provider,
-                                    )
+                                    if beer.logo_url != value:
+                                        LOG.info(
+                                            'Not overwriting logo for beer %s '
+                                            '(%s) with brewery logo'
+                                            ' from %s',
+                                            beer, beer.logo_url, provider,
+                                        )
                                     found = True
                                     break
                             if found:
