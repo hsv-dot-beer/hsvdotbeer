@@ -10,6 +10,7 @@ from urllib.parse import urlparse
 import logging
 
 from django.db.models import Prefetch, Q
+from kombu.exceptions import OperationalError
 
 from venues.models import Venue
 from beers.models import Beer, Manufacturer, BeerPrice, ServingSize
@@ -236,7 +237,16 @@ class BaseTapListProvider():
                     raise
         if beer.untappd_url:
             # queue up an async fetch
-            look_up_beer.delay(beer.id)
+            try:
+                # if it has an untappd URL, queue a lookup for the next in line
+                look_up_beer.delay(beer.id)
+            except OperationalError as exc:
+                if str(exc).casefold() == 'max number of clients reached'.casefold():
+                    LOG.error('Reached redis limit!')
+                    # fall back to doing it synchronously
+                    look_up_beer(beer.id)
+                else:
+                    raise
         return beer
 
     def get_manufacturer(self, name, **defaults):
