@@ -25,7 +25,7 @@ class CommandsTestCase(TestCase):
             venue=cls.venue, url='https://localhost:8000',
         )
 
-    def test_import_data(self):
+    def test_import_example_data(self):
         """Test parsing the JSON data"""
         self.assertFalse(Tap.objects.exists())
         self.assertEqual(Venue.objects.count(), 1)
