@@ -653,11 +653,11 @@
         {
             "beer": {
                 "abv": "5.0",
-                "beer_name": "Crisp Apple Cider",
+                "beer_name": "Crisp Apple Cider ",
                 "ibu": "7",
                 "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyFwsSDnRhcGh1bnRlcl9iZWVyGLatrBcM",
                 "logo_url": "https://lh3.googleusercontent.com/Pd6YLv5-aHD6nkNnTZBA1VzjHgYkf-Y7axHi0d6EvSOlV-0OEbI4FIn7CHssVtuFN4l7FzKZztU_X_c8rgAclWlEylvCvqs=s150",
-                "name": "Angry Orchard Crisp Apple Cider",
+                "name": "Angry Orchard Crisp Apple Cider ",
                 "pintley_id": "23567",
                 "public_url": "https://www.taphunter.com/beer/angry-orchard-crisp-apple-cider/48961206",
                 "ratebeer_id": 155194,
@@ -677,7 +677,7 @@
                 "logo_url": "https://lh5.ggpht.com/gUNebXp4obondztO0FPSxhFGr1JFMKMv2TnXvk5I_A4UQpd4YSs-PTjWBHP1HDivT8O10rPENIwfMXjg9NaaMsrAp6p6Rw=s150",
                 "market": "Cincinnati",
                 "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgICg_Iiq-QoM",
-                "name": "Angry Orchard Cidery",
+                "name": "Angry Orchard Cidery ",
                 "origin": "Cincinnati, OH",
                 "public_url": "https://www.taphunter.com/brewery/angry-orchard-cidery/35527549",
                 "state": "OH"
