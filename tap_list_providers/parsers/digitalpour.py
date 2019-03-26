@@ -115,6 +115,7 @@ class DigitalPourParser(BaseTapListProvider):
                 'color': hex(b['CiderStyle']['Color']),
                 'logo_url': b.get('LogoImageUrl'),
                 'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'rate_beer_url': b.get('RateBeerUrl'),
                 'manufacturer_url': b.get('BeerUrl'),
             }
         else:
@@ -125,6 +126,7 @@ class DigitalPourParser(BaseTapListProvider):
                 'ibu': b['Ibu'],
                 'color': hex(b['BeerStyle']['Color']),
                 'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'rate_beer_url': b.get('RateBeerUrl'),
                 'manufacturer_url': b.get('BeerUrl'),
                 'logo_url': b.get('LogoImageUrl') or b.get('ResolvedLogoImageUrl') or None,
             }
