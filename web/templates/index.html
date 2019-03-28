@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>HSV.beer v2.1 (Venue)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css?family=Lekton|Montserrat|Oswald:500" rel="stylesheet">
+  
+  <link rel='stylesheet' href='https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css'>
+
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+
+  <div class="header">
+
+  <div class="container-fluid container-header">
+
+    <nav class="navbar navbar-expand-md navbar">
+      <a class="navbar-brand navbar-logo" href="#">
+        <span class="particletext bubbles"><img class="brand-logo" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/69546/hsv-beer-logo.svg" alt="hsv.beer"></a>
+      <!--
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Beers<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Stores</a>
+          </li>
+        </ul>
+      </div>
+-->
+    </nav>
+    <p class="text-intro lead text-center">Find draft beer in Huntsville</p>
+<!--
+    <ul class="list-inline text-center">
+      <li><a class="btn" href="">About</a></li>
+      <li><a class="btn" href="">Buy us a beer</a></li>
+    </ul>
+-->
+    <div id="search" class="search-container">
+      <!--
+<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/69546/search-icon.svg" alt="search">
+-->
+      <div class="search-icon-container">
+        <div class="search-icon dark small">
+          <div class="mug-top"></div>
+          <div class="mug-sides"></div>
+          <div class="mug-bottom"></div>
+          <div class="mug-handle">
+            <div class="mug-handle-inner"></div>
+          </div>
+        </div>
+      </div>
+
+      <input type="text" class="form-control search" placeholder="Search beers, brewers, or styles" aria-label="Search beers, brewers, or styles">
+      <button class="btn btn-clearsearch btn-secondary" type="button"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/69546/close.svg" alt="close"></button>
+      <!--
+      <div class="input-group-append">
+        <a class="btn btn-search"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/69546/magnifying-glass.svg" alt="search"></a>
+      </div>
+-->
+    </div>
+
+    <div class="taphouse-select-container">
+      <select data-placeholder="Select a taphouse" id="taphouseSelect" class="chosen-select">
+        <option>Select a taphouse</option>
+        <option>Das Stahl Bierhaus</option>
+        <option>Liquor Express</option>
+        <option>OTBX</option>
+        <option selected="selected">Straight to Ale</option>
+        <option>Yellowhammer</option>
+      </select>
+    </div>
+  </div>
+
+</div>
+
+<main>
+
+  <div class="container-fluid">
+
+
+    
+    <div class="results-header">
+      <h2 class="results-number"><span class="beer-total">347</span> <span class="d-none">matching</span> beers on tap at <a class="header-venue" href="#" data-toggle="modal" data-target="#exampleModal">
+  Straight to Ale
+</a></h2>
+            <div class="sort">
+        <a class="sort-button btn btn-outline-light" href="#"></a>
+        <div class="sort-options z-3">
+          <div class="sort-options-header">Sort by:</div>
+          <ul>
+            <li><a href="#" class="selected">Name</a></li>
+            <li><a href="#">Brewer</a></li>
+            <li><a href="#">Style</a></li>
+            <li><a href="#">Rating</a></li>
+            <li><a href="#">ABV</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container-list">
+      <ul id="beer-list">
+
+        <li class="beer">
+          <div class="beer-intro">
+            <div class="beer-logo"><img src="https://untappd.akamaized.net/site/beer_logos/beer-27082_094a9_sm.jpeg"></div>
+            <div class="beer-info">
+              <a class="beer-link" data-toggle="collapse" href="#beer1Details" role="button" aria-expanded="false" aria-controls="beer1Details">
+                <h2 class="beer-name">Truck Stop Honey Brown Ale</h2>
+              </a>
+              <div class="beer-brewer">Back Forty Beer Company</div>
+              <div class="beer-style srm-20">Brown Ale - American <span class="beer-abv">6.0%</span></div>
+              <div class="beer-rating">3.6</div>
+            </div>
+          </div>
+          <div class="beer-details-container collapse" id="beer1Details">
+            <div class="beer-details">
+              <div class="find-it">
+                <h3 class="find-it-header">Find it on tap at:</h3>
+                <ul class="find-it-list">
+                  <li><a href="#">Liquor Express</a></li>
+                  <li><a href="#">OTBX</a></li>
+                </ul>
+              </div>
+              <div class="learn-more">
+                <h3 class="learn-more-header">Learn more</h3>
+                <a href="#" class="btn btn-outline-primary">untappd</a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="beer">
+          <div class="beer-intro">
+            <div class="beer-logo"><img src="https://untappd.akamaized.net/site/beer_logos/beer-49715_41e74_sm.jpeg"></div>
+            <div class="beer-info">
+              <a class="beer-link" data-toggle="collapse" href="#beer2Details" role="button" aria-expanded="false" aria-controls="beer2Details">
+                <h2 class="beer-name">Monkeynaut</h2>
+              </a>
+              <div class="beer-brewer">Straight to Ale</div>
+              <div class="beer-style srm-12">IPA - American <span class="beer-abv">7.3%</span></div>
+              <div class="beer-rating">3.7</div>
+            </div>
+          </div>
+          <div class="beer-details-container collapse" id="beer2Details">
+            <div class="beer-details">
+              <div class="find-it">
+                <h3 class="find-it-header">Find it on tap at:</h3>
+                <ul class="find-it-list">
+                  <li><a href="#">Das Stahl Bierhaus</a></li>
+                  <li><a href="#">Liquor Express</a></li>
+                  <li><a href="#">Straight to Ale</a></li>
+                </ul>
+              </div>
+              <div class="learn-more">
+                <h3 class="learn-more-header">Learn more</h3>
+                <a href="#" class="btn btn-outline-primary">untappd</a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="beer">
+          <div class="beer-intro">
+            <div class="beer-logo"><img src="https://untappd.akamaized.net/site/beer_logos/beer-27082_094a9_sm.jpeg"></div>
+            <div class="beer-info">
+              <a class="beer-link" data-toggle="collapse" href="#beer3Details" role="button" aria-expanded="false" aria-controls="beer3Details">
+                <h2 class="beer-name">Fictitious Bourbon Barrel Aged Double Imperial Vanilla Maple Russian Stout</h2>
+              </a>
+              <div class="beer-brewer">Needlessly Verbose Beer Co.</div>
+              <div class="beer-style srm-40">Stout - Russian Imperial <span class="beer-abv">12.0%</span></div>
+              <div class="beer-rating">4.6</div>
+            </div>
+          </div>
+          <div class="beer-details-container collapse" id="beer3Details">
+            <div class="beer-details">
+              <div class="find-it">
+                <h3 class="find-it-header">Find it on tap at:</h3>
+                <ul class="find-it-list">
+                  <li><a href="#">Liquor Express</a></li>
+                </ul>
+              </div>
+              <div class="learn-more">
+                <h3 class="learn-more-header">Learn more</h3>
+                <a href="#" class="btn btn-outline-primary">untappd</a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="beer">
+          <div class="beer-intro">
+            <div class="beer-logo"><img src="https://untappd.akamaized.net/site/beer_logos/beer-49715_41e74_sm.jpeg"></div>
+            <div class="beer-info">
+              <a class="beer-link" data-toggle="collapse" href="#beer4Details" role="button" aria-expanded="false" aria-controls="beer4Details">
+                <h2 class="beer-name">Monkeynaut</h2>
+              </a>
+              <div class="beer-brewer">Straight to Ale</div>
+              <div class="beer-style srm-12">IPA - American <span class="beer-abv">7.3%</span></div>
+              <div class="beer-rating">3.7</div>
+            </div>
+          </div>
+          <div class="beer-details-container collapse" id="beer4Details">
+            <div class="beer-details">
+              <div class="find-it">
+                <h3 class="find-it-header">Find it on tap at:</h3>
+                <ul class="find-it-list list-unstyled">
+                  <li><a href="#">Das Stahl Bierhaus</a></li>
+                  <li><a href="#">Liquor Express</a></li>
+                  <li><a href="#">Straight to Ale</a></li>
+                </ul>
+              </div>
+              <div class="learn-more">
+                <h3 class="learn-more-header">Learn more</h3>
+                <a href="#" class="btn btn-outline-primary">untappd</a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="beer">
+          <div class="beer-intro">
+            <div class="beer-logo"><img src="https://untappd.akamaized.net/site/beer_logos/beer-27082_094a9_sm.jpeg"></div>
+            <div class="beer-info">
+              <a class="beer-link" data-toggle="collapse" href="#beer5Details" role="button" aria-expanded="false" aria-controls="beer5Details">
+                <h2 class="beer-name">Truck Stop Honey Brown Ale</h2>
+              </a>
+              <div class="beer-brewer">Back Forty Beer Company</div>
+              <div class="beer-style srm-20">Brown Ale - American</div>
+              <div class="beer-rating">3.6</div>
+            </div>
+          </div>
+          <div class="beer-details-container collapse" id="beer5Details">
+            <div class="beer-details">
+              <div class="find-it">
+                <h3 class="find-it-header">Find it on tap at:</h3>
+                <ul class="find-it-list">
+                  <li><a href="#">Liquor Express</a></li>
+                </ul>
+              </div>
+              <div class="learn-more">
+                <h3 class="learn-more-header">Learn more</h3>
+                <a href="#" class="btn btn-outline-primary">untappd</a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+
+      <!--  
+  <h1>Find a Store</h1>
+<table class="table table-beers">
+  <thead>
+    <th class="th-store-img"></th>
+    <th class="th-store">Store</th>
+    <th class="th-beersontap">Beers On Tap</th>
+    <th class="th-address">Address</th>
+    <th class="th-tbd">TBD</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="td-store-img"><img class="store-logo" src="http://liquorexpress.net/wp-content/themes/rt_kraken/custom/images/logo/logo_small_ring_le.png"></td>
+      <td class="td-store">Liquor Express</td>
+      <td class="td-beersontap">98</td>
+      <td class="td-address"></td>
+      <td class="td-tbd"></td>
+    </tr>
+    <tr>
+      <td class="td-beer-img"><img class="beer-logo" src="http://otbxhsv.com/wp-content/themes/otbx-wp/img/logo.png"></td>
+      <td class="td-store">OTBX</td>
+      <td class="td-beersontap">44</td>
+      <td class="td-address"></td>
+      <td class="td-tbd"></td>
+    </tr>
+    <tr>
+      <td class="td-beer-img"><img class="beer-logo" src="http://straighttoale.com/str82wp/wp-content/uploads/2018/08/2018-STA-logo.png"></td>
+      <td class="td-store">Straight to Ale</td>
+      <td class="td-beersontap">21</td>
+      <td class="td-address"></td>
+      <td class="td-tbd"></td>
+    </tr>
+  </tbody>
+</table>
+-->
+
+</main>
+
+<footer>
+  <div class="container-fluid">
+    <ul class="list-inline">
+      <li><a href="">About</a></li>
+      <li><a href="mailto:contact@hsv.beer">Contact</a></li>
+      <li><a href="">Buy us a beer</a></li>
+    </ul>
+  </div>
+</footer>
+    
+    
+    
+<div class="modal modal-venue fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        
+            <section class="venue">
+      <div class="venue-logo-title">
+        <img class="venue-logo" src="http://straighttoale.com/wp-content/uploads/2018/08/2018-STA-logo.png" alt="">
+        <h1 class="venue-title">Straight to Ale</h1>
+      </div>
+      <div class="venue-info">
+        <address class="venue-address">2610 Clinton Ave<br>
+          Huntsville, AL 35805<br>
+          <a class="venue-gmap" href="">View on Map</a>
+        </address>
+        <div class="venue-contact">
+          <a class="venue-website" href="https://straighttoale.com">https://straighttoale.com</a>
+          <a class="venue-email" href="mailto:info@straighttoale.com">info@straighttoale.com</a>
+          <span class="venue-phone">256.801.9650</span>
+        </div>
+        <div class="venue-social">
+          <a class="btn venue-untappd" href=""><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/69546/untappd.svg"><span>Untappd</span></a>
+          <a class="btn venue-facebook" href=""><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/69546/facebook.svg"><span>Facebook</span></a>
+          <a class="btn venue-instagram" href=""><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/69546/instagram.svg"><span>Instagram</span></a>
+          <a class="btn venue-twitter" href=""><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/69546/twitter.svg"><span>Twitter</span></a>
+        </div>
+        <div class="venue-taps">
+          <a class="btn btn-primary btn-block btn-raised" href="">What's on tap</a>
+        </div>
+      </div>
+    </section>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+  <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
+<script src='https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js'></script>
+<script src='https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.proto.min.js'></script>
+
+  
+
+    <script  src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>
