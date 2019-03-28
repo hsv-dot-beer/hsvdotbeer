@@ -39,9 +39,6 @@ $( ".search-icon" ).click(function() {
    $(this).parent().removeClass("active");
   });
 
-$(".chosen-select").chosen()
-
-
 
 $("input.search").change(function() {
   if ($(this).val() != "") {
@@ -62,7 +59,6 @@ new Vue({
     visible: [],
     venues: [],
     activeIdx: -1,
-    selected_venue_id: -1,
     selected_venue: {},
   },
   mounted: function() {
@@ -140,4 +136,5 @@ new Vue({
     },
   },
 });
+Vue.component('v-select', VueSelect.VueSelect);
 

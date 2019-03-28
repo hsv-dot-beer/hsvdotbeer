@@ -42,15 +42,13 @@
     </div>
 
     <div class="taphouse-select-container">
-      <select v-model="selected_venue_id"
-              @change="onVenueChange($event)"
-              data-placeholder="Select a taphouse"
-              id="taphouseSelect"
-              class="chosen-select">
-        <option selected="selected" value="-1">Select a taphouse</option>
-        <option v-for="venue in venues"
-                v-bind:value="venue.id">${ venue.name }</option>
-      </select>
+      <v-select
+              v-model="selected_venue"
+              :options="venues"
+              label="name"
+              placeholder="Select a taphouse"
+              id="taphouseSelect">
+      </v-select>
     </div>
   </div>
 </div>
@@ -59,7 +57,7 @@
   <div class="container-fluid">
     <div class="results-header">
       <h2 class="results-number">
-        <span class="beer-total">${ count }</span> <span class="d-none">matching</span> beers on tap <span v-if="selected_venue_id != -1"> at <a class="header-venue" href="#" data-toggle="modal" data-target="#exampleModal">${ selected_venue.name }</a></span>
+        <span class="beer-total">${ count }</span> <span class="d-none">matching</span> beers on tap <span v-if="Object.keys(selected_venue).length"> at <a class="header-venue" href="#" data-toggle="modal" data-target="#exampleModal">${ selected_venue.name }</a></span>
       </h2>
       <div class="sort">
         <a class="sort-button btn btn-outline-light" href="#"></a>
@@ -133,17 +131,17 @@
       <section class="venue">
         <div class="venue-logo-title">
           <img class="venue-logo" src="http://straighttoale.com/wp-content/uploads/2018/08/2018-STA-logo.png" alt="">
-          <h1 class="venue-title">Straight to Ale</h1>
+          <h1 class="venue-title">${ selected_venue.name }</h1>
         </div>
         <div class="venue-info">
-          <address class="venue-address"><br>
-            Huntsville, AL 35805<br>
+          <address class="venue-address">${ selected_venue.address }<br>
+            ${ selected_venue.city } ${ selected_venue.state } ${ selected_venue.postal_code }<br>
             <a class="venue-gmap" href="">View on Map</a>
           </address>
           <div class="venue-contact">
-            <a class="venue-website" href="https://straighttoale.com">https://straighttoale.com</a>
-            <a class="venue-email" href="mailto:info@straighttoale.com">info@straighttoale.com</a>
-            <span class="venue-phone">256.801.9650</span>
+            <a class="venue-website" :href="selected_venue.website">${ selected_venue.website }</a>
+            <!--<a class="venue-email" href="mailto:info@straighttoale.com">info@straighttoale.com</a>-->
+            <!-- <span class="venue-phone">256.801.9650</span> -->
           </div>
           <div class="venue-social">
             <a class="btn venue-untappd" href=""><img src="{% static 'svg/untappd.svg' %}"><span>Untappd</span></a>
@@ -165,12 +163,12 @@
 <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
 <script src='https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js'></script>
 <script src='https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.proto.min.js'></script>
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.6/vue.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
 <script src='https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js'></script>
+
+<script src="https://unpkg.com/vue-select@latest"></script>
 
 <script src="{% static 'js/index.js' %}"></script>
 </body>
