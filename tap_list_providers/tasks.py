@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 """Tasks for tap list providers"""
 
+from json import JSONDecodeError
 import logging
 
+from requests.exceptions import RequestException
 from celery import shared_task
 
 
@@ -16,7 +18,11 @@ from tap_list_providers.parsers import (  # noqa
 LOG = logging.getLogger(__name__)
 
 
-@shared_task
+@shared_task(
+    bind=False,
+    autoretry_for=(RequestException, JSONDecodeError),
+    default_retry_delay=600,
+)
 def parse_provider(provider_name):
     provider = BaseTapListProvider.get_provider(provider_name)()
     LOG.debug('Got provider: %s', provider.__class__.__name__)
