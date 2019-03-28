@@ -10,6 +10,7 @@ from urllib.parse import urlparse, unquote
 import logging
 
 from django.db.models import Prefetch, Q
+from kombu.exceptions import OperationalError
 
 from venues.models import Venue
 from beers.models import Beer, Manufacturer, BeerPrice, ServingSize
@@ -71,6 +72,7 @@ class BaseTapListProvider():
             self.handle_venue(venue)
 
     def get_beer(self, name, manufacturer, pricing=None, venue=None, **defaults):
+        name = name.strip()
         LOG.debug(
             'get_beer(): name %s, mfg %s, defaults %s',
             name, manufacturer, defaults,
@@ -166,44 +168,46 @@ class BaseTapListProvider():
             for field, value in defaults.items():
                 # instead of using update_or_create(), only update fields *if*
                 # they're set in `defaults`
-                if value:
-                    if field == 'logo_url':
-                        # these don't have to be unique
-                        if beer.logo_url:
-                            if venue and venue.tap_list_provider == 'taphunter':
-                                LOG.info(
-                                    'Not trusting beer logo for %s from TapHunter'
-                                    ' because TH does not distinguish between '
-                                    'beer and brewery logos', beer
-                                )
-                                continue
-                            found = False
-                            for target, provider in PROVIDER_BREWERY_LOGO_STRINGS.items():
-                                if target in value:
-                                    LOG.info(
-                                        'Not overwriting logo for beer %s (%s) with brewery logo'
-                                        ' from %s',
-                                        beer, beer.logo_url, provider,
-                                    )
-                                    found = True
-                                    break
-                            if found:
-                                continue
-                    elif field.endswith('_url'):
-                        if Beer.objects.exclude(id=beer.id).filter(
-                            **{field: value}
-                        ).exists():
-                            LOG.warning(
-                                'skipping updating %s (%s) for %s (PK %s)'
-                                ' because it would conflict',
-                                field, value, beer.name, beer.id,
+                if not value or getattr(beer, field) == value:
+                    # it's either unset or is already set to this value
+                    continue
+                if field == 'logo_url':
+                    # these don't have to be unique
+                    if beer.logo_url:
+                        if venue and venue.tap_list_provider == 'taphunter':
+                            LOG.info(
+                                'Not trusting beer logo for %s from TapHunter'
+                                ' because TH does not distinguish between '
+                                'beer and brewery logos', beer
                             )
                             continue
-                    saved_value = getattr(beer, field)
-                    if value != saved_value:
-                        # TODO mark as unmoderated
-                        setattr(beer, field, value)
-                        needs_update = True
+                        found = False
+                        for target, provider in PROVIDER_BREWERY_LOGO_STRINGS.items():
+                            if target in value:
+                                LOG.info(
+                                    'Not overwriting logo for beer %s (%s) with brewery logo'
+                                    ' from %s',
+                                    beer, beer.logo_url, provider,
+                                )
+                                found = True
+                                break
+                        if found:
+                            continue
+                elif field.endswith('_url'):
+                    if Beer.objects.exclude(id=beer.id).filter(
+                        **{field: value}
+                    ).exists():
+                        LOG.warning(
+                            'skipping updating %s (%s) for %s (PK %s)'
+                            ' because it would conflict',
+                            field, value, beer.name, beer.id,
+                        )
+                        continue
+                saved_value = getattr(beer, field)
+                if value != saved_value:
+                    # TODO mark as unmoderated
+                    setattr(beer, field, value)
+                    needs_update = True
         if manufacturer.logo_url and not beer.logo_url:
             beer.logo_url = manufacturer.logo_url
             needs_update = True
@@ -243,10 +247,20 @@ class BaseTapListProvider():
                     raise
         if beer.untappd_url:
             # queue up an async fetch
-            look_up_beer.delay(beer.id)
+            try:
+                # if it has an untappd URL, queue a lookup for the next in line
+                look_up_beer.delay(beer.id)
+            except OperationalError as exc:
+                if str(exc).casefold() == 'max number of clients reached'.casefold():
+                    LOG.error('Reached redis limit!')
+                    # fall back to doing it synchronously
+                    look_up_beer(beer.id)
+                else:
+                    raise
         return beer
 
     def get_manufacturer(self, name, **defaults):
+        name = name.strip()
         field_names = {i.name for i in Manufacturer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:

@@ -122,7 +122,6 @@ class VenueAPIConfigurationListTestCase(APITestCase):
         self.venue = VenueFactory()
         self.admin_user = UserFactory(is_staff=True)
         self.url = reverse('venueapiconfiguration-list')
-        print(self.url)
         self.client.credentials = self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.admin_user.auth_token}')
         self.data = {
