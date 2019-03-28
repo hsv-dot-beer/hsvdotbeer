@@ -75,33 +75,36 @@
     </div>
     <div class="container-list">
       <ul id="beer-list">
-        <li class="beer">
+        <li v-for="beer, i of beers" class="beer">
           <div class="beer-intro">
-            <div class="beer-logo"><img src="https://untappd.akamaized.net/site/beer_logos/beer-27082_094a9_sm.jpeg"></div>
+            <div class="beer-logo"><img :src="beer.logo_url"></div>
             <div class="beer-info">
-              <a class="beer-link" data-toggle="collapse" href="#beer1Details" role="button" aria-expanded="false" aria-controls="beer1Details">
-                <h2 class="beer-name">Truck Stop Honey Brown Ale</h2>
+              <a class="beer-link"
+                 @click="$set(visible, i, !visible[i]);
+                         if (activeIdx != i) activeIdx = i;
+                         else activeIdx = -1;">
+                <h2 class="beer-name">${ beer.name }</h2>
               </a>
-              <div class="beer-brewer">Back Forty Beer Company</div>
-              <div class="beer-style srm-20">Brown Ale - American <span class="beer-abv">6.0%</span></div>
-              <div class="beer-rating">3.6</div>
+              <div class="beer-brewer">${ beer.manufacturer.name }</div>
+              <div class="beer-style" v-bind:style="beer.styleObj">Brown Ale - American <span v-if="beer.abv" class="beer-abv">${ beer.abv }%</span></div>
+              <div v-if="beer.rating" class="beer-rating">${ beer.rating }</div>
             </div>
           </div>
-          <div class="beer-details-container collapse" id="beer1Details">
+          <b-collapse class="beer-details-container" v-model="visible[i]">
             <div class="beer-details">
               <div class="find-it">
                 <h3 class="find-it-header">Find it on tap at:</h3>
                 <ul class="find-it-list">
-                  <li><a href="#">Liquor Express</a></li>
-                  <li><a href="#">OTBX</a></li>
+                  <li v-for="place of beer.venues"><a :href="place.website">${ place.name }</a></li>
                 </ul>
               </div>
-              <div class="learn-more">
+              <div class="learn-more" v-if="beer.untappd_url || beer.taphunter_url">
                 <h3 class="learn-more-header">Learn more</h3>
-                <a href="#" class="btn btn-outline-primary">untappd</a>
+                <a v-if="beer.untappd_url" :href="beer.untappd_url" class="btn btn-outline-primary">untappd</a>
+                <a v-if="beer.taphunter_url" :href="beer.taphunter_url" class="btn btn-outline-primary">TapHunter</a>
               </div>
             </div>
-          </div>
+          </b-collapse>
         </li>
       </ul>
     </div>
