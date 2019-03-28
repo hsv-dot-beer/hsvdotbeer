@@ -275,7 +275,7 @@ class Beer(models.Model):
 
 class BeerAlternateName(models.Model):
     beer = models.ForeignKey(Beer, models.CASCADE, related_name='alternate_names')
-    name = models.CharField(max_length=100, unique=True)
+    name = CITextField()
 
     def __str__(self):
         return f'{self.name} for {self.beer_id}'
@@ -284,7 +284,7 @@ class BeerAlternateName(models.Model):
 class ManufacturerAlternateName(models.Model):
     manufacturer = models.ForeignKey(
         Manufacturer, models.CASCADE, related_name='alternate_names')
-    name = models.CharField(max_length=100, unique=True)
+    name = CITextField()
 
     def __str__(self):
         return f'{self.name} for {self.manufacturer_id}'
