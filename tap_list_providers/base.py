@@ -6,7 +6,7 @@ which takes a single argument: a Venue object.
 It'll have API configuration, taps, and existing beers prefetched.
 """
 from decimal import Decimal, InvalidOperation
-from urllib.parse import urlparse
+from urllib.parse import urlparse, unquote
 import logging
 
 from django.db.models import Prefetch, Q
@@ -85,6 +85,15 @@ class BaseTapListProvider():
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:
             raise ValueError(f'Unknown fields f{",".join(sorted(defaults))}')
+        for key, val in list(defaults.items()):
+            if val and key.endswith('_url'):
+                unquoted = unquote(val)
+                if unquoted != val:
+                    LOG.debug(
+                        'Replacing unquoted value for %s (%s) with %s',
+                        key, val, unquoted,
+                    )
+                    defaults[key] = unquoted
         fix_urls(defaults)
         unique_fields_present = {
             field: value for field, value in defaults.items()
