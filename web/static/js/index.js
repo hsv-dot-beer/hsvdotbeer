@@ -50,3 +50,94 @@ $("input.search").change(function() {
     $(this).removeClass('filled');
   }
 })
+
+Vue.config.devtools = true;
+
+new Vue({
+  el: '#app',
+  delimiters: ['${', '}'],
+  data: {
+    count: 0,
+    beers: [],
+    visible: [],
+    venues: [],
+    activeIdx: -1,
+    selected_venue_id: -1,
+    selected_venue: {},
+  },
+  mounted: function() {
+    this.getVenues('api/v1/venues/');
+    this.getBeers();
+    // $(".chosen-select").chosen();
+
+  },
+  methods: {
+    getBeers: function() {
+      axios.get('api/v1/beers/').
+      then((response) => {
+        console.log(response);
+        this.beers = response.data.results;
+        for (var i = 0; i < this.beers.length; i++) {
+          this.visible[i] = false;
+          this.beers[i].styleObj = {
+            '--background-color': this.beers[i].color_srm_html,
+          };
+        }
+        this.activeIdx = -1;
+        this.count = response.data.count;
+      })
+        .catch((err) => {
+        console.log(err);
+      });
+    },
+    getVenueBeers: function(venue) {
+      axios.get('api/v1/venues/' + venue + '/').
+      then((response) => {
+        console.log(response);
+        this.selected_venue = response.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      axios.get('api/v1/venues/' + venue + '/beers/').
+      then((response) => {
+        console.log(response);
+        this.beers = response.data.results;
+      for (var i = 0; i < this.beers.length; i++) {
+          this.visible[i] = false;
+          this.beers[i].styleObj = {
+            '--background-color': this.beers[i].color_srm_html,
+          };
+        }
+        this.activeIdx = -1;
+        this.count = response.data.count;
+      })
+       .catch((err) => {
+        console.log(err);
+      });
+    },
+    getVenues: function(link) {
+      axios.get(link).
+      then((response) => {
+        console.log(response);
+        this.venues.push.apply(this.venues, response.data.results);
+        if (response.data.next)
+        {
+          this.getVenues(response.data.next);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
+    onVenueChange(event) {
+      console.log(event.target.value);
+      if (event.target.value != -1)
+        this.getVenueBeers(event.target.value);
+      else
+        this.getBeers();
+    },
+  },
+});
+

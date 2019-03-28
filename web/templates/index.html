@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -11,6 +12,7 @@
 </head>
 
 <body>
+  <div id="app">
   <div class="header">
     <div class="container-fluid container-header">
       <nav class="navbar navbar-expand-md navbar">
@@ -40,13 +42,14 @@
     </div>
 
     <div class="taphouse-select-container">
-      <select data-placeholder="Select a taphouse" id="taphouseSelect" class="chosen-select">
-        <option>Select a taphouse</option>
-        <option>Das Stahl Bierhaus</option>
-        <option>Liquor Express</option>
-        <option>OTBX</option>
-        <option selected="selected">Straight to Ale</option>
-        <option>Yellowhammer</option>
+      <select v-model="selected_venue_id"
+              @change="onVenueChange($event)"
+              data-placeholder="Select a taphouse"
+              id="taphouseSelect"
+              class="chosen-select">
+        <option selected="selected" value="-1">Select a taphouse</option>
+        <option v-for="venue in venues"
+                v-bind:value="venue.id">${ venue.name }</option>
       </select>
     </div>
   </div>
@@ -56,9 +59,7 @@
   <div class="container-fluid">
     <div class="results-header">
       <h2 class="results-number">
-        <span class="beer-total">347</span> <span class="d-none">matching</span> beers on tap at <a class="header-venue" href="#" data-toggle="modal" data-target="#exampleModal">
-  Straight to Ale
-</a>
+        <span class="beer-total">${ count }</span> <span class="d-none">matching</span> beers on tap <span v-if="selected_venue_id != -1"> at <a class="header-venue" href="#" data-toggle="modal" data-target="#exampleModal">${ selected_venue.name }</a></span>
       </h2>
       <div class="sort">
         <a class="sort-button btn btn-outline-light" href="#"></a>
@@ -135,7 +136,7 @@
           <h1 class="venue-title">Straight to Ale</h1>
         </div>
         <div class="venue-info">
-          <address class="venue-address">2610 Clinton Ave<br>
+          <address class="venue-address"><br>
             Huntsville, AL 35805<br>
             <a class="venue-gmap" href="">View on Map</a>
           </address>
@@ -158,6 +159,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
