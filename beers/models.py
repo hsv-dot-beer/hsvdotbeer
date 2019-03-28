@@ -1,7 +1,7 @@
 import logging
 import string
 
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import JSONField, CITextField
 from django.db import models, transaction
 
 from .utils import render_srm
@@ -111,7 +111,7 @@ class BeerStyle(models.Model):
 
 
 class Manufacturer(models.Model):
-    name = models.CharField(unique=True, max_length=100)
+    name = CITextField(unique=True)
     url = models.URLField(blank=True)
     location = models.CharField(blank=True, max_length=50)
     logo_url = models.URLField(blank=True)
@@ -126,15 +126,15 @@ class Manufacturer(models.Model):
         LOG.info('merging %s into %s', other, self)
         with transaction.atomic():
             other_beers = list(other.beers.all())
-            my_beers = {i.name: i for i in self.beers.all()}
+            my_beers = {i.name.casefold(): i for i in self.beers.all()}
             for beer in other_beers:
                 beer.manufacturer = self
-                if beer.name in my_beers:
+                if beer.name.casefold() in my_beers:
                     # we have a duplicate beer. Merge those two first.
                     # merge_from takes care of saving my_beer and deleting
                     # beer
                     # keep the one that was already present
-                    my_beer = my_beers[beer.name]
+                    my_beer = my_beers[beer.name.casefold()]
                     my_beer.merge_from(beer)
                 else:
                     # good
@@ -169,7 +169,7 @@ class Manufacturer(models.Model):
 
 
 class Beer(models.Model):
-    name = models.CharField(max_length=100, db_index=True)
+    name = CITextField()
     style = models.ForeignKey(
         BeerStyle, models.DO_NOTHING, related_name='beers',
         # TODO: prevent this being null?
