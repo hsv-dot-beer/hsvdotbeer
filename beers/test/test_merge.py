@@ -15,7 +15,7 @@ class BeerTestCase(TestCase):
             color_srm=None,
         )
         beer2 = BeerFactory(
-            manufacturer=manufacturer, color_srm=55,
+            manufacturer=manufacturer, color_srm=55, stem_and_stein_pk=551,
         )
         tap = TapFactory(beer=beer2)
         beer1.merge_from(beer2)
@@ -26,6 +26,7 @@ class BeerTestCase(TestCase):
         self.assertTrue(BeerAlternateName.objects.filter(
             name=beer2.name, beer=beer1,
         ).exists())
+        self.assertEqual(tap.beer.stem_and_stein_pk, beer2.stem_and_stein_pk)
 
 
 class ManufacturerTestCase(TestCase):

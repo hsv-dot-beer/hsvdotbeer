@@ -6,6 +6,7 @@ from django.test import TestCase
 import responses
 
 from beers.models import Beer, Manufacturer
+from beers.test.factories import ManufacturerFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
@@ -96,3 +97,44 @@ class CommandsTestCase(TestCase):
             price = prices[0]
             self.assertEqual(price.price, 8)
             self.assertEqual(price.serving_size.volume_oz, 10)
+
+    def test_guess_manufacturer_good_people(self):
+        mfg_names = [
+            'Goodwood', 'Good People Brewing Company', 'Good People',
+            'Good People Brewing Co.',
+        ]
+        manufacturers = [
+            ManufacturerFactory.build(name=name) for name in mfg_names
+        ]
+        Manufacturer.objects.bulk_create(manufacturers)
+        parser = StemAndSteinParser()
+        guessed = parser.guess_manufacturer('Good People IPA')
+        self.assertEqual(guessed.name, 'Good People', guessed)
+        self.assertIn(guessed, manufacturers)
+
+    def test_guess_manufacturer_stone(self):
+        mfg_names = [
+            'New Realm Brewing Company / Stone', 'Stone Brewing ', 'Stone',
+            'Stone Brewing Co.', 'Stone Brewing',
+        ]
+        manufacturers = [
+            ManufacturerFactory.build(name=name) for name in mfg_names
+        ]
+        Manufacturer.objects.bulk_create(manufacturers)
+        parser = StemAndSteinParser()
+        guessed = parser.guess_manufacturer('Stone Enjoy By 04.20.19 IPA')
+        self.assertEqual(guessed.name, 'Stone', guessed)
+        self.assertIn(guessed, manufacturers)
+
+    def test_guess_manufacturer_goat_island(self):
+        mfg_names = [
+            'Horny Goat Brewing Company', 'Goat Island Brewing', 'Goat Island',
+        ]
+        manufacturers = [
+            ManufacturerFactory.build(name=name) for name in mfg_names
+        ]
+        Manufacturer.objects.bulk_create(manufacturers)
+        parser = StemAndSteinParser()
+        guessed = parser.guess_manufacturer('Goat Island Sipsey River Red Ale')
+        self.assertEqual(guessed.name, 'Goat Island', guessed)
+        self.assertIn(guessed, manufacturers)
