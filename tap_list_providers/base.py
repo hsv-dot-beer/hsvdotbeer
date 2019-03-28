@@ -72,6 +72,7 @@ class BaseTapListProvider():
             self.handle_venue(venue)
 
     def get_beer(self, name, manufacturer, pricing=None, venue=None, **defaults):
+        name = name.strip()
         LOG.debug(
             'get_beer(): name %s, mfg %s, defaults %s',
             name, manufacturer, defaults,
@@ -250,6 +251,7 @@ class BaseTapListProvider():
         return beer
 
     def get_manufacturer(self, name, **defaults):
+        name = name.strip()
         field_names = {i.name for i in Manufacturer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:

@@ -116,6 +116,7 @@ class StemAndSteinParser(BaseTapListProvider):
         return None
 
     def guess_beer(self, beer_name):
+        beer_name = beer_name.strip()
         manufacturer = self.guess_manufacturer(beer_name)
         if not manufacturer:
             manufacturer = Manufacturer.objects.create(

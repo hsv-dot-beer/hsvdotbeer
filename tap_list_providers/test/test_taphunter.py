@@ -62,10 +62,13 @@ class CommandsTestCase(TestCase):
             taps = Tap.objects.filter(
                 venue=self.venue, tap_number__in=[6, 22],
             ).select_related(
-                'beer__style',
+                'beer__style', 'beer__manufacturer',
             ).order_by('tap_number')
             tap = taps[0]
             self.assertEqual(tap.beer.name, 'Crisp Apple Cider', tap.beer)
+            self.assertEqual(
+                tap.beer.manufacturer.name, 'Angry Orchard Cidery', tap.beer.manufacturer,
+            )
             self.assertEqual(
                 tap.beer.logo_url,
                 "https://lh3.googleusercontent.com/Pd6YLv5-aHD6nkNnTZBA1VzjHgYkf"

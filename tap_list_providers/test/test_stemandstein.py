@@ -81,6 +81,7 @@ class CommandsTestCase(TestCase):
                 tap.beer.name.endswith('Space Blood Orange Cider'),
                 tap.beer.name,
             )
+            self.assertEqual(tap.beer.stem_and_stein_pk, 967)
             prices = list(tap.beer.prices.all())
             self.assertEqual(len(prices), 1)
             price = prices[0]
