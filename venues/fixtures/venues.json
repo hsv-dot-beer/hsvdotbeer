@@ -15,26 +15,32 @@
         "twitter_handle": "StraightToAle",
         "instagram_handle": "straighttoale",
         "tap_list_provider": "digitalpour",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/straight-to-ale-brands/5025238",
+        "email": "",
+        "phone_number": "2568019650",
+        "logo_url": "http://straighttoale.com/wp-content/uploads/2018/08/2018-STA-logo.png"
     }
 },
 {
     "model": "venues.venue",
     "pk": 2,
     "fields": {
-        "name": "Wish You Were Beer Madison",
+        "name": "Madison Taproom",
         "address": "7407 Highway 72 W",
         "city": "Madison",
         "state": "Alabama",
         "postal_code": "35758",
         "country": "US",
         "time_zone": "America/Chicago",
-        "website": "http://www.wishyouwerebeer.net/",
-        "facebook_page": "https://www.facebook.com/wishyouwerebeerllc/",
+        "website": "https://www.madisontaproom.com/",
+        "facebook_page": "https://www.facebook.com/MadTaps/",
         "twitter_handle": "",
         "instagram_handle": "",
         "tap_list_provider": "digitalpour",
-        "untappd_url": null
+        "untappd_url": null,
+        "email": "madisyn@madisontaproom.com",
+        "phone_number": "2563259992",
+        "logo_url": "https://static.wixstatic.com/media/32a46f_b2a00471bb10440393c0fa0742f7ee93~mv2.png/v1/fill/w_210,h_200,al_c,lg_1,q_80/MTR-Logo-Tmp.webp"
     }
 },
 {
@@ -50,10 +56,13 @@
         "time_zone": "America/Chicago",
         "website": "http://www.wishyouwerebeer.net/",
         "facebook_page": "https://www.facebook.com/wywbcampus805/",
-        "twitter_handle": "",
+        "twitter_handle": "wywb_campus",
         "instagram_handle": "",
         "tap_list_provider": "digitalpour",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/wish-you-were-beer-campus-805/5853452",
+        "email": "info@wishyouwerebeer.net",
+        "phone_number": "2567157148",
+        "logo_url": "http://www.wishyouwerebeer.net/wp-content/uploads/2016/05/Logo-2.png"
     }
 },
 {
@@ -72,7 +81,10 @@
         "twitter_handle": "OTBXHSV",
         "instagram_handle": "otbxhsv",
         "tap_list_provider": "digitalpour",
-        "untappd_url": null
+        "untappd_url": null,
+        "email": "",
+        "phone_number": "2562707825",
+        "logo_url": "http://otbxhsv.com/wp-content/themes/otbx-wp/img/logo.png"
     }
 },
 {
@@ -88,10 +100,13 @@
         "time_zone": "America/Chicago",
         "website": "https://www.rocketcitycraftbeer.com/",
         "facebook_page": "http://www.facebook.com/rocketcitycraftbeer",
-        "twitter_handle": "rccbh",
+        "twitter_handle": "rccbhsv",
         "instagram_handle": "rocketcitycraftbeer",
         "tap_list_provider": "digitalpour",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/rocket-city-craft-beer/7494975",
+        "email": "",
+        "phone_number": "2564890807",
+        "logo_url": "https://static1.squarespace.com/static/5a9c2a4af8370a048dab34c4/t/5b6b4bc18a922d8794f6904b/1533758427380/Rocket-City-Beer-Garden+RGB_Color+jpg.jpg?format=2500w"
     }
 },
 {
@@ -99,18 +114,21 @@
     "pk": 6,
     "fields": {
         "name": "Whole Foods",
-        "address": "",
-        "city": "",
-        "state": "",
-        "postal_code": "",
-        "country": "",
+        "address": "2501 Memorial Parkway SW",
+        "city": "Huntsville",
+        "state": "AL",
+        "postal_code": "35801",
+        "country": "US",
         "time_zone": "America/Chicago",
-        "website": "",
+        "website": "https://www.wholefoodsmarket.com/shop/HSV",
         "facebook_page": "",
         "twitter_handle": "",
         "instagram_handle": "",
         "tap_list_provider": "taphunter",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/whole-foods-market/3882150",
+        "email": "",
+        "phone_number": "2568013741",
+        "logo_url": ""
     }
 },
 {
@@ -129,7 +147,10 @@
         "twitter_handle": "LiquorExpressAL",
         "instagram_handle": "liquorexpress",
         "tap_list_provider": "taphunter",
-        "untappd_url": null
+        "untappd_url": null,
+        "email": "",
+        "phone_number": "",
+        "logo_url": ""
     }
 },
 {
@@ -148,7 +169,10 @@
         "twitter_handle": "",
         "instagram_handle": "wagonwheelliquors",
         "tap_list_provider": "taphunter",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/wagon-wheel-liquors/588607",
+        "email": "wagonwheelliquors431@gmail.com",
+        "phone_number": "2565335155",
+        "logo_url": "http://www.wagonwheelliquorsal.com/wp-content/uploads/2017/11/logo.png"
     }
 },
 {
@@ -167,7 +191,10 @@
         "twitter_handle": "",
         "instagram_handle": "",
         "tap_list_provider": "taphunter",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/the-open-bottle/8190315",
+        "email": "",
+        "phone_number": "2568018990",
+        "logo_url": ""
     }
 },
 {
@@ -183,10 +210,13 @@
         "time_zone": "America/Chicago",
         "website": "http://www.thenooktavern.com",
         "facebook_page": "",
-        "twitter_handle": "",
+        "twitter_handle": "thenooktavern",
         "instagram_handle": "",
         "tap_list_provider": "nook_html",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/the-nook/5853",
+        "email": "",
+        "phone_number": "2564890911",
+        "logo_url": "http://www.thenooktavern.com/TheNook/Directions_files/Napoleon%27s-Nook-Logo.jpg"
     }
 },
 {
@@ -202,10 +232,13 @@
         "time_zone": "America/Chicago",
         "website": "http://www.dsb-hsv.com/",
         "facebook_page": "https://www.facebook.com/DSBHSV/",
-        "twitter_handle": "",
+        "twitter_handle": "DSBhsv",
         "instagram_handle": "",
         "tap_list_provider": "untappd",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/das-stahl-bierhaus/5569477",
+        "email": "contact@dsb-hsv.com",
+        "phone_number": "2568581495",
+        "logo_url": "https://untappd.akamaized.net/venuelogos/venue_5569477_5165f161_bg_176.png"
     }
 },
 {
@@ -224,7 +257,10 @@
         "twitter_handle": "casualpinthsv",
         "instagram_handle": "casualpinthsv",
         "tap_list_provider": "untappd",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/the-casual-pint-huntsville/7919239",
+        "email": "",
+        "phone_number": "2562611265",
+        "logo_url": "https://untappd.akamaized.net/venuelogos/venue_7919239_5965ac33_bg_176.png"
     }
 },
 {
@@ -243,14 +279,17 @@
         "twitter_handle": "yellowhammerale",
         "instagram_handle": "yellowhammer_brewing",
         "tap_list_provider": "untappd",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/yellowhammer-brewing/56970",
+        "email": "",
+        "phone_number": "2564893510",
+        "logo_url": "https://untappd.akamaized.net/venuelogos/venue_56970_9c7a85ca_bg_176.png"
     }
 },
 {
     "model": "venues.venue",
     "pk": 14,
     "fields": {
-        "name": "Mad Malts Brewery",
+        "name": "Mad Malts Brewing",
         "address": "109 Maple Ave NW",
         "city": "Huntsville",
         "state": "Alabama",
@@ -259,10 +298,13 @@
         "time_zone": "America/Chicago",
         "website": "http://madmaltsbrewing.com/",
         "facebook_page": "https://www.facebook.com/MadMaltsBrewing1/",
-        "twitter_handle": "",
+        "twitter_handle": "madmaltsbrewing",
         "instagram_handle": "",
         "tap_list_provider": "untappd",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/mad-malts/3802051",
+        "email": "chris@madmaltsbrewing.com",
+        "phone_number": "2565032233",
+        "logo_url": "https://utfb-images.untappd.com/logos/9210d47b78cd274d421470d180b242144c08b524.jpg"
     }
 },
 {
@@ -281,7 +323,10 @@
         "twitter_handle": "TheStemAndStein",
         "instagram_handle": "",
         "tap_list_provider": "stemandstein",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/the-stem-and-stein/35784",
+        "email": "ali@thestemandstein.com",
+        "phone_number": "2563253779",
+        "logo_url": "https://thestemandstein.com/Content/logoSS.png"
     }
 },
 {
@@ -300,7 +345,10 @@
         "twitter_handle": "bluepantsbrew",
         "instagram_handle": "",
         "tap_list_provider": "untappd",
-        "untappd_url": null
+        "untappd_url": "https://untappd.com/v/blue-pants-brewery/201633",
+        "email": "",
+        "phone_number": "2563251131",
+        "logo_url": "https://untappd.akamaized.net/venuelogos/venue_201633_b5eef036_bg_176.png"
     }
 },
 {
