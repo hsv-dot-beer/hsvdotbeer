@@ -68,10 +68,9 @@ class DigitalPourParser(BaseTapListProvider):
                 manufacturer = manufacturers[parsed_manufacturer['name']]
             except KeyError:
                 defaults = {}
-                if parsed_manufacturer['location']:
-                    defaults['location'] = parsed_manufacturer['location']
-                if parsed_manufacturer['logo_url']:
-                    defaults['logo_url'] = parsed_manufacturer['logo_url']
+                for field in ['location', 'logo_url', 'twitter_handle']:
+                    if parsed_manufacturer[field]:
+                        defaults[field] = parsed_manufacturer[field]
                 manufacturer = self.get_manufacturer(
                     name=parsed_manufacturer['name'],
                     **defaults,
@@ -145,7 +144,16 @@ class DigitalPourParser(BaseTapListProvider):
             'name': name,
             'location': producer['Location'] or '',
             'logo_url': producer.get('LogoImageUrl'),
+            'twitter_handle': producer.get('TwitterName') or '',
         }
+        if manufacturer['twitter_handle'] and manufacturer[
+                'twitter_handle'].startswith('@'):
+            # strip the leading @ for consistency
+            manufacturer['twitter_handle'] = manufacturer['twitter_handle'][1:]
+        LOG.debug(
+            'Got twitter name %s from producer %s',
+            manufacturer['twitter_handle'], producer,
+        )
         return manufacturer
 
     def parse_tap(self, tap):

@@ -66,7 +66,7 @@ class CommandsTestCase(TestCase):
             taps = Tap.objects.filter(
                 venue=self.venue, tap_number__in=[22, 1, 2],
             ).select_related(
-                'beer__style',
+                'beer__style', 'beer__manufacturer',
             ).order_by('tap_number')
             tap = taps[0]
             self.assertEqual(tap.beer.name, 'Hopslam')
@@ -87,6 +87,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(tap.gas_type, 'nitro')
             self.assertEqual(tap.beer.render_srm(), '#241206')
             self.assertEqual(tap.beer.api_vendor_style, 'Milk Stout')
+            self.assertEqual(tap.beer.manufacturer.twitter_handle, 'LeftHandBrewing')
             prices = {
                 Decimal(6.0): Decimal(3.0),
                 Decimal(10.0): Decimal(5.0),
