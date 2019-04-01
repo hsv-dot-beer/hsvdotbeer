@@ -35,6 +35,7 @@ COMMON_BREWERY_ENDINGS = (
     'Beer Company',
     'Beer',
     'Beer Co.',
+    'Craft Brewery',
 )
 
 REPLACE_TARGET = '\\.'
