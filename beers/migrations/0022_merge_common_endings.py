@@ -33,7 +33,7 @@ def merge_common_ending_breweries(apps, schema_editor):
         return
     mfg_dict = {}
     for mfg in mfgs:
-        key = ENDINGS_REGEX.sub('', mfg.name).strip()
+        key = ENDINGS_REGEX.sub('', mfg.name.strip()).strip()
         try:
             mfg_dict[key].append(mfg)
         except KeyError:

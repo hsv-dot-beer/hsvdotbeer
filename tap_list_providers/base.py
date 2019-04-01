@@ -279,7 +279,7 @@ class BaseTapListProvider():
         return beer
 
     def get_manufacturer(self, name, **defaults):
-        name = ENDINGS_REGEX.sub('', name).strip()
+        name = ENDINGS_REGEX.sub('', name.strip()).strip()
         field_names = {i.name for i in Manufacturer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:
