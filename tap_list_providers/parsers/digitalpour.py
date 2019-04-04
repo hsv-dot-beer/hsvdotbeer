@@ -117,6 +117,18 @@ class DigitalPourParser(BaseTapListProvider):
                 'rate_beer_url': b.get('RateBeerUrl'),
                 'manufacturer_url': b.get('BeerUrl'),
             }
+        elif 'Mead' in b['$type']:
+            beer = {
+                'name': b['MeadName'],
+                'style': b['MeadStyle']['StyleName'],
+                'abv': b['Abv'],
+                'ibu': b.get('Ibu'),
+                'color': hex(b['MeadStyle']['Color']),
+                'logo_url': b.get('LogoImageUrl'),
+                'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'rate_beer_url': b.get('RateBeerUrl'),
+                'manufacturer_url': b.get('BeerUrl'),
+            }
         else:
             beer = {
                 'name': b['BeerName'],
@@ -137,6 +149,8 @@ class DigitalPourParser(BaseTapListProvider):
 
         if 'CideryName' in producer:
             name = producer['CideryName']
+        elif 'MeaderyName' in producer:
+            name = producer['MeaderyName']
         else:
             name = producer['BreweryName']
 
