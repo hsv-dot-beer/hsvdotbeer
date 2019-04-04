@@ -5,6 +5,7 @@ which takes a single argument: a Venue object.
 
 It'll have API configuration, taps, and existing beers prefetched.
 """
+import re
 from decimal import Decimal, InvalidOperation
 from urllib.parse import urlparse, unquote
 import logging
@@ -24,6 +25,24 @@ PROVIDER_BREWERY_LOGO_STRINGS = {
     'brewery_logos': 'Untappd',
     'digitalpourproducerlogos': 'DigitalPour',
 }
+
+COMMON_BREWERY_ENDINGS = (
+    'Brewing Company',
+    'Brewery',
+    'Brewing',
+    'Brewing Co.',
+    'Brewing',
+    'Beer Company',
+    'Beer',
+    'Beer Co.',
+    'Craft Brewery',
+)
+
+REPLACE_TARGET = '\\.'
+ENDINGS_REGEX = re.compile(
+    f'({"|".join(i.replace(".", REPLACE_TARGET) for i in COMMON_BREWERY_ENDINGS)})$',
+    re.IGNORECASE,
+)
 
 
 class BaseTapListProvider():
@@ -260,7 +279,7 @@ class BaseTapListProvider():
         return beer
 
     def get_manufacturer(self, name, **defaults):
-        name = name.strip()
+        name = ENDINGS_REGEX.sub('', name.strip()).strip()
         field_names = {i.name for i in Manufacturer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:
