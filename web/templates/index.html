@@ -133,7 +133,7 @@
 
       <section class="venue">
         <div class="venue-logo-title">
-          <img class="venue-logo" src="http://straighttoale.com/wp-content/uploads/2018/08/2018-STA-logo.png" alt="">
+          <img class="venue-logo" src="${ selected_venue.logo_url }" alt="">
           <h1 class="venue-title">${ selected_venue.name }</h1>
         </div>
         <div class="venue-info">
@@ -143,8 +143,8 @@
           </address>
           <div class="venue-contact">
             <a class="venue-website" :href="selected_venue.website">${ selected_venue.website }</a>
-            <!--<a class="venue-email" href="mailto:info@straighttoale.com">info@straighttoale.com</a>-->
-            <!-- <span class="venue-phone">256.801.9650</span> -->
+            <a v-if="selected_venue.email" class="venue-email" :href="selected_venue.email">${ selected_venue.email }</a>
+            <a v-if="selected_venue.phone_number" class="venue-phone">${ selected_venue.phone_number }</span>
           </div>
           <div class="venue-social">
             <a class="btn venue-untappd" href=""><img src="{% static 'svg/untappd.svg' %}"><span>Untappd</span></a>
