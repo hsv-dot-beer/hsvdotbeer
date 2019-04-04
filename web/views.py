@@ -8,6 +8,6 @@ from taps.models import Tap
 def main_page(request):
     template = get_template('index.html')
     html = template.render({
-        'tap_count': Tap.objects.count(),
+        'tap_count': Tap.objects.filter(beer__isnull=False).count(),
     })
     return HttpResponse(html)
