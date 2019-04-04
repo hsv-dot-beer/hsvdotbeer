@@ -1,3 +1,5 @@
+import json
+
 from django.urls import reverse
 from django.forms.models import model_to_dict
 from django.contrib.auth.hashers import check_password
@@ -19,6 +21,7 @@ class TestUserListTestCase(APITestCase):
     def setUp(self):
         self.url = reverse('user-list')
         self.user_data = model_to_dict(UserFactory.build())
+        self.user_data['date_joined'] = self.user_data['date_joined'].isoformat()
 
     def test_post_request_with_no_data_fails(self):
         user = UserFactory(is_staff=True)
@@ -29,7 +32,10 @@ class TestUserListTestCase(APITestCase):
     def test_post_request_with_valid_data_succeeds(self):
         user = UserFactory(is_staff=True)
         self.client.credentials(HTTP_AUTHORIZATION=f'Token {user.auth_token}')
-        response = self.client.post(self.url, self.user_data)
+        response = self.client.post(
+            self.url, json.dumps(self.user_data),
+            content_type='application/json',
+        )
         eq_(response.status_code, status.HTTP_201_CREATED)
 
         user = User.objects.get(pk=response.data.get('id'))
@@ -37,7 +43,10 @@ class TestUserListTestCase(APITestCase):
         ok_(check_password(self.user_data.get('password'), user.password))
 
     def test_post_request_unauthorized(self):
-        response = self.client.post(self.url, self.user_data)
+        response = self.client.post(
+            self.url, json.dumps(self.user_data),
+            content_type='application/json',
+        )
         eq_(response.status_code, status.HTTP_403_FORBIDDEN)
 
 

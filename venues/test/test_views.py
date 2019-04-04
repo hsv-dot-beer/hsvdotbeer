@@ -1,3 +1,4 @@
+import json
 from django.urls import reverse
 from django.forms.models import model_to_dict
 from nose.tools import eq_
@@ -22,16 +23,22 @@ class TestVenueListTestCase(APITestCase):
     def setUp(self):
         self.url = reverse('venue-list')
         self.venue_data = model_to_dict(VenueFactory.build())
+        self.venue_data['country'] = str(self.venue_data['country'])
         self.user = UserFactory(is_staff=True)
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
 
     def test_post_request_with_no_data_fails(self):
-        response = self.client.post(self.url, {})
+        response = self.client.post(
+            self.url, json.dumps({}), content_type='application/json',
+        )
         eq_(response.status_code, status.HTTP_400_BAD_REQUEST, response.data)
 
     def test_post_request_with_valid_data_succeeds(self):
-        response = self.client.post(self.url, self.venue_data)
+        response = self.client.post(
+            self.url, json.dumps(self.venue_data),
+            content_type='application/json',
+        )
         eq_(response.status_code, status.HTTP_201_CREATED, response.data)
 
         venue = Venue.objects.get(pk=response.data.get('id'))
