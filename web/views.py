@@ -1,4 +1,4 @@
-from django.template import Template, Context
+"""Views for web frontend"""
 from django.template.loader import get_template
 from django.http import HttpResponse
 
