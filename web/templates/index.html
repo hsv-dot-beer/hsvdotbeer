@@ -142,7 +142,7 @@
             <a class="venue-gmap" href="">View on Map</a>
           </address>
           <div class="venue-contact">
-            <a class="venue-website" :href="selected_venue.website">${ selected_venue.website }</a>
+            <a v-if="selected_venue.website" class="venue-website" :href="selected_venue.website">${ selected_venue.website }</a>
             <a v-if="selected_venue.email" class="venue-email" :href="selected_venue.email">${ selected_venue.email }</a>
             <a v-if="selected_venue.phone_number" class="venue-phone">${ selected_venue.phone_number }</span>
           </div>
