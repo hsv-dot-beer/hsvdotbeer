@@ -1,6 +1,5 @@
 # hsvdotbeer
 
-[![Build Status](https://travis-ci.org/hsv-dot-beer/hsvdotbeer.svg?branch=master)](https://travis-ci.org/hsv-dot-beer/hsvdotbeer)
 [![Built with](https://img.shields.io/badge/Built_with-Cookiecutter_Django_Rest-F7B633.svg)](https://github.com/agconti/cookiecutter-django-rest)
 
 Collate ALL the Huntsville beers. Check out the project's [documentation](http://hsv-dot-beer.github.io/hsvdotbeer/).
@@ -15,13 +14,12 @@ Collate ALL the Huntsville beers. Check out the project's [documentation](http:/
 
 - First, get yourself familiar with Django. There are two excellent tutorials to get yourself started:
   - [Django Girls](https://tutorial.djangogirls.org/) assumes you have no experience with Python or the command line and is a great place for total newbies to get started.
-  - The [Django](https://docs.djangoproject.com/en/2.1/intro/) tutorial assumes a little bit of basic Python knowledge but is also good.
+  - The [Django](https://docs.djangoproject.com/en/2.2/intro/) tutorial assumes a little bit of basic Python knowledge but is also good.
 - Next, take a look at the [Django REST Framework](https://www.django-rest-framework.org/tutorial/1-serialization/) tutorial
 
 ### Installing software
 
-- [Python 3.6](https://www.python.org/downloads/)
-  - NOTE: We're stuck using Python 3.6 until [Celery 5.0](https://github.com/celery/celery/issues/4500) is released.
+- [Python 3.7](https://www.python.org/downloads/)
 - [Docker](https://docs.docker.com/docker-for-mac/install/) (Download for your platform)
   - NOTE: if you intend to develop on Windows, you need to have Windows 10 Pro or Enterprise to be able to use Docker, and you have to have at least a somewhat recent CPU that supports Hyper-V. Any non-Atom CPU from the past 5 years should more than suffice. Also, it'll break VirtualBox. 😿
 
