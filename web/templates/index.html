@@ -42,13 +42,11 @@
     </div>
 
     <div class="taphouse-select-container">
-      <v-select
-              v-model="selected_venue"
-              :options="venues"
-              label="name"
-              placeholder="Select a taphouse"
-              id="taphouseSelect">
-      </v-select>
+      <select data-placeholder="Select a taphouse" id="taphouseSelect" class="chosen-select">
+        <option v-for="venue in venues" v-bind:value="venue.id">
+          ${ venue.name }
+        </option>
+      </select>
     </div>
   </div>
 </div>
@@ -75,7 +73,7 @@
     </div>
     <div class="container-list">
       <ul id="beer-list">
-        <li v-for="beer, i of beers" class="beer">
+        <li v-for="(beer, i) of beers" class="beer">
           <div class="beer-intro">
             <div class="beer-logo"><img :src="beer.logo_url"></div>
             <div class="beer-info">
@@ -90,7 +88,7 @@
               <div v-if="beer.rating" class="beer-rating">${ beer.rating }</div>
             </div>
           </div>
-          <b-collapse class="beer-details-container" v-model="visible[i]">
+          <b-collapse class="beer-details-container" v-model="visible[i]" :id="`collapse-${i}`">
             <div class="beer-details">
               <div class="find-it">
                 <h3 class="find-it-header">Find it on tap at:</h3>
@@ -133,7 +131,7 @@
 
       <section class="venue">
         <div class="venue-logo-title">
-          <img class="venue-logo" src="${ selected_venue.logo_url }" alt="">
+          <img class="venue-logo" :src="selected_venue.logo_url" alt="">
           <h1 class="venue-title">${ selected_venue.name }</h1>
         </div>
         <div class="venue-info">
@@ -143,8 +141,8 @@
           </address>
           <div class="venue-contact">
             <a v-if="selected_venue.website" class="venue-website" :href="selected_venue.website">${ selected_venue.website }</a>
-            <a v-if="selected_venue.email" class="venue-email" :href="selected_venue.email">${ selected_venue.email }</a>
-            <a v-if="selected_venue.phone_number" class="venue-phone">${ selected_venue.phone_number }</span>
+            <a v-if="selected_venue.email" class="venue-email" :href="`mailto:${selected_venue.email}`">${ selected_venue.email }</a>
+            <a v-if="selected_venue.phone_number" class="venue-phone" :href="`tel:${selected_venue.phone_number}`">${ selected_venue.phone_number }</a>
           </div>
           <div class="venue-social">
             <a class="btn venue-untappd" href=""><img src="{% static 'svg/untappd.svg' %}"><span>Untappd</span></a>
@@ -166,12 +164,12 @@
 <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
 <script src='https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js'></script>
 <script src='https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.proto.js'></script>
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.6/vue.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
-<script src='https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js'></script>
-
-<script src="https://unpkg.com/vue-select@latest"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.6/vue.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js'></script>
+<script src='https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js'></script>
 
 <script src="{% static 'js/index.js' %}"></script>
 </body>

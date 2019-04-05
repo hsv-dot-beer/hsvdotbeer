@@ -48,6 +48,7 @@ $("input.search").change(function() {
   }
 })
 
+
 Vue.config.devtools = true;
 
 new Vue({
@@ -57,21 +58,23 @@ new Vue({
     count: 0,
     beers: [],
     visible: [],
-    venues: [],
+    venues: [{'name': null, 'id': -1}],
     activeIdx: -1,
     selected_venue: {},
   },
   mounted: function() {
     this.getVenues('api/v1/venues/');
     this.getBeers();
-    // $(".chosen-select").chosen();
 
+    let component = this;
+    $(".chosen-select").chosen().change(function ($event) {
+      component.getVenueBeers($($event.target).val());
+    });;
   },
   methods: {
     getBeers: function() {
       axios.get('api/v1/beers/').
       then((response) => {
-        console.log(response);
         this.beers = response.data.results;
         for (var i = 0; i < this.beers.length; i++) {
           this.visible[i] = false;
@@ -89,7 +92,6 @@ new Vue({
     getVenueBeers: function(venue) {
       axios.get('api/v1/venues/' + venue + '/').
       then((response) => {
-        console.log(response);
         this.selected_venue = response.data;
       })
       .catch((err) => {
@@ -98,7 +100,6 @@ new Vue({
 
       axios.get('api/v1/venues/' + venue + '/beers/').
       then((response) => {
-        console.log(response);
         this.beers = response.data.results;
       for (var i = 0; i < this.beers.length; i++) {
           this.visible[i] = false;
@@ -116,8 +117,8 @@ new Vue({
     getVenues: function(link) {
       axios.get(link).
       then((response) => {
-        console.log(response);
         this.venues.push.apply(this.venues, response.data.results);
+        $(".chosen-select").chosen().trigger("chosen:updated");
         if (response.data.next)
         {
           this.getVenues(response.data.next);
@@ -128,7 +129,6 @@ new Vue({
       });
     },
     onVenueChange(event) {
-      console.log(event.target.value);
       if (event.target.value != -1)
         this.getVenueBeers(event.target.value);
       else
@@ -136,5 +136,3 @@ new Vue({
     },
   },
 });
-Vue.component('v-select', VueSelect.VueSelect);
-
