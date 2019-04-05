@@ -25,7 +25,7 @@ django-countries = "*"
 "beautifulsoup4" = "*"
 lxml = "*"
 requests = "*"
-celery = {extras = ["redis"],version = "*"}
+celery = {extras = ["redis"],version = ">=4.3.0"}
 django-celery-beat = "*"
 django-cors-headers = "*"
 
@@ -42,4 +42,4 @@ pylint-django = "*"
 responses = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"
