@@ -14,7 +14,7 @@ Collate ALL the Huntsville beers. Check out the project's [documentation](http:/
 
 - First, get yourself familiar with Django. There are two excellent tutorials to get yourself started:
   - [Django Girls](https://tutorial.djangogirls.org/) assumes you have no experience with Python or the command line and is a great place for total newbies to get started.
-  - The [Django](https://docs.djangoproject.com/en/2.1/intro/) tutorial assumes a little bit of basic Python knowledge but is also good.
+  - The [Django](https://docs.djangoproject.com/en/2.2/intro/) tutorial assumes a little bit of basic Python knowledge but is also good.
 - Next, take a look at the [Django REST Framework](https://www.django-rest-framework.org/tutorial/1-serialization/) tutorial
 
 ### Installing software
