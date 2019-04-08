@@ -41,6 +41,14 @@ class BeerStyleTagSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class StyleSerializer(serializers.ModelSerializer):
+    alternate_names = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = models.Style
+        fields = '__all__'
+
+
 class BeerStyleSerializer(serializers.ModelSerializer):
     tags = BeerStyleTagSerializer(many=True)
     category = BeerStyleCategorySerializer(read_only=True)
@@ -155,6 +163,7 @@ class BeerSerializer(serializers.ModelSerializer):
     )
     color_srm_html = serializers.SerializerMethodField()
     style = serializers.StringRelatedField()
+    new_style = StyleSerializer(read_only=True)
     style_id = serializers.PrimaryKeyRelatedField(
         write_only=True, required=False, allow_null=True,
         queryset=models.BeerStyle.objects.all()
