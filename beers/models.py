@@ -9,6 +9,22 @@ from .utils import render_srm
 LOG = logging.getLogger(__name__)
 
 
+class Style(models.Model):
+    name = CITextField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class StyleAlternateName(models.Model):
+    name = CITextField(unique=True)
+    style = models.ForeignKey(
+        Style, models.CASCADE, related_name='alternate_names')
+
+    def __str__(self):
+        return self.name
+
+
 class BeerStyleCategory(models.Model):
     CLASS_CHOICES = (
         ('beer', 'Beer'),
@@ -173,6 +189,10 @@ class Beer(models.Model):
     style = models.ForeignKey(
         BeerStyle, models.DO_NOTHING, related_name='beers',
         # TODO: prevent this being null?
+        blank=True, null=True,
+    )
+    new_style = models.ForeignKey(
+        Style, models.DO_NOTHING, related_name='beers',
         blank=True, null=True,
     )
     manufacturer = models.ForeignKey(

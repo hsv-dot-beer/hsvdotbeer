@@ -172,6 +172,7 @@ class BeerPriceAdmin(admin.ModelAdmin):
 admin.site.register(models.BeerStyleCategory)
 admin.site.register(models.BeerStyleTag)
 admin.site.register(models.BeerStyle)
+admin.site.register(models.Style)
 admin.site.register(models.Manufacturer, ManufacturerAdmin)
 admin.site.register(models.BeerPrice, BeerPriceAdmin)
 admin.site.register(models.ServingSize)
