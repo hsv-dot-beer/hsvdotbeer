@@ -57,6 +57,14 @@ new Vue({
   data: {
     count: 0,
     beers: [],
+    sort: [
+      {'name': 'Name', 'sort': 'name'},
+      {'name': 'Brewer', 'sort': 'manufacturer'},
+      {'name': 'Style', 'sort': 'style'},
+      {'name': 'Rating', 'sort': 'rating'},
+      {'name': 'ABV', 'sort': 'abv'}],
+    invert_sort: false,
+    selected_sort: {'name': 'Name', 'sort': 'name'},
     visible: [],
     venues: [{'name': null, 'id': -1}],
     activeIdx: -1,
@@ -72,12 +80,25 @@ new Vue({
     });;
   },
   methods: {
-    getBeers: function() {
-      axios.get('api/v1/beers/').
+    getBeers: function()
+    {
+      if ('id' in this.selected_venue)
+      {
+        this.getVenueBeers(this.selected_venue.id);
+      }
+      else
+      {
+        this.getAllBeers();
+      }
+    },
+    getAllBeers: function() {
+      axios.get('api/v1/beers/?o='
+        + (this.invert_sort ? "-" : "")
+        + this.selected_sort.sort).
       then((response) => {
         this.beers = response.data.results;
         for (var i = 0; i < this.beers.length; i++) {
-          this.visible[i] = false;
+          Vue.set(this.visible, i, false);
           this.beers[i].styleObj = {
             '--background-color': this.beers[i].color_srm_html,
           };
@@ -98,11 +119,13 @@ new Vue({
         console.log(err);
       });
 
-      axios.get('api/v1/venues/' + venue + '/beers/').
+      axios.get('api/v1/venues/' + venue + '/beers/?o='
+        + (this.invert_sort ? "-" : "")
+        + this.selected_sort.sort).
       then((response) => {
         this.beers = response.data.results;
       for (var i = 0; i < this.beers.length; i++) {
-          this.visible[i] = false;
+          Vue.set(this.visible, i, false);
           this.beers[i].styleObj = {
             '--background-color': this.beers[i].color_srm_html,
           };
@@ -128,11 +151,13 @@ new Vue({
         console.log(err);
       });
     },
-    onVenueChange(event) {
-      if (event.target.value != -1)
-        this.getVenueBeers(event.target.value);
-      else
-        this.getBeers();
+    onSortChange(new_sort) {
+      if (this.selected_sort.sort === new_sort.sort)
+      {
+        this.invert_sort = !this.invert_sort;
+      }
+      this.selected_sort = new_sort;
+      this.getBeers();
     },
   },
 });

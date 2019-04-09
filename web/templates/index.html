@@ -62,11 +62,9 @@
         <div class="sort-options z-3">
           <div class="sort-options-header">Sort by:</div>
           <ul>
-            <li><a href="#" class="selected">Name</a></li>
-            <li><a href="#">Brewer</a></li>
-            <li><a href="#">Style</a></li>
-            <li><a href="#">Rating</a></li>
-            <li><a href="#">ABV</a></li>
+            <li v-for="s in sort">
+              <a @click="onSortChange(s)" v-bind:class="{ selected: s.name == selected_sort.name }">${ s.name }</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -84,7 +82,7 @@
                 <h2 class="beer-name">${ beer.name }</h2>
               </a>
               <div class="beer-brewer">${ beer.manufacturer.name }</div>
-              <div class="beer-style" v-bind:style="beer.styleObj">Brown Ale - American <span v-if="beer.abv" class="beer-abv">${ beer.abv }%</span></div>
+              <div class="beer-style srm" v-bind:style="beer.styleObj">Brown Ale - American <span v-if="beer.abv" class="beer-abv">${ beer.abv }%</span></div>
               <div v-if="beer.rating" class="beer-rating">${ beer.rating }</div>
             </div>
           </div>

@@ -604,31 +604,11 @@ li.beer:last-of-type .beer-info {
   content:" - "
 }
 
-
-
 .beer.active .beer-name, .beer.active .beer-brewer, .beer.active .beer-style {
   overflow:visible;
   white-space:normal;
 }
-/*
-.beer-rating {
-position: absolute;
-    top: 1.125rem;
-    right: .75rem;
-    padding: .075rem;
-    background: #ffedb7;
-    width: 2rem;
-    height: 2rem;
-    text-align: center;
-    line-height: 1.6rem;
-    letter-spacing: -.075rem;
-    border-radius: 50%;
-    transition: background .1s ease-out;
-    font-family: "Lekton", courier, monospace;
-    font-size: 1rem;
-    padding-right: .125rem;
-}
-*/
+
 .beer-rating {
   position: absolute;
   top: .875rem;
@@ -648,6 +628,7 @@ position: absolute;
   padding-top:.325rem;
   color: #8F6400;
 }
+
 .beer-details-container {
   position:relative;
 }
@@ -748,83 +729,9 @@ body .particletext.bubbles > .particle {
 
 /* SRM Color Codes */
 
-.srm-2:before {
-  background-color: #ffff45;
+.srm:before {
+  background-color: var(--background-color);
 }
-
-.srm-3:before {
-  background-color: #ffe93e;
-}
-
-.srm-4:before {
-  background-color: #fed849;
-}
-
-.srm-6:before {
-  background-color: #ffa846;
-}
-
-.srm-9:before {
-  background-color: #f49f44;
-}
-
-.srm-12:before {
-  background-color: #d77f59;
-}
-
-.srm-15:before {
-  background-color: #94523a;
-}
-
-.srm-18:before {
-  background-color: #804541;
-}
-
-.srm-20:before {
-  background-color: #5b342f;
-}
-
-.srm-24:before {
-  background-color: #4c3b2b;
-}
-
-.srm-30:before {
-  background-color: #38302e;
-}
-
-.srm-40:before {
-  background-color: #31302c;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Mug Search Icon */
 
