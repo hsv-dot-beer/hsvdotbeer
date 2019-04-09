@@ -8,7 +8,6 @@ from beers.models import Beer, Manufacturer
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
-from tap_list_providers.models import TapListProviderStyleMapping
 from tap_list_providers.example import ExampleTapListProvider
 
 
@@ -31,10 +30,6 @@ class CommandsTestCase(TestCase):
         self.assertEqual(Venue.objects.count(), 1)
         self.assertFalse(Beer.objects.exists())
         self.assertFalse(Manufacturer.objects.exists())
-        TapListProviderStyleMapping.objects.create(
-            style_id=48,  # sweet stout, AKA milk stout
-            provider_style_name='Stout - Milk',
-        )
         for dummy in range(2):
             # running twice to make sure we're not double-creating
             args = []
