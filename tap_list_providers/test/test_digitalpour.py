@@ -17,8 +17,6 @@ from hsv_dot_beer.config.local import BASE_DIR
 
 class CommandsTestCase(TestCase):
 
-    fixtures = ['example_style_data']
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -83,10 +81,9 @@ class CommandsTestCase(TestCase):
             tap = taps[2]
             self.assertEqual(tap.beer.name, "Milk Stout Nitro")
             self.assertEqual(tap.beer.abv, Decimal('6.0'))
-            self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, 'nitro')
             self.assertEqual(tap.beer.render_srm(), '#241206')
-            self.assertEqual(tap.beer.api_vendor_style, 'Milk Stout')
+            self.assertEqual(tap.beer.style.name, 'Milk Stout')
             self.assertEqual(tap.beer.manufacturer.twitter_handle, 'LeftHandBrewing')
             prices = {
                 Decimal(6.0): Decimal(3.0),

@@ -17,8 +17,6 @@ from hsv_dot_beer.config.local import BASE_DIR
 
 class CommandsTestCase(TestCase):
 
-    fixtures = ['example_style_data']
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -71,10 +69,9 @@ class CommandsTestCase(TestCase):
             ).get()
             self.assertEqual(tap.beer.name, "Tobacco Road")
             self.assertEqual(tap.beer.abv, Decimal('9.4'))
-            self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, '')
             self.assertEqual(
-                tap.beer.api_vendor_style, 'Red Ale - Imperial / Double')
+                tap.beer.style.name, 'Red Ale - Imperial / Double')
             self.assertEqual(
                 tap.beer.untappd_url,
                 'https://untappd.com/b/yellowhammer-brewing-tobacco-road/32727',

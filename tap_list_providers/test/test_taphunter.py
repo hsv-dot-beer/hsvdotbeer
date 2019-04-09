@@ -16,8 +16,6 @@ from hsv_dot_beer.config.local import BASE_DIR
 
 class CommandsTestCase(TestCase):
 
-    fixtures = ['example_style_data']
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -92,7 +90,6 @@ class CommandsTestCase(TestCase):
             tap = taps[1]
             self.assertEqual(tap.beer.name, "Bound By Time")
             self.assertEqual(tap.beer.abv, Decimal('7.00'))
-            self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, '')
             self.assertEqual(
                 tap.beer.logo_url,

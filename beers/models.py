@@ -1,5 +1,4 @@
 import logging
-import string
 
 from django.contrib.postgres.fields import JSONField, CITextField
 from django.db import models, transaction
@@ -9,102 +8,17 @@ from .utils import render_srm
 LOG = logging.getLogger(__name__)
 
 
-class BeerStyleCategory(models.Model):
-    CLASS_CHOICES = (
-        ('beer', 'Beer'),
-        ('cider', 'Cider'),
-        ('mead', 'Mead'),
-    )
-
-    name = models.CharField(max_length=100, unique=True, db_index=True)
-    bjcp_class = models.CharField(max_length=10, choices=CLASS_CHOICES, default='beer')
-    notes = models.TextField(blank=True)
-    category_id = models.PositiveSmallIntegerField()
-    revision = models.CharField(max_length=10, default='2015')
-
-    class Meta:
-        unique_together = (('category_id', 'revision', 'bjcp_class'),)
+class Style(models.Model):
+    name = CITextField(unique=True)
 
     def __str__(self):
         return self.name
 
 
-class BeerStyleTag(models.Model):
-    tag = models.CharField(max_length=50, unique=True)
-
-    def __str__(self):
-        return self.tag
-
-
-class BeerStyle(models.Model):
-    name = models.CharField(max_length=255)
-    subcategory = models.CharField(max_length=1,
-                                   choices=zip(string.ascii_uppercase, string.ascii_uppercase))
-
-    category = models.ForeignKey(
-        BeerStyleCategory, on_delete='CASCADE', related_name='styles',
-    )
-    tags = models.ManyToManyField(BeerStyleTag, blank=True)
-
-    ibu_low = models.PositiveSmallIntegerField(
-        'Minimum bitterness (International Bitterness Units)', default=0,
-    )
-    ibu_high = models.PositiveSmallIntegerField(
-        'Maximum bitterness (International Bitterness Units)', default=0,
-    )
-    srm_low = models.PositiveSmallIntegerField(
-        'Minimum color (Standard Reference Method)',
-        default=0,
-    )
-    srm_high = models.PositiveSmallIntegerField(
-        'Maximum color (Standard Reference Method)', default=0,
-    )
-
-    og_low = models.DecimalField(
-        'Minimum original specific gravity',
-        max_digits=4, decimal_places=3, default=0,
-    )
-    og_high = models.DecimalField(
-        'Maximum original specific gravity',
-        max_digits=4, decimal_places=3, default=0,
-    )
-    fg_low = models.DecimalField(
-        'Minimum final specific gravity',
-        max_digits=4, decimal_places=3, default=0,
-    )
-    fg_high = models.DecimalField(
-        'Maximum final specific gravity',
-        max_digits=4, decimal_places=3, default=0,
-    )
-
-    abv_low = models.DecimalField(
-        'Maximum alcohol content (% by volume)',
-        max_digits=3, decimal_places=1, default=0,
-    )
-    abv_high = models.DecimalField(
-        'Minimum alcohol content (% by volume)',
-        max_digits=3, decimal_places=1, default=0,
-    )
-
-    aroma = models.TextField(blank=True)
-    appearance = models.TextField(blank=True)
-    flavor = models.TextField(blank=True)
-    mouthfeel = models.TextField(blank=True)
-    impression = models.TextField(blank=True)
-    comments = models.TextField(blank=True)
-    history = models.TextField(blank=True)
-    ingredients = models.TextField(blank=True)
-    comparison = models.TextField(blank=True)
-    examples = models.TextField(blank=True)
-
-    def render_srm_low(self):
-        return render_srm(self.srm_low)
-
-    def render_srm_high(self):
-        return render_srm(self.srm_high)
-
-    class Meta:
-        unique_together = (('category', 'subcategory'),)
+class StyleAlternateName(models.Model):
+    name = CITextField(unique=True)
+    style = models.ForeignKey(
+        Style, models.CASCADE, related_name='alternate_names')
 
     def __str__(self):
         return self.name
@@ -171,8 +85,7 @@ class Manufacturer(models.Model):
 class Beer(models.Model):
     name = CITextField()
     style = models.ForeignKey(
-        BeerStyle, models.DO_NOTHING, related_name='beers',
-        # TODO: prevent this being null?
+        Style, models.DO_NOTHING, related_name='beers',
         blank=True, null=True,
     )
     manufacturer = models.ForeignKey(

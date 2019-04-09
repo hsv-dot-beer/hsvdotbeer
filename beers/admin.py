@@ -4,6 +4,10 @@ from django.db import transaction
 from . import models
 
 
+class BeerAlternateNameInline(admin.TabularInline):
+    model = models.BeerAlternateName
+
+
 class BeerAdmin(admin.ModelAdmin):
 
     def merge_beers(self, request, queryset):
@@ -78,6 +82,11 @@ class BeerAdmin(admin.ModelAdmin):
     list_filter = ('name', 'manufacturer')
     list_select_related = ('manufacturer', )
     search_fields = ('name', 'manufacturer__name')
+    inlines = [BeerAlternateNameInline]
+
+
+class ManufacturerAlternateNameInline(admin.TabularInline):
+    model = models.ManufacturerAlternateName
 
 
 class ManufacturerAdmin(admin.ModelAdmin):
@@ -143,6 +152,7 @@ class ManufacturerAdmin(admin.ModelAdmin):
             f'{manufacturer}'
         )
 
+    inlines = [ManufacturerAlternateNameInline]
     merge_manufacturers.short_description = 'Merge manufacturers'
     actions = ['merge_manufacturers']
     list_display = ('name', 'id')
@@ -169,9 +179,15 @@ class BeerPriceAdmin(admin.ModelAdmin):
     search_fields = ('beer__name', 'serving_size__name', )
 
 
-admin.site.register(models.BeerStyleCategory)
-admin.site.register(models.BeerStyleTag)
-admin.site.register(models.BeerStyle)
+class StyleAlternateNameInline(admin.TabularInline):
+    model = models.StyleAlternateName
+
+
+class StyleAdmin(admin.ModelAdmin):
+    inlines = [StyleAlternateNameInline]
+
+
+admin.site.register(models.Style, StyleAdmin)
 admin.site.register(models.Manufacturer, ManufacturerAdmin)
 admin.site.register(models.BeerPrice, BeerPriceAdmin)
 admin.site.register(models.ServingSize)

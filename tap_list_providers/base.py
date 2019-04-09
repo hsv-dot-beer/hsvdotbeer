@@ -11,13 +11,13 @@ from urllib.parse import urlparse, unquote
 import logging
 
 from django.db.models import Prefetch, Q
+from django.db import transaction
 from kombu.exceptions import OperationalError
 
 from venues.models import Venue
-from beers.models import Beer, Manufacturer, BeerPrice, ServingSize
+from beers.models import Beer, Manufacturer, BeerPrice, ServingSize, Style
 from beers.tasks import look_up_beer
 from taps.models import Tap
-from .models import TapListProviderStyleMapping
 
 LOG = logging.getLogger(__name__)
 
@@ -48,6 +48,7 @@ ENDINGS_REGEX = re.compile(
 class BaseTapListProvider():
 
     def __init__(self):
+        self.styles = {}
         if not hasattr(self, 'provider_name'):
             # Don't define this attribute if the child does for us
             self.provider_name = None
@@ -90,6 +91,23 @@ class BaseTapListProvider():
             LOG.debug('Fetching beers at %s', venue)
             self.handle_venue(venue)
 
+    def get_style(self, name):
+        try:
+            return self.styles[name.casefold()]
+        except KeyError:
+            # do it the old fashioned way
+            pass
+        with transaction.atomic():
+            try:
+                style = Style.objects.get(name=name)
+            except Style.DoesNotExist:
+                try:
+                    style = Style.objects.get(alternate_names__name=name)
+                except Style.DoesNotExist:
+                    style = Style.objects.create(name=name)
+        self.styles[name.casefold()] = style
+        return style
+
     def get_beer(self, name, manufacturer, pricing=None, venue=None, **defaults):
         name = name.strip()
         LOG.debug(
@@ -119,23 +137,11 @@ class BaseTapListProvider():
             if field in set(unique_fields) and value
         }
         serving_sizes = {i.volume_oz: i for i in ServingSize.objects.all()}
-        try:
-            api_vendor_style = defaults['api_vendor_style']
-        except KeyError:
-            # don't care; ignore it
-            pass
-        else:
-            try:
-                mapping = TapListProviderStyleMapping.objects.filter(
-                    provider_style_name=api_vendor_style
-                ).select_related('style').get()
-            except TapListProviderStyleMapping.DoesNotExist:
-                # oh well, it was worth a shot
-                pass
-            else:
-                # go ahead and try to assign it to the style if possible
-                defaults['style'] = mapping.style
-                del defaults['api_vendor_style']
+        if 'style' in defaults and not isinstance(defaults['style'], Style):
+            defaults['style'] = self.get_style(defaults['style'])
+        # TODO: delete this
+        if isinstance(defaults.get('style'), Style):
+            defaults['style'] = defaults.pop('style')
         beer = None
         if unique_fields_present:
             filter_expr = Q()

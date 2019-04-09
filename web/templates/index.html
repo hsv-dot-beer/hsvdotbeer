@@ -84,7 +84,7 @@
                 <h2 class="beer-name">${ beer.name }</h2>
               </a>
               <div class="beer-brewer">${ beer.manufacturer.name }</div>
-              <div class="beer-style" v-bind:style="beer.styleObj">Brown Ale - American <span v-if="beer.abv" class="beer-abv">${ beer.abv }%</span></div>
+              <div class="beer-style" v-bind:style="beer.styleObj">${ beer.style.name }<span v-if="beer.abv" class="beer-abv">${ beer.abv }%</span></div>
               <div v-if="beer.rating" class="beer-rating">${ beer.rating }</div>
             </div>
           </div>

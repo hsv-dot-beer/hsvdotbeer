@@ -35,7 +35,6 @@ class NookParser(BaseTapListProvider):
     provider_name = 'nook_html'
 
     NAME_COLUMN_ID = 'id9'
-    # TODO (#37): parse styles
     STYLE_COLUMN_ID = 'id10'
     BREWERY_COLUMN_ID = 'id12'
     ABV_COLUMN_ID = 'id17'
@@ -103,7 +102,7 @@ class NookParser(BaseTapListProvider):
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer
             beer = self.get_beer(
-                name, manufacturer, abv=abv, api_vendor_style=style,
+                name, manufacturer, abv=abv, style=style,
             )
             if tap.beer_id != beer.id:
                 tap.beer = beer
