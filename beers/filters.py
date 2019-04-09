@@ -19,8 +19,8 @@ class BeerFilterSet(FilterSet):
 
     o = OrderingFilter(
         fields=[
-            'name', 'abv', 'ibu', 'style__name', 'style__category__name',
-            'manufacturer__name',
+            'name', 'abv', 'ibu', 'new_style__name',
+            'new_style__alternate_names__name', 'manufacturer__name',
         ],
     )
 
@@ -36,9 +36,11 @@ class BeerFilterSet(FilterSet):
             ) | Q(
                 manufacturer__name__icontains=value,
             ) | Q(
-                style__name__icontains=value,
+                # the field is case-insensitive, so no need for icontains
+                new_style__name=value,
             ) | Q(
-                style__category__name__icontains=value,
+                # the field is case-insensitive, so no need for icontains
+                new_style__alternate_names__name=value,
             ) | Q(
                 manufacturer__alternate_names__name__icontains=value,
             ),
@@ -54,8 +56,8 @@ class BeerFilterSet(FilterSet):
             'ibu': DEFAULT_NUMERIC_FILTER_OPERATORS,
             'manufacturer__name': DEFAULT_NUMERIC_FILTER_OPERATORS,
             'taps__venue__name': DEFAULT_STRING_FILTER_OPERATORS,
-            'style__name': DEFAULT_STRING_FILTER_OPERATORS,
-            'style__category__name': DEFAULT_STRING_FILTER_OPERATORS,
+            'new_style__name': DEFAULT_STRING_FILTER_OPERATORS,
+            'new_style__alternate_names__name': DEFAULT_STRING_FILTER_OPERATORS,
             'search': ['exact'],
             'on_tap': ['exact'],
         }
