@@ -156,7 +156,12 @@ new Vue({
       {
         this.invert_sort = !this.invert_sort;
       }
-      this.selected_sort = new_sort;
+      else
+      {
+        this.invert_sort = false;
+        this.selected_sort = new_sort;
+      }
+
       this.getBeers();
     },
   },
