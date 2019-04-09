@@ -64,7 +64,7 @@ class BeerSerializer(serializers.ModelSerializer):
         max_value=500, allow_null=True, required=False,
     )
     color_srm_html = serializers.SerializerMethodField()
-    new_style = StyleSerializer(read_only=True)
+    style = StyleSerializer(read_only=True)
     venues = serializers.SerializerMethodField()
     prices = BeerPriceSerializer(many=True, read_only=True)
     untappd_metadata = serializers.SerializerMethodField()

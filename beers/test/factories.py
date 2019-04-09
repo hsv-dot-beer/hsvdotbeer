@@ -35,7 +35,7 @@ class BeerFactory(factory.django.DjangoModelFactory):
     name = factory.fuzzy.FuzzyText(length=20)
     manufacturer = factory.SubFactory(ManufacturerFactory)
     color_srm = factory.Sequence(lambda n: n % 31 + 1)
-    new_style = factory.SubFactory(StyleFactory)
+    style = factory.SubFactory(StyleFactory)
 
     class Meta:
         model = Beer

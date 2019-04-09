@@ -141,7 +141,7 @@ class BaseTapListProvider():
             defaults['style'] = self.get_style(defaults['style'])
         # TODO: delete this
         if isinstance(defaults.get('style'), Style):
-            defaults['new_style'] = defaults.pop('style')
+            defaults['style'] = defaults.pop('style')
         beer = None
         if unique_fields_present:
             filter_expr = Q()

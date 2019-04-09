@@ -50,6 +50,6 @@ class CommandsTestCase(TestCase):
             tap = taps[0]
             self.assertEqual(tap.beer.name, "Monkeynaut")
             self.assertEqual(tap.beer.abv, Decimal('7.25'))
-            self.assertEqual(tap.beer.new_style.name, 'American IPA')
+            self.assertEqual(tap.beer.style.name, 'American IPA')
             tap = taps[1]
-            self.assertEqual(tap.beer.new_style.name, 'Sweet Stout')
+            self.assertEqual(tap.beer.style.name, 'Sweet Stout')
