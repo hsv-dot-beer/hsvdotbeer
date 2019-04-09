@@ -1,4 +1,4 @@
-from django.db.models import Prefetch
+
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser
 from rest_framework.decorators import action

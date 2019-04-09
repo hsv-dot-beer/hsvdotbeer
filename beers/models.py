@@ -1,5 +1,4 @@
 import logging
-import string
 
 from django.contrib.postgres.fields import JSONField, CITextField
 from django.db import models, transaction

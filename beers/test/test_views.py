@@ -1,9 +1,6 @@
-import json
-
 from django.urls import reverse
 from nose.tools import eq_
 from rest_framework.test import APITestCase
-from rest_framework import status
 from faker import Faker
 
 from hsv_dot_beer.users.test.factories import UserFactory
