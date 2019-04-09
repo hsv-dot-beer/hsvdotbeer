@@ -14,8 +14,6 @@ from tap_list_providers.example import ExampleTapListProvider
 
 class CommandsTestCase(TestCase):
 
-    fixtures = ['example_style_data']
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()

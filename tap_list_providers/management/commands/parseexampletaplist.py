@@ -4,7 +4,6 @@ import os
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from beers.models import BeerStyle
 from hsv_dot_beer.config.local import BASE_DIR
 from tap_list_providers.example import ExampleTapListProvider
 
@@ -24,8 +23,6 @@ class Command(BaseCommand):
         parser.add_argument('--input', default=self.DEFAULT_JSON_FILE)
 
     def handle(self, *args, **options):
-        if not BeerStyle.objects.exists():
-            raise ValueError('You must import BJCP styles before continuing')
         tap_list_provider = ExampleTapListProvider(options['input'])
         with transaction.atomic():
             for venue in tap_list_provider.get_venues():

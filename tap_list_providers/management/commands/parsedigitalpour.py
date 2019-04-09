@@ -3,7 +3,6 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from beers.models import BeerStyle
 from tap_list_providers.parsers.digitalpour import DigitalPourParser
 
 
@@ -16,8 +15,6 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        if not BeerStyle.objects.exists():
-            raise ValueError('You must import BJCP styles before continuing')
         tap_list_provider = DigitalPourParser()
         with transaction.atomic():
             for venue in tap_list_provider.get_venues():

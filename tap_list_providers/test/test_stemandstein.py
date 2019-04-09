@@ -16,7 +16,7 @@ from hsv_dot_beer.config.local import BASE_DIR
 
 class CommandsTestCase(TestCase):
 
-    fixtures = ['example_style_data', 'serving_sizes']
+    fixtures = ['serving_sizes']
 
     @classmethod
     def setUpTestData(cls):
