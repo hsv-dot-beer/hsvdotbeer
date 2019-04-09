@@ -5,6 +5,7 @@ from django.core.management import call_command
 from django.test import TestCase
 
 from beers.models import Beer, Manufacturer
+from beers.test.factories import StyleFactory, StyleAlternateNameFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
@@ -23,6 +24,10 @@ class CommandsTestCase(TestCase):
         VenueAPIConfiguration.objects.create(
             venue=cls.venue, url='https://localhost:8000',
         )
+        ipa = StyleFactory(name='American IPA')
+        StyleAlternateNameFactory(style=ipa, name='IPA - American')
+        stout = StyleFactory(name='Sweet Stout')
+        StyleAlternateNameFactory(style=stout, name='stout - milk')
 
     def test_import_example_data(self):
         """Test parsing the JSON data"""
@@ -47,6 +52,6 @@ class CommandsTestCase(TestCase):
             tap = taps[0]
             self.assertEqual(tap.beer.name, "Monkeynaut")
             self.assertEqual(tap.beer.abv, Decimal('7.25'))
-            self.assertEqual(tap.beer.style.name, 'American IPA')
+            self.assertEqual(tap.beer.new_style.name, 'American IPA')
             tap = taps[1]
-            self.assertEqual(tap.beer.style.name, 'Sweet Stout')
+            self.assertEqual(tap.beer.new_style.name, 'Sweet Stout')

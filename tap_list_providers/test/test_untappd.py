@@ -74,7 +74,7 @@ class CommandsTestCase(TestCase):
             self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, '')
             self.assertEqual(
-                tap.beer.api_vendor_style, 'Red Ale - Imperial / Double')
+                tap.beer.new_style.name, 'Red Ale - Imperial / Double')
             self.assertEqual(
                 tap.beer.untappd_url,
                 'https://untappd.com/b/yellowhammer-brewing-tobacco-road/32727',

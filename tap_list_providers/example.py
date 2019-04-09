@@ -1,7 +1,7 @@
 import json
 import logging
 
-from beers.models import Manufacturer, BeerStyleCategory
+from beers.models import Manufacturer
 from taps.models import Tap
 
 from .base import BaseTapListProvider
@@ -50,6 +50,7 @@ class ExampleTapListProvider(BaseTapListProvider):
                 manufacturers[manufacturer.name] = manufacturer
             name = beer_info.pop('beer')
             del beer_info['brewery']
+            beer_info['style'] = self.get_style(beer_info['style'])
             beer = self.get_beer(name, manufacturer, **beer_info)
             tap.beer = beer
             tap.save()

@@ -79,8 +79,6 @@ class DigitalPourParser(BaseTapListProvider):
             # 3. get the beer, creating if necessary
             parsed_beer = self.parse_beer(entry)
             name = parsed_beer.pop('name')
-            # TODO (#37): map styles
-            parsed_beer['api_vendor_style'] = parsed_beer.pop('style', '')
             color_html = parsed_beer.pop('color', '')
             if color_html:
                 # convert 0xabcde into #0abcde

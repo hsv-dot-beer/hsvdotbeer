@@ -86,7 +86,7 @@ class CommandsTestCase(TestCase):
             self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, 'nitro')
             self.assertEqual(tap.beer.render_srm(), '#241206')
-            self.assertEqual(tap.beer.api_vendor_style, 'Milk Stout')
+            self.assertEqual(tap.beer.new_style.name, 'Milk Stout')
             self.assertEqual(tap.beer.manufacturer.twitter_handle, 'LeftHandBrewing')
             prices = {
                 Decimal(6.0): Decimal(3.0),

@@ -68,6 +68,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(tap.beer.abv, Decimal('5.0'))
             self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, '')
+            self.assertEqual(tap.beer.new_style.name, 'Hard Cider')
             tap = taps[1]
             # this one ends with an asterisk. Make sure it's stripped.
             self.assertEqual(tap.beer.name, 'Delirium Tremens')
