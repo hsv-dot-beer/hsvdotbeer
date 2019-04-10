@@ -127,6 +127,30 @@ class DigitalPourParser(BaseTapListProvider):
                 'rate_beer_url': b.get('RateBeerUrl'),
                 'manufacturer_url': b.get('BeerUrl'),
             }
+        elif 'Wine' in b['$type']:
+            beer = {
+                'name': b['WineName'],
+                'style': b['FullStyleName'],
+                'abv': b['Abv'],
+                'ibu': b.get('Ibu'),
+                'color': hex(b['StyleColor']),
+                'logo_url': b.get('LogoImageUrl'),
+                'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'rate_beer_url': b.get('RateBeerUrl'),
+                'manufacturer_url': b.get('BeerUrl'),
+            }
+        elif 'Kombucha' in b['$type']:
+            beer = {
+                'name': b['KombuchaName'],
+                'style': b['FullStyleName'],
+                'abv': b['Abv'],
+                'ibu': b.get('Ibu'),
+                'color': hex(b['StyleColor']),
+                'logo_url': b.get('LogoImageUrl'),
+                'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'rate_beer_url': b.get('RateBeerUrl'),
+                'manufacturer_url': b.get('BeerUrl'),
+            }
         else:
             beer = {
                 'name': b['BeerName'],
@@ -145,12 +169,18 @@ class DigitalPourParser(BaseTapListProvider):
         """Parse manufacturer info from JSON entry."""
         producer = tap['MenuItemProductDetail']['Beverage']['BeverageProducer']
 
-        if 'CideryName' in producer:
-            name = producer['CideryName']
-        elif 'MeaderyName' in producer:
-            name = producer['MeaderyName']
+        styles = ['Cidery', 'Meadery', 'Winery', 'KombuchaMaker', 'Brewery']
+        for style in styles:
+            try:
+                name = producer[f'{style}Name']
+            except KeyError:
+                # try the next one
+                continue
+            else:
+                # success
+                break
         else:
-            name = producer['BreweryName']
+            raise ValueError(f"Unknown producer type {producer}")
 
         manufacturer = {
             'name': name,
