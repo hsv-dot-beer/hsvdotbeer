@@ -92,6 +92,7 @@ class BaseTapListProvider():
             self.handle_venue(venue)
 
     def get_style(self, name):
+        name = name.strip()
         try:
             return self.styles[name.casefold()]
         except KeyError:
