@@ -72,11 +72,7 @@ class Command(BaseCommand):
                     with transaction.atomic():
                         style.save()
                 except IntegrityError:
-                    self.stderr.write(
-                        self.style.NOTICE(
-                            f'{new_name} already exists. Merging'
-                        )
-                    )
+                    self.stderr.write(f'{new_name} already exists. Merging')
                     new_style = Style.objects.get(name=new_name)
                     style.beers.update(style=new_style)
                     style.delete()
@@ -84,6 +80,8 @@ class Command(BaseCommand):
                     for alt_style_name in new_alt_names:
                         alt_style_name.style = style
                 alt_name_list += new_alt_names
+            # because the name field is unique in the StyleAlternateName
+            # model, we have to be careful not to have duplicates
             alt_names_found = set(i.name for i in alt_name_list)
             if len(alt_names_found) != len(alt_name_list):
                 # crap! we have duplicates
@@ -110,5 +108,12 @@ class Command(BaseCommand):
             self.stderr.write(self.style.NOTICE(
                 f'Missed styles: {sorted(styles_missed)}'
             ))
+            self.stdout.write(
+                self.style.SUCCESS(
+                    'Successfully updated all other styles. You can either '
+                    'create a new spreadsheet to handle those values or just '
+                    'modify them by hand in the admin view'
+                )
+            )
         else:
             self.stdout.write(self.style.SUCCESS('Success!'))
