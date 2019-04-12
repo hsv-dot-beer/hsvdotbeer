@@ -28,23 +28,30 @@ class BeerFilterSet(FilterSet):
     on_tap = BooleanFilter(method='filter_on_tap')
 
     def filter_search(self, queryset, name, value):
-        return self.queryset.filter(
-            Q(
-                name__icontains=value,
+        base_cond = Q()
+        # what I want to search for:
+        # each word (split by whitespace) is included in at least
+        # one of the below six fields,
+        # so you can search for "straight monkey" to get monkeynaut
+        # or "belgi ipa ommeg" to get all Ommegang Belgian IPAs
+        for word in value.split():
+            base_cond &= Q(
+                name__icontains=word,
             ) | Q(
-                alternate_names__name__icontains=value,
+                alternate_names__name__icontains=word,
             ) | Q(
-                manufacturer__name__icontains=value,
+                manufacturer__name__icontains=word,
             ) | Q(
                 # the field is case-insensitive, so no need for icontains
-                style__name=value,
+                style__name=word,
             ) | Q(
                 # the field is case-insensitive, so no need for icontains
-                style__alternate_names__name=value,
+                style__alternate_names__name=word,
             ) | Q(
-                manufacturer__alternate_names__name__icontains=value,
-            ),
-        ).distinct()
+                manufacturer__alternate_names__name__icontains=word,
+            )
+        queryset = queryset.filter(base_cond).distinct()
+        return queryset
 
     def filter_on_tap(self, queryset, name, value):
         return queryset.filter(taps__isnull=not value)
