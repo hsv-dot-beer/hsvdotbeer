@@ -1,5 +1,9 @@
+from csv import writer
+
 from django.contrib import admin, messages
 from django.db import transaction
+from django.db.models import Count
+from django.http import HttpResponse
 
 from . import models
 
@@ -185,6 +189,34 @@ class StyleAlternateNameInline(admin.TabularInline):
 
 class StyleAdmin(admin.ModelAdmin):
     inlines = [StyleAlternateNameInline]
+    actions = ['export_as_csv']
+
+    def export_as_csv(self, request, queryset):
+        queryset = queryset.prefetch_related(
+            'alternate_names',
+        ).annotate(names_count=Count('alternate_names__name'))
+        meta = self.model._meta
+        most_alt_names = max(i.names_count for i in queryset)
+        field_names = [field.name for field in meta.fields]
+        header = field_names + [
+            'Alternate Names',
+        ] + ([''] * (most_alt_names - 1))
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(
+            meta)
+        csv_writer = writer(response)
+
+        csv_writer.writerow(header)
+        for obj in queryset:
+            alt_names = [i.name for i in obj.alternate_names.all()]
+            padding = [''] * (most_alt_names - len(alt_names))
+            csv_writer.writerow(
+                [
+                    getattr(obj, field) for field in field_names
+                ] + alt_names + padding,
+            )
+        return response
 
 
 admin.site.register(models.Style, StyleAdmin)
