@@ -127,3 +127,20 @@ class BeerListTestCase(APITestCase):
             response.data,
         )
         eq_(len(response.data['results'][0]['venues']), 1, response.data)
+
+    def test_compound_match(self):
+        """Test that searching for part of the beer name and mfg name works"""
+        query_string = f'{self.beer.name[:10]}+{self.beer.manufacturer.name[:5]}'
+        tap = TapFactory(beer=self.beer)
+        response = self.client.get(
+            f'{self.url}?search={query_string.upper()}',
+        )
+        eq_(response.status_code, 200)
+        eq_(len(response.data['results']), 1, response.data)
+        eq_(response.data['results'][0]['name'], self.beer.name, response.data)
+        eq_(
+            response.data['results'][0]['venues'][0]['id'],
+            tap.venue.id,
+            response.data,
+        )
+        eq_(len(response.data['results'][0]['venues']), 1, response.data)
