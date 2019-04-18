@@ -14,6 +14,43 @@ class BeerAlternateNameInline(admin.TabularInline):
 
 class BeerAdmin(admin.ModelAdmin):
 
+    def export_as_csv(self, request, queryset):
+        queryset = queryset.select_related(
+            'manufacturer', 'style',
+        ).annotate(taps_count=Count('taps')).prefetch_related(
+            'alternate_names',
+        ).order_by(
+            'manufacturer__name', 'name',
+        )
+        field_names = {
+            'ID': 'id',
+            'Name': 'name',
+            'Manufacturer': 'manufacturer',
+            'Style': 'style',
+            'Taps occupied': 'taps_count',
+        }
+        most_alt_names = max(len(i.alternate_names.all()) for i in queryset)
+        header = list(field_names.keys()) + [
+            'Alternate Names',
+        ] + ([''] * (most_alt_names - 1))
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(
+            queryset.model._meta)
+        csv_writer = writer(response)
+
+        csv_writer.writerow(header)
+        for obj in queryset:
+            alt_names = [i.name for i in obj.alternate_names.all()]
+            padding = [''] * (most_alt_names - len(alt_names))
+            csv_writer.writerow(
+                [
+                    getattr(obj, val) if val in {'id', 'taps_count'}
+                    else str(getattr(obj, val)) for val in field_names.values()
+                ] + alt_names + padding,
+            )
+        return response
+
     def merge_beers(self, request, queryset):
         """
         Merge multiple beers into one.
@@ -81,7 +118,8 @@ class BeerAdmin(admin.ModelAdmin):
         )
 
     merge_beers.short_description = 'Merge beers'
-    actions = ['merge_beers']
+    export_as_csv.short_description = 'Export as CSV'
+    actions = ['merge_beers', 'export_as_csv']
     list_display = ('name', 'manufacturer', 'id')
     list_filter = ('name', 'manufacturer')
     list_select_related = ('manufacturer', )
