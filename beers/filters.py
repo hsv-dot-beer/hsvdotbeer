@@ -54,7 +54,7 @@ class BeerFilterSet(FilterSet):
         return queryset
 
     def filter_on_tap(self, queryset, name, value):
-        return queryset.filter(taps__isnull=not value)
+        return queryset.filter(taps__isnull=not value).distinct()
 
     class Meta:
         fields = {
