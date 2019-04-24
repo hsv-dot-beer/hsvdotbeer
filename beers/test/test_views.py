@@ -144,3 +144,14 @@ class BeerListTestCase(APITestCase):
             response.data,
         )
         eq_(len(response.data['results'][0]['venues']), 1, response.data)
+
+    def test_on_tap_no_dupes(self):
+        # create two taps for the beer
+        TapFactory(beer=self.beer)
+        TapFactory(beer=self.beer)
+        # create another beer that isn't on tap
+        BeerFactory()
+        response = self.client.get(f'{self.url}?on_tap=True')
+        eq_(response.status_code, 200)
+        eq_(len(response.data['results']), 1, response.data)
+        eq_(response.data['results'][0]['name'], self.beer.name, response.data)
