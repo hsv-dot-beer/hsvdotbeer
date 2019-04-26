@@ -2,6 +2,7 @@ import logging
 
 from django.contrib.postgres.fields import JSONField, CITextField
 from django.db import models, transaction
+from django.db.utils import IntegrityError
 
 from .utils import render_srm
 
@@ -22,12 +23,17 @@ class Style(models.Model):
                 style.alternate_names.all().update(style=self)
                 style.delete()
             try:
-                StyleAlternateName.objects.bulk_create([
-                    StyleAlternateName(
-                        name=name,
-                        style=self,
-                    ) for name in alt_names
-                ])
+                # need the second transaction so we can run a query in the
+                # event this fails. Because we're doing a raise in the except
+                # block, the outer transaction will still be aborted in case
+                # of failure.
+                with transaction.atomic():
+                    StyleAlternateName.objects.bulk_create([
+                        StyleAlternateName(
+                            name=name,
+                            style=self,
+                        ) for name in alt_names
+                    ])
             except IntegrityError:
                 existing_names = [
                     i.name for i in StyleAlternateName.objects.filter(

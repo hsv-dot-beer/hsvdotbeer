@@ -1,18 +1,20 @@
 from django.test import TestCase
 
-from beers.models import Style, StyleAlternateName
+from beers.models import Style, StyleAlternateName, Beer
 
-from .factories import BeerFactory, StyleFactory
+from .factories import BeerFactory, StyleFactory, ManufacturerFactory
 
 
 class StyleMergeTestCase(TestCase):
 
     def test_merge_success(self):
+        mfg = ManufacturerFactory()
         styles = Style.objects.bulk_create(
             StyleFactory.build() for dummy in range(10)
         )
-        beers = Beer.objects.bulk_create(
-            BeerFactory.build(style=style) for style in styles
+        Beer.objects.bulk_create(
+            BeerFactory.build(style=style, manufacturer=mfg)
+            for style in styles
         )
         kept_style = styles[0]
         kept_style.merge_from(styles)
@@ -21,7 +23,7 @@ class StyleMergeTestCase(TestCase):
             kept_style.alternate_names.count(), 9,
         )
         self.assertEqual(
-            kept_style.beers.count(), 9,
+            kept_style.beers.count(), 10,
         )
         self.assertFalse(
             Style.objects.filter(
