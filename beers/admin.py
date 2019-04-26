@@ -3,7 +3,7 @@ from csv import writer
 from django.contrib import admin, messages
 from django.db import transaction
 from django.db.models import Count
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from . import models
 
@@ -227,7 +227,14 @@ class StyleAlternateNameInline(admin.TabularInline):
 
 class StyleAdmin(admin.ModelAdmin):
     inlines = [StyleAlternateNameInline]
-    actions = ['export_as_csv']
+    actions = ['export_as_csv', 'merge_styles']
+    search_fields = ('name', 'alternate_names__name')
+
+    def merge_styles(self, request, queryset):
+        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+        return HttpResponseRedirect(
+            f"/beers/mergestyles/?ids={','.join(selected)}",
+        )
 
     def export_as_csv(self, request, queryset):
         queryset = queryset.prefetch_related(

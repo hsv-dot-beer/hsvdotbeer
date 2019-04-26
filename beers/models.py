@@ -11,6 +11,35 @@ LOG = logging.getLogger(__name__)
 class Style(models.Model):
     name = CITextField(unique=True)
 
+    def merge_from(self, other_styles):
+        alt_names = []
+        with transaction.atomic():
+            for style in other_styles:
+                if style.id == self.id:
+                    continue
+                alt_names.append(style.name)
+                style.beers.all().update(style=self)
+                style.delete()
+            try:
+                StyleAlternateName.objects.bulk_create([
+                    StyleAlternateName(
+                        name=name,
+                        style=self,
+                    ) for name in alt_names
+                ])
+            except IntegrityError:
+                existing_names = [
+                    i.name for i in StyleAlternateName.objects.filter(
+                        name__in=alt_names,
+                    ).exclude(
+                        style=self,
+                    )
+                ]
+                raise ValueError(
+                    'These alternate names already exist: '
+                    f'{", ".join(existing_names)}'
+                )
+
     def __str__(self):
         return self.name
 
