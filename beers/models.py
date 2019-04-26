@@ -19,6 +19,7 @@ class Style(models.Model):
                     continue
                 alt_names.append(style.name)
                 style.beers.all().update(style=self)
+                style.alternate_names.all().update(style=self)
                 style.delete()
             try:
                 StyleAlternateName.objects.bulk_create([
