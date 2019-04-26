@@ -38,3 +38,6 @@ class Production(Common):
         'dev.hsv.beer',
         's.codepen.io',
     )
+
+    # force URLs to be HTTPS on prod
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
