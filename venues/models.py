@@ -41,6 +41,7 @@ class Venue(models.Model):
     email = models.EmailField(blank=True)
     phone_number = models.CharField(max_length=50, blank=True)
     logo_url = models.URLField(blank=True)
+    slug = models.SlugField()
 
     def __str__(self):
         return self.name

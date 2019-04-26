@@ -11,3 +11,4 @@ class VenueFactory(factory.django.DjangoModelFactory):
 
     name = factory.Sequence(lambda n: f'venue {n}')
     time_zone = factory.Iterator(pytz.all_timezones)
+    slug = factory.Sequence(lambda n: f'venue-{n}')

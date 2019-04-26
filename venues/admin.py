@@ -3,5 +3,9 @@ from django.contrib import admin
 from . import models
 
 
-admin.site.register(models.Venue)
+class VenueAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+
+
+admin.site.register(models.Venue, VenueAdmin)
 admin.site.register(models.VenueAPIConfiguration)
