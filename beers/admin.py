@@ -229,6 +229,7 @@ class StyleAdmin(admin.ModelAdmin):
     inlines = [StyleAlternateNameInline]
     actions = ['export_as_csv', 'merge_styles']
     search_fields = ('name', 'alternate_names__name')
+    list_display = ('name', 'id')
 
     def merge_styles(self, request, queryset):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
