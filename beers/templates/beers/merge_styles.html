@@ -25,5 +25,7 @@
     <input type="hidden" name="all-styles" value="{% for style in styles %}{{ style.id }}{% if not forloop.last %},{% endif %}{% endfor %}">
     <button type="submit" name="submit-button">Merge!</button>
   </form>
+  <br>
+  <a href="/admin/beers/style/">Go back</a>
 </div>
 {% endblock %}
