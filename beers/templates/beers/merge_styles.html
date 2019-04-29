@@ -11,7 +11,7 @@
 {% block content %}
 <div id="content-main">
   <h1>Pick the style you want to keep</h1>
-  <form class="" action="/beers/mergestyles/" method="post">
+  <form class="" action="{{ request.path }}" method="post">
     {% csrf_token %}
     <select class="" name="styles">
       {% for style in styles %}
@@ -26,6 +26,6 @@
     <button type="submit" name="submit-button">Merge!</button>
   </form>
   <br>
-  <a href="/admin/beers/style/">Go back</a>
+  <a href="{{ back_link }}">Go back</a>
 </div>
 {% endblock %}

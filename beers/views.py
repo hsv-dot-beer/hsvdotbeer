@@ -3,6 +3,7 @@ from django.db.utils import IntegrityError
 from django.db.models import Prefetch
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic import TemplateView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
@@ -89,7 +90,7 @@ class StyleMergeView(TemplateView):
     def get(self, request):
         user = request.user
         if not user.is_staff:
-            return redirect(f'/login/?next={request.path}')
+            return redirect(f'/{reverse("admin:login")}/?next={request.path}')
         if 'ids' not in request.GET:
             return HttpResponse('you must specify IDs', status=400)
         return super().get(request)
@@ -99,6 +100,7 @@ class StyleMergeView(TemplateView):
         context['styles'] = models.Style.objects.filter(
             id__in=context['view'].request.GET['ids'].split(','),
         ).prefetch_related('alternate_names')
+        context['back_link'] = reverse('admin:beers_style_changelist')
 
         return context
 
@@ -127,6 +129,6 @@ class StyleMergeView(TemplateView):
             )
         except ValueError as exc:
             return HttpResponse(str(exc), status=400)
-        return redirect('/admin/beers/style/')
+        return redirect(reverse('admin:beers_style_changelist'))
 
     template_name = 'beers/merge_styles.html'
