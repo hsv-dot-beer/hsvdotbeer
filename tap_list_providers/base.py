@@ -93,6 +93,9 @@ class BaseTapListProvider():
 
     def get_style(self, name):
         name = name.strip()
+        if name == '-':
+            # bogus untappd style
+            return None
         try:
             return self.styles[name.casefold()]
         except KeyError:
