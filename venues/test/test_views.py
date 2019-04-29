@@ -74,10 +74,10 @@ class TestVenueDetailTestCase(APITestCase):
         response = self.client.get(self.url)
         eq_(response.status_code, status.HTTP_200_OK)
 
-    def test_put_request_updates_a_venue(self):
+    def test_patch_request_updates_a_venue(self):
         new_name = fake.first_name()
         payload = {'name': new_name}
-        response = self.client.put(self.url, payload)
+        response = self.client.patch(self.url, payload)
         eq_(response.status_code, status.HTTP_200_OK, response.data)
 
         venue = Venue.objects.get(pk=self.venue.id)
