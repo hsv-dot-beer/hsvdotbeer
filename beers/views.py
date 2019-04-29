@@ -1,4 +1,10 @@
+
+from django.db.utils import IntegrityError
 from django.db.models import Prefetch
+from django.http import HttpResponse
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.views.generic import TemplateView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -77,3 +83,52 @@ class BeerViewSet(ModerationMixin, ModelViewSet):
 
         serializer = VenueSerializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class StyleMergeView(TemplateView):
+
+    def get(self, request):
+        user = request.user
+        if not user.is_staff:
+            return redirect(f'/{reverse("admin:login")}/?next={request.path}')
+        if 'ids' not in request.GET:
+            return HttpResponse('you must specify IDs', status=400)
+        return super().get(request)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['styles'] = models.Style.objects.filter(
+            id__in=context['view'].request.GET['ids'].split(','),
+        ).prefetch_related('alternate_names')
+        context['back_link'] = reverse('admin:beers_style_changelist')
+
+        return context
+
+    def post(self, request):
+        try:
+            all_pks = [int(i) for i in request.POST['all-styles'].split(',')]
+            kept_pk = int(request.POST['styles'])
+        except (KeyError, ValueError) as exc:
+            print(exc, request.POST)
+            return HttpResponse('Invalid data received!', status=400)
+        styles = models.Style.objects.filter(id__in=all_pks).prefetch_related(
+            'alternate_names', 'beers',
+        )
+        try:
+            desired_style = [i for i in styles if i.id == kept_pk][0]
+        except IndexError:
+            return HttpResponse(
+                'Chosen style was not part of the list!', status=400,
+            )
+        try:
+            desired_style.merge_from(styles)
+        except IntegrityError:
+            return HttpResponse(
+                'At least one of the beers has an alternate name that '
+                'conflicts', status=400,
+            )
+        except ValueError as exc:
+            return HttpResponse(str(exc), status=400)
+        return redirect(reverse('admin:beers_style_changelist'))
+
+    template_name = 'beers/merge_styles.html'
