@@ -23,6 +23,28 @@
 },
 {
     "model": "venues.venue",
+    "pk": 2,
+    "fields": {
+        "name": "Madison Taproom",
+        "address": "7407 Highway 72 W",
+        "city": "Madison",
+        "state": "Alabama",
+        "postal_code": "35758",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "https://www.madisontaproom.com/",
+        "facebook_page": "https://www.facebook.com/MadTaps/",
+        "twitter_handle": "",
+        "instagram_handle": "",
+        "tap_list_provider": "digitalpour",
+        "untappd_url": null,
+        "email": "madisyn@madisontaproom.com",
+        "phone_number": "2563259992",
+        "logo_url": "https://static.wixstatic.com/media/32a46f_b2a00471bb10440393c0fa0742f7ee93~mv2.png/v1/fill/w_210,h_200,al_c,lg_1,q_80/MTR-Logo-Tmp.webp"
+    }
+},
+{
+    "model": "venues.venue",
     "pk": 3,
     "fields": {
         "name": "Wish You Were Beer Campus 805",
@@ -337,6 +359,21 @@
         "url": null,
         "api_key": "",
         "digital_pour_venue_id": "5761f0a45e002c13703ed811",
+        "digital_pour_location_number": 1,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 2,
+    "fields": {
+        "venue": 2,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "5c7e9f7635272613d8d70727",
         "digital_pour_location_number": 1,
         "untappd_location": null,
         "untappd_theme": null,
