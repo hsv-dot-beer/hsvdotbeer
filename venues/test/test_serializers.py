@@ -12,6 +12,7 @@ class VenueSerializerTestCase(TestCase):
             'website': 'https://www.example.com',
             'instagram_handle': 'example',
             'time_zone': 'America/New_York',
+            'slug': 'my-bar',
         }
         serializer = VenueSerializer(data=data)
         serializer.is_valid(raise_exception=True)
@@ -31,6 +32,7 @@ class VenueSerializerTestCase(TestCase):
             'instagram_handle': 'example',
             'time_zone': 'America/New_York',
             'tap_list_provider': 'untappd',
+            'slug': 'my-bar',
         }
         serializer = VenueSerializer(data=data)
         serializer.is_valid(raise_exception=True)
