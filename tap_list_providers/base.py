@@ -327,7 +327,9 @@ class BaseTapListProvider():
                 filter_expr, kwargs,
             )
             try:
-                manufacturer = Manufacturer.objects.get(filter_expr)
+                manufacturer = Manufacturer.objects.filter(
+                    filter_expr
+                ).distinct().get()
             except Manufacturer.DoesNotExist:
                 manufacturer = Manufacturer.objects.create(
                     name=name, **kwargs)
