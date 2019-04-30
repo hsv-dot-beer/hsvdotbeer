@@ -1,20 +1,22 @@
-
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-
+from beers.views import CachedListMixin
 from . import serializers
 from . import models
 from . import filters
 
 
-class VenueViewSet(ModelViewSet):
+class VenueViewSet(CachedListMixin, ModelViewSet):
     serializer_class = serializers.VenueSerializer
     queryset = models.Venue.objects.order_by('name')
     filterset_class = filters.VenueFilterSet
 
+    @method_decorator(cache_page(60 * 5))
     @action(detail=True, methods=['GET'])
     def beers(self, request, pk):
         from beers.views import BeerViewSet
@@ -35,7 +37,7 @@ class VenueViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
-class VenueAPIConfigurationViewSet(ModelViewSet):
+class VenueAPIConfigurationViewSet(CachedListMixin, ModelViewSet):
     serializer_class = serializers.VenueAPIConfigurationSerializer
     queryset = models.VenueAPIConfiguration.objects.all()
     permission_classes = (IsAdminUser, )

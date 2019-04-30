@@ -4,7 +4,9 @@ from django.db.models import Prefetch
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
+from django.views.decorators.cache import cache_page
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -18,6 +20,12 @@ from venues.filters import VenueFilterSet
 from . import serializers
 from . import models
 from . import filters
+
+
+class CachedListMixin():
+    @method_decorator(cache_page(60 * 5))
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
 
 class ModerationMixin():
@@ -41,12 +49,12 @@ class ModerationMixin():
         return Response(self.get_serializer(instance=instance).data)
 
 
-class ManufacturerViewSet(ModerationMixin, ModelViewSet):
+class ManufacturerViewSet(CachedListMixin, ModerationMixin, ModelViewSet):
     serializer_class = serializers.ManufacturerSerializer
     queryset = models.Manufacturer.objects.order_by('name')
 
 
-class BeerViewSet(ModerationMixin, ModelViewSet):
+class BeerViewSet(CachedListMixin, ModerationMixin, ModelViewSet):
     serializer_class = serializers.BeerSerializer
     queryset = models.Beer.objects.select_related(
         'manufacturer', 'style', 'untappd_metadata', 'style',
@@ -67,6 +75,7 @@ class BeerViewSet(ModerationMixin, ModelViewSet):
     ).order_by('manufacturer__name', 'name')
     filterset_class = filters.BeerFilterSet
 
+    @method_decorator(cache_page(60 * 5))
     @action(detail=True, methods=['GET'])
     def placesavailable(self, request, pk):
         """Get all the venues at which the given beer is on tap"""
