@@ -1,6 +1,6 @@
 
 from django.db.utils import IntegrityError
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Count
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -92,6 +92,87 @@ class BeerViewSet(CachedListMixin, ModerationMixin, ModelViewSet):
 
         serializer = VenueSerializer(queryset, many=True)
         return Response(serializer.data)
+
+    @method_decorator(cache_page(60 * 5))
+    @action(detail=False, methods=['GET'])
+    def autocomplete(self, request):
+        """Attempt to autocomplete beers"""
+        try:
+            search_term = request.GET['search'].lower()
+            if not search_term:
+                raise KeyError(search_term)
+        except KeyError:
+            return Response({
+                'error': 'You must specify "search" as a query argument',
+            })
+        beer_qs = models.Beer.objects.filter(
+            name__icontains=search_term
+        ).select_related('manufacturer').annotate(
+            taps_count=Count('taps', distinct=True),
+        ).values(
+            'name', 'taps_count', 'id', 'manufacturer__name',
+        ).order_by('-taps_count', 'manufacturer__name', 'name', 'id')[:10]
+        mfg_qs = models.Manufacturer.objects.filter(
+            name__icontains=search_term,
+        ).annotate(
+            beers_count=Count('beers', distinct=True),
+            taps_occupied=Count('beers__taps', distinct=True),
+        ).values(
+            'name', 'beers_count', 'id', 'taps_occupied',
+        ).order_by('-taps_occupied', '-beers_count', 'name')[:10]
+        style_qs = models.Style.objects.filter(
+            name__contains=search_term,
+        ).annotate(
+            beers_count=Count('beers', distinct=True),
+            taps_occupied=Count('beers__taps', distinct=True),
+        ).values(
+            'name', 'beers_count', 'id', 'taps_occupied',
+        ).order_by('-taps_occupied', '-beers_count', 'name')[:10]
+        alt_beer_qs = models.BeerAlternateName.objects.filter(
+            beer__id__in=[i['id'] for i in beer_qs],
+        )
+        alt_mfg_qs = models.ManufacturerAlternateName.objects.filter(
+            manufacturer__id__in=[i['id'] for i in mfg_qs],
+        )
+        alt_style_qs = models.StyleAlternateName.objects.filter(
+            style__id__in=[i['id'] for i in style_qs],
+        )
+        alt_beers = {i['id']: [] for i in beer_qs}
+        alt_mfgs = {i['id']: [] for i in mfg_qs}
+        alt_styles = {i['id']: [] for i in style_qs}
+        for alt_beer in alt_beer_qs.all():
+            alt_beers[alt_beer.beer_id].append(alt_beer.name)
+        for alt_mfg in alt_mfg_qs.all():
+            alt_mfgs[alt_mfg.manufacturer_id].append(alt_mfg.name)
+        for alt_style in alt_style_qs.all():
+            alt_styles[alt_style.style_id].append(alt_style.name)
+        result = {
+            'beers': [
+                {
+                    'name': i['name'],
+                    'taps': i['taps_count'],
+                    'alternate_names': alt_beers.get(i['id'], []),
+                    'manufacturer': i['manufacturer__name'],
+                } for i in beer_qs
+            ],
+            'styles': [
+                {
+                    'name': i['name'],
+                    'beers': i['beers_count'],
+                    'taps_occupied': i['taps_occupied'],
+                    'alternate_names': alt_styles.get(i['id'], []),
+                } for i in style_qs
+            ],
+            'manufacturers': [
+                {
+                    'name': i['name'],
+                    'beers': i['beers_count'],
+                    'taps_occupied': i['taps_occupied'],
+                    'alternate_names': alt_mfgs.get(i['id'], []),
+                } for i in mfg_qs
+            ],
+        }
+        return Response(result)
 
 
 class StyleMergeView(TemplateView):
