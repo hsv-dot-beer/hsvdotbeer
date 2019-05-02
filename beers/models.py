@@ -71,6 +71,9 @@ class Manufacturer(models.Model):
     untappd_url = models.URLField(blank=True, unique=True, null=True)
     automatic_updates_blocked = models.NullBooleanField(default=False)
     taphunter_url = models.URLField(blank=True, null=True, unique=True)
+    taplist_io_pk = models.PositiveIntegerField(
+        blank=True, null=True, unique=True,
+    )
 
     def merge_from(self, other):
         LOG.info('merging %s into %s', other, self)
@@ -158,6 +161,9 @@ class Beer(models.Model):
     automatic_updates_blocked = models.NullBooleanField(default=False)
     taphunter_url = models.URLField(blank=True, null=True, unique=True)
     stem_and_stein_pk = models.PositiveIntegerField(
+        blank=True, null=True, unique=True,
+    )
+    taplist_io_pk = models.PositiveIntegerField(
         blank=True, null=True, unique=True,
     )
 
