@@ -1,5 +1,6 @@
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from rest_framework.exceptions import NotFound
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser
 from rest_framework.decorators import action
@@ -35,6 +36,15 @@ class VenueViewSet(CachedListMixin, ModelViewSet):
             return self.get_paginated_response(serializer.data)
         serializer = BeerViewSet.serializer_class(queryset, many=True)
         return Response(serializer.data)
+
+
+class VenueBySlugViewSet(VenueViewSet):
+
+    def list(self, request, *args, **kwargs):
+        raise NotFound()
+
+    lookup_field = 'slug'
+    serializer_class = serializers.VenueBySlugSerializer
 
 
 class VenueAPIConfigurationViewSet(CachedListMixin, ModelViewSet):
