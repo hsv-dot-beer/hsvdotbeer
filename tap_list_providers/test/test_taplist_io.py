@@ -1,7 +1,6 @@
 """Test the parsing of taplist.io data"""
 import json
 import os
-from decimal import Decimal
 
 from dateutil.parser import parse
 from django.core.management import call_command
