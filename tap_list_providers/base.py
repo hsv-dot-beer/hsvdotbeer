@@ -5,17 +5,19 @@ which takes a single argument: a Venue object.
 
 It'll have API configuration, taps, and existing beers prefetched.
 """
+import re
 from decimal import Decimal, InvalidOperation
-from urllib.parse import urlparse
+from urllib.parse import urlparse, unquote
 import logging
 
 from django.db.models import Prefetch, Q
+from django.db import transaction
+from kombu.exceptions import OperationalError
 
 from venues.models import Venue
-from beers.models import Beer, Manufacturer, BeerPrice, ServingSize
+from beers.models import Beer, Manufacturer, BeerPrice, ServingSize, Style
 from beers.tasks import look_up_beer
 from taps.models import Tap
-from .models import TapListProviderStyleMapping
 
 LOG = logging.getLogger(__name__)
 
@@ -24,10 +26,29 @@ PROVIDER_BREWERY_LOGO_STRINGS = {
     'digitalpourproducerlogos': 'DigitalPour',
 }
 
+COMMON_BREWERY_ENDINGS = (
+    'Brewing Company',
+    'Brewery',
+    'Brewing',
+    'Brewing Co.',
+    'Brewing',
+    'Beer Company',
+    'Beer',
+    'Beer Co.',
+    'Craft Brewery',
+)
+
+REPLACE_TARGET = '\\.'
+ENDINGS_REGEX = re.compile(
+    f'({"|".join(i.replace(".", REPLACE_TARGET) for i in COMMON_BREWERY_ENDINGS)})$',
+    re.IGNORECASE,
+)
+
 
 class BaseTapListProvider():
 
     def __init__(self):
+        self.styles = {}
         if not hasattr(self, 'provider_name'):
             # Don't define this attribute if the child does for us
             self.provider_name = None
@@ -70,7 +91,29 @@ class BaseTapListProvider():
             LOG.debug('Fetching beers at %s', venue)
             self.handle_venue(venue)
 
+    def get_style(self, name):
+        name = name.strip()
+        if name == '-':
+            # bogus untappd style
+            return None
+        try:
+            return self.styles[name.casefold()]
+        except KeyError:
+            # do it the old fashioned way
+            pass
+        with transaction.atomic():
+            try:
+                style = Style.objects.get(name=name)
+            except Style.DoesNotExist:
+                try:
+                    style = Style.objects.get(alternate_names__name=name)
+                except Style.DoesNotExist:
+                    style = Style.objects.create(name=name)
+        self.styles[name.casefold()] = style
+        return style
+
     def get_beer(self, name, manufacturer, pricing=None, venue=None, **defaults):
+        name = name.strip()
         LOG.debug(
             'get_beer(): name %s, mfg %s, defaults %s',
             name, manufacturer, defaults,
@@ -83,29 +126,26 @@ class BaseTapListProvider():
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:
             raise ValueError(f'Unknown fields f{",".join(sorted(defaults))}')
+        for key, val in list(defaults.items()):
+            if val and key.endswith('_url'):
+                unquoted = unquote(val)
+                if unquoted != val:
+                    LOG.debug(
+                        'Replacing unquoted value for %s (%s) with %s',
+                        key, val, unquoted,
+                    )
+                    defaults[key] = unquoted
         fix_urls(defaults)
         unique_fields_present = {
             field: value for field, value in defaults.items()
             if field in set(unique_fields) and value
         }
         serving_sizes = {i.volume_oz: i for i in ServingSize.objects.all()}
-        try:
-            api_vendor_style = defaults['api_vendor_style']
-        except KeyError:
-            # don't care; ignore it
-            pass
-        else:
-            try:
-                mapping = TapListProviderStyleMapping.objects.filter(
-                    provider_style_name=api_vendor_style
-                ).select_related('style').get()
-            except TapListProviderStyleMapping.DoesNotExist:
-                # oh well, it was worth a shot
-                pass
-            else:
-                # go ahead and try to assign it to the style if possible
-                defaults['style'] = mapping.style
-                del defaults['api_vendor_style']
+        if 'style' in defaults and not isinstance(defaults['style'], Style):
+            defaults['style'] = self.get_style(defaults['style'])
+        # TODO: delete this
+        if isinstance(defaults.get('style'), Style):
+            defaults['style'] = defaults.pop('style')
         beer = None
         if unique_fields_present:
             filter_expr = Q()
@@ -157,44 +197,46 @@ class BaseTapListProvider():
             for field, value in defaults.items():
                 # instead of using update_or_create(), only update fields *if*
                 # they're set in `defaults`
-                if value:
-                    if field == 'logo_url':
-                        # these don't have to be unique
-                        if beer.logo_url:
-                            if venue and venue.tap_list_provider == 'taphunter':
-                                LOG.info(
-                                    'Not trusting beer logo for %s from TapHunter'
-                                    ' because TH does not distinguish between '
-                                    'beer and brewery logos', beer
-                                )
-                                continue
-                            found = False
-                            for target, provider in PROVIDER_BREWERY_LOGO_STRINGS.items():
-                                if target in value:
-                                    LOG.info(
-                                        'Not overwriting logo for beer %s (%s) with brewery logo'
-                                        ' from %s',
-                                        beer, beer.logo_url, provider,
-                                    )
-                                    found = True
-                                    break
-                            if found:
-                                continue
-                    elif field.endswith('_url'):
-                        if Beer.objects.exclude(id=beer.id).filter(
-                            **{field: value}
-                        ).exists():
-                            LOG.warning(
-                                'skipping updating %s (%s) for %s (PK %s)'
-                                ' because it would conflict',
-                                field, value, beer.name, beer.id,
+                if not value or getattr(beer, field) == value:
+                    # it's either unset or is already set to this value
+                    continue
+                if field == 'logo_url':
+                    # these don't have to be unique
+                    if beer.logo_url:
+                        if venue and venue.tap_list_provider == 'taphunter':
+                            LOG.info(
+                                'Not trusting beer logo for %s from TapHunter'
+                                ' because TH does not distinguish between '
+                                'beer and brewery logos', beer
                             )
                             continue
-                    saved_value = getattr(beer, field)
-                    if value != saved_value:
-                        # TODO mark as unmoderated
-                        setattr(beer, field, value)
-                        needs_update = True
+                        found = False
+                        for target, provider in PROVIDER_BREWERY_LOGO_STRINGS.items():
+                            if target in value:
+                                LOG.info(
+                                    'Not overwriting logo for beer %s (%s) with brewery logo'
+                                    ' from %s',
+                                    beer, beer.logo_url, provider,
+                                )
+                                found = True
+                                break
+                        if found:
+                            continue
+                elif field.endswith('_url'):
+                    if Beer.objects.exclude(id=beer.id).filter(
+                        **{field: value}
+                    ).exists():
+                        LOG.warning(
+                            'skipping updating %s (%s) for %s (PK %s)'
+                            ' because it would conflict',
+                            field, value, beer.name, beer.id,
+                        )
+                        continue
+                saved_value = getattr(beer, field)
+                if value != saved_value:
+                    # TODO mark as unmoderated
+                    setattr(beer, field, value)
+                    needs_update = True
         if manufacturer.logo_url and not beer.logo_url:
             beer.logo_url = manufacturer.logo_url
             needs_update = True
@@ -234,10 +276,20 @@ class BaseTapListProvider():
                     raise
         if beer.untappd_url:
             # queue up an async fetch
-            look_up_beer.delay(beer.id)
+            try:
+                # if it has an untappd URL, queue a lookup for the next in line
+                look_up_beer.delay(beer.id)
+            except OperationalError as exc:
+                if str(exc).casefold() == 'max number of clients reached'.casefold():
+                    LOG.error('Reached redis limit!')
+                    # fall back to doing it synchronously
+                    look_up_beer(beer.id)
+                else:
+                    raise
         return beer
 
     def get_manufacturer(self, name, **defaults):
+        name = ENDINGS_REGEX.sub('', name.strip()).strip()
         field_names = {i.name for i in Manufacturer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:
@@ -275,7 +327,9 @@ class BaseTapListProvider():
                 filter_expr, kwargs,
             )
             try:
-                manufacturer = Manufacturer.objects.get(filter_expr)
+                manufacturer = Manufacturer.objects.filter(
+                    filter_expr
+                ).distinct().get()
             except Manufacturer.DoesNotExist:
                 manufacturer = Manufacturer.objects.create(
                     name=name, **kwargs)

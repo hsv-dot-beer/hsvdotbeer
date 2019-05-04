@@ -16,8 +16,6 @@ from hsv_dot_beer.config.local import BASE_DIR
 
 class CommandsTestCase(TestCase):
 
-    fixtures = ['example_style_data']
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -62,10 +60,13 @@ class CommandsTestCase(TestCase):
             taps = Tap.objects.filter(
                 venue=self.venue, tap_number__in=[6, 22],
             ).select_related(
-                'beer__style',
+                'beer__style', 'beer__manufacturer',
             ).order_by('tap_number')
             tap = taps[0]
             self.assertEqual(tap.beer.name, 'Crisp Apple Cider', tap.beer)
+            self.assertEqual(
+                tap.beer.manufacturer.name, 'Angry Orchard Cidery', tap.beer.manufacturer,
+            )
             self.assertEqual(
                 tap.beer.logo_url,
                 "https://lh3.googleusercontent.com/Pd6YLv5-aHD6nkNnTZBA1VzjHgYkf"
@@ -89,7 +90,6 @@ class CommandsTestCase(TestCase):
             tap = taps[1]
             self.assertEqual(tap.beer.name, "Bound By Time")
             self.assertEqual(tap.beer.abv, Decimal('7.00'))
-            self.assertIsNone(tap.beer.style)
             self.assertEqual(tap.gas_type, '')
             self.assertEqual(
                 tap.beer.logo_url,

@@ -19,8 +19,8 @@ class BeerFilterSet(FilterSet):
 
     o = OrderingFilter(
         fields=[
-            'name', 'abv', 'ibu', 'style__name', 'style__category__name',
-            'manufacturer__name',
+            'name', 'abv', 'ibu', 'style__name',
+            'style__alternate_names__name', 'manufacturer__name',
         ],
     )
 
@@ -28,24 +28,33 @@ class BeerFilterSet(FilterSet):
     on_tap = BooleanFilter(method='filter_on_tap')
 
     def filter_search(self, queryset, name, value):
-        return self.queryset.filter(
-            Q(
-                name__icontains=value,
+        base_cond = Q()
+        # what I want to search for:
+        # each word (split by whitespace) is included in at least
+        # one of the below six fields,
+        # so you can search for "straight monkey" to get monkeynaut
+        # or "belgi ipa ommeg" to get all Ommegang Belgian IPAs
+        for word in value.split():
+            base_cond &= Q(
+                name__icontains=word,
             ) | Q(
-                alternate_names__name__icontains=value,
+                alternate_names__name__icontains=word,
             ) | Q(
-                manufacturer__name__icontains=value,
+                manufacturer__name__icontains=word,
             ) | Q(
-                style__name__icontains=value,
+                # the field is case-insensitive, so no need for icontains
+                style__name=word,
             ) | Q(
-                style__category__name__icontains=value,
+                # the field is case-insensitive, so no need for icontains
+                style__alternate_names__name=word,
             ) | Q(
-                manufacturer__alternate_names__name__icontains=value,
-            ),
-        ).distinct()
+                manufacturer__alternate_names__name__icontains=word,
+            )
+        queryset = queryset.filter(base_cond).distinct()
+        return queryset
 
     def filter_on_tap(self, queryset, name, value):
-        return queryset.filter(taps__isnull=not value)
+        return queryset.filter(taps__isnull=not value).distinct()
 
     class Meta:
         fields = {
@@ -55,7 +64,7 @@ class BeerFilterSet(FilterSet):
             'manufacturer__name': DEFAULT_NUMERIC_FILTER_OPERATORS,
             'taps__venue__name': DEFAULT_STRING_FILTER_OPERATORS,
             'style__name': DEFAULT_STRING_FILTER_OPERATORS,
-            'style__category__name': DEFAULT_STRING_FILTER_OPERATORS,
+            'style__alternate_names__name': DEFAULT_STRING_FILTER_OPERATORS,
             'search': ['exact'],
             'on_tap': ['exact'],
         }

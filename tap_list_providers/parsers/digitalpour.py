@@ -68,10 +68,9 @@ class DigitalPourParser(BaseTapListProvider):
                 manufacturer = manufacturers[parsed_manufacturer['name']]
             except KeyError:
                 defaults = {}
-                if parsed_manufacturer['location']:
-                    defaults['location'] = parsed_manufacturer['location']
-                if parsed_manufacturer['logo_url']:
-                    defaults['logo_url'] = parsed_manufacturer['logo_url']
+                for field in ['location', 'logo_url', 'twitter_handle']:
+                    if parsed_manufacturer[field]:
+                        defaults[field] = parsed_manufacturer[field]
                 manufacturer = self.get_manufacturer(
                     name=parsed_manufacturer['name'],
                     **defaults,
@@ -80,8 +79,6 @@ class DigitalPourParser(BaseTapListProvider):
             # 3. get the beer, creating if necessary
             parsed_beer = self.parse_beer(entry)
             name = parsed_beer.pop('name')
-            # TODO (#37): map styles
-            parsed_beer['api_vendor_style'] = parsed_beer.pop('style', '')
             color_html = parsed_beer.pop('color', '')
             if color_html:
                 # convert 0xabcde into #0abcde
@@ -115,6 +112,43 @@ class DigitalPourParser(BaseTapListProvider):
                 'color': hex(b['CiderStyle']['Color']),
                 'logo_url': b.get('LogoImageUrl'),
                 'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'rate_beer_url': b.get('RateBeerUrl'),
+                'manufacturer_url': b.get('BeerUrl'),
+            }
+        elif 'Mead' in b['$type']:
+            beer = {
+                'name': b['MeadName'],
+                'style': b['MeadStyle']['StyleName'],
+                'abv': b['Abv'],
+                'ibu': b.get('Ibu'),
+                'color': hex(b['MeadStyle']['Color']),
+                'logo_url': b.get('LogoImageUrl'),
+                'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'rate_beer_url': b.get('RateBeerUrl'),
+                'manufacturer_url': b.get('BeerUrl'),
+            }
+        elif 'Wine' in b['$type']:
+            beer = {
+                'name': b['WineName'],
+                'style': b['FullStyleName'],
+                'abv': b['Abv'],
+                'ibu': b.get('Ibu'),
+                'color': hex(b['StyleColor']),
+                'logo_url': b.get('LogoImageUrl'),
+                'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'rate_beer_url': b.get('RateBeerUrl'),
+                'manufacturer_url': b.get('BeerUrl'),
+            }
+        elif 'Kombucha' in b['$type']:
+            beer = {
+                'name': b['KombuchaName'],
+                'style': b['FullStyleName'],
+                'abv': b['Abv'],
+                'ibu': b.get('Ibu'),
+                'color': hex(b['StyleColor']),
+                'logo_url': b.get('LogoImageUrl'),
+                'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'rate_beer_url': b.get('RateBeerUrl'),
                 'manufacturer_url': b.get('BeerUrl'),
             }
         else:
@@ -125,6 +159,7 @@ class DigitalPourParser(BaseTapListProvider):
                 'ibu': b['Ibu'],
                 'color': hex(b['BeerStyle']['Color']),
                 'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'rate_beer_url': b.get('RateBeerUrl'),
                 'manufacturer_url': b.get('BeerUrl'),
                 'logo_url': b.get('LogoImageUrl') or b.get('ResolvedLogoImageUrl') or None,
             }
@@ -134,16 +169,33 @@ class DigitalPourParser(BaseTapListProvider):
         """Parse manufacturer info from JSON entry."""
         producer = tap['MenuItemProductDetail']['Beverage']['BeverageProducer']
 
-        if 'CideryName' in producer:
-            name = producer['CideryName']
+        styles = ['Cidery', 'Meadery', 'Winery', 'KombuchaMaker', 'Brewery']
+        for style in styles:
+            try:
+                name = producer[f'{style}Name']
+            except KeyError:
+                # try the next one
+                continue
+            else:
+                # success
+                break
         else:
-            name = producer['BreweryName']
+            raise ValueError(f"Unknown producer type {producer}")
 
         manufacturer = {
             'name': name,
             'location': producer['Location'] or '',
             'logo_url': producer.get('LogoImageUrl'),
+            'twitter_handle': producer.get('TwitterName') or '',
         }
+        if manufacturer['twitter_handle'] and manufacturer[
+                'twitter_handle'].startswith('@'):
+            # strip the leading @ for consistency
+            manufacturer['twitter_handle'] = manufacturer['twitter_handle'][1:]
+        LOG.debug(
+            'Got twitter name %s from producer %s',
+            manufacturer['twitter_handle'], producer,
+        )
         return manufacturer
 
     def parse_tap(self, tap):

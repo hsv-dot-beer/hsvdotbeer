@@ -1,22 +1,22 @@
-from django.db.models import Prefetch
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from beers.serializers import BeerStyleWithBeersSerializer, \
-    BeerStyleCategoryWithBeersSerializer
-
+from beers.views import CachedListMixin
 from . import serializers
 from . import models
 from . import filters
 
 
-class VenueViewSet(ModelViewSet):
+class VenueViewSet(CachedListMixin, ModelViewSet):
     serializer_class = serializers.VenueSerializer
     queryset = models.Venue.objects.order_by('name')
     filterset_class = filters.VenueFilterSet
 
+    @method_decorator(cache_page(60 * 5))
     @action(detail=True, methods=['GET'])
     def beers(self, request, pk):
         from beers.views import BeerViewSet
@@ -36,54 +36,8 @@ class VenueViewSet(ModelViewSet):
         serializer = BeerViewSet.serializer_class(queryset, many=True)
         return Response(serializer.data)
 
-    @action(detail=True, methods=['GET'])
-    def styles(self, request, pk):
-        from beers.views import BeerStyleViewSet, BeerViewSet
-        queryset = BeerStyleViewSet.queryset.filter(
-            beers__taps__venue__id=pk,
-        ).prefetch_related(
-            Prefetch(
-                'beers',
-                queryset=BeerViewSet.queryset.filter(
-                    taps__isnull=False,
-                ).distinct(),
-            ),
-        ).distinct()
 
-        page = self.paginate_queryset(queryset)
-
-        if page is not None:
-            serializer = BeerStyleWithBeersSerializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-        serializer = BeerStyleWithBeersSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    @action(detail=True, methods=['GET'])
-    def stylecategories(self, request, pk):
-        from beers.views import BeerStyleCategoryViewSet, BeerViewSet
-        queryset = BeerStyleCategoryViewSet.queryset.filter(
-            styles__beers__taps__venue__id=pk,
-        ).prefetch_related(
-            Prefetch(
-                'styles__beers',
-                queryset=BeerViewSet.queryset.filter(
-                    taps__isnull=False,
-                ).distinct(),
-            ),
-        ).distinct()
-
-        page = self.paginate_queryset(queryset)
-
-        if page is not None:
-            serializer = BeerStyleCategoryWithBeersSerializer(
-                page, many=True)
-            return self.get_paginated_response(serializer.data)
-        serializer = BeerStyleCategoryWithBeersSerializer(
-            queryset, many=True)
-        return Response(serializer.data)
-
-
-class VenueAPIConfigurationViewSet(ModelViewSet):
+class VenueAPIConfigurationViewSet(CachedListMixin, ModelViewSet):
     serializer_class = serializers.VenueAPIConfigurationSerializer
     queryset = models.VenueAPIConfiguration.objects.all()
     permission_classes = (IsAdminUser, )

@@ -8,6 +8,7 @@ import os
 from bs4 import BeautifulSoup
 import requests
 import configurations
+from django.db.models import Q
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
 
 # boilerplate code necessary for launching outside manage.py
@@ -87,19 +88,35 @@ class StemAndSteinParser(BaseTapListProvider):
             found_beers[index + 1] = beer
         return found_beers
 
-    def guess_manufacturer(self, beer_name):
+    def guess_manufacturer(self, beer_name, use_contains=False):
         words = beer_name.split(' ')
-        for index in range(1, len(words)):
+        # go in reverse order so we can catch longest name first
+        for index in range(len(words) - 1, 0, -1):
             manufacturer = ' '.join(words[:index])
+            if not use_contains:
+                try:
+                    return Manufacturer.objects.get(
+                        Q(name__iexact=manufacturer) |
+                        Q(alternate_names__name__iexact=manufacturer)
+                    )
+                except Manufacturer.DoesNotExist:
+                    continue
+            filter_str = 'icontains' if use_contains else 'istartswith'
+            filter_expr = Q(**{
+                f'name__{filter_str}': manufacturer,
+            }) | Q(**{
+                f'alternate_names__name__{filter_str}': manufacturer,
+            })
             try:
-                return Manufacturer.objects.filter(
-                    name__icontains=manufacturer,
-                )[0]
+                return Manufacturer.objects.filter(filter_expr)[0]
             except IndexError:
                 continue
+        if not use_contains:
+            return self.guess_manufacturer(beer_name, use_contains=True)
         return None
 
     def guess_beer(self, beer_name):
+        beer_name = beer_name.strip()
         manufacturer = self.guess_manufacturer(beer_name)
         if not manufacturer:
             manufacturer = Manufacturer.objects.create(

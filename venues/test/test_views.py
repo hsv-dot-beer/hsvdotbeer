@@ -1,3 +1,4 @@
+import json
 from django.urls import reverse
 from django.forms.models import model_to_dict
 from nose.tools import eq_
@@ -7,7 +8,7 @@ from faker import Faker
 
 from hsv_dot_beer.users.test.factories import UserFactory
 from venues.models import Venue, VenueAPIConfiguration
-from beers.test.factories import BeerFactory, BeerStyleTagFactory, BeerStyleFactory
+from beers.test.factories import BeerFactory
 from taps.test.factories import TapFactory
 from .factories import VenueFactory
 
@@ -22,16 +23,22 @@ class TestVenueListTestCase(APITestCase):
     def setUp(self):
         self.url = reverse('venue-list')
         self.venue_data = model_to_dict(VenueFactory.build())
+        self.venue_data['country'] = str(self.venue_data['country'])
         self.user = UserFactory(is_staff=True)
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
 
     def test_post_request_with_no_data_fails(self):
-        response = self.client.post(self.url, {})
+        response = self.client.post(
+            self.url, json.dumps({}), content_type='application/json',
+        )
         eq_(response.status_code, status.HTTP_400_BAD_REQUEST, response.data)
 
     def test_post_request_with_valid_data_succeeds(self):
-        response = self.client.post(self.url, self.venue_data)
+        response = self.client.post(
+            self.url, json.dumps(self.venue_data),
+            content_type='application/json',
+        )
         eq_(response.status_code, status.HTTP_201_CREATED, response.data)
 
         venue = Venue.objects.get(pk=response.data.get('id'))
@@ -39,11 +46,7 @@ class TestVenueListTestCase(APITestCase):
         eq_(venue.time_zone.zone, self.venue_data.get('time_zone'))
 
     def test_filtering(self):
-        tags = [
-            BeerStyleTagFactory.create(), BeerStyleTagFactory.create(),
-        ]
-        style = BeerStyleFactory.create(tags=tags)
-        beer = BeerFactory(style=style)
+        beer = BeerFactory()
         venue = VenueFactory()
         TapFactory(venue=venue, beer=beer)
         url = f'{self.url}?taps__beer__name__istartswith={beer.name.lower()[:5]}'
@@ -71,10 +74,10 @@ class TestVenueDetailTestCase(APITestCase):
         response = self.client.get(self.url)
         eq_(response.status_code, status.HTTP_200_OK)
 
-    def test_put_request_updates_a_venue(self):
+    def test_patch_request_updates_a_venue(self):
         new_name = fake.first_name()
         payload = {'name': new_name}
-        response = self.client.put(self.url, payload)
+        response = self.client.patch(self.url, payload)
         eq_(response.status_code, status.HTTP_200_OK, response.data)
 
         venue = Venue.objects.get(pk=self.venue.id)
@@ -89,32 +92,6 @@ class TestVenueDetailTestCase(APITestCase):
         eq_(len(response.data['results']), 1, response.data)
         eq_(response.data['results'][0]['id'], tap.beer_id)
 
-    def test_styles(self):
-        style = BeerStyleFactory()
-        tap = TapFactory(venue=self.venue, beer=BeerFactory(style=style))
-        BeerStyleFactory()
-        url = f'{self.url}styles/'
-        response = self.client.get(url)
-        eq_(response.status_code, status.HTTP_200_OK, response.data)
-        eq_(len(response.data['results']), 1, response.data)
-        eq_(response.data['results'][0]['id'], style.id)
-        beers = response.data['results'][0]['beers']
-        eq_(len(beers), 1, beers)
-        eq_(beers[0]['id'], tap.beer_id, beers[0])
-
-    def test_style_categories(self):
-        style = BeerStyleFactory()
-        tap = TapFactory(venue=self.venue, beer=BeerFactory(style=style))
-        BeerStyleFactory()
-        url = f'{self.url}stylecategories/'
-        response = self.client.get(url)
-        eq_(response.status_code, status.HTTP_200_OK, response.data)
-        eq_(len(response.data['results']), 1, response.data)
-        eq_(response.data['results'][0]['id'], style.category_id)
-        beers = response.data['results'][0]['beers']
-        eq_(len(beers), 1, beers)
-        eq_(beers[0]['id'], tap.beer_id, beers[0])
-
 
 class VenueAPIConfigurationListTestCase(APITestCase):
 
@@ -122,7 +99,6 @@ class VenueAPIConfigurationListTestCase(APITestCase):
         self.venue = VenueFactory()
         self.admin_user = UserFactory(is_staff=True)
         self.url = reverse('venueapiconfiguration-list')
-        print(self.url)
         self.client.credentials = self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.admin_user.auth_token}')
         self.data = {

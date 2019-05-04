@@ -84,11 +84,9 @@ class TaphunterParser(BaseTapListProvider):
             # 3. get the beer, creating if necessary
             parsed_beer = self.parse_beer(entry)
             name = parsed_beer.pop('name')
-            # TODO (#37): map styles
             style = parsed_beer.pop('style', {})
             if style:
-                parsed_beer['api_vendor_style'] = \
-                    f"{style['category']} - {style['name']}"
+                parsed_beer['style'] = f"{style['category']} - {style['name']}"
             color_srm = parsed_beer.pop('srm', 0)
             if color_srm:
                 parsed_beer['color_srm'] = color_srm

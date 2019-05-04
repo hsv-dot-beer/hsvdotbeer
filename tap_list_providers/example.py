@@ -1,7 +1,7 @@
 import json
 import logging
 
-from beers.models import Manufacturer, BeerStyleCategory
+from beers.models import Manufacturer
 from taps.models import Tap
 
 from .base import BaseTapListProvider
@@ -50,35 +50,7 @@ class ExampleTapListProvider(BaseTapListProvider):
                 manufacturers[manufacturer.name] = manufacturer
             name = beer_info.pop('beer')
             del beer_info['brewery']
-            beer_info['api_vendor_style'] = beer_info['style']
-            beer_info['style'] = self.guess_style(beer_info['style'])
+            beer_info['style'] = self.get_style(beer_info['style'])
             beer = self.get_beer(name, manufacturer, **beer_info)
             tap.beer = beer
             tap.save()
-
-    def guess_style(self, style_name):
-        """Attempt to guess a style based on the given name"""
-        category, style = [i.strip() for i in style_name.split('-')]
-        categories = BeerStyleCategory.objects.filter(
-            name__iexact=category
-        )
-        try:
-            style_category = categories.get()
-        except BeerStyleCategory.DoesNotExist:
-            LOG.warning('Could not find a match for category %s', category)
-            return None
-        candidate_styles = list(
-            style_category.styles.filter(name__icontains=style)
-        )
-        if len(candidate_styles) == 1:
-            matched_style = candidate_styles[0]
-            LOG.debug('Matched %s to style %s', style_name, matched_style)
-            return matched_style
-        if not candidate_styles:
-            LOG.warning('Could not find any matches for style %s', style_name)
-            return None
-        LOG.warning(
-            'Found multiple matches for style %s: %s',
-            style_name, candidate_styles,
-        )
-        return None
