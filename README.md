@@ -1,4 +1,3 @@
-# hsvdotbeer
 
 <img src="https://github.com/hsv-dot-beer/hsvdotbeer/blob/master/web/static/svg/hsv-beer-logo.svg">
 
