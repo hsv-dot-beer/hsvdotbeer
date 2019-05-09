@@ -146,11 +146,15 @@ class StemAndSteinParser(BaseTapListProvider):
         price = Decimal(pricing_div.text[1:])
         image_url = image_div.find('img').attrs['src']
         image_params = dict(parse_qsl(image_url.split('?')[-1]))
-        color = self.html_parser.unescape(image_params['color'])
+        try:
+            color = self.html_parser.unescape(image_params['color'])
+        except KeyError:
+            LOG.warning('Missing S&S color for beer %s', beer)
+            color = None
         volume_oz = 16 if image_params[
             'glassware'
         ].casefold() == 'pint'.casefold() else 10
-        if not beer.color_html:
+        if not beer.color_html and color:
             beer.color_html = color
             beer.save()
         serving_size = self.serving_sizes[volume_oz]
