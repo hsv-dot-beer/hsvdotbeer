@@ -1,6 +1,6 @@
 # hsvdotbeer
 
-<img src="https://raw.github.com/hsv-dot-beer/hsvdotbeer/blob/master/web/static/svg/hsv-beer-logo.svg">
+<img src="https://github.com/hsv-dot-beer/hsvdotbeer/blob/master/web/static/svg/hsv-beer-logo.svg">
 
 
 [![Built with](https://img.shields.io/badge/Built_with-Cookiecutter_Django_Rest-F7B633.svg)](https://github.com/agconti/cookiecutter-django-rest)
