@@ -58,6 +58,29 @@ class TestVenueListTestCase(APITestCase):
         self.assertEqual(len(response.data['results']), 0, response.data)
 
 
+class TestVenueBySlug(APITestCase):
+    """test /venues/byslug"""
+
+    def setUp(self):
+        self.venue = VenueFactory()
+        self.url = reverse(
+            'venue_byslug-detail', kwargs={'slug': self.venue.slug},
+        )
+        self.list_url = reverse('venue_byslug-list')
+        self.user = UserFactory(is_staff=True)
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
+
+    def test_list_404(self):
+        response = self.client.get(self.list_url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_get_ok(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200, response.data)
+        self.assertEqual(response.data['id'], self.venue.id)
+
+
 class TestVenueDetailTestCase(APITestCase):
     """
     Tests /venues detail operations.
