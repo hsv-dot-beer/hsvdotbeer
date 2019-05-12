@@ -120,12 +120,14 @@ class BaseTapListProvider():
         )
         unique_fields = (
             'manufacturer_url', 'untappd_url', 'beer_advocate_url',
-            'taphunter_url',
+            'taphunter_url', 'taplist_io_pk',
         )
         field_names = {i.name for i in Beer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
         if bogus_defaults:
-            raise ValueError(f'Unknown fields f{",".join(sorted(defaults))}')
+            raise ValueError(
+                f'Unknown field(s) {", ".join(sorted(bogus_defaults))}'
+            )
         for key, val in list(defaults.items()):
             if val and key.endswith('_url'):
                 unquoted = unquote(val)
@@ -298,7 +300,7 @@ class BaseTapListProvider():
         manufacturer = None
         filter_expr = Q()
         unique_fields = {
-            'untappd_url', 'taphunter_url',
+            'untappd_url', 'taphunter_url', 'taplist_io_pk',
         }
         for field in unique_fields:
             value = kwargs.get(field)
