@@ -57,6 +57,24 @@ class TestVenueListTestCase(APITestCase):
         response = self.client.get(url)
         self.assertEqual(len(response.data['results']), 0, response.data)
 
+    def test_craft_beer_trail_ordering(self):
+        on_trail = VenueFactory(on_downtown_craft_beer_trail=True)
+        off_trail = VenueFactory(on_downtown_craft_beer_trail=False)
+        url = f'{self.url}?o=-on_downtown_craft_beer_trail'
+        response = self.client.get(url)
+        self.assertEqual(len(response.data['results']), 2)
+        self.assertEqual(
+            [i['id'] for i in response.data['results']],
+            [on_trail.id, off_trail.id],
+        )
+        url = f'{self.url}?o=on_downtown_craft_beer_trail'
+        response = self.client.get(url)
+        self.assertEqual(len(response.data['results']), 2)
+        self.assertEqual(
+            [i['id'] for i in response.data['results']],
+            [off_trail.id, on_trail.id],
+        )
+
 
 class TestVenueBySlug(APITestCase):
     """test /venues/byslug"""
