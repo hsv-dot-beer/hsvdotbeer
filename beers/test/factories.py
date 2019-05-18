@@ -7,6 +7,7 @@ from beers.models import Manufacturer, Beer, Style, StyleAlternateName
 class StyleFactory(factory.django.DjangoModelFactory):
 
     name = factory.Sequence(lambda n: 'style %d' % n)
+    default_color = factory.Sequence(lambda n: '#{:0>6X}'.format(n))
 
     class Meta:
         model = Style
