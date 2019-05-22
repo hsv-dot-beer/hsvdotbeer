@@ -96,6 +96,9 @@ class BaseTapListProvider():
         if name == '-':
             # bogus untappd style
             return None
+        if name.startswith('None - '):
+            # strip untappd noise
+            name = name[7:]
         try:
             return self.styles[name.casefold()]
         except KeyError:
