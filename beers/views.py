@@ -200,7 +200,6 @@ class StyleMergeView(TemplateView):
             all_pks = [int(i) for i in request.POST['all-styles'].split(',')]
             kept_pk = int(request.POST['styles'])
         except (KeyError, ValueError) as exc:
-            print(exc, request.POST)
             return HttpResponse('Invalid data received!', status=400)
         styles = models.Style.objects.filter(id__in=all_pks).prefetch_related(
             'alternate_names', 'beers',
@@ -249,7 +248,6 @@ class BeerMergeView(TemplateView):
             all_pks = [int(i) for i in request.POST['all-beers'].split(',')]
             kept_pk = int(request.POST['beers'])
         except (KeyError, ValueError) as exc:
-            print(exc, request.POST)
             return HttpResponse('Invalid data received!', status=400)
         beers = models.Beer.objects.filter(id__in=all_pks).prefetch_related(
             'alternate_names', 'taps',
@@ -275,3 +273,59 @@ class BeerMergeView(TemplateView):
         return redirect(reverse('admin:beers_beer_changelist'))
 
     template_name = 'beers/merge_beers.html'
+
+
+class ManufacturerMergeView(TemplateView):
+
+    def get(self, request):
+        user = request.user
+        if not user.is_staff:
+            return redirect(f'/{reverse("admin:login")}/?next={request.path}')
+        if 'ids' not in request.GET:
+            return HttpResponse('you must specify IDs', status=400)
+        return super().get(request)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['manufacturers'] = models.Manufacturer.objects.filter(
+            id__in=context['view'].request.GET['ids'].split(','),
+        ).prefetch_related('alternate_names')
+        context['back_link'] = reverse('admin:beers_manufacturer_changelist')
+
+        return context
+
+    def post(self, request):
+        try:
+            all_pks = [
+                int(i) for i in request.POST['all-manufacturers'].split(',')
+            ]
+            kept_pk = int(request.POST['manufacturers'])
+        except (KeyError, ValueError) as exc:
+            return HttpResponse('Invalid data received!', status=400)
+        manufacturers = models.Manufacturer.objects.filter(
+            id__in=all_pks,
+        ).prefetch_related(
+            'alternate_names',
+        )
+        try:
+            desired_manufacturer = [i for i in manufacturers if i.id == kept_pk][0]
+        except IndexError:
+            return HttpResponse(
+                'Chosen manufacturer was not part of the list!', status=400,
+            )
+        try:
+            with transaction.atomic():
+                for manufacturer in manufacturers:
+                    if manufacturer != desired_manufacturer:
+                        desired_manufacturer.merge_from(manufacturer)
+        except IntegrityError as exc:
+            print(exc)
+            return HttpResponse(
+                'At least one of the beers has an alternate name that '
+                'conflicts', status=400,
+            )
+        except ValueError as exc:
+            return HttpResponse(str(exc), status=400)
+        return redirect(reverse('admin:beers_manufacturer_changelist'))
+
+    template_name = 'beers/merge_manufacturers.html'

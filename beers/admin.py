@@ -86,52 +86,9 @@ class ManufacturerAdmin(admin.ModelAdmin):
         )
 
     def merge_manufacturers(self, request, queryset):
-        """
-        Merge multiple manufacturers into one.
-
-        Takes the best guess as to which mfg to keep based on these criteria:
-        1. MFG with the most beers gets the nod.
-        2. If tied, mfg with the most *_url fields gets the nod.`
-        3. If still tied, lowest PK wins.
-        """
-        manufacturers = list(queryset)
-        if len(manufacturers) == 1:
-            self.message_user(
-                request,
-                message='Nothing to do; you only selected one manufacturer.',
-            )
-            return
-        keeper = None
-        most_beers = -1
-        most_url_fields_set = -1
-        for manufacturer in manufacturers:
-            beers = manufacturer.beers.count()
-            url_fields_set = self.url_fields_set(manufacturer)
-            if beers > most_beers or (beers == most_beers and (
-                    url_fields_set > most_url_fields_set
-            ) or (
-                    url_fields_set == most_url_fields_set and
-                    manufacturer.id < keeper.id
-            )):
-                keeper = manufacturer
-                most_url_fields_set = url_fields_set
-                most_beers = beers
-        if not keeper:
-            self.message_user(
-                request,
-                message='Unable to determine which manufacturer to keep!',
-                level=messages.ERROR,
-            )
-            return
-        with transaction.atomic():
-            for manufacturer in manufacturers:
-                if manufacturer == keeper:
-                    continue
-                keeper.merge_from(manufacturer)
-        self.message_user(
-            request,
-            message=f'Merged {", ".join(str(i) for i in manufacturers if i != keeper)} into '
-            f'{manufacturer}'
+        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+        return HttpResponseRedirect(
+            f"/manufacturers/merge/?ids={','.join(selected)}",
         )
 
     inlines = [ManufacturerAlternateNameInline]
