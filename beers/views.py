@@ -199,7 +199,7 @@ class StyleMergeView(TemplateView):
         try:
             all_pks = [int(i) for i in request.POST['all-styles'].split(',')]
             kept_pk = int(request.POST['styles'])
-        except (KeyError, ValueError) as exc:
+        except (KeyError, ValueError):
             return HttpResponse('Invalid data received!', status=400)
         styles = models.Style.objects.filter(id__in=all_pks).prefetch_related(
             'alternate_names', 'beers',
@@ -247,7 +247,7 @@ class BeerMergeView(TemplateView):
         try:
             all_pks = [int(i) for i in request.POST['all-beers'].split(',')]
             kept_pk = int(request.POST['beers'])
-        except (KeyError, ValueError) as exc:
+        except (KeyError, ValueError):
             return HttpResponse('Invalid data received!', status=400)
         beers = models.Beer.objects.filter(id__in=all_pks).prefetch_related(
             'alternate_names', 'taps',
@@ -300,7 +300,7 @@ class ManufacturerMergeView(TemplateView):
                 int(i) for i in request.POST['all-manufacturers'].split(',')
             ]
             kept_pk = int(request.POST['manufacturers'])
-        except (KeyError, ValueError) as exc:
+        except (KeyError, ValueError):
             return HttpResponse('Invalid data received!', status=400)
         manufacturers = models.Manufacturer.objects.filter(
             id__in=all_pks,
@@ -318,8 +318,7 @@ class ManufacturerMergeView(TemplateView):
                 for manufacturer in manufacturers:
                     if manufacturer != desired_manufacturer:
                         desired_manufacturer.merge_from(manufacturer)
-        except IntegrityError as exc:
-            print(exc)
+        except IntegrityError:
             return HttpResponse(
                 'At least one of the beers has an alternate name that '
                 'conflicts', status=400,

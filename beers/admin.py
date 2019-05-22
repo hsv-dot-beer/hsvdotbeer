@@ -1,7 +1,6 @@
 from csv import writer
 
-from django.contrib import admin, messages
-from django.db import transaction
+from django.contrib import admin
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseRedirect
 
