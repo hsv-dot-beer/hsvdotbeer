@@ -10,6 +10,7 @@ import requests
 import configurations
 from django.db.models import Q
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
+from django.utils.timezone import now
 
 # boilerplate code necessary for launching outside manage.py
 try:
@@ -166,6 +167,7 @@ class StemAndSteinParser(BaseTapListProvider):
         )
 
     def handle_venue(self, venue):
+        timestamp = now()
         self.venue = venue
         self.fetch_root_html()
         beers_found = self.parse_root_html()
@@ -184,6 +186,9 @@ class StemAndSteinParser(BaseTapListProvider):
                     venue=self.venue,
                     tap_number=tap_number,
                 )
+            if beer and tap.beer_id != beer.id:
+                tap.time_added = timestamp
+            tap.time_updated = timestamp
             tap.beer = beer
             tap.save()
             taps_hit.append(tap.tap_number)

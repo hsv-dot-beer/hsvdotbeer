@@ -55,7 +55,6 @@ class DigitalPourParser(BaseTapListProvider):
                 tap = taps[tap_info['tap_number']]
             except KeyError:
                 tap = Tap(venue=venue, tap_number=tap_info['tap_number'])
-            tap.time_added = tap_info['added']
             tap.time_updated = tap_info['updated']
             tap.estimated_percent_remaining = tap_info['percent_full']
             if tap_info['gas_type'] in [i[0] for i in Tap.GAS_CHOICES]:
@@ -102,6 +101,9 @@ class DigitalPourParser(BaseTapListProvider):
                 name, manufacturer, pricing=self.parse_pricing(entry),
                 venue=venue, **parsed_beer,
             )
+            if beer and tap.beer_id != beer.id:
+                tap.time_added = tap_info['added']
+
             # 4. assign the beer to the tap
             tap.beer = beer
             tap.save()
