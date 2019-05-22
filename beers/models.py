@@ -5,6 +5,7 @@ from django.db import models, transaction
 from django.db.utils import IntegrityError
 from django.utils.timezone import now
 
+from taps.models import Tap
 from .utils import render_srm
 
 LOG = logging.getLogger(__name__)
@@ -95,9 +96,9 @@ class Manufacturer(models.Model):
                     # good
                     beer.save()
 
-            for alternate_name in other.alternate_names.all():
-                alternate_name.beer = self
-                alternate_name.save()
+            ManufacturerAlternateName.objects.filter(
+                manufacturer=other,
+            ).update(manufacturer=self)
             excluded_fields = {
                 'name', 'automatic_updates_blocked', 'id', 'time_first_seen',
             }
@@ -199,12 +200,8 @@ class Beer(models.Model):
     def merge_from(self, other):
         LOG.info('merging %s into %s', other, self)
         with transaction.atomic():
-            for tap in other.taps.all():
-                tap.beer = self
-                tap.save()
-            for alternate_name in other.alternate_names.all():
-                alternate_name.beer = self
-                alternate_name.save()
+            Tap.objects.filter(beer=other).update(beer=self)
+            BeerAlternateName.objects.filter(beer=other).update(beer=self)
             excluded_fields = {
                 'name' 'in_production', 'automatic_updates_blocked',
                 'manufacturer', 'id', 'time_first_seen',
