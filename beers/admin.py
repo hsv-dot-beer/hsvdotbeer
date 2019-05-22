@@ -70,6 +70,13 @@ class ManufacturerAlternateNameInline(admin.TabularInline):
     model = models.ManufacturerAlternateName
 
 
+class UserFavoriteBeerInline(admin.TabularInline):
+    model = models.UserFavoriteBeer
+    queryset = models.UserFavoriteBeer.objects.select_related(
+        'user', 'beer__manufacturer',
+    )
+
+
 class ManufacturerAdmin(admin.ModelAdmin):
 
     def url_fields_set(self, manufacturer):

@@ -1,5 +1,6 @@
 import logging
 
+from django.conf import settings
 from django.contrib.postgres.fields import JSONField, CITextField
 from django.db import models, transaction
 from django.db.utils import IntegrityError
@@ -298,3 +299,19 @@ class UntappdMetadata(models.Model):
     beer = models.OneToOneField(
         Beer, models.CASCADE, related_name='untappd_metadata',
     )
+
+
+class UserFavoriteBeer(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, models.CASCADE,
+        related_name='favorite_beers',
+    )
+    beer = models.ForeignKey(
+        Beer, models.CASCADE, related_name='favored_by_users',
+    )
+    notifications_enabled = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = (
+            ('beer', 'user'),
+        )
