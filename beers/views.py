@@ -1,4 +1,5 @@
 
+from django.db import transaction
 from django.db.utils import IntegrityError
 from django.db.models import Prefetch, Count
 from django.http import HttpResponse
@@ -222,3 +223,55 @@ class StyleMergeView(TemplateView):
         return redirect(reverse('admin:beers_style_changelist'))
 
     template_name = 'beers/merge_styles.html'
+
+
+class BeerMergeView(TemplateView):
+
+    def get(self, request):
+        user = request.user
+        if not user.is_staff:
+            return redirect(f'/{reverse("admin:login")}/?next={request.path}')
+        if 'ids' not in request.GET:
+            return HttpResponse('you must specify IDs', status=400)
+        return super().get(request)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['beers'] = models.Beer.objects.filter(
+            id__in=context['view'].request.GET['ids'].split(','),
+        ).prefetch_related('alternate_names').select_related('manufacturer')
+        context['back_link'] = reverse('admin:beers_beer_changelist')
+
+        return context
+
+    def post(self, request):
+        try:
+            all_pks = [int(i) for i in request.POST['all-beers'].split(',')]
+            kept_pk = int(request.POST['beers'])
+        except (KeyError, ValueError) as exc:
+            print(exc, request.POST)
+            return HttpResponse('Invalid data received!', status=400)
+        beers = models.Beer.objects.filter(id__in=all_pks).prefetch_related(
+            'alternate_names', 'taps',
+        )
+        try:
+            desired_beer = [i for i in beers if i.id == kept_pk][0]
+        except IndexError:
+            return HttpResponse(
+                'Chosen beer was not part of the list!', status=400,
+            )
+        try:
+            with transaction.atomic():
+                for beer in beers:
+                    if beer != desired_beer:
+                        desired_beer.merge_from(beer)
+        except IntegrityError:
+            return HttpResponse(
+                'At least one of the beers has an alternate name that '
+                'conflicts', status=400,
+            )
+        except ValueError as exc:
+            return HttpResponse(str(exc), status=400)
+        return redirect(reverse('admin:beers_beer_changelist'))
+
+    template_name = 'beers/merge_beers.html'
