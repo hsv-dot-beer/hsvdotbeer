@@ -1,3 +1,5 @@
+from dateutil.relativedelta import relativedelta
+from django.utils.timezone import now
 from django.urls import reverse
 from nose.tools import eq_
 from rest_framework.test import APITestCase
@@ -161,3 +163,25 @@ class BeerListTestCase(APITestCase):
         eq_(response.status_code, 200)
         eq_(len(response.data['results']), 1, response.data)
         eq_(response.data['results'][0]['name'], self.beer.name, response.data)
+
+    def test_sort_by_time_added(self):
+        # create a tap for a second beer in between the two
+        other_beer = BeerFactory()
+        TapFactory(
+            beer=other_beer,
+            time_added=now() - relativedelta(hours=5, minutes=2),
+        )
+        # create another beer on tap with no time added, so therefore it's now
+        third_beer = TapFactory(beer=BeerFactory()).beer
+
+        # create two taps for the first beer
+        TapFactory(beer=self.beer, time_added=now() - relativedelta(hours=1))
+        TapFactory(beer=self.beer, time_added=now() - relativedelta(hours=16))
+
+        response = self.client.get(f'{self.url}?o=-most_recently_added')
+        eq_(response.status_code, 200)
+        # expected order is third_beer, self.beer, other_beer
+        eq_(len(response.data['results']), 3, response.data)
+        eq_(response.data['results'][0]['name'], third_beer.name, response.data)
+        eq_(response.data['results'][1]['name'], self.beer.name, response.data)
+        eq_(response.data['results'][2]['name'], other_beer.name, response.data)

@@ -21,6 +21,7 @@ class BeerFilterSet(FilterSet):
         fields=[
             'name', 'abv', 'ibu', 'style__name',
             'style__alternate_names__name', 'manufacturer__name',
+            'most_recently_added',
         ],
     )
 
