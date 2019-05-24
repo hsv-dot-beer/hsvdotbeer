@@ -10,7 +10,7 @@ from django.utils.timezone import now
 from celery import shared_task
 
 
-from beers.models import Beer, UntappdMetadata
+from beers.models import Beer, UntappdMetadata, BeerPrice
 
 
 LOG = logging.getLogger(__name__)
@@ -107,3 +107,13 @@ def prune_stale_data():
         timestamp__lt=threshold
     ).delete()
     LOG.info('Cleaned up old untappd data: %s', result)
+
+
+@shared_task
+def purge_unused_prices():
+    queryset = BeerPrice.objects.filter(
+        beer__taps__isnull=True,
+    ).distinct()
+    LOG.info('Purging %s prices of unused beers', queryset.count())
+    queryset.delete()
+    LOG.info('Done. %s prices remain', BeerPrice.objects.count())
