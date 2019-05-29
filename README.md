@@ -49,12 +49,18 @@ a Raspberry Pi. They have great instructions for both at
 ### Installing software
 
 - [Python 3.7](https://www.python.org/downloads/)
+   - Windows 10 users can also install Python from the [Windows Store](https://docs.python.org/3.7/using/windows.html#windows-store)
 - [Docker](https://docs.docker.com/docker-for-mac/install/) (Download for your platform)
-  - NOTE: if you intend to develop on Windows, you need to have Windows 10 Pro or Enterprise to be able to use Docker, and you have to have at least a somewhat recent CPU that supports Hyper-V. Any non-Atom CPU from the past 5 years should more than suffice. Also, it'll break VirtualBox. 😿
+  - NOTE: if you intend to develop on Windows, you need to have Windows 10 Pro
+    or Enterprise to be able to use Docker, and you have to have at least a
+    somewhat recent CPU that supports Hyper-V. Any non-Atom CPU from the past 5
+    years should more than suffice. Also, it'll break VirtualBox 5.x and older.
 
 ### Setting Up a Dev Environment
 
-- After you get Python installed, you need to open a command line (see the Django Girls tutorial above) and run `pip3 install pipenv` to be able to install packages.
+- After you get Python installed, you need to open a command line (see the
+  Django Girls tutorial above) and run `pip3 install pipenv` to be able to
+  install packages.
 - Once you have pipenv installed, install packages:
 
 ```bash
@@ -77,7 +83,7 @@ docker-compose run --rm web [command]
 
 ## Running without Docker
 
-Say you don't want to use Docker (or can't if you'd rather not kill VirtualBox). Don't worry, here's what you need to get started:
+Say you don't want to use Docker. Don't worry, here's what you need to get started:
 
 ```bash
 pipenv install --dev
@@ -89,6 +95,8 @@ You'll need to set this up anyway if you're making migrations (i.e. modifying mo
 
 ## Contributing and Community
 
-PRs are more than welcome.  As we get a better idea of what we need to do, we'll create issues that need fixing if you don't know where to start.  All contributors are required to follow the [Tech256 Code of Conduct](https://github.com/tech256/CoC).
+PRs are more than welcome.  As we get a better idea of what we need to do, we'll
+create issues that need fixing if you don't know where to start.  All
+contributors are required to follow the [Tech256 Code of Conduct](https://github.com/tech256/CoC).
 
 You can find us on the [Tech256 Slack](https://tech256.com) in the `#hsv_dot_beer` channel.
