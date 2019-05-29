@@ -25,6 +25,7 @@ class ManufacturerTestCase(TestCase):
         self.assertIsInstance(instance, Manufacturer)
         for field, value in data.items():
             self.assertEqual(value, getattr(instance, field), field)
+        self.assertIsNotNone(instance.time_first_seen)
 
     def test_update(self):
         instance = ManufacturerFactory()
@@ -50,6 +51,7 @@ class BeerSerializerTestCase(TestCase):
         serializer.is_valid(raise_exception=True)
         instance = serializer.save()
         self.assertIsInstance(instance, Beer)
+        self.assertIsNotNone(instance.time_first_seen)
         self.assertEqual(instance.manufacturer, manufacturer)
         self.assertEqual(instance.name, data['name'])
         self.assertEqual(instance.color_srm, Decimal(data['color_srm']))
