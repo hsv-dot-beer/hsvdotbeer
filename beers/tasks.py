@@ -31,9 +31,9 @@ def look_up_beer(self, beer_pk):
         beer = Beer.objects.filter(
             id=beer_pk,
         ).select_related('untappd_metadata').get()
-    except Beer.DoesNotExist:
+    except Beer.DoesNotExist as exc:
         LOG.error('Beer ID %s not found!', beer_pk)
-        return False
+        raise self.retry(countdown=30, exc=exc)
     try:
         untappd_metadata = beer.untappd_metadata
     except UntappdMetadata.DoesNotExist:
