@@ -3,6 +3,7 @@ import logging
 from django.contrib.postgres.fields import JSONField, CITextField
 from django.db import models, transaction
 from django.db.utils import IntegrityError
+from django.utils.timezone import now
 
 from .utils import render_srm
 
@@ -71,6 +72,10 @@ class Manufacturer(models.Model):
     untappd_url = models.URLField(blank=True, unique=True, null=True)
     automatic_updates_blocked = models.NullBooleanField(default=False)
     taphunter_url = models.URLField(blank=True, null=True, unique=True)
+    taplist_io_pk = models.PositiveIntegerField(
+        blank=True, null=True, unique=True,
+    )
+    time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
 
     def merge_from(self, other):
         LOG.info('merging %s into %s', other, self)
@@ -94,7 +99,7 @@ class Manufacturer(models.Model):
                 alternate_name.beer = self
                 alternate_name.save()
             excluded_fields = {
-                'name', 'automatic_updates_blocked', 'id',
+                'name', 'automatic_updates_blocked', 'id', 'time_first_seen',
             }
             for field in self._meta.fields:
                 field_name = field.name
@@ -112,6 +117,10 @@ class Manufacturer(models.Model):
                 manufacturer=self,
             )
             other.delete()
+            if other.time_first_seen:
+                if not self.time_first_seen or \
+                        self.time_first_seen > other.time_first_seen:
+                    self.time_first_seen = other.time_first_seen
             self.save()
 
     def __str__(self):
@@ -160,6 +169,10 @@ class Beer(models.Model):
     stem_and_stein_pk = models.PositiveIntegerField(
         blank=True, null=True, unique=True,
     )
+    taplist_io_pk = models.PositiveIntegerField(
+        blank=True, null=True, unique=True,
+    )
+    time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
@@ -194,7 +207,7 @@ class Beer(models.Model):
                 alternate_name.save()
             excluded_fields = {
                 'name' 'in_production', 'automatic_updates_blocked',
-                'manufacturer', 'id',
+                'manufacturer', 'id', 'time_first_seen',
             }
             for field in self._meta.fields:
                 field_name = field.name
@@ -213,6 +226,10 @@ class Beer(models.Model):
                     name=other.name,
                     beer=self,
                 )
+            if other.time_first_seen:
+                if not self.time_first_seen or \
+                        self.time_first_seen > other.time_first_seen:
+                    self.time_first_seen = other.time_first_seen
             other.delete()
             self.save()
 

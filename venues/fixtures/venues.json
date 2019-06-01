@@ -47,28 +47,6 @@
 },
 {
     "model": "venues.venue",
-    "pk": 2,
-    "fields": {
-        "name": "Madison Taproom",
-        "address": "7407 Highway 72 W",
-        "city": "Madison",
-        "state": "Alabama",
-        "postal_code": "35758",
-        "country": "US",
-        "time_zone": "America/Chicago",
-        "website": "https://www.madisontaproom.com/",
-        "facebook_page": "https://www.facebook.com/MadTaps/",
-        "twitter_handle": "",
-        "instagram_handle": "",
-        "tap_list_provider": "digitalpour",
-        "untappd_url": null,
-        "email": "madisyn@madisontaproom.com",
-        "phone_number": "2563259992",
-        "logo_url": "https://static.wixstatic.com/media/32a46f_b2a00471bb10440393c0fa0742f7ee93~mv2.png/v1/fill/w_210,h_200,al_c,lg_1,q_80/MTR-Logo-Tmp.webp"
-    }
-},
-{
-    "model": "venues.venue",
     "pk": 3,
     "fields": {
         "name": "Wish You Were Beer Campus 805",
@@ -390,6 +368,52 @@
     }
 },
 {
+    "model": "venues.venue",
+    "pk": 17,
+    "fields": {
+        "name": "InnerSpace Brewing",
+        "address": "2414 Clinton Avenue West",
+        "city": "Huntsville",
+        "state": "Alabama",
+        "postal_code": "35805",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "https://innerspacebrewing.com",
+        "facebook_page": "https://www.facebook.com/InnerSpaceBrewing/",
+        "twitter_handle": "https://twitter.com/Inner",
+        "instagram_handle": "",
+        "tap_list_provider": "taplist.io",
+        "untappd_url": "https://untappd.com/v/innerspace-brewing/7027492",
+        "email": "",
+        "phone_number": "(256) 489-5599",
+        "logo_url": "https://pbs.twimg.com/profile_images/846777797863522304/wJa_aKvb_400x400.jpg",
+        "slug": "innerspace-brewing"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 18,
+    "fields": {
+        "name": "Rocket City Brewfest",
+        "address": "",
+        "city": "Redstone Arsenal",
+        "state": "AL",
+        "postal_code": "",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "https://rocketcitybrewfest.com",
+        "facebook_page": "https://www.facebook.com/RocketCityBrewfest/",
+        "twitter_handle": "RCBF_FTH",
+        "instagram_handle": "",
+        "tap_list_provider": "untappd",
+        "untappd_url": null,
+        "email": "",
+        "phone_number": "",
+        "logo_url": "https://utfb-images.untappd.com/9XSKxMh7qR8fgWcgc2swMmXM?auto=compress",
+        "slug": "rocket-city-brewfest"
+    }
+},
+{
     "model": "venues.venueapiconfiguration",
     "pk": 1,
     "fields": {
@@ -401,7 +425,9 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
-        "taphunter_location": ""
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -416,7 +442,9 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
-        "taphunter_location": ""
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -431,7 +459,9 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
-        "taphunter_location": ""
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -446,7 +476,9 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
-        "taphunter_location": ""
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -461,7 +493,9 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
-        "taphunter_location": ""
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -476,7 +510,9 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
-        "taphunter_location": "5963904507707392"
+        "taphunter_location": "5963904507707392",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -491,7 +527,9 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
-        "taphunter_location": "6200813693698048"
+        "taphunter_location": "6200813693698048",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -506,7 +544,9 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
-        "taphunter_location": "6082279375634432"
+        "taphunter_location": "6082279375634432",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -521,7 +561,9 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
-        "taphunter_location": "6032598809837568"
+        "taphunter_location": "6032598809837568",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -536,7 +578,9 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
-        "taphunter_location": ""
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -551,7 +595,9 @@
         "untappd_location": 3884,
         "untappd_theme": 11913,
         "untappd_categories": "[\"Tap List\"]",
-        "taphunter_location": ""
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -566,7 +612,9 @@
         "untappd_location": 18351,
         "untappd_theme": 69229,
         "untappd_categories": "[\"On Tap\"]",
-        "taphunter_location": ""
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -581,7 +629,9 @@
         "untappd_location": 5949,
         "untappd_theme": 20074,
         "untappd_categories": "[\"Year-Round Beer\", \"Beer\"]",
-        "taphunter_location": ""
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -596,7 +646,9 @@
         "untappd_location": 8588,
         "untappd_theme": 30573,
         "untappd_categories": "[\"Favorites\", \"Seasonals\", \"Exclusives\"]",
-        "taphunter_location": ""
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -611,7 +663,9 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
-        "taphunter_location": ""
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 },
 {
@@ -626,7 +680,43 @@
         "untappd_location": 18301,
         "untappd_theme": 69029,
         "untappd_categories": "[\"Taproom Draft List\"]",
-        "taphunter_location": ""
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 17,
+    "fields": {
+        "venue": 17,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": "",
+        "taplist_io_display_id": "4434",
+        "taplist_io_access_code": "5e5b8565-27b7-4cfd-8e52-b7d2b2ca5c63"
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 18,
+    "fields": {
+        "venue": 18,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": 25262,
+        "untappd_theme": 96702,
+        "untappd_categories": "[\"Featured Brewer - Goat Island\", \"Featured Brewer - Crosseyed Owl\", \"Featured Brewer - Fairhope\", \"Featured Brewer - Green Bus\", \"Featured Brewer - Innerspace\", \"Featured Brewer - Mad Malts\", \"Featured Brewer - Rocket Republic\", \"Featured Brewer - Salty Nut\", \"Featured Brewer - Straight to Ale\", \"Featured Brewer - Yellowhammer\", \"Homebrew - 256 Brewers\", \"Distributor Area - Alabama Crown\", \"Distributor Area - AlaBev\", \"Distributor Area - International Wines\", \"Distributor Area - Supreme Beverage\", \"Distributor Area - Turner Beverage\", \"Distributor Area - United Johnson Brothers\", \"Because we can...\"]",
+        "taphunter_location": "",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 }
 ]

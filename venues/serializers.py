@@ -27,6 +27,11 @@ class VenueSerializer(CountryFieldMixin, serializers.ModelSerializer):
         read_only_fields = ['untappd_url']
 
 
+class VenueBySlugSerializer(VenueSerializer):
+    class Meta(VenueSerializer.Meta):
+        lookup_field = 'slug'
+
+
 class VenueAPIConfigurationSerializer(serializers.ModelSerializer):
 
     class Meta:
