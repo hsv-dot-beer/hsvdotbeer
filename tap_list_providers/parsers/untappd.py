@@ -282,28 +282,7 @@ if __name__ == '__main__':
         'dsb': ('3884', '11913', ['Tap List']),
         'cpp': ('18351', '69229', ['On Tap']),
         'yh': ('5949', '20074', ['YEAR-ROUND', 'SEASONALS', 'Beer']),
-        'mm': ('8588', '30573', ['Favorites', 'Seasonals', 'Exclusives']),
-        'rcbf': (
-            '25262', '96702', [
-                'Featured Brewer - Goat Island',
-                'Featured Brewer - Crosseyed Owl',
-                'Featured Brewer - Fairhope',
-                'Featured Brewer - Green Bus',
-                'Featured Brewer - Innerspace',
-                'Featured Brewer - Mad Malts',
-                'Featured Brewer - Rocket Republic',
-                'Featured Brewer - Salty Nut',
-                'Featured Brewer - Straight to Ale',
-                'Featured Brewer - Yellowhammer',
-                'Homebrew - 256 Brewers',
-                'Distributor Area - Alabama Crown',
-                'Distributor Area - AlaBev',
-                'Distributor Area - International Wines',
-                'Distributor Area - Supreme Beverage',
-                'Distributor Area - Turner Beverage',
-                'Distributor Area - United Johnson Brothers',
-                'Because we can...',
-            ]),
+        'mm': ('8588', '30573', ['Favorites', 'Seasonals', 'Exclusives'])
     }
 
     parser = argparse.ArgumentParser()
