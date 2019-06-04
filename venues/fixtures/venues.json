@@ -391,29 +391,6 @@
     }
 },
 {
-    "model": "venues.venue",
-    "pk": 18,
-    "fields": {
-        "name": "Rocket City Brewfest",
-        "address": "",
-        "city": "Redstone Arsenal",
-        "state": "AL",
-        "postal_code": "",
-        "country": "US",
-        "time_zone": "America/Chicago",
-        "website": "https://rocketcitybrewfest.com",
-        "facebook_page": "https://www.facebook.com/RocketCityBrewfest/",
-        "twitter_handle": "RCBF_FTH",
-        "instagram_handle": "",
-        "tap_list_provider": "untappd",
-        "untappd_url": null,
-        "email": "",
-        "phone_number": "",
-        "logo_url": "https://utfb-images.untappd.com/9XSKxMh7qR8fgWcgc2swMmXM?auto=compress",
-        "slug": "rocket-city-brewfest"
-    }
-},
-{
     "model": "venues.venueapiconfiguration",
     "pk": 1,
     "fields": {
@@ -700,23 +677,6 @@
         "taphunter_location": "",
         "taplist_io_display_id": "4434",
         "taplist_io_access_code": "5e5b8565-27b7-4cfd-8e52-b7d2b2ca5c63"
-    }
-},
-{
-    "model": "venues.venueapiconfiguration",
-    "pk": 18,
-    "fields": {
-        "venue": 18,
-        "url": null,
-        "api_key": "",
-        "digital_pour_venue_id": "",
-        "digital_pour_location_number": null,
-        "untappd_location": 25262,
-        "untappd_theme": 96702,
-        "untappd_categories": "[\"Featured Brewer - Goat Island\", \"Featured Brewer - Crosseyed Owl\", \"Featured Brewer - Fairhope\", \"Featured Brewer - Green Bus\", \"Featured Brewer - Innerspace\", \"Featured Brewer - Mad Malts\", \"Featured Brewer - Rocket Republic\", \"Featured Brewer - Salty Nut\", \"Featured Brewer - Straight to Ale\", \"Featured Brewer - Yellowhammer\", \"Homebrew - 256 Brewers\", \"Distributor Area - Alabama Crown\", \"Distributor Area - AlaBev\", \"Distributor Area - International Wines\", \"Distributor Area - Supreme Beverage\", \"Distributor Area - Turner Beverage\", \"Distributor Area - United Johnson Brothers\", \"Because we can...\"]",
-        "taphunter_location": "",
-        "taplist_io_display_id": "",
-        "taplist_io_access_code": ""
     }
 }
 ]
