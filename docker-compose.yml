@@ -20,12 +20,6 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
-    command: >
-        bash -c "pipenv install && pipenv run mkdocs serve"
-    volumes:
-      - ./:/code
-    ports:
-      - "8001:8001"
   redis:
     image: "redis:alpine"
   worker:
