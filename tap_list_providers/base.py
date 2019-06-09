@@ -181,10 +181,10 @@ class BaseTapListProvider():
             defaults['abv'] = abv
         if not beer:
             try:
-                beer = Beer.objects.get(
+                beer = Beer.objects.filter(
                     Q(name=name) | Q(alternate_names__name=name),
                     manufacturer=manufacturer,
-                )
+                ).distinct().get()
             except Beer.DoesNotExist:
                 beer = Beer.objects.create(
                     name=name,
