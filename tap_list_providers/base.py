@@ -191,6 +191,16 @@ class BaseTapListProvider():
                     manufacturer=manufacturer,
                     **defaults,
                 )
+            except Beer.MultipleObjectsReturned:
+                LOG.error(
+                    'Found duplicate results for name %s from mfg %s!',
+                    name, manufacturer,
+                )
+                # just take the first one
+                beer = Beer.objects.filter(
+                    Q(name=name) | Q(alternate_names__name=name),
+                    manufacturer=manufacturer,
+                )[0]
         needs_update = False
         if beer.logo_url and beer.logo_url == manufacturer.logo_url:
             beer.logo_url = None
