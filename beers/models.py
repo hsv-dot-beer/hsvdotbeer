@@ -13,6 +13,11 @@ LOG = logging.getLogger(__name__)
 
 class Style(models.Model):
     name = CITextField(unique=True)
+    default_color = models.CharField(
+        'HTML color (in hex) to use if the beer has no known color',
+        max_length=9,  # #00112233 -> RGBA
+        blank=True,
+    )
 
     def merge_from(self, other_styles):
         alt_names = []
