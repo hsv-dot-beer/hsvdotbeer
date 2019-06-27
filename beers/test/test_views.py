@@ -6,7 +6,7 @@ from faker import Faker
 from hsv_dot_beer.users.test.factories import UserFactory
 from taps.test.factories import TapFactory
 from beers.serializers import ManufacturerSerializer
-from .factories import ManufacturerFactory, BeerFactory
+from .factories import ManufacturerFactory, BeerFactory, StyleFactory
 
 fake = Faker()
 
@@ -62,7 +62,8 @@ class ManufacturerDetailTestCase(APITestCase):
 
 class BeerDetailTestCase(APITestCase):
     def setUp(self):
-        self.beer = BeerFactory()
+        self.style = StyleFactory()
+        self.beer = BeerFactory(style=self.style)
         self.url = reverse(
             'beer-detail', kwargs={'pk': self.beer.pk},
         )
@@ -70,6 +71,11 @@ class BeerDetailTestCase(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION=f'Token {self.user.auth_token}'
         )
+
+    def test_style_embedded(self):
+        response = self.client.get(self.url)
+        eq_(response.status_code, 200)
+        eq_(response.data['style']['default_color'], self.style.default_color)
 
     def test_patch(self):
         data = {
