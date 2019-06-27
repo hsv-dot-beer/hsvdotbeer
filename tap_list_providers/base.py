@@ -111,7 +111,7 @@ class BaseTapListProvider():
                 try:
                     style = Style.objects.get(alternate_names__name=name)
                 except Style.DoesNotExist:
-                    style = Style.objects.create(name=name)
+                    style = Style.objects.create(name=name, default_color='')
         self.styles[name.casefold()] = style
         return style
 
