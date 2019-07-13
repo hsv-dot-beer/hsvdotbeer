@@ -66,6 +66,7 @@ class CommandsTestCase(TestCase):
             tap = taps[1]
             self.assertEqual(tap.beer.name, 'Fig')
             self.assertEqual('Kombucha w/ Figs', tap.beer.style.name)
+            self.assertEqual(tap.beer.manufacturer.url, "http://www.betterkombucha.com")
             tap = taps[0]
             self.assertEqual(tap.beer.name, 'Rose')
             self.assertEqual(tap.beer.style.name, "Syrah, Grenache")
