@@ -198,8 +198,8 @@ class DigitalPourParser(BaseTapListProvider):
             'twitter_handle': producer.get('TwitterName') or '',
             'url': url,
         }
-        if manufacturer['url'] and manufacturer['url'].casefold().startswith(
-            'www'.casefold()
+        if manufacturer['url'] and not manufacturer['url'].casefold().startswith(
+            'http'.casefold()
         ):
             manufacturer['url'] = f'http://{manufacturer["url"]}'
         if manufacturer['twitter_handle'] and manufacturer[
