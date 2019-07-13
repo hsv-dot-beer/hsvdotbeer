@@ -186,9 +186,9 @@ class UntappdParser(BaseTapListProvider):
         else:
             url = None
 
-        beer_style = entry.find('span', {'class': 'beer-style'}).text
+        beer_style = entry.find('span', {'class': 'beer-style'}).text.strip()
         brewery_span = entry.find('span', {'class': 'brewery'})
-        brewery = brewery_span.text
+        brewery = brewery_span.text.strip()
         brewery_url = brewery_span.find('a').attrs['href']
 
         location_span = entry.find('span', {'class': 'location'})
@@ -200,6 +200,8 @@ class UntappdParser(BaseTapListProvider):
         beer_info = beer_info.replace(tap_num, '')
         beer_info = beer_info.replace(beer_style, '')
         beer_info = beer_info.strip()
+        if not beer_info or beer_info == brewery:
+            beer_info = f'{brewery} {beer_style}'
 
         t = {
             'beer':
