@@ -99,6 +99,7 @@ class TaplistDotIOParser(BaseTapListProvider):
         beverage['manufacturer'] = {
             'name': current['producer']['name'],
             'taplist_io_pk': current['producer']['id'],
+            'url': current['producer'].get('url') or '',
         }
         beverage['taplist_io_pk'] = current['id']
         return beverage
