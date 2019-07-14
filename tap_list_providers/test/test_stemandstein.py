@@ -61,6 +61,10 @@ class CommandsTestCase(TestCase):
         self.assertEqual(Venue.objects.count(), 1)
         self.assertFalse(Beer.objects.exists())
         self.assertFalse(Manufacturer.objects.exists())
+        deleted_tap = Tap.objects.create(
+            venue=self.venue,
+            tap_number=3000,
+        )
         for dummy in range(2):
             # running twice to make sure we're not double-creating
             args = []
@@ -98,6 +102,7 @@ class CommandsTestCase(TestCase):
             price = prices[0]
             self.assertEqual(price.price, 8)
             self.assertEqual(price.serving_size.volume_oz, 10)
+            self.assertFalse(Tap.objects.filter(id=deleted_tap.id).exists())
 
     def test_guess_manufacturer_good_people(self):
         mfg_names = [
