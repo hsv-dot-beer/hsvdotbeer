@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from tap_list_providers.base import fix_urls, BaseTapListProvider
-from beers.test.factories import ManufacturerFactory
+from beers.test.factories import ManufacturerFactory, StyleFactory
 from beers.models import Manufacturer, ManufacturerAlternateName
 
 
@@ -45,3 +45,11 @@ class ManufacturerTestCase(TestCase):
         provider = BaseTapListProvider()
         looked_up = provider.get_manufacturer(name=mfg.name)
         self.assertEqual(looked_up, mfg)
+
+
+class StyleTestCase(TestCase):
+    def test_style_strip_none(self):
+        provider = BaseTapListProvider()
+        style = StyleFactory(name='test style')
+        looked_up = provider.get_style('None - TEST STYLE')
+        self.assertEqual(looked_up, style)
