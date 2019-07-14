@@ -91,6 +91,13 @@ class DigitalPourParser(BaseTapListProvider):
                 'looking up beer: name %s, mfg %s, other data %s',
                 name, manufacturer, parsed_beer,
             )
+            if name.casefold().strip() == 'N/A'.casefold():
+                if not parsed_beer.get('abv'):
+                    # it's an empty tap
+                    LOG.info('Tap %s is unused', tap.tap_number)
+                    tap.beer = None
+                    tap.save()
+                    continue
             beer = self.get_beer(
                 name, manufacturer, pricing=self.parse_pricing(entry),
                 venue=venue, **parsed_beer,

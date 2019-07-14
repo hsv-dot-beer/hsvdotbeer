@@ -182,6 +182,56 @@
   }
 },
 {
+  "model": "django_celery_beat.periodictask",
+  "pk": 8,
+  "fields": {
+    "name": "Purge stale untappd data",
+    "task": "beers.tasks.prune_stale_data",
+    "interval": null,
+    "crontab": 8,
+    "solar": null,
+    "args": "",
+    "kwargs": "{}",
+    "queue": null,
+    "exchange": null,
+    "routing_key": null,
+    "priority": null,
+    "expires": null,
+    "one_off": false,
+    "start_time": null,
+    "enabled": true,
+    "last_run_at": "2019-05-04T00:37:54.338Z",
+    "total_run_count": 1,
+    "date_changed": "2019-05-04T00:37:59.459Z",
+    "description": ""
+  }
+},
+{
+  "model": "django_celery_beat.periodictask",
+  "pk": 9,
+  "fields": {
+    "name": "Purge unused prices",
+    "task": "beers.tasks.purge_unused_prices",
+    "interval": null,
+    "crontab": 9,
+    "solar": null,
+    "args": "",
+    "kwargs": "{}",
+    "queue": null,
+    "exchange": null,
+    "routing_key": null,
+    "priority": null,
+    "expires": null,
+    "one_off": false,
+    "start_time": null,
+    "enabled": true,
+    "last_run_at": "2019-05-04T00:37:54.338Z",
+    "total_run_count": 1,
+    "date_changed": "2019-05-04T00:37:59.459Z",
+    "description": ""
+  }
+},
+{
   "model": "django_celery_beat.intervalschedule",
   "pk": 1,
   "fields": {
@@ -267,6 +317,30 @@
   "fields": {
     "minute": "5",
     "hour": "*",
+    "day_of_week": "*",
+    "day_of_month": "*",
+    "month_of_year": "*",
+    "timezone": "UTC"
+  }
+},
+{
+  "model": "django_celery_beat.crontabschedule",
+  "pk": 8,
+  "fields": {
+    "minute": "0",
+    "hour": "9",
+    "day_of_week": "*",
+    "day_of_month": "*",
+    "month_of_year": "*",
+    "timezone": "UTC"
+  }
+},
+{
+  "model": "django_celery_beat.crontabschedule",
+  "pk": 9,
+  "fields": {
+    "minute": "30",
+    "hour": "9",
     "day_of_week": "*",
     "day_of_month": "*",
     "month_of_year": "*",
