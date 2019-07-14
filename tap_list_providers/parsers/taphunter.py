@@ -37,6 +37,7 @@ class TaphunterParser(BaseTapListProvider):
 
     def handle_venue(self, venue):
         location = venue.api_configuration.taphunter_location
+        excluded_lists = venue.api_configuration.taphunter_excluded_lists
         self.url = self.URL.format(location)
         data = self.fetch()
         taps = {tap.tap_number: tap for tap in venue.taps.all()}
@@ -48,6 +49,14 @@ class TaphunterParser(BaseTapListProvider):
         for index, entry in enumerate(data['taps']):
             # 1. parse the tap
             tap_info = self.parse_tap(entry)
+            # Is it in an excluded list?
+            if excluded_lists and entry.get('list', {'name': -1})['name'] in excluded_lists:
+                LOG.debug(
+                    'Skipping %s because it is in excluded list %s',
+                    entry['beer']['beer_name'],
+                    entry['list']['name'],
+                )
+                continue
             if use_sequential_taps:
                 tap_number = index + 1
             else:
