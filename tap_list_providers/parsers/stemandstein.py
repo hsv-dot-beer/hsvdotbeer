@@ -173,6 +173,8 @@ class StemAndSteinParser(BaseTapListProvider):
         existing_taps = {
             i.tap_number: i for i in venue.taps.all()
         }
+        LOG.debug('existing taps %s', existing_taps)
+        taps_hit = []
         for tap_number, beer in taps.items():
             self.fill_in_beer_details(beer)
             try:
@@ -184,3 +186,10 @@ class StemAndSteinParser(BaseTapListProvider):
                 )
             tap.beer = beer
             tap.save()
+            taps_hit.append(tap.tap_number)
+        LOG.debug('Deleting all taps except %s', taps_hit)
+        Tap.objects.filter(
+            venue=venue,
+        ).exclude(
+            tap_number__in=taps_hit,
+        ).delete()
