@@ -261,7 +261,6 @@ class BaseTapListProvider():
             if not venue:
                 raise ValueError('You must specify a venue with a price')
             beer.prices.filter(venue=venue).delete()
-            price_objects = []
             for price_info in pricing:
                 if price_info['price'] > 500:
                     LOG.warning(
