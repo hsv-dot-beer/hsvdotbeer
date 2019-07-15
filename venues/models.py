@@ -68,5 +68,11 @@ class VenueAPIConfiguration(models.Model):
         null=True,
     )
     taphunter_location = models.CharField(max_length=50, blank=True)
+    taphunter_excluded_lists = ArrayField(
+        models.CharField(max_length=50),
+        default=list,
+        blank=True,
+        null=True,
+    )
     taplist_io_display_id = models.CharField(max_length=50, blank=True)
     taplist_io_access_code = models.CharField(max_length=50, blank=True)

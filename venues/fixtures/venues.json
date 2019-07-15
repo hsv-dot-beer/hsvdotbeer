@@ -420,6 +420,7 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -437,6 +438,7 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -454,6 +456,7 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -471,6 +474,7 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -488,6 +492,7 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -505,6 +510,7 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "5963904507707392",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -522,6 +528,7 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "6200813693698048",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -539,6 +546,7 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "6082279375634432",
+        "taphunter_excluded_lists": "[\"Kegs to Go\"]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -556,6 +564,7 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "6032598809837568",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -573,6 +582,7 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -590,6 +600,7 @@
         "untappd_theme": 11913,
         "untappd_categories": "[\"Tap List\"]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -607,6 +618,7 @@
         "untappd_theme": 69229,
         "untappd_categories": "[\"On Tap\"]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -624,6 +636,7 @@
         "untappd_theme": 20074,
         "untappd_categories": "[\"Year-Round Beer\", \"Beer\"]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -641,6 +654,7 @@
         "untappd_theme": 30573,
         "untappd_categories": "[\"Favorites\", \"Seasonals\", \"Exclusives\"]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -658,6 +672,7 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -675,6 +690,7 @@
         "untappd_theme": 69029,
         "untappd_categories": "[\"Taproom Draft List\"]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
     }
@@ -692,6 +708,7 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "4434",
         "taplist_io_access_code": "5e5b8565-27b7-4cfd-8e52-b7d2b2ca5c63"
     }
