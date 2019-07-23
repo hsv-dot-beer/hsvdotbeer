@@ -260,6 +260,7 @@ class BaseTapListProvider():
         if pricing:
             if not venue:
                 raise ValueError('You must specify a venue with a price')
+            beer.prices.filter(venue=venue).delete()
             for price_info in pricing:
                 if price_info['price'] > 500:
                     LOG.warning(
@@ -278,11 +279,11 @@ class BaseTapListProvider():
                     )[0]
                     serving_sizes[price_info['volume_oz']] = serving_size
                 try:
-                    BeerPrice.objects.update_or_create(
+                    BeerPrice.objects.create(
                         serving_size=serving_size,
                         beer=beer,
                         venue=venue,
-                        defaults={'price': price_info['price']}
+                        price=price_info['price'],
                     )
                 except InvalidOperation:
                     LOG.error(

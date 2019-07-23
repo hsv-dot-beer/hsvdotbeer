@@ -76,6 +76,19 @@ class CommandsTestCase(TestCase):
                 tap.beer.beer_advocate_url,
                 "https://www.beeradvocate.com/beer/profile/287/17112/",
             )
+            # RCCB sold Hopslam by the pint but not the growler
+            self.assertTrue(
+                tap.beer.prices.filter(
+                    serving_size__volume_oz=16,
+                    venue=self.venue,
+                ).exists()
+            )
+            self.assertFalse(
+                tap.beer.prices.filter(
+                    serving_size__volume_oz__in=[32, 64],
+                    venue=self.venue,
+                ).exists()
+            )
             # location nulled out in test data
             self.assertEqual(tap.beer.manufacturer.location, '')
             tap = taps[2]
@@ -89,8 +102,6 @@ class CommandsTestCase(TestCase):
                 Decimal(6.0): Decimal(3.0),
                 Decimal(10.0): Decimal(5.0),
                 Decimal(16.0): Decimal(8.0),
-                Decimal(32.0): Decimal(13.5),
-                Decimal(64.0): Decimal(25.0),
             }
             price_instances = list(tap.beer.prices.select_related('serving_size', 'venue'))
             self.assertEqual(
