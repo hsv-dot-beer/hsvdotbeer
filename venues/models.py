@@ -14,7 +14,6 @@ class Venue(models.Model):
         ('untappd', 'Untappd'),
         ('digitalpour', 'DigitalPour'),
         ('taphunter', 'TapHunter'),
-        ('nook_html', 'The Nook\'s static HTML'),
         ('manual', 'Chalkboard/Whiteboard'),
         ('', 'Unknown'),
         ('test', 'TEST LOCAL PROVIDER'),
