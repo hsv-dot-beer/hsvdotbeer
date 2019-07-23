@@ -217,30 +217,6 @@
 },
 {
     "model": "venues.venue",
-    "pk": 10,
-    "fields": {
-        "name": "The Nook",
-        "address": "3305 Bob Wallace Ave SW",
-        "city": "Huntsville",
-        "state": "Alabama",
-        "postal_code": "35805",
-        "country": "US",
-        "time_zone": "America/Chicago",
-        "website": "http://www.thenooktavern.com",
-        "facebook_page": "",
-        "twitter_handle": "thenooktavern",
-        "instagram_handle": "",
-        "tap_list_provider": "nook_html",
-        "untappd_url": "https://untappd.com/v/the-nook/5853",
-        "email": "",
-        "phone_number": "2564890911",
-        "logo_url": "http://www.thenooktavern.com/TheNook/Directions_files/Napoleon%27s-Nook-Logo.jpg",
-        "slug": "nook",
-        "on_downtown_craft_beer_trail": false
-    }
-},
-{
-    "model": "venues.venue",
     "pk": 11,
     "fields": {
         "name": "Das Stahl Bierhaus",
@@ -564,24 +540,6 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "6032598809837568",
-        "taphunter_excluded_lists": "[]",
-        "taplist_io_display_id": "",
-        "taplist_io_access_code": ""
-    }
-},
-{
-    "model": "venues.venueapiconfiguration",
-    "pk": 10,
-    "fields": {
-        "venue": 10,
-        "url": "http://www.thenooktavern.com/TheNook/Beers.html",
-        "api_key": "",
-        "digital_pour_venue_id": "",
-        "digital_pour_location_number": null,
-        "untappd_location": null,
-        "untappd_theme": null,
-        "untappd_categories": "[]",
-        "taphunter_location": "",
         "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": ""
