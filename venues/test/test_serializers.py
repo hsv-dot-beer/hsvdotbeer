@@ -43,6 +43,34 @@ class VenueSerializerTestCase(TestCase):
             serializer.data['tap_list_provider_display'], 'Untappd',
         )
 
+    def test_bogus_latitude(self):
+        data = {
+            'name': 'My bar',
+            'website': 'https://www.example.com',
+            'instagram_handle': 'example',
+            'time_zone': 'America/New_York',
+            'tap_list_provider': 'untappd',
+            'slug': 'my-bar',
+            'latitude': 90.1,
+            'longitude': 1,
+        }
+        serializer = VenueSerializer(data=data)
+        self.assertFalse(serializer.is_valid(raise_exception=False))
+
+    def test_bogus_longitude(self):
+        data = {
+            'name': 'My bar',
+            'website': 'https://www.example.com',
+            'instagram_handle': 'example',
+            'time_zone': 'America/New_York',
+            'tap_list_provider': 'untappd',
+            'slug': 'my-bar',
+            'latitude': 34.8,
+            'longitude': 180.00001,
+        }
+        serializer = VenueSerializer(data=data)
+        self.assertFalse(serializer.is_valid(raise_exception=False))
+
 
 class VenueAPIConfigurationSerializerTestCase(TestCase):
 
