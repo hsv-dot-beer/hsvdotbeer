@@ -223,6 +223,8 @@ class DigitalPourParser(BaseTapListProvider):
         pricing = []
         prices = tap['MenuItemProductDetail']['Prices']
         for price in prices:
+            if not price.get('DisplayOnMenu'):
+                continue
             p = {
                 'volume_oz': Decimal(price['DisplaySize']),
                 # 6oz --> 6 oz
