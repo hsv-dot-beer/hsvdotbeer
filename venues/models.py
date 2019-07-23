@@ -43,6 +43,14 @@ class Venue(models.Model):
     logo_url = models.URLField(blank=True)
     slug = models.SlugField()
     on_downtown_craft_beer_trail = models.BooleanField(default=False)
+    # -90 to +90
+    latitude = models.DecimalField(
+        max_digits=10, decimal_places=8, blank=True, null=True,
+    )
+    # -180 to 180
+    longitude = models.DecimalField(
+        max_digits=11, decimal_places=8, blank=True, null=True,
+    )
 
     def __str__(self):
         return self.name
