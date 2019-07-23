@@ -20,7 +20,9 @@
         "phone_number": "2568019650",
         "logo_url": "http://straighttoale.com/wp-content/uploads/2018/08/2018-STA-logo.png",
         "slug": "straight-to-ale",
-        "on_downtown_craft_beer_trail": true
+        "on_downtown_craft_beer_trail": true,
+        "latitude": "34.72094800",
+        "longitude": "-86.60709000"
     }
 },
 {
@@ -44,7 +46,9 @@
         "phone_number": "2563259992",
         "logo_url": "https://static.wixstatic.com/media/32a46f_b2a00471bb10440393c0fa0742f7ee93~mv2.png/v1/fill/w_210,h_200,al_c,lg_1,q_80/MTR-Logo-Tmp.webp",
         "slug": "madison-taproom",
-        "on_downtown_craft_beer_trail": false
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.75632700",
+        "longitude": "-86.72494500"
     }
 },
 {
@@ -68,7 +72,9 @@
         "phone_number": "2567157148",
         "logo_url": "http://www.wishyouwerebeer.net/wp-content/uploads/2016/05/Logo-2.png",
         "slug": "wish-you-were-beer",
-        "on_downtown_craft_beer_trail": true
+        "on_downtown_craft_beer_trail": true,
+        "latitude": "34.72237700",
+        "longitude": "-86.60492100"
     }
 },
 {
@@ -92,7 +98,9 @@
         "phone_number": "2562707825",
         "logo_url": "http://otbxhsv.com/wp-content/themes/otbx-wp/img/logo.png",
         "slug": "otbx",
-        "on_downtown_craft_beer_trail": true
+        "on_downtown_craft_beer_trail": true,
+        "latitude": "34.73339800",
+        "longitude": "-86.58495300"
     }
 },
 {
@@ -116,7 +124,9 @@
         "phone_number": "2564890807",
         "logo_url": "https://static1.squarespace.com/static/5a9c2a4af8370a048dab34c4/t/5b6b4bc18a922d8794f6904b/1533758427380/Rocket-City-Beer-Garden+RGB_Color+jpg.jpg?format=2500w",
         "slug": "rocket-city-craft-beer",
-        "on_downtown_craft_beer_trail": false
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.74765700",
+        "longitude": "-86.76637000"
     }
 },
 {
@@ -140,7 +150,9 @@
         "phone_number": "2568013741",
         "logo_url": "",
         "slug": "whole-foods-hsv",
-        "on_downtown_craft_beer_trail": false
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.71222600",
+        "longitude": "-86.58991600"
     }
 },
 {
@@ -164,7 +176,9 @@
         "phone_number": "",
         "logo_url": "",
         "slug": "liquor-express",
-        "on_downtown_craft_beer_trail": true
+        "on_downtown_craft_beer_trail": true,
+        "latitude": "34.74135200",
+        "longitude": "-86.59819700"
     }
 },
 {
@@ -188,7 +202,9 @@
         "phone_number": "2565335155",
         "logo_url": "http://www.wagonwheelliquorsal.com/wp-content/uploads/2017/11/logo.png",
         "slug": "wagon-wheel",
-        "on_downtown_craft_beer_trail": false
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.65305000",
+        "longitude": "-86.48039500"
     }
 },
 {
@@ -212,7 +228,9 @@
         "phone_number": "2568018990",
         "logo_url": "",
         "slug": "open-bottle",
-        "on_downtown_craft_beer_trail": false
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.75356000",
+        "longitude": "-86.71162200"
     }
 },
 {
@@ -236,7 +254,9 @@
         "phone_number": "2568581495",
         "logo_url": "https://untappd.akamaized.net/venuelogos/venue_5569477_5165f161_bg_176.png",
         "slug": "das-stahl-bierhaus",
-        "on_downtown_craft_beer_trail": false
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.66121200",
+        "longitude": "-86.57131300"
     }
 },
 {
@@ -260,7 +280,9 @@
         "phone_number": "2562611265",
         "logo_url": "https://untappd.akamaized.net/venuelogos/venue_7919239_5965ac33_bg_176.png",
         "slug": "casual-pint-hsv",
-        "on_downtown_craft_beer_trail": false
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.75380900",
+        "longitude": "-86.69412700"
     }
 },
 {
@@ -284,7 +306,9 @@
         "phone_number": "2564893510",
         "logo_url": "https://untappd.akamaized.net/venuelogos/venue_56970_9c7a85ca_bg_176.png",
         "slug": "yellowhammer",
-        "on_downtown_craft_beer_trail": true
+        "on_downtown_craft_beer_trail": true,
+        "latitude": "34.72168500",
+        "longitude": "-86.60553600"
     }
 },
 {
@@ -308,7 +332,9 @@
         "phone_number": "2565032233",
         "logo_url": "https://utfb-images.untappd.com/logos/9210d47b78cd274d421470d180b242144c08b524.jpg",
         "slug": "mad-malts",
-        "on_downtown_craft_beer_trail": true
+        "on_downtown_craft_beer_trail": true,
+        "latitude": "34.74636400",
+        "longitude": "-86.58528300"
     }
 },
 {
@@ -332,7 +358,9 @@
         "phone_number": "2563253779",
         "logo_url": "https://thestemandstein.com/Content/logoSS.png",
         "slug": "stem-and-stein",
-        "on_downtown_craft_beer_trail": false
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.69143300",
+        "longitude": "-86.78591400"
     }
 },
 {
@@ -356,7 +384,9 @@
         "phone_number": "2563251131",
         "logo_url": "https://untappd.akamaized.net/venuelogos/venue_201633_b5eef036_bg_176.png",
         "slug": "blue-pants",
-        "on_downtown_craft_beer_trail": false
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.68496600",
+        "longitude": "-86.73857400"
     }
 },
 {
@@ -380,7 +410,9 @@
         "phone_number": "(256) 489-5599",
         "logo_url": "https://pbs.twimg.com/profile_images/846777797863522304/wJa_aKvb_400x400.jpg",
         "slug": "innerspace-brewing",
-        "on_downtown_craft_beer_trail": true
+        "on_downtown_craft_beer_trail": true,
+        "latitude": "34.72248000",
+        "longitude": "-86.60418700"
     }
 },
 {

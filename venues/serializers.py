@@ -14,6 +14,14 @@ class VenueSerializer(CountryFieldMixin, serializers.ModelSerializer):
         required=False, allow_blank=False, allow_null=False,
     )
     tap_list_provider_display = serializers.SerializerMethodField()
+    latitude = serializers.DecimalField(
+        max_digits=10, decimal_places=8, min_value=-90, max_value=90,
+        required=False, allow_null=True,
+    )
+    longitude = serializers.DecimalField(
+        max_digits=11, decimal_places=8, min_value=-180, max_value=180,
+        required=False, allow_null=True,
+    )
 
     def get_tap_list_provider_display(self, obj):
         # Give the user the fancy formatted version in read-only form
