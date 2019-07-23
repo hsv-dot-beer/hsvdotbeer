@@ -1,0 +1,31 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_modify %}
+
+{% block extrahead %}{{ block.super }}
+<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <h1>Pick the beer you want to keep</h1>
+  <form class="" action="{{ request.path }}" method="post">
+    {% csrf_token %}
+    <select class="" name="beers">
+      {% for beer in beers %}
+      <option value="{{ beer.id }}">{{ beer.name }} by {{ beer.manufacturer.name }}{% if beer.alternate_names.all %} ({{ beer.alternate_names.all | join:', ' }}){% endif %}</option>
+      {% endfor %}
+    </select>
+    {% comment %}
+    I'm trusting the user to not be stupid here. This is a bad idea generally,
+    but since this requires a staff account to access, it's not _horrible_.
+    {% endcomment %}
+    <input type="hidden" name="all-beers" value="{% for beer in beers %}{{ beer.id }}{% if not forloop.last %},{% endif %}{% endfor %}">
+    <button type="submit" name="submit-button">Merge!</button>
+  </form>
+  <br>
+  <a href="{{ back_link }}">Go back</a>
+</div>
+{% endblock %}
