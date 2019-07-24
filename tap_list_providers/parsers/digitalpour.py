@@ -68,7 +68,7 @@ class DigitalPourParser(BaseTapListProvider):
                 manufacturer = manufacturers[parsed_manufacturer['name']]
             except KeyError:
                 defaults = {
-                    parsed_manufacturer[field] for field in [
+                    field: parsed_manufacturer[field] for field in [
                         'location', 'logo_url', 'twitter_handle', 'url',
                     ] if parsed_manufacturer[field]
                 }
