@@ -66,10 +66,11 @@ class DigitalPourParser(BaseTapListProvider):
             try:
                 manufacturer = manufacturers[parsed_manufacturer['name']]
             except KeyError:
-                defaults = {}
-                for field in ['location', 'logo_url', 'twitter_handle']:
-                    if parsed_manufacturer[field]:
-                        defaults[field] = parsed_manufacturer[field]
+                defaults = {
+                    field: parsed_manufacturer[field] for field in [
+                        'location', 'logo_url', 'twitter_handle', 'url',
+                    ] if parsed_manufacturer[field]
+                }
                 manufacturer = self.get_manufacturer(
                     name=parsed_manufacturer['name'],
                     **defaults,
@@ -179,6 +180,7 @@ class DigitalPourParser(BaseTapListProvider):
         producer = tap['MenuItemProductDetail']['Beverage']['BeverageProducer']
 
         styles = ['Cidery', 'Meadery', 'Winery', 'KombuchaMaker', 'Brewery']
+        url = ''
         for style in styles:
             try:
                 name = producer[f'{style}Name']
@@ -186,6 +188,7 @@ class DigitalPourParser(BaseTapListProvider):
                 # try the next one
                 continue
             else:
+                url = producer.get(f'{style}Url', '') or ''
                 # success
                 break
         else:
@@ -196,7 +199,12 @@ class DigitalPourParser(BaseTapListProvider):
             'location': producer['Location'] or '',
             'logo_url': producer.get('LogoImageUrl'),
             'twitter_handle': producer.get('TwitterName') or '',
+            'url': url,
         }
+        if manufacturer['url'] and not manufacturer['url'].casefold().startswith(
+            'http'.casefold()
+        ):
+            manufacturer['url'] = f'http://{manufacturer["url"]}'
         if manufacturer['twitter_handle'] and manufacturer[
                 'twitter_handle'].startswith('@'):
             # strip the leading @ for consistency

@@ -89,6 +89,10 @@ class CommandsTestCase(TestCase):
                     venue=self.venue,
                 ).exists()
             )
+            self.assertEqual(
+                tap.beer.manufacturer.url,
+                'http://www.bellsbeer.com/',
+            )
             # location nulled out in test data
             self.assertEqual(tap.beer.manufacturer.location, '')
             tap = taps[2]
