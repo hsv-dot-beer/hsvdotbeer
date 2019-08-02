@@ -33,6 +33,7 @@ class Production(Common):
 
     # cross-origin request sharing
     CORS_ORIGIN_WHITELIST = (
+        'http://localhost:8000',
         'https://localhost:8000',
         'https://hsv.beer',
         'https://dev.hsv.beer',
