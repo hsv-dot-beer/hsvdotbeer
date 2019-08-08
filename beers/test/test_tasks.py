@@ -1,3 +1,4 @@
+import os
 from unittest.mock import patch
 
 from celery import Task
@@ -20,6 +21,8 @@ class TaskRetryTestCase(TestCase):
     @responses.activate
     @patch.object(Task, 'retry')
     def test_no_exception_on_retry(self, mock_retry):
+        os.environ['UNTAPPD_CLIENT_ID'] = '1'
+        os.environ['UNTAPPD_CLIENT_SECRET'] = '3'
         mock_retry.side_effect = MaxRetriesExceededError
         headers = {
             'Date': 'Wed, 07 Aug 2019 22:00:16 GMT',
