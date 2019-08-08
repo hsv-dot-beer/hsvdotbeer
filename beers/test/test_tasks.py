@@ -5,8 +5,6 @@ from celery.exceptions import MaxRetriesExceededError
 from django.test import TestCase
 import responses
 
-
-from ..models import UntappdMetadata
 from ..tasks import look_up_beer
 from .factories import BeerFactory
 
