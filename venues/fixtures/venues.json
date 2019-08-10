@@ -53,32 +53,6 @@
 },
 {
     "model": "venues.venue",
-    "pk": 3,
-    "fields": {
-        "name": "Wish You Were Beer Campus 805",
-        "address": "2500 Clinton Ave W",
-        "city": "Huntsville",
-        "state": "Alabama",
-        "postal_code": "35805",
-        "country": "US",
-        "time_zone": "America/Chicago",
-        "website": "http://www.wishyouwerebeer.net/",
-        "facebook_page": "https://www.facebook.com/wywbcampus805/",
-        "twitter_handle": "wywb_campus",
-        "instagram_handle": "",
-        "tap_list_provider": "digitalpour",
-        "untappd_url": "https://untappd.com/v/wish-you-were-beer-campus-805/5853452",
-        "email": "info@wishyouwerebeer.net",
-        "phone_number": "2567157148",
-        "logo_url": "http://www.wishyouwerebeer.net/wp-content/uploads/2016/05/Logo-2.png",
-        "slug": "wish-you-were-beer",
-        "on_downtown_craft_beer_trail": true,
-        "latitude": "34.72237700",
-        "longitude": "-86.60492100"
-    }
-},
-{
-    "model": "venues.venue",
     "pk": 4,
     "fields": {
         "name": "Old Town Beer Exchange",
@@ -442,24 +416,6 @@
         "api_key": "",
         "digital_pour_venue_id": "5c7e9f7635272613d8d70727",
         "digital_pour_location_number": 1,
-        "untappd_location": null,
-        "untappd_theme": null,
-        "untappd_categories": "[]",
-        "taphunter_location": "",
-        "taphunter_excluded_lists": "[]",
-        "taplist_io_display_id": "",
-        "taplist_io_access_code": ""
-    }
-},
-{
-    "model": "venues.venueapiconfiguration",
-    "pk": 3,
-    "fields": {
-        "venue": 3,
-        "url": null,
-        "api_key": "",
-        "digital_pour_venue_id": "57b130dd5e002c0388f8b686",
-        "digital_pour_location_number": 2,
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
