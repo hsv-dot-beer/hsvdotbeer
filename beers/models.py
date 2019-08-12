@@ -273,7 +273,7 @@ class ServingSize(models.Model):
 class BeerPrice(models.Model):
     beer = models.ForeignKey(Beer, models.CASCADE, related_name='prices')
     venue = models.ForeignKey(
-        'venues.Venue', models.DO_NOTHING, related_name='beer_prices',
+        'venues.Venue', models.CASCADE, related_name='beer_prices',
     )
     serving_size = models.ForeignKey(
         ServingSize, models.DO_NOTHING, related_name='beer_prices',
