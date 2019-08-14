@@ -178,7 +178,14 @@ class BeerListTestCase(APITestCase):
         TapFactory(beer=self.beer, time_added=now() - relativedelta(hours=1))
         TapFactory(beer=self.beer, time_added=now() - relativedelta(hours=16))
 
-        response = self.client.get(f'{self.url}?o=-most_recently_added')
+        # 5 queries:
+        # 1. count of results
+        # 2. beers
+        # 3. taps
+        # 4. alt names
+        # 5. prices
+        with self.assertNumQueries(5):
+            response = self.client.get(f'{self.url}?o=-most_recently_added')
         eq_(response.status_code, 200)
         # expected order is third_beer, self.beer, other_beer
         eq_(len(response.data['results']), 3, response.data)
