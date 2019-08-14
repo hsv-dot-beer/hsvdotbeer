@@ -1,7 +1,7 @@
 
 from django.db import transaction
 from django.db.utils import IntegrityError
-from django.db.models import Prefetch, Count
+from django.db.models import Prefetch, Count, Max
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -73,6 +73,8 @@ class BeerViewSet(CachedListMixin, ModerationMixin, ModelViewSet):
                 'venue', 'serving_size',
             )
         ),
+    ).annotate(
+        most_recently_added=Max('taps__time_added'),
     ).order_by('manufacturer__name', 'name')
     filterset_class = filters.BeerFilterSet
 
