@@ -43,6 +43,26 @@ class VenueBySlugViewSet(VenueViewSet):
     def list(self, request, *args, **kwargs):
         raise NotFound()
 
+    @method_decorator(cache_page(60 * 5))
+    @action(detail=True, methods=['GET'])
+    def beers(self, request, slug):
+        from beers.views import BeerViewSet
+        from beers.filters import BeerFilterSet
+
+        queryset = BeerViewSet.queryset.filter(
+            **{f'taps__venue__{self.lookup_field}': slug}
+        ).distinct()
+
+        # let the user use all the beer filters just for kicks
+        queryset = BeerFilterSet(request.query_params, queryset=queryset).qs
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = BeerViewSet.serializer_class(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = BeerViewSet.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
     lookup_field = 'slug'
     serializer_class = serializers.VenueBySlugSerializer
 
