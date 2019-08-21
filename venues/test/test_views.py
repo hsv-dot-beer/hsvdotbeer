@@ -7,8 +7,10 @@ from rest_framework import status
 from faker import Faker
 
 from hsv_dot_beer.users.test.factories import UserFactory
+from beers.models import Beer
 from venues.models import Venue, VenueAPIConfiguration
-from beers.test.factories import BeerFactory
+from beers.test.factories import BeerFactory, ManufacturerFactory
+from taps.models import Tap
 from taps.test.factories import TapFactory
 from .factories import VenueFactory
 
@@ -97,6 +99,24 @@ class TestVenueBySlug(APITestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200, response.data)
         self.assertEqual(response.data['id'], self.venue.id)
+
+    def test_beers(self):
+        mfg = ManufacturerFactory()
+        beers = Beer.objects.bulk_create(BeerFactory.build(
+            manufacturer=mfg
+        ) for dummy in range(10))
+        taps = Tap.objects.bulk_create(
+            Tap(
+                beer=beer,
+                tap_number=index + 1,
+                venue=self.venue,
+            ) for index, beer in enumerate(beers)
+        )
+        response = self.client.get(f'{self.url}beers/')
+        self.assertEqual(len(taps), len(beers))
+        self.assertEqual(Beer.objects.count(), len(beers))
+        self.assertEqual(response.status_code, 200, response.data)
+        self.assertEqual(len(response.data['results']), len(beers))
 
 
 class TestVenueDetailTestCase(APITestCase):
