@@ -1,3 +1,5 @@
+import json
+
 from dateutil.relativedelta import relativedelta
 from django.utils.timezone import now
 from django.urls import reverse
@@ -7,7 +9,10 @@ from faker import Faker
 
 from hsv_dot_beer.users.test.factories import UserFactory
 from taps.test.factories import TapFactory
+from taps.models import Tap
+from beers.models import Beer
 from beers.serializers import ManufacturerSerializer
+from venues.test.factories import VenueFactory
 from .factories import ManufacturerFactory, BeerFactory, StyleFactory
 
 fake = Faker()
@@ -192,3 +197,25 @@ class BeerListTestCase(APITestCase):
         eq_(response.data['results'][0]['name'], third_beer.name, response.data)
         eq_(response.data['results'][1]['name'], self.beer.name, response.data)
         eq_(response.data['results'][2]['name'], other_beer.name, response.data)
+
+    def test_filter_by_venue_slug(self):
+        wanted_venue = VenueFactory(slug='slug-1')
+        other_venue = VenueFactory(slug='not-this')
+        mfg = ManufacturerFactory()
+        beers = Beer.objects.bulk_create(
+            BeerFactory.build(manufacturer=mfg) for dummy in range(3)
+        )
+        # set up 3 beers on tap, two at the one we want to look for, one at
+        # the other
+        Tap.objects.bulk_create(
+            TapFactory.build(beer=beer, venue=venue)
+            for beer, venue in zip(
+                beers, [wanted_venue, wanted_venue, other_venue],
+            )
+        )
+        url = f'{self.url}?taps__venue__slug__icontains=SLUG&on_tap=True'
+        with self.assertNumQueries(4):
+            response = self.client.get(url)
+        eq_(response.status_code, 200, response.data)
+        eq_(len(response.data['results']), 2, json.dumps(response.data, indent=2))
+        eq_(set(i['id'] for i in response.data['results']), set(i.id for i in beers[:-1]))
