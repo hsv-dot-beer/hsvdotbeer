@@ -8,6 +8,7 @@ import requests
 from requests.exceptions import RequestException
 from django.utils.timezone import now
 from celery import shared_task
+from celery.exceptions import MaxRetriesExceededError
 
 
 from beers.models import Beer, UntappdMetadata, BeerPrice
@@ -62,9 +63,13 @@ def look_up_beer(self, beer_pk):
     untappd_url = f'https://api.untappd.com/v4/beer/info/{untappd_pk}'
     result = requests.get(untappd_url, params=untappd_args)
     if result.status_code == 429:
-        LOG.error('Hit Untappd API rate limit! Headers %s', result.headers)
+        LOG.warning('Hit Untappd API rate limit! Headers %s', result.headers)
         # retry in 1 hour
-        self.retry(countdown=3600)
+        try:
+            self.retry(countdown=3600)
+        except MaxRetriesExceededError:
+            LOG.warning('Ran out of retries. We must be hurting.')
+            return None
     # retry sooner for all other status codes
     result.raise_for_status()
     json_body = result.json()
