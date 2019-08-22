@@ -37,12 +37,12 @@ steps:
       print('##vso[task.setvariable variable=projectRoot]{}'.format(project_location))
 
 - script: |
-    docker-compose run --rm web bash -c 'export PIPENV_COLORBLIND=1; pipenv install --dev && pipenv run pip install unittest-xml-reporting && pipenv run flake8'
+    docker-compose run --rm web bash -c 'export PIPENV_COLORBLIND=1; export PIPENV_NOSPIN=1; pipenv install --dev && pipenv run pip install unittest-xml-reporting && pipenv run flake8'
   condition: succeededOrFailed()
   displayName: 'Run pep8'
 
 - script: |
-    docker-compose run --rm web bash -c 'export PIPENV_COLORBLIND=1; pipenv install --dev && pipenv run pip install unittest-xml-reporting && pipenv run python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input'
+    docker-compose run --rm web bash -c 'export PIPENV_COLORBLIND=1; export PIPENV_NOSPIN=1; pipenv install --dev && pipenv run pip install unittest-xml-reporting && pipenv run python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input'
   condition: succeededOrFailed()
   displayName: 'Run Django tests'
 
