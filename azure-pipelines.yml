@@ -10,8 +10,8 @@ pool:
   vmImage: 'Ubuntu-16.04'
 strategy:
   matrix:
-    Python36:
-      PYTHON_VERSION: '3.6'
+    Python37:
+      PYTHON_VERSION: '3.7'
   maxParallel: 3
 
 steps:
@@ -36,10 +36,14 @@ steps:
       print('Found Django project in', project_location)
       print('##vso[task.setvariable variable=projectRoot]{}'.format(project_location))
 
-- script: |
-    docker-compose run --rm web bash -c 'export PIPENV_COLORBLIND=1; pipenv install --dev && pipenv run pip install unittest-xml-reporting && pipenv run flake8 && pipenv run python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input'
+- script: bash -c 'pip install flake8 && flake8'
   condition: succeededOrFailed()
-  displayName: 'Run tests'
+  displayName: 'Run pep8'
+
+- script: |
+    docker-compose run --rm web bash -c 'export PIPENV_COLORBLIND=1; export PIPENV_NOSPIN=1; pipenv install --dev && pipenv run pip install unittest-xml-reporting && pipenv run python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input'
+  condition: succeededOrFailed()
+  displayName: 'Run Django tests'
 
 - task: PublishTestResults@2
   inputs:
