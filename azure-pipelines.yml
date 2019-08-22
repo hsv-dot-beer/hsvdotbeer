@@ -36,7 +36,7 @@ steps:
       print('Found Django project in', project_location)
       print('##vso[task.setvariable variable=projectRoot]{}'.format(project_location))
 
-- script: docker-compose run --rm web bash -c 'pip install flake8 && flake8'
+- script: bash -c 'pip install flake8 && flake8'
   condition: succeededOrFailed()
   displayName: 'Run pep8'
 
