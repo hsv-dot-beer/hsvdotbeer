@@ -14,8 +14,6 @@ strategy:
       PYTHON_VERSION: '3.7'
   maxParallel: 3
 
-container: ubuntu:18.04
-
 steps:
 - task: UsePythonVersion@0
   inputs:
