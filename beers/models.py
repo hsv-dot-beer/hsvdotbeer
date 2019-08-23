@@ -208,6 +208,22 @@ class Beer(models.Model):
         with transaction.atomic():
             Tap.objects.filter(beer=other).update(beer=self)
             BeerAlternateName.objects.filter(beer=other).update(beer=self)
+            try:
+                with transaction.atomic():
+                    BeerPrice.objects.filter(beer=other).update(beer=self)
+            except IntegrityError:
+                LOG.warning('Duplicate prices detected for %s', self)
+                prices_updated = BeerPrice.objects.filter(beer=other).exclude(
+                    venue__in=models.Subquery(
+                        BeerPrice.objects.filter(beer=self).values('venue')
+                    ),
+                ).update(beer=self)
+                prices_deleted = BeerPrice.objects.filter(beer=other).delete()
+                LOG.info(
+                    'Updated %s prices and deleted %s prices',
+                    prices_updated,
+                    prices_deleted,
+                )
             excluded_fields = {
                 'name' 'in_production', 'automatic_updates_blocked',
                 'manufacturer', 'id', 'time_first_seen',
