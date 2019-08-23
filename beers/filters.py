@@ -68,5 +68,6 @@ class BeerFilterSet(FilterSet):
             'style__alternate_names__name': DEFAULT_STRING_FILTER_OPERATORS,
             'search': ['exact'],
             'on_tap': ['exact'],
+            'taps__venue__slug': DEFAULT_STRING_FILTER_OPERATORS,
         }
         model = models.Beer
