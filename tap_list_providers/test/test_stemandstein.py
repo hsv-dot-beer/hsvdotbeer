@@ -5,7 +5,7 @@ from django.core.management import call_command
 from django.test import TestCase
 import responses
 
-from beers.models import Beer, Manufacturer
+from beers.models import Beer, Manufacturer, ManufacturerAlternateName
 from beers.test.factories import ManufacturerFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
@@ -144,3 +144,13 @@ class CommandsTestCase(TestCase):
         guessed = parser.guess_manufacturer('Goat Island Sipsey River Red Ale')
         self.assertEqual(guessed.name, 'Goat Island', guessed)
         self.assertIn(guessed, manufacturers)
+
+    def test_guess_manufacturer_back_forty(self):
+        mfg = ManufacturerFactory(name='Back Forty')
+        ManufacturerAlternateName.objects.bulk_create(
+            ManufacturerAlternateName(name=name, manufacturer=mfg)
+            for name in ['Back Forty', 'Back Forty Beer Co']
+        )
+        parser = StemAndSteinParser()
+        guessed = parser.guess_beer('Back Forty Truck Stop Honey Brown')
+        self.assertEqual(guessed.manufacturer, mfg)
