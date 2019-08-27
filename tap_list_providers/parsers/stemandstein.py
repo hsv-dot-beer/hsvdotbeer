@@ -96,10 +96,10 @@ class StemAndSteinParser(BaseTapListProvider):
             manufacturer = ' '.join(words[:index])
             if not use_contains:
                 try:
-                    return Manufacturer.objects.get(
+                    return Manufacturer.objects.filter(
                         Q(name__iexact=manufacturer) |
                         Q(alternate_names__name__iexact=manufacturer)
-                    )
+                    ).distinct().get()
                 except Manufacturer.DoesNotExist:
                     continue
             filter_str = 'icontains' if use_contains else 'istartswith'
