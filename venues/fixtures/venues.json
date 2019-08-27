@@ -339,32 +339,6 @@
 },
 {
     "model": "venues.venue",
-    "pk": 16,
-    "fields": {
-        "name": "Blue Pants Brewery",
-        "address": "500 Lanier Road, Building 1, Suite A",
-        "city": "Madison",
-        "state": "AL",
-        "postal_code": "35758",
-        "country": "US",
-        "time_zone": "America/Chicago",
-        "website": "http://bluepantsbrew.com",
-        "facebook_page": "https://www.facebook.com/bluepantsbrewery/",
-        "twitter_handle": "bluepantsbrew",
-        "instagram_handle": "",
-        "tap_list_provider": "untappd",
-        "untappd_url": "https://untappd.com/v/blue-pants-brewery/201633",
-        "email": "",
-        "phone_number": "2563251131",
-        "logo_url": "https://untappd.akamaized.net/venuelogos/venue_201633_b5eef036_bg_176.png",
-        "slug": "blue-pants",
-        "on_downtown_craft_beer_trail": false,
-        "latitude": "34.68496600",
-        "longitude": "-86.73857400"
-    }
-},
-{
-    "model": "venues.venue",
     "pk": 17,
     "fields": {
         "name": "InnerSpace Brewing",
@@ -617,24 +591,6 @@
         "untappd_location": null,
         "untappd_theme": null,
         "untappd_categories": "[]",
-        "taphunter_location": "",
-        "taphunter_excluded_lists": "[]",
-        "taplist_io_display_id": "",
-        "taplist_io_access_code": ""
-    }
-},
-{
-    "model": "venues.venueapiconfiguration",
-    "pk": 16,
-    "fields": {
-        "venue": 16,
-        "url": null,
-        "api_key": "",
-        "digital_pour_venue_id": "",
-        "digital_pour_location_number": null,
-        "untappd_location": 18301,
-        "untappd_theme": 69029,
-        "untappd_categories": "[\"Taproom Draft List\"]",
         "taphunter_location": "",
         "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
