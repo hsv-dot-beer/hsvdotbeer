@@ -38,11 +38,11 @@ def parse_provider(provider_name):
 
 
 @shared_task(
-    bind=False,
+    bind=True,
     autoretry_for=(RequestException, JSONDecodeError, IntegrityError),
     default_retry_delay=600,
 )
-def parse_venue(venue_id, provider_name):
+def parse_venue(self, venue_id, provider_name):
     provider = BaseTapListProvider.get_provider(provider_name)()
     venue = Venue.objects.select_related(
         'api_configuration',
