@@ -67,24 +67,24 @@ class BaseTapListProvider():
         except KeyError:
             raise ValueError(f'Unknown prover name {provider_name}')
 
-    def get_venues(self):
+    def get_venues(self, ids_only=False):
         if not self.provider_name:
             raise ValueError(
                 'You must define `provider_name` in your __init__()')
         LOG.debug(
             'Looking for venues with tap list provider %s', self.provider_name)
-        queryset = Venue.objects.select_related(
-            'api_configuration',
-        ).filter(
+        queryset = Venue.objects.filter(
             tap_list_provider=self.provider_name,
             api_configuration__isnull=False,
-        ).prefetch_related(
+        )
+        if ids_only:
+            return queryset.values('id')
+        return queryset.select_related('api_configuration').prefetch_related(
             Prefetch(
                 'taps',
                 queryset=Tap.objects.select_related('beer__manufacturer'),
             ),
         )
-        return queryset
 
     def handle_venues(self, venues):
         for venue in venues:
