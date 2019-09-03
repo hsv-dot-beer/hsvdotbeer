@@ -37,4 +37,5 @@ class Production(Common):
         'https://localhost:8000',
         'https://hsv.beer',
         'https://dev.hsv.beer',
+        'https://nuxt.hsv.beer',
     )
