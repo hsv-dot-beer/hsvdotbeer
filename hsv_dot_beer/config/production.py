@@ -39,3 +39,7 @@ class Production(Common):
         'https://dev.hsv.beer',
         'https://nuxt.hsv.beer',
     )
+
+    CORS_ORIGIN_REGEX_WHITELIST = [
+        r"^https://\w+\.herokuapp\.com$",
+    ]
