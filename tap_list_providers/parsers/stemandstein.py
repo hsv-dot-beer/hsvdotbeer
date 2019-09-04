@@ -160,14 +160,14 @@ class StemAndSteinParser(BaseTapListProvider):
                 except ValueError:
                     LOG.warning('Invalid S&S ABV %s for beer %s', abv_div.text, beer)
                 else:
-                    LOG.info('Setting ABV for beer %s to %s%%', beer, abv)
+                    LOG.debug('Setting ABV for beer %s to %s%%', beer, abv)
                     beer.abv = abv
                     beer.save()
         if not beer.manufacturer.location:
             raw_text = abv_div.text.replace('&nbsp;', '')
             percent_index = raw_text.index('%')
             beer.manufacturer.location = raw_text[percent_index + 1:].strip()
-            LOG.info('Setting beer %s location to %s', beer, beer.manufacturer.location)
+            LOG.debug('Setting beer %s location to %s', beer, beer.manufacturer.location)
             beer.manufacturer.save()
         try:
             color = self.html_parser.unescape(image_params['color'])
