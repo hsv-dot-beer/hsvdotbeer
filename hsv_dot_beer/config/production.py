@@ -41,5 +41,7 @@ class Production(Common):
     )
 
     CORS_ORIGIN_REGEX_WHITELIST = [
-        r"^https://\w+\.herokuapp\.com$",
+        # while we're developing the nuxt.js frontend, heroku PR review apps
+        # are deployed at https://hsvdotbeer-nuxt-pr-NNN.herokuapp.com
+        r"^https:\/\/hsvdotbeer-nuxt-pr-\d+\.herokuapp\.com$",
     ]
