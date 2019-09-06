@@ -1,5 +1,6 @@
 """Test the parsing of stem and stein data"""
 import os
+from decimal import Decimal
 
 from django.core.management import call_command
 from django.test import TestCase
@@ -78,13 +79,15 @@ class CommandsTestCase(TestCase):
             taps = Tap.objects.filter(
                 venue=self.venue, tap_number__in=[1, 17],
             ).select_related(
-                'beer__style',
+                'beer__style', 'beer__manufacturer',
             ).order_by('tap_number')
             tap = taps[0]
             self.assertTrue(
                 tap.beer.name.endswith('Space Blood Orange Cider'),
                 tap.beer.name,
             )
+            self.assertEqual(tap.beer.manufacturer.location, 'Sebastopol, CA')
+            self.assertEqual(tap.beer.abv, Decimal('6.9'))
             self.assertEqual(tap.beer.stem_and_stein_pk, 967)
             prices = list(tap.beer.prices.all())
             self.assertEqual(len(prices), 1)
@@ -97,6 +100,7 @@ class CommandsTestCase(TestCase):
                 tap.beer.name.endswith('Karmeliet'),
                 tap.beer.name,
             )
+            self.assertEqual(tap.beer.manufacturer.location, 'Belgium')
             prices = list(tap.beer.prices.all())
             self.assertEqual(len(prices), 1)
             price = prices[0]
