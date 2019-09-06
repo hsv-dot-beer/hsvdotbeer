@@ -6,12 +6,15 @@ from json import JSONDecodeError
 
 import requests
 from requests.exceptions import RequestException
+from django.db.models import F
 from django.utils.timezone import now
 from celery import shared_task
 from celery.exceptions import MaxRetriesExceededError
 
 
-from beers.models import Beer, UntappdMetadata, BeerPrice
+from beers.models import (
+    Beer, UntappdMetadata, BeerPrice, BeerAlternateName, ManufacturerAlternateName
+)
 
 
 LOG = logging.getLogger(__name__)
@@ -122,3 +125,18 @@ def purge_unused_prices():
     LOG.info('Purging %s prices of unused beers', queryset.count())
     queryset.delete()
     LOG.info('Done. %s prices remain', BeerPrice.objects.count())
+
+
+@shared_task
+def purge_duplicate_alt_names():
+    beer_names_deleted = BeerAlternateName.objects.filter(
+        name=F('beer__name')
+    ).delete()[0]
+    mfg_names_deleted = ManufacturerAlternateName.objects.filter(
+        name=F('manufacturer__name')
+    ).delete()[0]
+    LOG.info(
+        'Beer alt names deleted: %s, Mfg alt names %s',
+        beer_names_deleted,
+        mfg_names_deleted,
+    )

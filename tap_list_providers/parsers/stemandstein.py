@@ -147,6 +147,29 @@ class StemAndSteinParser(BaseTapListProvider):
         price = Decimal(pricing_div.text[1:])
         image_url = image_div.find('img').attrs['src']
         image_params = dict(parse_qsl(image_url.split('?')[-1]))
+        abv_div = jumbotron.find(
+            'div',
+            {
+                'style': 'color:slategray; font-size:18px;padding-left:20px',
+            },
+        )
+        if not beer.abv:
+            if 'ABV' in abv_div.text:
+                # ABV x.y% (a bunch of spaces) city, state
+                try:
+                    abv = Decimal(abv_div.text.split()[1][:-1])
+                except ValueError:
+                    LOG.warning('Invalid S&S ABV %s for beer %s', abv_div.text, beer)
+                else:
+                    LOG.debug('Setting ABV for beer %s to %s%%', beer, abv)
+                    beer.abv = abv
+                    beer.save()
+        if not beer.manufacturer.location:
+            raw_text = abv_div.text.replace('&nbsp;', '')
+            percent_index = raw_text.index('%')
+            beer.manufacturer.location = raw_text[percent_index + 1:].strip()
+            LOG.debug('Setting beer %s location to %s', beer, beer.manufacturer.location)
+            beer.manufacturer.save()
         try:
             color = self.html_parser.unescape(image_params['color'])
         except KeyError:
