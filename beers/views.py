@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
-from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import cache_control
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -22,9 +22,12 @@ from . import serializers
 from . import models
 from . import filters
 
+CLIENT_CACHE_AGE_SEC = 30
+SERVER_CACHE_AGE_SEC = 300
+
 
 class CachedListMixin():
-    @method_decorator(cache_page(60 * 5))
+    @method_decorator(cache_control(max_age=CLIENT_CACHE_AGE_SEC, s_maxage=SERVER_CACHE_AGE_SEC))
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
@@ -78,7 +81,7 @@ class BeerViewSet(CachedListMixin, ModerationMixin, ModelViewSet):
     ).order_by('manufacturer__name', 'name')
     filterset_class = filters.BeerFilterSet
 
-    @method_decorator(cache_page(60 * 5))
+    @method_decorator(cache_control(max_age=CLIENT_CACHE_AGE_SEC, s_maxage=SERVER_CACHE_AGE_SEC))
     @action(detail=True, methods=['GET'])
     def placesavailable(self, request, pk):
         """Get all the venues at which the given beer is on tap"""
@@ -96,7 +99,7 @@ class BeerViewSet(CachedListMixin, ModerationMixin, ModelViewSet):
         serializer = VenueSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    @method_decorator(cache_page(60 * 5))
+    @method_decorator(cache_control(max_age=CLIENT_CACHE_AGE_SEC, s_maxage=SERVER_CACHE_AGE_SEC))
     @action(detail=False, methods=['GET'])
     def autocomplete(self, request):
         """Attempt to autocomplete beers"""

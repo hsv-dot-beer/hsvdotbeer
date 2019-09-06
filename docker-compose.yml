@@ -32,6 +32,8 @@ services:
       - postgres
       - redis
     build: ./
+    volumes:
+      - ./:/code
     command: >
       bash -c "pipenv run python wait_for_postgres.py &&
                pipenv run ./manage.py migrate &&
