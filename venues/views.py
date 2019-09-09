@@ -1,14 +1,12 @@
 from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_control
+from django.views.decorators.cache import cache_page
 from rest_framework.exceptions import NotFound
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from beers.views import (
-    CachedListMixin, BeerViewSet, SERVER_CACHE_AGE_SEC, CLIENT_CACHE_AGE_SEC,
-)
+from beers.views import CachedListMixin, BeerViewSet
 from beers.filters import BeerFilterSet
 from . import serializers
 from . import models
@@ -20,7 +18,7 @@ class VenueViewSet(CachedListMixin, ModelViewSet):
     queryset = models.Venue.objects.order_by('name')
     filterset_class = filters.VenueFilterSet
 
-    @method_decorator(cache_control(max_age=CLIENT_CACHE_AGE_SEC, s_maxage=SERVER_CACHE_AGE_SEC))
+    @method_decorator(cache_page(60 * 5))
     @action(detail=True, methods=['GET'])
     def beers(self, request, pk=None, slug=None):
         filter_cond = {}
