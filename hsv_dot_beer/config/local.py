@@ -28,3 +28,9 @@ class Local(Common):
     CORS_ORIGIN_WHITELIST = (
         'https://localhost:8000',
     )
+
+    CACHES = {
+      'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+      }
+    }
