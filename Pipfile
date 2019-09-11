@@ -27,6 +27,7 @@ requests = "*"
 celery = {extras = ["redis"],version = ">=4.3.0"}
 django-celery-beat = "*"
 django-cors-headers = "*"
+pylibmc = "*"
 
 [dev-packages]
 ipdb = "*"
