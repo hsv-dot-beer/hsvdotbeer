@@ -1,7 +1,7 @@
 from django_filters.rest_framework import (
     FilterSet, OrderingFilter, CharFilter, BooleanFilter,
 )
-from django.db.models import Q
+from django.db.models import Q, F
 
 from . import models
 
@@ -15,9 +15,22 @@ DEFAULT_STRING_FILTER_OPERATORS = [
 ]
 
 
+class BeerOrderingFilter(OrderingFilter):
+    """Custom version of OrderingFilter that treats null ABVs as zero"""
+
+    def get_ordering_value(self, param):
+        value = super().get_ordering_value(param)
+        if param.endswith('abv'):
+            if param.startswith('-'):
+                # if we're going high-to-low, put nulls at the end
+                return F(value[1:]).desc(nulls_last=True)
+            return F(value).asc(nulls_first=True)
+        return value
+
+
 class BeerFilterSet(FilterSet):
 
-    o = OrderingFilter(
+    o = BeerOrderingFilter(
         fields=[
             'name', 'abv', 'ibu', 'style__name',
             'style__alternate_names__name', 'manufacturer__name',

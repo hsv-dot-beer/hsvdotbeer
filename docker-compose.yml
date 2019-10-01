@@ -2,7 +2,7 @@ version: '2'
 
 services:
   postgres:
-    image: postgres:11.2
+    image: postgres:11.5
   web:
     restart: always
     environment:
