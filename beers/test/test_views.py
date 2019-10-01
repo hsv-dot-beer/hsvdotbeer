@@ -1,4 +1,5 @@
 import json
+from decimal import Decimal
 
 from dateutil.relativedelta import relativedelta
 from django.utils.timezone import now
@@ -219,3 +220,37 @@ class BeerListTestCase(APITestCase):
         eq_(response.status_code, 200, response.data)
         eq_(len(response.data['results']), 2, json.dumps(response.data, indent=2))
         eq_(set(i['id'] for i in response.data['results']), set(i.id for i in beers[:-1]))
+
+    def test_sort_abv_ascending(self):
+        venue = VenueFactory()
+        mfg = ManufacturerFactory()
+        beers = Beer.objects.bulk_create([
+            BeerFactory.build(manufacturer=mfg, abv=None),
+            BeerFactory.build(manufacturer=mfg, abv=Decimal('3.2'))
+        ])
+        Tap.objects.bulk_create(
+            TapFactory.build(beer=beer, venue=venue) for beer in beers
+        )
+        url = f'{self.url}?o=abv&on_tap=True'
+        with self.assertNumQueries(4):
+            response = self.client.get(url)
+        eq_(response.status_code, 200, response.data)
+        eq_(len(response.data['results']), 2, json.dumps(response.data, indent=2))
+        eq_(list(i['id'] for i in response.data['results']), [i.id for i in beers])
+
+    def test_sort_abv_descending(self):
+        venue = VenueFactory()
+        mfg = ManufacturerFactory()
+        beers = Beer.objects.bulk_create([
+            BeerFactory.build(manufacturer=mfg, abv=None),
+            BeerFactory.build(manufacturer=mfg, abv=Decimal('3.2'))
+        ])
+        Tap.objects.bulk_create(
+            TapFactory.build(beer=beer, venue=venue) for beer in beers
+        )
+        url = f'{self.url}?o=-abv&on_tap=True'
+        with self.assertNumQueries(4):
+            response = self.client.get(url)
+        eq_(response.status_code, 200, response.data)
+        eq_(len(response.data['results']), 2, json.dumps(response.data, indent=2))
+        eq_(list(i['id'] for i in response.data['results']), [i.id for i in reversed(beers)])
