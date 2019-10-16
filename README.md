@@ -75,11 +75,18 @@ Start the dev server for local use:
 docker-compose up
 ```
 
+That will automatically pull the required images, install packages, and launch the
+processes. If you need to rebuild your images (such as when dependencies change),
+you can add `--build` to the end of that command to re-fetch images and build.
+
 Run a command inside the docker container:
 
 ```bash
 docker-compose run --rm web [command]
 ```
+
+To get to a plain shell, run `docker-compose run --rm web bash`. From there, you
+can run Django commands like `pipenv run ./manage.py shell`.
 
 ## Running without Docker
 
@@ -91,7 +98,8 @@ export DJANGO_SECRET_KEY=your_secret_key
 pipenv run python manage.py runserver
 ```
 
-You'll need to set this up anyway if you're making migrations (i.e. modifying models).
+You'll need to set this up anyway if you're making migrations (i.e. modifying models)
+outside the docker shell.
 
 ## Contributing and Community
 

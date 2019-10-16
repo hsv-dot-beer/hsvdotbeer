@@ -161,6 +161,18 @@ class DigitalPourParser(BaseTapListProvider):
                 'rate_beer_url': b.get('RateBeerUrl'),
                 'manufacturer_url': b.get('BeerUrl'),
             }
+        elif 'HardSeltzer' in b['$type']:
+            beer = {
+                'name': b['HardSeltzerName'],
+                'style': b['HardSeltzerStyle']['StyleName'],
+                'abv': b['Abv'],
+                'ibu': b.get('Ibu', 0),
+                'color': hex(b['StyleColor']),
+                'logo_url': b.get('LogoImageUrl'),
+                'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'rate_beer_url': b.get('RateBeerUrl'),
+                'manufacturer_url': b.get('BeerUrl'),
+            }
         else:
             beer = {
                 'name': b['BeerName'],
@@ -179,7 +191,9 @@ class DigitalPourParser(BaseTapListProvider):
         """Parse manufacturer info from JSON entry."""
         producer = tap['MenuItemProductDetail']['Beverage']['BeverageProducer']
 
-        styles = ['Cidery', 'Meadery', 'Winery', 'KombuchaMaker', 'Brewery']
+        styles = [
+            'Cidery', 'Meadery', 'Winery', 'KombuchaMaker', 'Brewery', 'HardSeltzerMaker',
+        ]
         url = ''
         for style in styles:
             try:
