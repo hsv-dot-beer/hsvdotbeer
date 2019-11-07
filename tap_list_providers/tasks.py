@@ -5,6 +5,7 @@ from json import JSONDecodeError
 import logging
 
 from django.conf import settings
+from django.utils.timezone import now
 from requests.exceptions import RequestException
 from celery import shared_task
 from twitter.api import Api, CHARACTER_LIMIT
