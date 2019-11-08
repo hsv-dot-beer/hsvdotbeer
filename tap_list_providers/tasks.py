@@ -52,6 +52,9 @@ def parse_provider(provider_name):
             tweeted_about=False,
         ).values_list('id')
     ]
+    if not new_beers:
+        LOG.info('no new beers to tweet about')
+        return
     LOG.debug('Scheduling tweet about new beers: %s', new_beers)
     # give ourselves a brief delay to give a quick chance at an untappd
     # lookup
@@ -119,6 +122,9 @@ def format_beers(beers, format_str=MULTI_BEER_INNER):
 
 @shared_task(bind=True)
 def tweet_about_beers(self, beer_pks):
+    if not beer_pks:
+        LOG.warning('nothing to do')
+        return
     LOG.debug('Tweeting about beer PKs: %s', beer_pks)
     consumer_key = settings.TWITTER_CONSUMER_KEY
     consumer_secret = settings.TWITTER_CONSUMER_SECRET
@@ -150,10 +156,17 @@ def tweet_about_beers(self, beer_pks):
             ),
         ).order_by('id')
     )
+    already_tweeted_about = set(i.id for i in Beer.objects.filter(
+        tweeted_about=True, id__in=beer_pks,
+    ))
+    unknown_pks = set(beer_pks).difference(already_tweeted_about)
     LOG.debug('Got %s beers', len(beers))
     if not beers:
-        LOG.warning('No beers found! Trying again shortly')
-        raise self.retry(countdown=300)
+        if unknown_pks:
+            LOG.warning('No beers found! Trying again shortly')
+            raise self.retry(countdown=300)
+        LOG.info('everything was already tweeted about. No big deal')
+        return
     if len(beers) > 10:
         LOG.info('Too many beers to tweet about at once: %s', len(beers))
         beers = beers[:10]
@@ -165,38 +178,34 @@ def tweet_about_beers(self, beer_pks):
         message = format_beer(beer, SINGLE_BEER_TEMPLATE).strip()
         messages = [message]
     else:
+        extra_beers = len(beer_pks) - len(beers) - len(already_tweeted_about)
         messages = [
             MULTI_BEER_OUTER.format(
                 len(beers),
-                '({} still to come!)'.format(len(beer_pks) - len(beers))
-                if len(beer_pks) > len(beers) else ''
+                '({} still to come!)'.format(extra_beers)
+                if extra_beers > 0 else ''
             ).strip()
         ] + format_beers(beers)
         if len(messages) == 1:
             LOG.info('All beers already tweeted about')
             return
-    LOG.info('Going to tweet: %s', messages)
-    last_status_id = None
-    for message in messages:
-        try:
-            if calc_expected_status_length(message) > CHARACTER_LIMIT:
-                status = api.PostUpdates(
-                    message,
-                    in_reply_to_status_id=last_status_id,
-                    continuation='…',
-                )[-1]
-            else:
-                status = api.PostUpdate(message, in_reply_to_status_id=last_status_id)
-        except TwitterError as exc:
-            LOG.warning('Hit twitter error: %s', exc)
-            if str(exc) in RETRYABLE_ERRORS:
-                raise self.retry(exc=exc)
-            delay = get_twitter_rate_limit_delay(api)
-            if delay is None:
-                LOG.error('No idea what to do with twitter error %s', exc)
-                raise
-            raise self.retry(countdown=delay, exc=exc)
-        last_status_id = status.id
+    message = '\r\n'.join(messages)
+    LOG.info('Going to tweet: %s', message)
+
+    try:
+        if calc_expected_status_length(message) > CHARACTER_LIMIT:
+            api.PostUpdates(message, continuation='…')
+        else:
+            api.PostUpdate(message)
+    except TwitterError as exc:
+        LOG.warning('Hit twitter error: %s', exc)
+        if str(exc) in RETRYABLE_ERRORS:
+            raise self.retry(exc=exc)
+        delay = get_twitter_rate_limit_delay(api)
+        if delay is None:
+            LOG.error('No idea what to do with twitter error %s', exc)
+            raise
+        raise self.retry(countdown=delay, exc=exc)
     Beer.objects.filter(id__in=[i.id for i in beers]).update(tweeted_about=True)
     LOG.debug('Done tweeting')
 
