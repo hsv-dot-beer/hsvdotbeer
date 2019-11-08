@@ -5,7 +5,7 @@ from json import JSONDecodeError
 import logging
 
 from django.conf import settings
-from django.db.models import Prefetch, Max
+from django.db.models import Prefetch
 from django.utils.timezone import now
 from requests.exceptions import RequestException
 from celery import shared_task
