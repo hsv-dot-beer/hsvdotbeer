@@ -229,7 +229,7 @@ def test_tweet(self):
         access_token_key=access_key,
         access_token_secret=access_secret,
     )
-    message = 'Hello World! I know nothing.'
+    message = 'Hello World! I know nothing.\r\nThis should be on line two.'
     try:
         if calc_expected_status_length(message) > CHARACTER_LIMIT:
             api.PostUpdates(message, continuation='…')
