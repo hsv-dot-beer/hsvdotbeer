@@ -6,7 +6,6 @@ Doesn't test the most important rule: never tweet.
 
 from unittest.mock import patch
 
-from django.conf import settings
 from django.test import TestCase
 from celery import Task
 from celery.exceptions import Retry
