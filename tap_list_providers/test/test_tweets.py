@@ -110,3 +110,35 @@ class TweetTestCase(TestCase):
             )
         )
         mock_api.return_value.PostUpdates.assert_not_called()
+
+    @patch('tap_list_providers.tasks.Api')
+    @patch.object(Task, 'retry')
+    def test_single_beer_already_tweeted(self, mock_retry, mock_api):
+        beer = BeerFactory(tweeted_about=True)
+        TapFactory(venue=self.venue, beer=beer)
+        with self.settings_context_manager():
+            tweet_about_beers([beer.id])
+        mock_retry.assert_not_called()
+        mock_api.assert_called_once_with(
+            consumer_key=self.consumer_key,
+            consumer_secret=self.consumer_secret,
+            access_token_key=self.api_key,
+            access_token_secret=self.api_secret,
+        )
+        mock_api.return_value.PostUpdate.assert_not_called()
+        mock_api.return_value.PostUpdates.assert_not_called()
+
+    @patch('tap_list_providers.tasks.Api')
+    @patch.object(Task, 'retry')
+    def test_single_beer_no_creds(self, mock_retry, mock_api):
+        beer = BeerFactory()
+        TapFactory(venue=self.venue, beer=beer)
+        with self.settings(
+            TWITTER_CONSUMER_KEY='',
+            TWITTER_CONSUMER_SECRET='',
+            TWITTER_ACCESS_TOKEN_KEY='',
+            TWITTER_ACCESS_TOKEN_SECRET='',
+        ):
+            tweet_about_beers([beer.id])
+        mock_retry.assert_not_called()
+        mock_api.assert_not_called()
