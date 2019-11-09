@@ -168,7 +168,6 @@ class TweetTestCase(TestCase):
         mock_api.return_value.PostUpdates.assert_called_once()
         mock_api.return_value.PostUpdate.assert_not_called()
         call_args = mock_api.return_value.PostUpdates.call_args
-        print(call_args, dir(call_args))
         self.assertEqual(call_args[1], {'continuation': '…'})
         self.assertEqual(len(call_args[0]), 1)
         tweet = call_args[0][0]
@@ -210,7 +209,6 @@ class TweetTestCase(TestCase):
         mock_api.return_value.PostUpdates.assert_called_once()
         mock_api.return_value.PostUpdate.assert_not_called()
         call_args = mock_api.return_value.PostUpdates.call_args
-        print(call_args, dir(call_args))
         self.assertEqual(call_args[1], {'continuation': '…'})
         self.assertEqual(len(call_args[0]), 1)
         tweet = call_args[0][0]
