@@ -9,6 +9,7 @@ from unittest.mock import patch
 from django.conf import settings
 from django.test import TestCase
 from celery import Task
+from celery.exceptions import Retry
 
 from beers.models import Beer
 from beers.test.factories import BeerFactory, ManufacturerFactory
@@ -185,3 +186,58 @@ class TweetTestCase(TestCase):
                 'unknown',
                 self.venue.name,
             ), line)
+
+    @patch('tap_list_providers.tasks.Api')
+    @patch.object(Task, 'retry')
+    def test_multi_beer_more_to_come(self, mock_retry, mock_api):
+        mfg = ManufacturerFactory()
+        beers = Beer.objects.bulk_create(
+            BeerFactory.build(manufacturer=mfg, style=None) for dummy in range(20)
+        )
+        Tap.objects.bulk_create(
+            TapFactory.build(venue=self.venue, beer=beer)
+            for beer in beers
+        )
+        with self.settings_context_manager():
+            tweet_about_beers([i.id for i in beers])
+        beers = beers[:10]
+        mock_retry.assert_not_called()
+        mock_api.assert_called_once_with(
+            consumer_key=self.consumer_key,
+            consumer_secret=self.consumer_secret,
+            access_token_key=self.api_key,
+            access_token_secret=self.api_secret,
+        )
+        mock_api.return_value.PostUpdates.assert_called_once()
+        mock_api.return_value.PostUpdate.assert_not_called()
+        call_args = mock_api.return_value.PostUpdates.call_args
+        print(call_args, dir(call_args))
+        self.assertEqual(call_args[1], {'continuation': '…'})
+        self.assertEqual(len(call_args[0]), 1)
+        tweet = call_args[0][0]
+        self.assertIn(
+            MULTI_BEER_OUTER.format(len(beers), '(10 still to come!)').strip(),
+            tweet,
+        )
+        lines = tweet.splitlines()
+        self.assertEqual(len(lines), 1 + len(beers))
+        for beer, line in zip(beers, lines[1:]):
+            self.assertIn(MULTI_BEER_INNER.format(
+                beer.name,
+                '@' + beer.manufacturer.twitter_handle,
+                'unknown',
+                self.venue.name,
+            ), line)
+
+    @patch('tap_list_providers.tasks.Api')
+    def test_beer_not_found_yet(self, mock_api):
+        beer_pks = [1234, 5678]
+        with self.settings_context_manager():
+            with self.assertRaises(Retry):
+                tweet_about_beers(beer_pks)
+        mock_api.assert_called_once_with(
+            consumer_key=self.consumer_key,
+            consumer_secret=self.consumer_secret,
+            access_token_key=self.api_key,
+            access_token_secret=self.api_secret,
+        )
