@@ -10,7 +10,9 @@ from django.conf import settings
 from django.test import TestCase
 from celery import Task
 
-from beers.test.factories import BeerFactory
+from beers.models import Beer
+from beers.test.factories import BeerFactory, ManufacturerFactory
+from taps.models import Tap
 from taps.test.factories import TapFactory
 from venues.test.factories import VenueFactory
 from tap_list_providers.tasks import (
@@ -142,3 +144,44 @@ class TweetTestCase(TestCase):
             tweet_about_beers([beer.id])
         mock_retry.assert_not_called()
         mock_api.assert_not_called()
+
+    @patch('tap_list_providers.tasks.Api')
+    @patch.object(Task, 'retry')
+    def test_multi_beer(self, mock_retry, mock_api):
+        mfg = ManufacturerFactory()
+        beers = Beer.objects.bulk_create(
+            BeerFactory.build(manufacturer=mfg, style=None) for dummy in range(10)
+        )
+        Tap.objects.bulk_create(
+            TapFactory.build(venue=self.venue, beer=beer)
+            for beer in beers
+        )
+        with self.settings_context_manager():
+            tweet_about_beers([i.id for i in beers])
+        mock_retry.assert_not_called()
+        mock_api.assert_called_once_with(
+            consumer_key=self.consumer_key,
+            consumer_secret=self.consumer_secret,
+            access_token_key=self.api_key,
+            access_token_secret=self.api_secret,
+        )
+        mock_api.return_value.PostUpdates.assert_called_once()
+        mock_api.return_value.PostUpdate.assert_not_called()
+        call_args = mock_api.return_value.PostUpdates.call_args
+        print(call_args, dir(call_args))
+        self.assertEqual(call_args[1], {'continuation': '…'})
+        self.assertEqual(len(call_args[0]), 1)
+        tweet = call_args[0][0]
+        self.assertIn(
+            MULTI_BEER_OUTER.format(len(beers), '').strip(),
+            tweet,
+        )
+        lines = tweet.splitlines()
+        self.assertEqual(len(lines), 1 + len(beers))
+        for beer, line in zip(beers, lines[1:]):
+            self.assertIn(MULTI_BEER_INNER.format(
+                beer.name,
+                '@' + beer.manufacturer.twitter_handle,
+                'unknown',
+                self.venue.name,
+            ), line)
