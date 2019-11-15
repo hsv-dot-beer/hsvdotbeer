@@ -239,7 +239,11 @@ def test_tweet(self):
         access_token_key=access_key,
         access_token_secret=access_secret,
     )
-    message = 'Hello World! I know nothing.\r\nThis should be on line two.'
+    message = 'This is a test long tweet\r\n{}'.format(
+        '\r\n'.join(
+            f'This is line {line}' for line in range(2, 30)
+        )
+    )
     try:
         if calc_expected_status_length(message) > CHARACTER_LIMIT:
             api.PostUpdates(message, continuation='…', threaded=True)
