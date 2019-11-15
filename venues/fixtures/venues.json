@@ -350,7 +350,7 @@
         "time_zone": "America/Chicago",
         "website": "https://innerspacebrewing.com",
         "facebook_page": "https://www.facebook.com/InnerSpaceBrewing/",
-        "twitter_handle": "https://twitter.com/Inner",
+        "twitter_handle": "InnerSpaceBrews",
         "instagram_handle": "",
         "tap_list_provider": "taplist.io",
         "untappd_url": "https://untappd.com/v/innerspace-brewing/7027492",
@@ -361,6 +361,32 @@
         "on_downtown_craft_beer_trail": true,
         "latitude": "34.72248000",
         "longitude": "-86.60418700"
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 18,
+    "fields": {
+        "name": "Big Spring Tavern",
+        "address": "200 Westside Square, Suite 60",
+        "city": "Huntsville",
+        "state": "AL",
+        "postal_code": "35801",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "",
+        "facebook_page": "",
+        "twitter_handle": "",
+        "instagram_handle": "",
+        "tap_list_provider": "digitalpour",
+        "untappd_url": null,
+        "email": "",
+        "phone_number": "",
+        "logo_url": "",
+        "slug": "big-spring-tavern",
+        "on_downtown_craft_beer_trail": false,
+        "latitude": null,
+        "longitude": null
     }
 },
 {
@@ -613,6 +639,24 @@
         "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "4434",
         "taplist_io_access_code": "5e5b8565-27b7-4cfd-8e52-b7d2b2ca5c63"
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 18,
+    "fields": {
+        "venue": 18,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "5c80378c3527260e1860a625",
+        "digital_pour_location_number": 1,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": ""
     }
 }
 ]

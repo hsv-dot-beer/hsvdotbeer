@@ -222,3 +222,8 @@ class Common(Configuration):
         'tap_list_providers.tasks',
         'beers.tasks',
     )
+
+    TWITTER_CONSUMER_KEY = os.environ.get('TWITTER_CONSUMER_KEY')
+    TWITTER_CONSUMER_SECRET = os.environ.get('TWITTER_CONSUMER_SECRET')
+    TWITTER_ACCESS_TOKEN_KEY = os.environ.get('TWITTER_ACCESS_TOKEN_KEY')
+    TWITTER_ACCESS_TOKEN_SECRET = os.environ.get('TWITTER_ACCESS_TOKEN_SECRET')

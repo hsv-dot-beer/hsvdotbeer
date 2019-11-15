@@ -27,7 +27,7 @@ LOG = logging.getLogger(__name__)
 class DigitalPourParser(BaseTapListProvider):
     """Parser for DigitalPour based vendors."""
 
-    URL = 'https://mobile.digitalpour.com/DashboardServer/v4/MobileApp/MenuItems/{}/{}/Tap?ApiKey={}'
+    URL = 'https://mobile.digitalpour.com/DashboardServer/v4/MobileApp/MenuItems/{}/{}/Tap?ApiKey={}'  # noqa
     APIKEY = '574725e55e002c0b7cf0cf19'
     provider_name = 'digitalpour'
 
@@ -219,10 +219,12 @@ class DigitalPourParser(BaseTapListProvider):
             'http'.casefold()
         ):
             manufacturer['url'] = f'http://{manufacturer["url"]}'
-        if manufacturer['twitter_handle'] and manufacturer[
-                'twitter_handle'].startswith('@'):
-            # strip the leading @ for consistency
-            manufacturer['twitter_handle'] = manufacturer['twitter_handle'][1:]
+        if manufacturer['twitter_handle']:
+            if manufacturer['twitter_handle'].startswith('@'):
+                # strip the leading @ for consistency
+                manufacturer['twitter_handle'] = manufacturer['twitter_handle'][1:]
+            if '/' in manufacturer['twitter_handle']:
+                manufacturer['twitter_handle'] = manufacturer['twitter_handle'].rsplit('/', 1)[-1]
         LOG.debug(
             'Got twitter name %s from producer %s',
             manufacturer['twitter_handle'], producer,
