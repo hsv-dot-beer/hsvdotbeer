@@ -180,6 +180,7 @@ class Beer(models.Model):
         blank=True, null=True, unique=True,
     )
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
+    tweeted_about = models.BooleanField(default=False, db_index=True)
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
