@@ -51,6 +51,10 @@ class Venue(models.Model):
     longitude = models.DecimalField(
         max_digits=11, decimal_places=8, blank=True, null=True,
     )
+    twitter_short_location_description = models.CharField(
+        'Short location description for this specific location for use on '
+        'Twitter', max_length=25, blank=True,
+    )
 
     def __str__(self):
         return self.name
