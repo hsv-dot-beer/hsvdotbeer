@@ -38,7 +38,7 @@ class TweetTestCase(TestCase):
             TWITTER_ACCESS_TOKEN_SECRET=self.api_secret,
         )
 
-    @patch('tap_list_providers.tasks.Api')
+    @patch('tap_list_providers.tasks.ThreadedApi')
     @patch.object(Task, 'retry')
     def test_single_beer(self, mock_retry, mock_api):
         beer = BeerFactory()
@@ -62,7 +62,7 @@ class TweetTestCase(TestCase):
         )
         mock_api.return_value.PostUpdates.assert_not_called()
 
-    @patch('tap_list_providers.tasks.Api')
+    @patch('tap_list_providers.tasks.ThreadedApi')
     @patch.object(Task, 'retry')
     def test_single_beer_no_twitter(self, mock_retry, mock_api):
         beer = BeerFactory()
@@ -88,7 +88,7 @@ class TweetTestCase(TestCase):
         )
         mock_api.return_value.PostUpdates.assert_not_called()
 
-    @patch('tap_list_providers.tasks.Api')
+    @patch('tap_list_providers.tasks.ThreadedApi')
     @patch.object(Task, 'retry')
     def test_single_beer_venue_twitter(self, mock_retry, mock_api):
         beer = BeerFactory()
@@ -114,7 +114,7 @@ class TweetTestCase(TestCase):
         )
         mock_api.return_value.PostUpdates.assert_not_called()
 
-    @patch('tap_list_providers.tasks.Api')
+    @patch('tap_list_providers.tasks.ThreadedApi')
     @patch.object(Task, 'retry')
     def test_single_beer_already_tweeted(self, mock_retry, mock_api):
         beer = BeerFactory(tweeted_about=True)
@@ -131,7 +131,7 @@ class TweetTestCase(TestCase):
         mock_api.return_value.PostUpdate.assert_not_called()
         mock_api.return_value.PostUpdates.assert_not_called()
 
-    @patch('tap_list_providers.tasks.Api')
+    @patch('tap_list_providers.tasks.ThreadedApi')
     @patch.object(Task, 'retry')
     def test_single_beer_no_creds(self, mock_retry, mock_api):
         beer = BeerFactory()
@@ -146,7 +146,7 @@ class TweetTestCase(TestCase):
         mock_retry.assert_not_called()
         mock_api.assert_not_called()
 
-    @patch('tap_list_providers.tasks.Api')
+    @patch('tap_list_providers.tasks.ThreadedApi')
     @patch.object(Task, 'retry')
     def test_multi_beer(self, mock_retry, mock_api):
         mfg = ManufacturerFactory()
@@ -169,7 +169,7 @@ class TweetTestCase(TestCase):
         mock_api.return_value.PostUpdates.assert_called_once()
         mock_api.return_value.PostUpdate.assert_not_called()
         call_args = mock_api.return_value.PostUpdates.call_args
-        self.assertEqual(call_args[1], {'continuation': '…'})
+        self.assertEqual(call_args[1], {'continuation': '…', 'threaded': True})
         self.assertEqual(len(call_args[0]), 1)
         tweet = call_args[0][0]
         self.assertIn(
@@ -186,7 +186,7 @@ class TweetTestCase(TestCase):
                 self.venue.name,
             ), line)
 
-    @patch('tap_list_providers.tasks.Api')
+    @patch('tap_list_providers.tasks.ThreadedApi')
     @patch.object(Task, 'retry')
     def test_multi_beer_more_to_come(self, mock_retry, mock_api):
         mfg = ManufacturerFactory()
@@ -210,7 +210,7 @@ class TweetTestCase(TestCase):
         mock_api.return_value.PostUpdates.assert_called_once()
         mock_api.return_value.PostUpdate.assert_not_called()
         call_args = mock_api.return_value.PostUpdates.call_args
-        self.assertEqual(call_args[1], {'continuation': '…'})
+        self.assertEqual(call_args[1], {'continuation': '…', 'threaded': True})
         self.assertEqual(len(call_args[0]), 1)
         tweet = call_args[0][0]
         self.assertIn(
@@ -227,7 +227,7 @@ class TweetTestCase(TestCase):
                 self.venue.name,
             ), line)
 
-    @patch('tap_list_providers.tasks.Api')
+    @patch('tap_list_providers.tasks.ThreadedApi')
     def test_beer_not_found_yet(self, mock_api):
         beer_pks = [1234, 5678]
         with self.settings_context_manager():
