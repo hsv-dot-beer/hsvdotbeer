@@ -17,6 +17,7 @@ from taps.test.factories import TapFactory
 from venues.test.factories import VenueFactory
 from tap_list_providers.tasks import (
     tweet_about_beers, SINGLE_BEER_TEMPLATE, MULTI_BEER_INNER, MULTI_BEER_OUTER,
+    format_venue,
 )
 
 
@@ -238,3 +239,24 @@ class TweetTestCase(TestCase):
             access_token_key=self.api_key,
             access_token_secret=self.api_secret,
         )
+
+
+class VenueFormatTestCase(TestCase):
+
+    def test_no_twitter(self):
+        venue = VenueFactory(twitter_handle='')
+        formatted = format_venue(venue)
+        self.assertEqual(formatted, venue.name)
+
+    def test_twitter_no_desc(self):
+        venue = VenueFactory(twitter_handle='mytwitter')
+        formatted = format_venue(venue)
+        self.assertEqual(formatted, '@mytwitter')
+
+    def test_twitter_with_desc(self):
+        venue = VenueFactory(
+            twitter_handle='myBar',
+            twitter_short_location_description='downtown',
+        )
+        formatted = format_venue(venue)
+        self.assertEqual(formatted, '@myBar downtown')

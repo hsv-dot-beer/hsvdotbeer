@@ -66,6 +66,8 @@ def parse_provider(provider_name):
 def format_venue(venue):
     """Format a venue for tweeting"""
     if venue.twitter_handle:
+        if venue.twitter_short_location_description:
+            return f'@{venue.twitter_handle} {venue.twitter_short_location_description}'
         return f'@{venue.twitter_handle}'
     return venue.name
 
