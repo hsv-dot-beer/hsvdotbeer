@@ -9,7 +9,7 @@ from django.db.models import Prefetch
 from django.utils.timezone import now
 from requests.exceptions import RequestException
 from celery import shared_task
-from twitter.api import Api, CHARACTER_LIMIT
+from twitter.api import CHARACTER_LIMIT
 from twitter.error import TwitterError
 from twitter.twitter_utils import calc_expected_status_length
 
@@ -20,6 +20,7 @@ from tap_list_providers.base import BaseTapListProvider
 from tap_list_providers.parsers import (  # noqa
     digitalpour, taphunter, untappd, stemandstein, taplist_io,
 )
+from tap_list_providers.twitter_api import ThreadedApi
 
 SINGLE_BEER_TEMPLATE = "We found a new beer! {} from {} (style: {}) on tap at {}"
 
@@ -65,6 +66,8 @@ def parse_provider(provider_name):
 def format_venue(venue):
     """Format a venue for tweeting"""
     if venue.twitter_handle:
+        if venue.twitter_short_location_description:
+            return f'@{venue.twitter_handle} {venue.twitter_short_location_description}'
         return f'@{venue.twitter_handle}'
     return venue.name
 
@@ -137,7 +140,7 @@ def tweet_about_beers(self, beer_pks):
     ):
         LOG.warning('Twitter API credentials not set!')
         return
-    api = Api(
+    api = ThreadedApi(
         consumer_key=consumer_key,
         consumer_secret=consumer_secret,
         access_token_key=access_key,
@@ -194,7 +197,7 @@ def tweet_about_beers(self, beer_pks):
 
     try:
         if calc_expected_status_length(message) > CHARACTER_LIMIT:
-            api.PostUpdates(message, continuation='…')
+            api.PostUpdates(message, continuation='…', threaded=True)
         else:
             api.PostUpdate(message)
     except TwitterError as exc:
@@ -232,16 +235,20 @@ def test_tweet(self):
     ):
         LOG.warning('Twitter API credentials not set!')
         return
-    api = Api(
+    api = ThreadedApi(
         consumer_key=consumer_key,
         consumer_secret=consumer_secret,
         access_token_key=access_key,
         access_token_secret=access_secret,
     )
-    message = 'Hello World! I know nothing.\r\nThis should be on line two.'
+    message = 'This is a test long tweet\r\n{}'.format(
+        '\r\n'.join(
+            f'This is line {line}' for line in range(2, 30)
+        )
+    )
     try:
         if calc_expected_status_length(message) > CHARACTER_LIMIT:
-            api.PostUpdates(message, continuation='…')
+            api.PostUpdates(message, continuation='…', threaded=True)
         else:
             api.PostUpdate(message)
     except TwitterError as exc:
