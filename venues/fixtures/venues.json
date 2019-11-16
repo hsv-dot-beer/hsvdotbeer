@@ -22,7 +22,8 @@
         "slug": "straight-to-ale",
         "on_downtown_craft_beer_trail": true,
         "latitude": "34.72094800",
-        "longitude": "-86.60709000"
+        "longitude": "-86.60709000",
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -48,7 +49,8 @@
         "slug": "madison-taproom",
         "on_downtown_craft_beer_trail": false,
         "latitude": "34.75632700",
-        "longitude": "-86.72494500"
+        "longitude": "-86.72494500",
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -74,7 +76,8 @@
         "slug": "otbx",
         "on_downtown_craft_beer_trail": true,
         "latitude": "34.73339800",
-        "longitude": "-86.58495300"
+        "longitude": "-86.58495300",
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -100,7 +103,8 @@
         "slug": "rocket-city-craft-beer",
         "on_downtown_craft_beer_trail": false,
         "latitude": "34.74765700",
-        "longitude": "-86.76637000"
+        "longitude": "-86.76637000",
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -126,7 +130,8 @@
         "slug": "whole-foods-hsv",
         "on_downtown_craft_beer_trail": false,
         "latitude": "34.71222600",
-        "longitude": "-86.58991600"
+        "longitude": "-86.58991600",
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -152,7 +157,8 @@
         "slug": "liquor-express",
         "on_downtown_craft_beer_trail": true,
         "latitude": "34.74135200",
-        "longitude": "-86.59819700"
+        "longitude": "-86.59819700",
+        "twitter_short_location_description": "downtown"
     }
 },
 {
@@ -178,7 +184,8 @@
         "slug": "wagon-wheel",
         "on_downtown_craft_beer_trail": false,
         "latitude": "34.65305000",
-        "longitude": "-86.48039500"
+        "longitude": "-86.48039500",
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -194,7 +201,7 @@
         "time_zone": "America/Chicago",
         "website": "",
         "facebook_page": "https://www.facebook.com/TheOpenBottleMadison/",
-        "twitter_handle": "",
+        "twitter_handle": "LiquorExpressAL",
         "instagram_handle": "",
         "tap_list_provider": "taphunter",
         "untappd_url": "https://untappd.com/v/the-open-bottle/8190315",
@@ -204,7 +211,8 @@
         "slug": "open-bottle",
         "on_downtown_craft_beer_trail": false,
         "latitude": "34.75356000",
-        "longitude": "-86.71162200"
+        "longitude": "-86.71162200",
+        "twitter_short_location_description": "(The Open Bottle)"
     }
 },
 {
@@ -230,7 +238,8 @@
         "slug": "das-stahl-bierhaus",
         "on_downtown_craft_beer_trail": false,
         "latitude": "34.66121200",
-        "longitude": "-86.57131300"
+        "longitude": "-86.57131300",
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -256,7 +265,8 @@
         "slug": "casual-pint-hsv",
         "on_downtown_craft_beer_trail": false,
         "latitude": "34.75380900",
-        "longitude": "-86.69412700"
+        "longitude": "-86.69412700",
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -282,7 +292,8 @@
         "slug": "yellowhammer",
         "on_downtown_craft_beer_trail": true,
         "latitude": "34.72168500",
-        "longitude": "-86.60553600"
+        "longitude": "-86.60553600",
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -308,7 +319,8 @@
         "slug": "mad-malts",
         "on_downtown_craft_beer_trail": true,
         "latitude": "34.74636400",
-        "longitude": "-86.58528300"
+        "longitude": "-86.58528300",
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -334,7 +346,8 @@
         "slug": "stem-and-stein",
         "on_downtown_craft_beer_trail": false,
         "latitude": "34.69143300",
-        "longitude": "-86.78591400"
+        "longitude": "-86.78591400",
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -360,7 +373,8 @@
         "slug": "innerspace-brewing",
         "on_downtown_craft_beer_trail": true,
         "latitude": "34.72248000",
-        "longitude": "-86.60418700"
+        "longitude": "-86.60418700",
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -386,7 +400,8 @@
         "slug": "big-spring-tavern",
         "on_downtown_craft_beer_trail": false,
         "latitude": null,
-        "longitude": null
+        "longitude": null,
+        "twitter_short_location_description": ""
     }
 },
 {
