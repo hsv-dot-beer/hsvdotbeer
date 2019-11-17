@@ -32,7 +32,7 @@ class ThreadedApi(Api):
             continuation = ''
         char_limit = CHARACTER_LIMIT - len(continuation)
 
-        tweets = self._TweetTextWrap(status=status, char_lim=char_limit)
+        tweets = self.split_tweet_by_lines(tweet=status, continuation)
 
         if len(tweets) == 1:
             results.append(self.PostUpdate(status=tweets[0], **kwargs))
@@ -53,3 +53,42 @@ class ThreadedApi(Api):
         results.append(self.PostUpdate(status=tweets[-1], **kwargs))
 
         return results
+
+    def split_tweet_by_lines(self, tweet, continuation):
+        """Break the thread up by lines if possible"""
+        lines = tweet.split('\r\n')
+        tweets = []
+        current_tweet = ''
+
+        character_limit = CHARACTER_LIMIT - len(continuation)
+        for line in lines:
+            if len(line) > character_limit:
+                # this line is too long.
+                # dump what we have into the tweet queue
+                # and then use upstream's method to split up this line
+                if current_tweet:
+                    tweets.append(current_tweet + continuation)
+                    current_tweet = ''
+                split = self._TweetTextWrap(line, char_lim=character_limit)
+                # and then take whatever it gave us
+                # as a series of tweets
+                # but only after appending continuation
+                tweets += [f'{i}{continuation}' for i in split[:-1]]
+                # keep the last line as the start of our next tweet
+                current_tweet = split[-1]
+                continue
+            if len(line) + len(current_tweet) >= character_limit:
+                # next tweet!
+                if current_tweet:
+                    tweets.append(current_tweet + continuation)
+                current_tweet = line
+                continue
+            # add the next line to the currently being built tweet
+            if current_tweet:
+                current_tweet = f'{current_tweet}\r\n{line}'
+            else:
+                current_tweet = line
+        if current_tweet:
+            # if we have anything left over, tack it on!
+            tweets.append(current_tweet)
+        return tweets
