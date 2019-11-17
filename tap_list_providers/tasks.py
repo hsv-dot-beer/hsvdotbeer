@@ -25,7 +25,7 @@ from tap_list_providers.twitter_api import ThreadedApi
 SINGLE_BEER_TEMPLATE = "We found a new beer! {} from {} (style: {}) on tap at {}"
 
 MULTI_BEER_OUTER = """We found {} new beers! {}"""
-MULTI_BEER_INNER = """New: {} from {} (style: {}) on tap at {}"""
+MULTI_BEER_INNER = """- {} from {} (style: {}) on tap at {}"""
 
 RETRYABLE_ERRORS = {
     "Capacity Error",
