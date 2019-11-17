@@ -2,6 +2,7 @@ from itertools import count
 from random import SystemRandom
 from string import ascii_lowercase
 
+from twitter.api import CHARACTER_LIMIT
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -77,3 +78,37 @@ class TestThreadedApi(TestCase):
             calls = mock_post_update.call_args_list
         # 625 chars + 50 spaces ==> 3 tweets
         self.assertEqual(len(calls), 3)
+
+    def test_break_tweet_up_by_lines(self):
+        tweet = '\r\n'.join([
+            'Line 1',
+            'Line 2',
+            'Line 3',
+            # line 4 is 301 chars. Yay.
+            'This is an absurdly long line that will become the basis for what'
+            ' should be preserved as line 4 but who knows what Twitter will '
+            'do. This needs even more filler since Twitter decided to double'
+            ' its tweet character limit. I have no idea what else to put in'
+            ' here because everything is awful. Enjoy Arby\'s.',
+            'Line 5',
+        ])
+        tweets = self.api.split_tweet_by_lines(
+            tweet, character_limit=CHARACTER_LIMIT - len('…'))
+        self.assertEqual(len(tweets), 3, tweets)
+        self.assertEqual(
+            tweets[0],
+            'Line 1\r\nLine 2\r\nLine 3',
+        )
+        self.assertEqual(
+            tweets[1],
+            'This is an absurdly long line that '
+            'will become the basis for what'
+            ' should be preserved as line 4 but who knows what Twitter will '
+            'do. This needs even more filler since Twitter decided to double'
+            ' its tweet character limit. I have no idea what else to put in '
+            'here because everything'
+        )
+        self.assertEqual(
+            tweets[2],
+            'is awful. Enjoy Arby\'s.\r\nLine 5',
+        )
