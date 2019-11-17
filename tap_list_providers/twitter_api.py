@@ -32,7 +32,9 @@ class ThreadedApi(Api):
             continuation = ''
         char_limit = CHARACTER_LIMIT - len(continuation)
 
-        tweets = self.split_tweet_by_lines(tweet=status, continuation)
+        tweets = self.split_tweet_by_lines(
+            tweet=status, character_limit=char_limit,
+        )
 
         if len(tweets) == 1:
             results.append(self.PostUpdate(status=tweets[0], **kwargs))
@@ -54,33 +56,31 @@ class ThreadedApi(Api):
 
         return results
 
-    def split_tweet_by_lines(self, tweet, continuation):
+    def split_tweet_by_lines(self, tweet, character_limit):
         """Break the thread up by lines if possible"""
         lines = tweet.split('\r\n')
         tweets = []
         current_tweet = ''
 
-        character_limit = CHARACTER_LIMIT - len(continuation)
         for line in lines:
             if len(line) > character_limit:
                 # this line is too long.
                 # dump what we have into the tweet queue
                 # and then use upstream's method to split up this line
                 if current_tweet:
-                    tweets.append(current_tweet + continuation)
+                    tweets.append(current_tweet)
                     current_tweet = ''
                 split = self._TweetTextWrap(line, char_lim=character_limit)
                 # and then take whatever it gave us
                 # as a series of tweets
-                # but only after appending continuation
-                tweets += [f'{i}{continuation}' for i in split[:-1]]
+                tweets += split[:-1]
                 # keep the last line as the start of our next tweet
                 current_tweet = split[-1]
                 continue
             if len(line) + len(current_tweet) >= character_limit:
                 # next tweet!
                 if current_tweet:
-                    tweets.append(current_tweet + continuation)
+                    tweets.append(current_tweet)
                 current_tweet = line
                 continue
             # add the next line to the currently being built tweet

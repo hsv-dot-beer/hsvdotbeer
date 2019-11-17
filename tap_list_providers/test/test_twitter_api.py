@@ -2,6 +2,7 @@ from itertools import count
 from random import SystemRandom
 from string import ascii_lowercase
 
+from twitter.api import CHARACTER_LIMIT
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -91,11 +92,12 @@ class TestThreadedApi(TestCase):
             ' here because everything is awful. Enjoy Arby\'s.',
             'Line 5',
         ])
-        tweets = self.api.split_tweet_by_lines(tweet, continuation='…')
+        tweets = self.api.split_tweet_by_lines(
+            tweet, character_limit=CHARACTER_LIMIT - len('…'))
         self.assertEqual(len(tweets), 3, tweets)
         self.assertEqual(
             tweets[0],
-            'Line 1\r\nLine 2\r\nLine 3…',
+            'Line 1\r\nLine 2\r\nLine 3',
         )
         self.assertEqual(
             tweets[1],
@@ -104,7 +106,7 @@ class TestThreadedApi(TestCase):
             ' should be preserved as line 4 but who knows what Twitter will '
             'do. This needs even more filler since Twitter decided to double'
             ' its tweet character limit. I have no idea what else to put in '
-            'here because everything…'
+            'here because everything'
         )
         self.assertEqual(
             tweets[2],
