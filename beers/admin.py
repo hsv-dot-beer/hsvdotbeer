@@ -71,10 +71,10 @@ class BeerAdmin(admin.ModelAdmin):
     merge_beers.short_description = 'Merge beers'
     export_as_csv.short_description = 'Export as CSV'
     actions = ['merge_beers', 'export_as_csv']
-    list_display = ('name', 'manufacturer', 'id')
-    list_filter = ('name', 'manufacturer')
-    list_select_related = ('manufacturer', )
-    search_fields = ('name', 'manufacturer__name')
+    list_display = ('name', 'manufacturer', 'style', 'id')
+    list_filter = ('manufacturer', 'style')
+    list_select_related = ('manufacturer', 'style')
+    search_fields = ('name', 'manufacturer__name', 'style__name')
     inlines = [BeerAlternateNameInline]
 
 
