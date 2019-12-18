@@ -56,13 +56,25 @@ class BeerAdmin(admin.ModelAdmin):
             f"/beers/mergebeers/?ids={','.join(selected)}",
         )
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        fields = {
+            'style': models.Style.objects.order_by('name'),
+            'manufacturer': models.Manufacturer.objects.order_by('name'),
+        }
+        order_qs = fields.get(db_field.name)
+        print(db_field.name, order_qs is not None)
+        if order_qs:
+            kwargs['queryset'] = order_qs
+
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
     merge_beers.short_description = 'Merge beers'
     export_as_csv.short_description = 'Export as CSV'
     actions = ['merge_beers', 'export_as_csv']
-    list_display = ('name', 'manufacturer', 'id')
-    list_filter = ('name', 'manufacturer')
-    list_select_related = ('manufacturer', )
-    search_fields = ('name', 'manufacturer__name')
+    list_display = ('name', 'manufacturer', 'style', 'id')
+    list_filter = ('manufacturer', 'style')
+    list_select_related = ('manufacturer', 'style')
+    search_fields = ('name', 'manufacturer__name', 'style__name')
     inlines = [BeerAlternateNameInline]
 
 
