@@ -428,7 +428,7 @@
         "on_downtown_craft_beer_trail": false,
         "latitude": null,
         "longitude": null,
-        "twitter_short_location_description": "Madison"
+        "twitter_short_location_description": ""
     }
 },
 {
@@ -444,7 +444,7 @@
         "time_zone": "America/Chicago",
         "website": "https://www.rocketrepublicbrewing.com/",
         "facebook_page": "https://www.facebook.com/RocketRepublicBrewing/",
-        "twitter_handle": "RRBeer",
+        "twitter_handle": "RR_Downtown",
         "instagram_handle": "rocketrepubicbrewing",
         "tap_list_provider": "digitalpour",
         "untappd_url": null,
@@ -455,7 +455,7 @@
         "on_downtown_craft_beer_trail": true,
         "latitude": null,
         "longitude": null,
-        "twitter_short_location_description": "Downtown"
+        "twitter_short_location_description": ""
     }
 },
 {
