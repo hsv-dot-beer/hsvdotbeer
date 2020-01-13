@@ -161,7 +161,9 @@ class BeerMenusParser(BaseTapListProvider):
                         trailing
                     ):
                         raise ValueError(
-                            f'Got unexpected response loading more: {jq_call}'
+                            f'Got unexpected response loading more '
+                            f'(https://www.beermenus.com{load_more_url}):'
+                            f' {jq_call[:100]}'
                         )
                     # undo the escaping
                     html = jq_call[3:0 - len(trailing)].replace(
@@ -252,7 +254,7 @@ class BeerMenusParser(BaseTapListProvider):
                     'price': beer.price,
                 }],
                 abv=beer.abv,
-                beermenus_slug=beer.brewery_slug.split('/')[-1],
+                beermenus_slug=beer.url.split('/')[-1],
                 manufacturer=manufacturer,
             )
             if not tap.id or tap.beer_id != beer.id:
