@@ -3,7 +3,7 @@
   "model": "django_celery_beat.periodictasks",
   "pk": 1,
   "fields": {
-    "last_update": "2019-08-26T21:56:38.129Z"
+    "last_update": "2020-01-13T02:08:44.056Z"
   }
 },
 {
@@ -247,6 +247,33 @@
     "total_run_count": 0,
     "date_changed": "2019-08-26T21:56:38.133Z",
     "description": "Remove BeerAlternateName and ManufacturerAlternateName instances which match their parents' names."
+  }
+},
+{
+  "model": "django_celery_beat.periodictask",
+  "pk": 11,
+  "fields": {
+    "name": "Parse BeerMenus",
+    "task": "tap_list_providers.tasks.parse_provider",
+    "interval": null,
+    "crontab": 5,
+    "solar": null,
+    "clocked": null,
+    "args": "[\"beermenus\"]",
+    "kwargs": "{}",
+    "queue": null,
+    "exchange": null,
+    "routing_key": null,
+    "headers": "{}",
+    "priority": null,
+    "expires": null,
+    "one_off": false,
+    "start_time": null,
+    "enabled": true,
+    "last_run_at": null,
+    "total_run_count": 0,
+    "date_changed": "2020-01-13T02:08:44.058Z",
+    "description": ""
   }
 },
 {
