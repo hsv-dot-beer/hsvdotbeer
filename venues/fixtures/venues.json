@@ -459,6 +459,60 @@
     }
 },
 {
+    "model": "venues.venue",
+    "pk": 21,
+    "fields": {
+        "name": "Bad Daddy's Burger Bar Huntsville",
+        "address": "2317 Memorial Pkwy SW",
+        "city": "Huntsville",
+        "state": "AL",
+        "postal_code": "35801",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "https://baddaddysburgerbar.com/store/al/huntsville-al",
+        "facebook_page": "https://facebook.com/BadDaddysBurgerBar",
+        "twitter_handle": "BadDaddysBurger",
+        "instagram_handle": "baddaddysburger",
+        "tap_list_provider": "beermenus",
+        "untappd_url": null,
+        "email": "",
+        "phone_number": "2569704466",
+        "logo_url": "",
+        "slug": "bad-daddys-burger-bar-huntsville",
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.71462200",
+        "longitude": "-86.59030400",
+        "twitter_short_location_description": ""
+    }
+},
+{
+    "model": "venues.venue",
+    "pk": 22,
+    "fields": {
+        "name": "Beauregard's",
+        "address": "3310 Memorial Pkwy SW",
+        "city": "Huntsville",
+        "state": "AL",
+        "postal_code": "35801",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "https://beaus.us",
+        "facebook_page": "https://www.facebook.com/beauwings",
+        "twitter_handle": "beauregardshsv",
+        "instagram_handle": "beauregardshsv",
+        "tap_list_provider": "beermenus",
+        "untappd_url": null,
+        "email": "info@beaus.us",
+        "phone_number": "2564693005",
+        "logo_url": "",
+        "slug": "beauregards",
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.69928900",
+        "longitude": "-86.58591700",
+        "twitter_short_location_description": ""
+    }
+},
+{
     "model": "venues.venueapiconfiguration",
     "pk": 1,
     "fields": {
@@ -796,6 +850,46 @@
         "taplist_io_access_code": "",
         "beermenus_categories": "[]",
         "beermenus_slug": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 21,
+    "fields": {
+        "venue": 21,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": "",
+        "beermenus_categories": "[\"on_tap\", \"featured\"]",
+        "beermenus_slug": "64594-bad-daddy-s-burger-bar-huntsville"
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 22,
+    "fields": {
+        "venue": 22,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": null,
+        "untappd_theme": null,
+        "untappd_categories": "[]",
+        "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": "",
+        "beermenus_categories": "[\"local_draft\", \"craft_beer\", \"domestic\"]",
+        "beermenus_slug": "52478-beauregard-s"
     }
 }
 ]
