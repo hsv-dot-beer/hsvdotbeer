@@ -75,6 +75,7 @@ class BeerMenusParser(BaseTapListProvider):
         self.categories = categories
         self.soup = None
         self.save_fetched_data = save_fetched_data
+        super().__init__()
 
     def fetch_data(self) -> str:
         if not self.location_url:
@@ -217,7 +218,7 @@ class BeerMenusParser(BaseTapListProvider):
         self.parse_beers(beers)
         LOG.info('Found %s taps from %s', len(beers), venue)
         existing_taps = {
-            tap.tap_number: tap for tap in venues.taps.all()
+            tap.tap_number: tap for tap in venue.taps.all()
         }
         # delete unused taps
         Tap.objects.filter(venue=venue, tap_number__gt=len(beers)).delete()
@@ -233,7 +234,7 @@ class BeerMenusParser(BaseTapListProvider):
                 location=beer.brewery_location,
                 beermenus_slug=beer.brewery_slug.split('/')[-1],
             )
-            beer = self.guess_beer(
+            beer = self.get_beer(
                 name=beer.name,
                 style=beer.style,
                 venue=venue,
