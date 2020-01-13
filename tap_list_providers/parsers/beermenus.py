@@ -1,5 +1,4 @@
 from decimal import Decimal
-from pprint import PrettyPrinter
 from dataclasses import dataclass
 import logging
 import os
@@ -23,6 +22,7 @@ except (ImproperlyConfigured, AppRegistryNotReady):
     from ..base import BaseTapListProvider
 
 
+from venues.models import Venue
 from taps.models import Tap
 
 LOG = logging.getLogger(__name__)
@@ -97,7 +97,11 @@ class BeerMenusParser(BaseTapListProvider):
         # the last updated time is only a date
         # it's in a <span> in the form "Updated: M/D/YYYY"
         updated_span = self.soup.find_all(
-            lambda tag: tag.name == 'span' and not tag.attrs and tag.text.startswith('Updated:')
+            lambda tag: (
+                tag.name == 'span' and
+                not tag.attrs and
+                tag.text.startswith('Updated:')
+            )
         )[0]
         # they just give us a date. I'm going to arbitrarily declare that to be
         # midnight UTC because who cares if we're off by a day
@@ -199,7 +203,12 @@ class BeerMenusParser(BaseTapListProvider):
             try:
                 style, abv_raw, _ = [i.strip() for i in beer_info.text.split(MIDDOT)]
             except ValueError:
-                LOG.error('Unable to parse info for %s: %r (%s)', beer.name, beer_info.text, [ord(i) for i in beer_info.text])
+                LOG.error(
+                    'Unable to parse info for %s: %r (%s)',
+                    beer.name,
+                    beer_info.text,
+                    [ord(i) for i in beer_info.text],
+                )
                 raise
             abv = Decimal(abv_raw.split('%')[0])
             beer.abv = abv
@@ -210,7 +219,7 @@ class BeerMenusParser(BaseTapListProvider):
             beer.brewery_name = brewery_a.text
             beer.brewery_location = brewery_p.text.split(MIDDOT)[1].strip()
 
-    def handle_venue(self, venue: 'Venue') -> None:
+    def handle_venue(self, venue: Venue) -> None:
         self.categories = venue.api_configuration.beermenus_categories
         self.location_url = self.URL.format(venue.api_configuration.beermenus_slug)
         data = self.fetch_data()
