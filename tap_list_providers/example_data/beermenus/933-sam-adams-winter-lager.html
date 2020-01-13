@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript">
+    window.NREUM || (NREUM = {});
+    NREUM.info = {
+      "beacon": "bam.nr-data.net",
+      "errorBeacon": "bam.nr-data.net",
+      "licenseKey": "5dd8520f86",
+      "applicationID": "313557",
+      "transactionName": "Jg1YTBRWCQhcRU5WAQAQRRcVUQoT",
+      "queueTime": 4,
+      "applicationTime": 163,
+      "agent": ""
+    }
+  </script>
+  <script type="text/javascript">
+    (window.NREUM || (NREUM = {})).loader_config = {
+      licenseKey: "5dd8520f86",
+      applicationID: "313557"
+    };
+    window.NREUM || (NREUM = {}), __nr_require = function(n, e, t) {
+      function r(t) {
+        if (!e[t]) {
+          var i = e[t] = {
+            exports: {}
+          };
+          n[t][0].call(i.exports, function(e) {
+            var i = n[t][1][e];
+            return r(i || e)
+          }, i, i.exports)
+        }
+        return e[t].exports
+      }
+      if ("function" == typeof __nr_require) return __nr_require;
+      for (var i = 0; i < t.length; i++) r(t[i]);
+      return r
+    }({
+      1: [function(n, e, t) {
+        function r() {}
+
+        function i(n, e, t) {
+          return function() {
+            return o(n, [u.now()].concat(f(arguments)), e ? null : this, t), e ? void 0 : this
+          }
+        }
+        var o = n("handle"),
+          a = n(4),
+          f = n(5),
+          c = n("ee").get("tracer"),
+          u = n("loader"),
+          s = NREUM;
+        "undefined" == typeof window.newrelic && (newrelic = s);
+        var p = ["setPageViewName", "setCustomAttribute", "setErrorHandler", "finished", "addToTrace", "inlineHit", "addRelease"],
+          d = "api-",
+          l = d + "ixn-";
+        a(p, function(n, e) {
+          s[e] = i(d + e, !0, "api")
+        }), s.addPageAction = i(d + "addPageAction", !0), s.setCurrentRouteName = i(d + "routeName", !0), e.exports = newrelic, s.interaction = function() {
+          return (new r).get()
+        };
+        var m = r.prototype = {
+          createTracer: function(n, e) {
+            var t = {},
+              r = this,
+              i = "function" == typeof e;
+            return o(l + "tracer", [u.now(), n, t], r),
+              function() {
+                if (c.emit((i ? "" : "no-") + "fn-start", [u.now(), r, i], t), i) try {
+                  return e.apply(this, arguments)
+                } catch (n) {
+                  throw c.emit("fn-err", [arguments, this, n], t), n
+                } finally {
+                  c.emit("fn-end", [u.now()], t)
+                }
+              }
+          }
+        };
+        a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","), function(n, e) {
+          m[e] = i(l + e)
+        }), newrelic.noticeError = function(n, e) {
+          "string" == typeof n && (n = new Error(n)), o("err", [n, u.now(), !1, e])
+        }
+      }, {}],
+      2: [function(n, e, t) {
+        function r(n, e) {
+          var t = n.getEntries();
+          t.forEach(function(n) {
+            "first-paint" === n.name ? a("timing", ["fp", Math.floor(n.startTime)]) : "first-contentful-paint" === n.name && a("timing", ["fcp", Math.floor(n.startTime)])
+          })
+        }
+
+        function i(n) {
+          if (n instanceof c && !s) {
+            var e, t = Math.round(n.timeStamp);
+            e = t > 1e12 ? Date.now() - t : f.now() - t, s = !0, a("timing", ["fi", t, {
+              type: n.type,
+              fid: e
+            }])
+          }
+        }
+        if (!("init" in NREUM && "page_view_timing" in NREUM.init && "enabled" in NREUM.init.page_view_timing && NREUM.init.page_view_timing.enabled === !1)) {
+          var o, a = n("handle"),
+            f = n("loader"),
+            c = NREUM.o.EV;
+          if ("PerformanceObserver" in window && "function" == typeof window.PerformanceObserver) {
+            o = new PerformanceObserver(r);
+            try {
+              o.observe({
+                entryTypes: ["paint"]
+              })
+            } catch (u) {}
+          }
+          if ("addEventListener" in document) {
+            var s = !1,
+              p = ["click", "keydown", "mousedown", "pointerdown", "touchstart"];
+            p.forEach(function(n) {
+              document.addEventListener(n, i, !1)
+            })
+          }
+        }
+      }, {}],
+      3: [function(n, e, t) {
+        function r(n, e) {
+          if (!i) return !1;
+          if (n !== i) return !1;
+          if (!e) return !0;
+          if (!o) return !1;
+          for (var t = o.split("."), r = e.split("."), a = 0; a < r.length; a++)
+            if (r[a] !== t[a]) return !1;
+          return !0
+        }
+        var i = null,
+          o = null,
+          a = /Version\/(\S+)\s+Safari/;
+        if (navigator.userAgent) {
+          var f = navigator.userAgent,
+            c = f.match(a);
+          c && f.indexOf("Chrome") === -1 && f.indexOf("Chromium") === -1 && (i = "Safari", o = c[1])
+        }
+        e.exports = {
+          agent: i,
+          version: o,
+          match: r
+        }
+      }, {}],
+      4: [function(n, e, t) {
+        function r(n, e) {
+          var t = [],
+            r = "",
+            o = 0;
+          for (r in n) i.call(n, r) && (t[o] = e(r, n[r]), o += 1);
+          return t
+        }
+        var i = Object.prototype.hasOwnProperty;
+        e.exports = r
+      }, {}],
+      5: [function(n, e, t) {
+        function r(n, e, t) {
+          e || (e = 0), "undefined" == typeof t && (t = n ? n.length : 0);
+          for (var r = -1, i = t - e || 0, o = Array(i < 0 ? 0 : i); ++r < i;) o[r] = n[e + r];
+          return o
+        }
+        e.exports = r
+      }, {}],
+      6: [function(n, e, t) {
+        e.exports = {
+          exists: "undefined" != typeof window.performance && window.performance.timing && "undefined" != typeof window.performance.timing.navigationStart
+        }
+      }, {}],
+      ee: [function(n, e, t) {
+        function r() {}
+
+        function i(n) {
+          function e(n) {
+            return n && n instanceof r ? n : n ? c(n, f, o) : o()
+          }
+
+          function t(t, r, i, o) {
+            if (!d.aborted || o) {
+              n && n(t, r, i);
+              for (var a = e(i), f = v(t), c = f.length, u = 0; u < c; u++) f[u].apply(a, r);
+              var p = s[y[t]];
+              return p && p.push([b, t, r, a]), a
+            }
+          }
+
+          function l(n, e) {
+            h[n] = v(n).concat(e)
+          }
+
+          function m(n, e) {
+            var t = h[n];
+            if (t)
+              for (var r = 0; r < t.length; r++) t[r] === e && t.splice(r, 1)
+          }
+
+          function v(n) {
+            return h[n] || []
+          }
+
+          function g(n) {
+            return p[n] = p[n] || i(t)
+          }
+
+          function w(n, e) {
+            u(n, function(n, t) {
+              e = e || "feature", y[t] = e, e in s || (s[e] = [])
+            })
+          }
+          var h = {},
+            y = {},
+            b = {
+              on: l,
+              addEventListener: l,
+              removeEventListener: m,
+              emit: t,
+              get: g,
+              listeners: v,
+              context: e,
+              buffer: w,
+              abort: a,
+              aborted: !1
+            };
+          return b
+        }
+
+        function o() {
+          return new r
+        }
+
+        function a() {
+          (s.api || s.feature) && (d.aborted = !0, s = d.backlog = {})
+        }
+        var f = "nr@context",
+          c = n("gos"),
+          u = n(4),
+          s = {},
+          p = {},
+          d = e.exports = i();
+        d.backlog = s
+      }, {}],
+      gos: [function(n, e, t) {
+        function r(n, e, t) {
+          if (i.call(n, e)) return n[e];
+          var r = t();
+          if (Object.defineProperty && Object.keys) try {
+            return Object.defineProperty(n, e, {
+              value: r,
+              writable: !0,
+              enumerable: !1
+            }), r
+          } catch (o) {}
+          return n[e] = r, r
+        }
+        var i = Object.prototype.hasOwnProperty;
+        e.exports = r
+      }, {}],
+      handle: [function(n, e, t) {
+        function r(n, e, t, r) {
+          i.buffer([n], r), i.emit(n, e, t)
+        }
+        var i = n("ee").get("handle");
+        e.exports = r, r.ee = i
+      }, {}],
+      id: [function(n, e, t) {
+        function r(n) {
+          var e = typeof n;
+          return !n || "object" !== e && "function" !== e ? -1 : n === window ? 0 : a(n, o, function() {
+            return i++
+          })
+        }
+        var i = 1,
+          o = "nr@id",
+          a = n("gos");
+        e.exports = r
+      }, {}],
+      loader: [function(n, e, t) {
+        function r() {
+          if (!x++) {
+            var n = E.info = NREUM.info,
+              e = l.getElementsByTagName("script")[0];
+            if (setTimeout(s.abort, 3e4), !(n && n.licenseKey && n.applicationID && e)) return s.abort();
+            u(y, function(e, t) {
+              n[e] || (n[e] = t)
+            }), c("mark", ["onload", a() + E.offset], null, "api");
+            var t = l.createElement("script");
+            t.src = "https://" + n.agent, e.parentNode.insertBefore(t, e)
+          }
+        }
+
+        function i() {
+          "complete" === l.readyState && o()
+        }
+
+        function o() {
+          c("mark", ["domContent", a() + E.offset], null, "api")
+        }
+
+        function a() {
+          return O.exists && performance.now ? Math.round(performance.now()) : (f = Math.max((new Date).getTime(), f)) - E.offset
+        }
+        var f = (new Date).getTime(),
+          c = n("handle"),
+          u = n(4),
+          s = n("ee"),
+          p = n(3),
+          d = window,
+          l = d.document,
+          m = "addEventListener",
+          v = "attachEvent",
+          g = d.XMLHttpRequest,
+          w = g && g.prototype;
+        NREUM.o = {
+          ST: setTimeout,
+          SI: d.setImmediate,
+          CT: clearTimeout,
+          XHR: g,
+          REQ: d.Request,
+          EV: d.Event,
+          PR: d.Promise,
+          MO: d.MutationObserver
+        };
+        var h = "" + location,
+          y = {
+            beacon: "bam.nr-data.net",
+            errorBeacon: "bam.nr-data.net",
+            agent: "js-agent.newrelic.com/nr-1158.min.js"
+          },
+          b = g && w && w[m] && !/CriOS/.test(navigator.userAgent),
+          E = e.exports = {
+            offset: f,
+            now: a,
+            origin: h,
+            features: {},
+            xhrWrappable: b,
+            userAgent: p
+          };
+        n(1), n(2), l[m] ? (l[m]("DOMContentLoaded", o, !1), d[m]("load", r, !1)) : (l[v]("onreadystatechange", i), d[v]("onload", r)), c("mark", ["firstbyte", f], null, "api");
+        var x = 0,
+          O = n(6)
+      }, {}],
+      "wrap-function": [function(n, e, t) {
+        function r(n) {
+          return !(n && n instanceof Function && n.apply && !n[a])
+        }
+        var i = n("ee"),
+          o = n(5),
+          a = "nr@original",
+          f = Object.prototype.hasOwnProperty,
+          c = !1;
+        e.exports = function(n, e) {
+          function t(n, e, t, i) {
+            function nrWrapper() {
+              var r, a, f, c;
+              try {
+                a = this, r = o(arguments), f = "function" == typeof t ? t(r, a) : t || {}
+              } catch (u) {
+                d([u, "", [r, a, i], f])
+              }
+              s(e + "start", [r, a, i], f);
+              try {
+                return c = n.apply(a, r)
+              } catch (p) {
+                throw s(e + "err", [r, a, p], f), p
+              } finally {
+                s(e + "end", [r, a, c], f)
+              }
+            }
+            return r(n) ? n : (e || (e = ""), nrWrapper[a] = n, p(n, nrWrapper), nrWrapper)
+          }
+
+          function u(n, e, i, o) {
+            i || (i = "");
+            var a, f, c, u = "-" === i.charAt(0);
+            for (c = 0; c < e.length; c++) f = e[c], a = n[f], r(a) || (n[f] = t(a, u ? f + i : i, o, f))
+          }
+
+          function s(t, r, i) {
+            if (!c || e) {
+              var o = c;
+              c = !0;
+              try {
+                n.emit(t, r, i, e)
+              } catch (a) {
+                d([a, t, r, i])
+              }
+              c = o
+            }
+          }
+
+          function p(n, e) {
+            if (Object.defineProperty && Object.keys) try {
+              var t = Object.keys(n);
+              return t.forEach(function(t) {
+                Object.defineProperty(e, t, {
+                  get: function() {
+                    return n[t]
+                  },
+                  set: function(e) {
+                    return n[t] = e, e
+                  }
+                })
+              }), e
+            } catch (r) {
+              d([r])
+            }
+            for (var i in n) f.call(n, i) && (e[i] = n[i]);
+            return e
+          }
+
+          function d(e) {
+            try {
+              n.emit("internal-error", e)
+            } catch (t) {}
+          }
+          return n || (n = i), t.inPlace = u, t.flag = a, t
+        }
+      }, {}]
+    }, {}, ["loader"]);
+  </script>
+
+  <title>Sam Adams Winter Lager - Where to Buy Near Me - BeerMenus</title>
+  <meta name="description" content="See bars, beer stores, and restaurants near me selling Sam Adams Winter Lager with prices and whether it's on tap or in a bottle, can, growler, etc." />
+  <link rel="canonical" href="https://www.beermenus.com/beers/933-sam-adams-winter-lager" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@BeerMenus" />
+  <meta name="twitter:title" content="Sam Adams Winter Lager - Where to Buy Near Me - BeerMenus" />
+  <meta name="twitter:description" content="See bars, beer stores, and restaurants near me selling Sam Adams Winter Lager with prices and whether it's on tap or in a bottle, can, growler, etc." />
+  <meta name="twitter:app:name:iphone" content="BeerMenus - Find Great Beer" />
+  <meta name="twitter:app:id:iphone" content="917882057" />
+  <meta name="twitter:app:url:iphone" content="beermenus://beers/933-sam-adams-winter-lager" />
+  <meta name="twitter:app:name:googleplay" content="BeerMenus - Find Great Beer">
+  <meta name="twitter:app:id:googleplay" content="com.beermenus.beermenus">
+  <meta name="twitter:image" content="https://www.beermenus.com/assets/sprites/logo.png">
+
+  <meta property="og:url" content="https://www.beermenus.com/beers/933-sam-adams-winter-lager" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sam Adams Winter Lager - Where to Buy Near Me - BeerMenus" />
+  <meta property="og:description" content="See bars, beer stores, and restaurants near me selling Sam Adams Winter Lager with prices and whether it's on tap or in a bottle, can, growler, etc." />
+  <meta property="og:image" content="https://www.beermenus.com/assets/sprites/logo.png" />
+  <meta property="fb:app_id" content="102382313187511" />
+
+  <link rel="shortcut icon" href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/favicon-af1a8d564621e02dc8e29aa32fc5f45edbeb492f8b1b9cc707f0dd88cad2cd64.ico">
+  <link rel="icon" type="image/png" href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/android-chrome-192x192-e044eea727d615fae8147e2a5e6a9575fe40c727ec9e3d96cc195c5550fab130.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/favicon-194x194-bc9abda30115c79ebc2152aedf60449de7b36cc97f32e5ac534c87f9e5e9e811.png" sizes="194x194">
+
+  <link rel="stylesheet" media="screen" href="https://d301kf52wiw73w.cloudfront.net/assets/desktop-c4519de544e7e2118e9a125af83a76285fde20be222c684f4e7248343dbd002a.css" />
+  <script src="https://d301kf52wiw73w.cloudfront.net/packs/js/desktop-954edf86c16941164e82.js" defer="defer"></script>
+  <meta name="action-cable-url" content="wss://beermenus.com" />
+  <meta name="csrf-param" content="authenticity_token" />
+  <meta name="csrf-token" content="GuyA9WA9uA8xw75SbufxinbWkybYhyHIqC4/v4el8l8DaeG6pOaxXuKnZRSNk+ttoYnWpRhioTu+tACbJGfekA==" />
+
+  <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-1198075-3"></script>
+
+  <script>
+    //<![CDATA[
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+    gtag("config", "UA-1198075-3");
+
+//]]>
+</script>
+
+
+</head>
+
+<body class="web" style="height: auto;">
+  <div data-controller="honeybadger"></div>
+
+
+  <div id="header" class="header header-signed-out">
+
+    <div class="header-main">
+      <div class="content-inner">
+        <div class="pure-g">
+          <div class="pure-u-1-6">
+            <a class="logo" href="/">BEERMENUS</a>
+          </div>
+          <div class="pure-u-1-3 header-search">
+            <form action="/search" method="get" class="pure-form search-form">
+              <label class="pure-icon pure-icon-search" for="search-input"></label>
+              <input type="text" name="q" id="search-input" class="pure-input search-input" placeholder="Search for beers or places..." value="">
+              <button type="submit" class="pure-button pure-button-primary" id="search-button">Search</button>
+            </form>
+          </div>
+
+          <div class="pure-u-1-2 header-account">
+            <a rel="nofollow" class="pure-button pure-button-naked" href="/sessions/new">Log In</a>
+            <a class="pure-button pure-button-naked" href="/join">Sign Up</a>
+            <a class="pure-button pure-button-primary-outline" href="/places/new?ref=d_header_u2">Add My Business</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="header-nav">
+      <div class="content-inner">
+        <div class="header-browse">
+          <a href="/">Home</a>
+          <a href="/my_feed">Feed</a>
+          <a href="/places">Places</a>
+          <a href="/large_map">Map</a>
+          <a href="/events">Events</a>
+          <a href="/specials">Specials</a>
+          <a href="/business-blog">Behind the Bar</a>
+        </div>
+
+        <p class="header-help header-lp-links">
+          <a class="first" href="/print-menus?ref=d_header_u2">One-Click Print Menus</a>
+          <a href="/digital-beer-boards?ref=d_header_u2">Digital TV Menus</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="global-messages">
+
+
+
+  </div>
+
+
+  <div data-controller="structured-data" data-structured-data-path="/api/internal/structured_data/933?resource=beer"></div>
+
+  <div class="content">
+
+
+
+    <div class="splash splash-small">
+      <div class="content-inner">
+        <div class="inline-block mr va-t">
+          <a class="inline-block beer-label-img mb-0" href="/beers/933-sam-adams-winter-lager/label"><img class="pure-img ms-auto" alt="Sam Adams Winter Lager beer" src="https://d2sochvv0rudri.cloudfront.net/beer_labels/933/thumb_sam-adams-winter-lager-5.png" /></a>
+        </div>
+        <div class="inline-block">
+          <h1 class="text-bigger mb-less-small">Sam Adams Winter Lager</h1>
+          <div data-controller="beer-info">
+            <p class="mb-tiny">
+              Maibock &middot; 5.6% ABV
+              &middot; ~240 calories
+            </p>
+            <p class="mb-0">
+              <a href="/breweries/19-boston-beer-company">Boston Beer Company</a>
+              &middot; Boston, MA
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="content-inner pt-biggish">
+      <div class="pure-g">
+        <div class="pure-u-2-3">
+          <div class="pure-card pure-card-p-small ba-0 bl b-thick b-green background-light-gray mb-biggish">
+            <div class="pure-f">
+              <div class="pure-f-item va-m text-bigger pl-tiny">📣</div>
+              <div class="pure-f-body">
+                <div class="pure-g pure-g-small-gutter">
+                  <div class="pure-u-2-3">
+                    <h3 class="mb-tiny text-500">Sell great beer? Tell the BeerMenus community!</h3>
+                    <p class="mb-0 caption">Add your business, list your beers, bring in your locals.</p>
+                  </div>
+                  <div class="pure-u-1-3 mt-tiny">
+                    <a class="pure-button pure-button-round pure-button-primary-outline" href="/places/new?ref=d_beer_137_1">Add my business</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-less-small pl-0 pure-u-1">
+            <div data-controller="location-autocomplete" class="location-updater">
+              <form class="pure-form" data-target="location-autocomplete.form" action="/locations" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="MdUR+WHsIXHZ3Zas3PMGHpQ2In6ADyh8S4nFliyKG2ooUHC2pTcoIAq5Teo/hxz5Q2ln/UDqqI9dE/qyj0g3pQ==" />
+                <input value="34.71350000000001" data-target="location-autocomplete.latitude" type="hidden" name="location[latitude]" id="location_latitude" />
+                <input value="-86.7421" data-target="location-autocomplete.longitude" type="hidden" name="location[longitude]" id="location_longitude" />
+                <input value="Madison, AL, 35758, US" data-target="location-autocomplete.name" type="hidden" name="location[name]" id="location_name" />
+
+
+
+
+                <div class="pure-input-2-3 pure-input-prepend">
+                  <label for="location_address" class="prepend">Near</label>
+                  <input value="Madison, AL, 35758, US" class="address va-m pure-input pure-input-1" placeholder="Address, City, State or Zip" data-target="location-autocomplete.input" type="text" name="location[address]" id="location_address" />
+                </div>
+                <input type="submit" name="commit" value="Update" class="pure-button pure-button-round" data-disable-with="Updating..." data-action="location-autocomplete#submit" data-disable-with="Update" />
+              </form>
+            </div>
+
+          </div>
+          <h2 class="mb-tiny">
+            54 places have this beer near you
+          </h2>
+
+          <p class="mb-less-small caption">
+            These places list their beers on BeerMenus. Join them for free &mdash; <a href="/places/new?ref=d_beer_jtff">Add my business</a>
+          </p>
+
+          <ul id="places" class="pure-list pure-list-less-short">
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/64594-bad-daddy-s-burger-bar-huntsville">Bad Daddy&#39;s Burger Bar - Huntsville</a>
+              </h3>
+              <p class="caption mb-small">
+                8.6 miles away
+                &middot;
+                2317 Memorial Parkway Southwest, Huntsville, AL 35801
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 12/14/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/64416-bad-daddy-s-burger-bar-murfreesboro">Bad Daddy&#39;s Burger Bar - Murfreesboro</a>
+              </h3>
+              <p class="caption mb-small">
+                80.9 miles away
+                &middot;
+                2243 Medical Center Parkway, Murfreesboro, TN 37129
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 12/13/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5.75
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/26958-brixx-wood-fired-pizza-franklin-cool-springs">Brixx Wood Fired Pizza - Franklin - Cool Springs</a>
+              </h3>
+              <p class="caption mb-small">
+                84.5 miles away
+                &middot;
+                1550 West McEwen Drive, Franklin, TN 37067
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 12/27/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  14oz
+                  Draft $5.50
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/63214-bad-daddy-s-burger-bar-chattanooga">Bad Daddy&#39;s Burger Bar - Chattanooga</a>
+              </h3>
+              <p class="caption mb-small">
+                92.6 miles away
+                &middot;
+                1924 Gunbarrel Road #104, Chattanooga, TN 37421
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 12/19/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5.75
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/30502-beverage-liquors">Beverage liquors</a>
+              </h3>
+              <p class="caption mb-small">
+                246.2 miles away
+                &middot;
+                4450 South 3rd Street, Louisville, KY 40214
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/12/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  6 Pack Cans $9.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/48488-gaslight-pizza-grill">Gaslight Pizza &amp; Grill</a>
+              </h3>
+              <p class="caption mb-small">
+                247.8 miles away
+                &middot;
+                328 East 4th Street, Huntingburg, IN 47542
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 11/24/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5
+                </span>
+                &middot;
+                <span>
+                  22oz
+                  Draft $7
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/63259-bad-daddy-s-burger-bar-greenville-sc">Bad Daddy&#39;s Burger Bar - Greenville, SC</a>
+              </h3>
+              <p class="caption mb-small">
+                251.8 miles away
+                &middot;
+                1025 Woodruff Road #D-101, Greenville, SC 29607
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 12/05/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5.75
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/49079-zeddie-s-party-shop-bar">Zeddie&#39;s Party Shop &amp; Bar</a>
+              </h3>
+              <p class="caption mb-small">
+                318.1 miles away
+                &middot;
+                203 Hwy 378W, Lexington, SC 29072
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 12/13/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  6 Pack Bottles $8.99
+                </span>
+                &middot;
+                <span>
+                  12oz
+                  Can $9.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/38597-l-burg-drinks-more">L&#39;Burg Drinks &amp; More</a>
+              </h3>
+              <p class="caption mb-small">
+                319.2 miles away
+                &middot;
+                1097 West Eads Parkway, Lawrenceburg, IN 47025
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 01/12/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5.25
+                </span>
+                &middot;
+                <span>
+                  23oz
+                  Draft $6.75
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/38055-smoke-justis-mainfloor">Smoke Justis Mainfloor</a>
+              </h3>
+              <p class="caption mb-small">
+                326.5 miles away
+                &middot;
+                302 Court Street, Covington, KY 41011
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 12/04/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/63210-bad-daddy-s-burger-bar-birkdale">Bad Daddy&#39;s Burger Bar - Birkdale</a>
+              </h3>
+              <p class="caption mb-small">
+                335.3 miles away
+                &middot;
+                8625-A Lindholm Drive, Huntersville, NC 28078
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 12/22/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5.75
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/63208-bad-daddy-s-burger-bar-dilworth">Bad Daddy&#39;s Burger Bar - Dilworth</a>
+              </h3>
+              <p class="caption mb-small">
+                335.8 miles away
+                &middot;
+                1626 East Boulevard, Charlotte, NC 28203
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 01/08/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5.75
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/33727-brixx-wood-fired-pizza-charlotte-uptown">Brixx Wood Fired Pizza - Charlotte - Uptown</a>
+              </h3>
+              <p class="caption mb-small">
+                336.1 miles away
+                &middot;
+                225 East 6th Street, Charlotte, NC 28202
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 12/15/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  14oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/34990-brixx-wood-fired-pizza-foxcroft">Brixx Wood Fired Pizza - Foxcroft</a>
+              </h3>
+              <p class="caption mb-small">
+                337.4 miles away
+                &middot;
+                7814 Fairview Road, Charlotte, NC 28226
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 01/07/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  14oz
+                  Draft $6
+                </span>
+                &middot;
+                <span>
+                  32oz
+                  Crowler (can) $11
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/63212-bad-daddy-s-burger-bar-christenbury">Bad Daddy&#39;s Burger Bar - Christenbury</a>
+              </h3>
+              <p class="caption mb-small">
+                342.9 miles away
+                &middot;
+                8915 Christenbury Parkway #70, Concord, NC 28027
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 12/17/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5.75
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/22609-mellow-mushroom-west-chester">Mellow Mushroom - West Chester</a>
+              </h3>
+              <p class="caption mb-small">
+                343.0 miles away
+                &middot;
+                9238 Floer Drive, West Chester Township, OH 45069
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 01/08/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+
+                  Pint $5
+                </span>
+                &middot;
+                <span>
+                  60oz
+                  Pitcher $16.25
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/66413-gaslight-brewhouse">Gaslight Brewhouse</a>
+              </h3>
+              <p class="caption mb-small">
+                348.9 miles away
+                &middot;
+                325 South College Avenue, Oxford, OH 45056
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 01/08/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+
+                  Draft
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/53510-brew-brews-drive-thru-and-pizza">Brew &amp; Brews Drive-Thru and Pizza</a>
+              </h3>
+              <p class="caption mb-small">
+                367.8 miles away
+                &middot;
+                326 North Springboro Pike, Miamisburg, OH 45449
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/09/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  6 Pack Bottles $9.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/23354-brixx-wood-fired-pizza-winston-salem">Brixx Wood Fired Pizza - Winston Salem</a>
+              </h3>
+              <p class="caption mb-small">
+                373.2 miles away
+                &middot;
+                1295 Creekshire Way, Winston-Salem, NC 27103
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 01/11/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  14oz
+                  Draft $4
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/63255-bad-daddy-s-burger-bar-winston-salem">Bad Daddy&#39;s Burger Bar - Winston-Salem</a>
+              </h3>
+              <p class="caption mb-small">
+                374.4 miles away
+                &middot;
+                504 Hanes Mall Boulevard, Winston-Salem, NC 27103
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 12/04/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5.95
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/65585-duke-s-mart">Duke’s Mart</a>
+              </h3>
+              <p class="caption mb-small">
+                382.3 miles away
+                &middot;
+                1071 Johnsontown Road, Thomasville, NC 27360
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 01/07/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  6 Pack Bottles $9.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/30519-galloway-grill">Galloway Grill</a>
+              </h3>
+              <p class="caption mb-small">
+                400.0 miles away
+                &middot;
+                4211 South Lone Pine Avenue, Springfield, MO 65804
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 12/27/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  Bottle $3.75
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/58778-dutch-mill-cafe">Dutch Mill cafe</a>
+              </h3>
+              <p class="caption mb-small">
+                413.2 miles away
+                &middot;
+                153 West 4th Street, Minster, OH 45865
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 12/03/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $4
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/36723-buffalo-wild-wings">Buffalo Wild Wings </a>
+              </h3>
+              <p class="caption mb-small">
+                416.3 miles away
+                &middot;
+                3220 East Empire Street, Bloomington, IL 61704
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 01/12/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5.75
+                </span>
+                &middot;
+                <span>
+                  23oz
+                  Draft $6.75
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/40790-local-cantina-grandview">Local Cantina Grandview</a>
+              </h3>
+              <p class="caption mb-small">
+                417.0 miles away
+                &middot;
+                1423 Grandview Avenue, Columbus, OH 43212
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 01/10/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  15oz
+                  Draft $5
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/60816-local-cantina-short-north">Local Cantina Short North</a>
+              </h3>
+              <p class="caption mb-small">
+                417.4 miles away
+                &middot;
+                600 North High Street, Columbus, OH 43215
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 01/10/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  15oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/48004-local-bar">Local Bar</a>
+              </h3>
+              <p class="caption mb-small">
+                417.7 miles away
+                &middot;
+                913 North High Street, Columbus, OH 43201
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 01/09/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+
+                  Pint $5
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/58195-mellow-mushroom">Mellow Mushroom</a>
+              </h3>
+              <p class="caption mb-small">
+                418.8 miles away
+                &middot;
+                767 Huffman Mill Road, Burlington, NC 27215
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 01/02/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/57508-rule-3">Rule 3</a>
+              </h3>
+              <p class="caption mb-small">
+                419.5 miles away
+                &middot;
+                650 Windmiller Drive, Pickerington, OH 43147
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 11/22/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/40882-local-cantina-clintonville">Local Cantina Clintonville</a>
+              </h3>
+              <p class="caption mb-small">
+                420.2 miles away
+                &middot;
+                3126 North High Street, Columbus, OH 43202
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 01/12/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  15oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/9620-savor-growl">Savor Growl</a>
+              </h3>
+              <p class="caption mb-small">
+                420.4 miles away
+                &middot;
+                2991 Indianola Avenue, Columbus, OH 43202
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/10/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  6 Pack Bottles $8.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/60264-blarneystone-tavern">Blarneystone Tavern </a>
+              </h3>
+              <p class="caption mb-small">
+                423.0 miles away
+                &middot;
+                2245 West Dublin Granville Road #111, Columbus, OH 43085
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 12/18/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/53125-local-cantina-westerville">Local Cantina Westerville</a>
+              </h3>
+              <p class="caption mb-small">
+                429.0 miles away
+                &middot;
+                667 North Cleveland Avenue, Westerville, OH 43082
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 01/12/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  14oz
+                  Draft $5
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/65776-silver-q-billiards-sports-bar">Silver Q Billiards &amp; Sports Bar</a>
+              </h3>
+              <p class="caption mb-small">
+                434.6 miles away
+                &middot;
+                225 West University Avenue, Gainesville, FL 32601
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 11/17/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $4.50
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/23509-beef-o-bradys">Beef O Bradys</a>
+              </h3>
+              <p class="caption mb-small">
+                449.7 miles away
+                &middot;
+                547 Main Street Northwest, Bourbonnais, IL 60914
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 11/29/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $4.50
+                </span>
+                &middot;
+                <span>
+                  23oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/13206-tobacco-road-sports-cafe">Tobacco Road Sports Cafe</a>
+              </h3>
+              <p class="caption mb-small">
+                462.6 miles away
+                &middot;
+                505 West Jones Street, Raleigh, NC 27603
+              </p>
+              <p class="caption mb-0">
+                Brewpub &middot;
+                Menu Updated: 11/16/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  3oz
+                  Draft $1.25
+                </span>
+                &middot;
+                <span>
+                  8oz
+                  Draft $2.75
+                </span>
+                &middot;
+                <span>
+                  16oz
+                  Draft $5
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/56835-gelsosomo-s-pizzeria-region-on-tap">Gelsosomo&#39;s Pizzeria &amp; Region on Tap</a>
+              </h3>
+              <p class="caption mb-small">
+                464.0 miles away
+                &middot;
+                11319 Broadway, Crown Point, IN 46307
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 01/11/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $7
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/36524-illini-lounge">Illini lounge</a>
+              </h3>
+              <p class="caption mb-small">
+                469.4 miles away
+                &middot;
+                390 Main Street, Marseilles, IL 61341
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 12/07/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/14020-dock-rotz-tavern">Dock Rotz Tavern</a>
+              </h3>
+              <p class="caption mb-small">
+                472.2 miles away
+                &middot;
+                859 South Ridge Road, Minooka, IL 60447
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 01/08/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  14oz
+                  Draft $5
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/13322-shakers">Shakers</a>
+              </h3>
+              <p class="caption mb-small">
+                474.4 miles away
+                &middot;
+                121 West Stevenson Road, Ottawa, IL 61350
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 01/10/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/55512-jameson-s-pub-joliet">Jameson&#39;s Pub Joliet</a>
+              </h3>
+              <p class="caption mb-small">
+                477.6 miles away
+                &middot;
+                2755 Black Road, Joliet, IL 60435
+              </p>
+              <p class="caption mb-0">
+                Brewpub &middot;
+                Menu Updated: 12/20/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/44886-champions-sports-bar">Champions Sports Bar</a>
+              </h3>
+              <p class="caption mb-small">
+                479.6 miles away
+                &middot;
+                2049 South Illinois 59, Plainfield, IL 60586
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 12/26/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  Bottle $4
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/63526-stagecoach-saloon">Stagecoach Saloon</a>
+              </h3>
+              <p class="caption mb-small">
+                480.3 miles away
+                &middot;
+                1028 South State Street, Lockport, IL 60441
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 12/28/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/11435-the-galley-sports-pub">The Galley Sports Pub</a>
+              </h3>
+              <p class="caption mb-small">
+                482.2 miles away
+                &middot;
+                917 West McKinley Avenue, Mishawaka, IN 46545
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 12/30/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5
+                </span>
+                &middot;
+                <span>
+                  34oz
+                  Draft $10
+                </span>
+                &middot;
+                <span>
+                  64oz
+                  Pitcher $15
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/2395-tap-house-grill-plainfield">Tap House Grill (Plainfield)</a>
+              </h3>
+              <p class="caption mb-small">
+                483.0 miles away
+                &middot;
+                24402 West Lockport Street, Plainfield, IL 60544
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 01/07/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/16038-barracos-pizza">Barracos Pizza</a>
+              </h3>
+              <p class="caption mb-small">
+                484.9 miles away
+                &middot;
+                3043 West 111th Street, Chicago, IL 60655
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 01/09/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/7128-tailgaters-sports-bar-and-grill">Tailgaters Sports Bar and Grill</a>
+              </h3>
+              <p class="caption mb-small">
+                488.6 miles away
+                &middot;
+                431 West Boughton Road, Bolingbrook, IL 60440
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 12/07/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $5
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/25062-the-brook-at-whole-foods-market-willowbrook">The Brook at Whole Foods Market Willowbrook®</a>
+              </h3>
+              <p class="caption mb-small">
+                492.1 miles away
+                &middot;
+                6300 Kingery Highway, Willowbrook, IL 60527
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 01/11/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  Bottle $2
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/65914-clique-sports-bar-grill">Clique Sports Bar &amp; Grill</a>
+              </h3>
+              <p class="caption mb-small">
+                492.7 miles away
+                &middot;
+                6010 South Cass Avenue, Westmont, IL 60559
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 12/18/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/8488-liquorama">Liquorama</a>
+              </h3>
+              <p class="caption mb-small">
+                493.3 miles away
+                &middot;
+                4430 South Kedzie Avenue, Chicago, IL 60632
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/10/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  6 Pack Bottles $9.99
+                </span>
+                &middot;
+                <span>
+                  12oz
+                  12 Pack Bottles $14.99
+                </span>
+
+              </p>
+            </li>
+
+
+            <li class="pure-list-item pure-list-item-more">
+              <a class="block text-center" data-remote="true" href="/beers/933/view_all.js">
+                View all places
+                <span class="pure-icon pure-icon-arrow-down"></span>
+              </a> <span class="loading"></span>
+            </li>
+          </ul>
+
+          <h3 class="mb-tiny">Make sure your business is on this list.</h3>
+          <p class="mb-bigger"><a href="/places/new?ref=d_beer_msol">Add my business</a></p>
+
+        </div>
+        <div class="pure-u-1-3">
+          <div class="background-light-gray bl b-thick b-blue pl pt-small pb-small mb-biggish caption">
+            Follow this beer to get emailed when local businesses get it.
+          </div>
+
+          <div class="follow-beer action mb-biggish">
+
+            <div class="follow-beer follow-beer-933">
+
+              <form class="new_beer_relationship" id="new_beer_relationship" action="/beer_relationships" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+                <input value="933" type="hidden" name="beer_relationship[beer_id]" id="beer_relationship_beer_id" />
+                <input type="hidden" name="list" id="list" value="false" />
+                <input type="submit" name="commit" value="Follow this beer" data-disable-with="Following..." class="pure-button pure-button-round pure-button-primary" />
+              </form>
+            </div>
+
+          </div>
+
+          <div class="mb" data-controller="beer-info">
+            <h3 class="mb-tiny text-500">Beer Description</h3>
+            <div class="caption" data-target="beer-info.description">
+              <p>The cinnamon, ginger, and hint of citrus from the orange peel blend with the roasty sweetness of the malts to deliver a warming, spicy flavor.</p>
+            </div>
+            <div class="caption">
+              <div data-target="beer-info.description">
+                <p>Bold and rich, with a touch of holiday spice. The first thing one notices about a Samuel Adams® Winter Lager is the deep ruby color. Then comes the magical aroma which promises something special on the tongue. On the palate Samuel
+                  Adams Winter Lager is rich and full bodied, robust and warming, a wonderful way to enjoy the cold evenings that come with the season.</p>
+              </div>
+            </div>
+            <div class="mt-less-small">
+              <a data-action="beer-info#copyDescription" class="clipboard-button pure-button pure-button-small pure-button-round mb" href="#">Copy description</a>
+            </div>
+          </div>
+
+          <div class="pure-card pure-card-p-0">
+            <div class="background-black pt-small bb">
+              <img src="https://d301kf52wiw73w.cloudfront.net/assets/promos/print-menu-examples-promo-7d67488d065f36debce35ed5ac27c57da2cabfbea0a3e6bac012d06e2cd2bad0.png" alt="" class="pure-img" />
+            </div>
+            <div class="ml ml mt mb">
+              <p class="mb-tiny"><strong>The print menu customers want.</strong></p>
+              <p class="text-gray">Sell more beer: print menus designed to help your customers choose beers.</p>
+              <a class="pure-button pure-button-round pure-button-primary-outline" href="/print-menus?ref=d_beer_sidebar_u2">Learn more</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal-narrow fade" id="print-menu" tabindex="-1" role="dialog" aria-labelledby="">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="background-light-green">
+            <div class="content-inner pt-less-small pb-less-small">
+              <span class="pure-icon pure-icon-check"></span>
+              Beer info copied to your clipboard.
+            </div>
+          </div>
+          <div class="background-black pt-small">
+            <img src="https://d301kf52wiw73w.cloudfront.net/assets/promos/print-menu-examples-promo-7d67488d065f36debce35ed5ac27c57da2cabfbea0a3e6bac012d06e2cd2bad0.png" alt="" class="pure-img" />
+          </div>
+          <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span class="pure-icon pure-icon-close"></span>
+            </button>
+
+            <h2>Copying beer info for your print menu?</h2>
+
+            <p>Save time&mdash;automatically create your print menu with one click.</p>
+
+            <a class="pure-button pure-button-round pure-button-primary" href="/print-menus?ref=d_beer_print">Learn More</a>
+            <p class="caption mt mb-0">
+              <span class="text-gray">or</span>
+              <a class="text-black" data-remote="true" href="/hide_print_menu_promo">Don&#39;t show this message again</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-container"></div>
+  </div>
+
+
+
+  <div class="footer caption ">
+
+    <div class="content-inner">
+      <div class="pure-g">
+        <div class="pure-u-1-4">
+          <h4 class="small-caps mb-small">Info</h4>
+          <ul class="pure-list pure-list-naked">
+            <li class="pure-list-item"><a href="/about">About</a></li>
+            <li class="pure-list-item"><a href="/careers">Careers</a></li>
+            <li class="pure-list-item"><a href="/contact">Contact</a></li>
+            <li class="pure-list-item"><a href="https://help.beermenus.com/">Help Center</a></li>
+            <li class="pure-list-item"><a href="/press">Press</a></li>
+            <li class="pure-list-item"><a href="/blog">Blog</a></li>
+            <li class="pure-list-item"><a href="/cities">Cities</a></li>
+            <li class="pure-list-item"><a href="/recruit?ref=footer">Recruit a Business</a></li>
+          </ul>
+        </div>
+
+        <div class="pure-u-1-4">
+          <h4 class="small-caps mb-small">I sell craft beer.</h4>
+          <a class="pure-button pure-button-round pure-button-primary-outline pure-button-small" href="/places/new?ref=footer_781">Add my business</a>
+
+          <h4 class="small-caps mt mb-small">For Breweries</h4>
+          <ul class="pure-list pure-list-naked mb-0">
+            <li class="pure-list-item"><a href="/beer-releases?ref=d_footer">Beer Releases</a></li>
+          </ul>
+
+          <h4 class="small-caps mt mb-small">Stats</h4>
+          <ul class="pure-list pure-list-naked">
+            <li class="pure-list-item"><span>54 Places</span></li>
+            <li class="pure-list-item"><span>242,893 Beers</span></li>
+            <li class="pure-list-item"><span>77 Events</span></li>
+          </ul>
+        </div>
+
+        <div class="pure-u-1-4">
+          <h4 class="small-caps mb-small">Stay in touch</h4>
+          <ul class="pure-list pure-list-naked">
+            <li class="pure-list-item">
+              <a href="https://www.facebook.com/beermenus">Facebook</a>
+            </li>
+            <li class="pure-list-item">
+              <a href="https://www.twitter.com/beermenus">Twitter</a>
+            </li>
+            <li class="pure-list-item">
+              <a href="http://www.instagram.com/beermenus">Instagram</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="pure-u-1-4">
+          <h4 class="small-caps mb-small">iPhone App</h4>
+          <a class="app-store-link" href="https://itunes.apple.com/app/apple-store/id917882057?pt=106837806&amp;ct=d-footer&amp;mt=8">Download on the App Store</a>
+
+          <h4 class="small-caps mt-big mb-small">Android App</h4>
+          <a class="footer-link" href="https://play.google.com/store/apps/details?id=com.beermenus.beermenus">Download on the Google Play Store</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="copyright">
+      <div class="content-inner">
+        <span>&copy; 2020 BeerMenus</span>
+        &middot; <a rel="nofollow" href="/terms">Terms</a>
+        &middot; <a rel="nofollow" href="/privacy">Privacy</a>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <div class="modal fade" id="customer-type-survey" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header text-center">
+          <h2 class="mb-tiny">Get the most out of BeerMenus</h2>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span class="pure-icon pure-icon-close"></span>
+          </button>
+        </div>
+
+        <form id="user-type-survey" action="/survey_response" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="N62maYV6uoHAaN7EnYPnSiArNNyEgZ1TNX9HhKvmo1EuKMcmQaGz0BMMBYJ+9/2t93RxX0RkHaAj5XigCCSPng==" />
+          <input type="hidden" name="survey" id="survey" value="user_type_logged_out" />
+          <div class="modal-body">
+            <div class="pure-form">
+              <div class="pure-checkbox">
+                <input type="checkbox" name="user[segments][user_type][]" id="user_type_owner" value="owner" />
+                <label for="user_type_owner">I own a business that sells beer, wine, or spirits to local drinkers.</label>
+              </div>
+
+              <hr class="pure-divider">
+              <div class="pure-checkbox">
+                <input type="checkbox" name="user[segments][user_type][]" id="user_type_manager" value="manager" />
+                <label for="user_type_manager">I manage a business that sells beer, wine, or spirits to local drinkers.</label>
+              </div>
+
+              <hr class="pure-divider">
+              <div class="pure-checkbox">
+                <input type="checkbox" name="user[segments][user_type][]" id="user_type_drinker" value="drinker" />
+                <label for="user_type_drinker">I&#39;m a beer, wine, or spirits drinker.</label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" name="commit" value="Continue" data-disable-with="Saving..." id="user_type_save_button" class="disabled pure-button pure-button-round pure-button-primary pure-button-big pure-button-1" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="analytics" data-event-name="Viewed logged out user type survey">
+    <div data-name="Viewed lo uts on entrance" data-value="Yes"></div>
+    <div data-name="AB 142" data-value="control"></div>
+    <div data-name="Logged In" data-value="false"></div>
+    <div data-name="Platform" data-value="Desktop"></div>
+  </div>
+
+
+  <script>
+    //<![CDATA[
+    function execute_indwaefh() {
+      $("#customer-type-survey").modal();
+      $(".pure-checkbox input[type=checkbox]").change(function() {
+        var checked = $(".pure-checkbox input[type=checkbox]:checked").length;
+        if (checked > 0) {
+          $("#user_type_save_button").removeClass("disabled").prop("disabled", false);
+        } else {
+          $("#user_type_save_button").addClass("disabled").prop("disabled", true);
+        }
+      });
+
+
+      $(".modal-content button.close").click(function() {
+        var future = new Date();
+        future.setDate(future.getDate() + 7);
+        var cookie_string = "user_type_logged_out=disable; expires=" + future.toUTCString() + "; path=/";
+        document.cookie = cookie_string;
+
+        BeerMenus.Analytics.track("Closed logged out user type survey", {
+          "platform": "Desktop"
+        });
+      });
+    }
+    if (document.readyState == 'loading') {
+      document.addEventListener('DOMContentLoaded', execute_indwaefh)
+    } else {
+      execute_indwaefh()
+    }
+    //]]>
+  </script>
+
+
+  <div id="sortable-mirror-wrapper" class="sortable"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript">
+    window.NREUM || (NREUM = {});
+    NREUM.info = {
+      "beacon": "bam.nr-data.net",
+      "errorBeacon": "bam.nr-data.net",
+      "licenseKey": "5dd8520f86",
+      "applicationID": "313557",
+      "transactionName": "Jg1YTBRWCQhcRU5WAQAQRRcVUQoT",
+      "queueTime": 5,
+      "applicationTime": 167,
+      "agent": ""
+    }
+  </script>
+  <script type="text/javascript">
+    (window.NREUM || (NREUM = {})).loader_config = {
+      licenseKey: "5dd8520f86",
+      applicationID: "313557"
+    };
+    window.NREUM || (NREUM = {}), __nr_require = function(n, e, t) {
+      function r(t) {
+        if (!e[t]) {
+          var i = e[t] = {
+            exports: {}
+          };
+          n[t][0].call(i.exports, function(e) {
+            var i = n[t][1][e];
+            return r(i || e)
+          }, i, i.exports)
+        }
+        return e[t].exports
+      }
+      if ("function" == typeof __nr_require) return __nr_require;
+      for (var i = 0; i < t.length; i++) r(t[i]);
+      return r
+    }({
+      1: [function(n, e, t) {
+        function r() {}
+
+        function i(n, e, t) {
+          return function() {
+            return o(n, [u.now()].concat(f(arguments)), e ? null : this, t), e ? void 0 : this
+          }
+        }
+        var o = n("handle"),
+          a = n(4),
+          f = n(5),
+          c = n("ee").get("tracer"),
+          u = n("loader"),
+          s = NREUM;
+        "undefined" == typeof window.newrelic && (newrelic = s);
+        var p = ["setPageViewName", "setCustomAttribute", "setErrorHandler", "finished", "addToTrace", "inlineHit", "addRelease"],
+          d = "api-",
+          l = d + "ixn-";
+        a(p, function(n, e) {
+          s[e] = i(d + e, !0, "api")
+        }), s.addPageAction = i(d + "addPageAction", !0), s.setCurrentRouteName = i(d + "routeName", !0), e.exports = newrelic, s.interaction = function() {
+          return (new r).get()
+        };
+        var m = r.prototype = {
+          createTracer: function(n, e) {
+            var t = {},
+              r = this,
+              i = "function" == typeof e;
+            return o(l + "tracer", [u.now(), n, t], r),
+              function() {
+                if (c.emit((i ? "" : "no-") + "fn-start", [u.now(), r, i], t), i) try {
+                  return e.apply(this, arguments)
+                } catch (n) {
+                  throw c.emit("fn-err", [arguments, this, n], t), n
+                } finally {
+                  c.emit("fn-end", [u.now()], t)
+                }
+              }
+          }
+        };
+        a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","), function(n, e) {
+          m[e] = i(l + e)
+        }), newrelic.noticeError = function(n, e) {
+          "string" == typeof n && (n = new Error(n)), o("err", [n, u.now(), !1, e])
+        }
+      }, {}],
+      2: [function(n, e, t) {
+        function r(n, e) {
+          var t = n.getEntries();
+          t.forEach(function(n) {
+            "first-paint" === n.name ? a("timing", ["fp", Math.floor(n.startTime)]) : "first-contentful-paint" === n.name && a("timing", ["fcp", Math.floor(n.startTime)])
+          })
+        }
+
+        function i(n) {
+          if (n instanceof c && !s) {
+            var e, t = Math.round(n.timeStamp);
+            e = t > 1e12 ? Date.now() - t : f.now() - t, s = !0, a("timing", ["fi", t, {
+              type: n.type,
+              fid: e
+            }])
+          }
+        }
+        if (!("init" in NREUM && "page_view_timing" in NREUM.init && "enabled" in NREUM.init.page_view_timing && NREUM.init.page_view_timing.enabled === !1)) {
+          var o, a = n("handle"),
+            f = n("loader"),
+            c = NREUM.o.EV;
+          if ("PerformanceObserver" in window && "function" == typeof window.PerformanceObserver) {
+            o = new PerformanceObserver(r);
+            try {
+              o.observe({
+                entryTypes: ["paint"]
+              })
+            } catch (u) {}
+          }
+          if ("addEventListener" in document) {
+            var s = !1,
+              p = ["click", "keydown", "mousedown", "pointerdown", "touchstart"];
+            p.forEach(function(n) {
+              document.addEventListener(n, i, !1)
+            })
+          }
+        }
+      }, {}],
+      3: [function(n, e, t) {
+        function r(n, e) {
+          if (!i) return !1;
+          if (n !== i) return !1;
+          if (!e) return !0;
+          if (!o) return !1;
+          for (var t = o.split("."), r = e.split("."), a = 0; a < r.length; a++)
+            if (r[a] !== t[a]) return !1;
+          return !0
+        }
+        var i = null,
+          o = null,
+          a = /Version\/(\S+)\s+Safari/;
+        if (navigator.userAgent) {
+          var f = navigator.userAgent,
+            c = f.match(a);
+          c && f.indexOf("Chrome") === -1 && f.indexOf("Chromium") === -1 && (i = "Safari", o = c[1])
+        }
+        e.exports = {
+          agent: i,
+          version: o,
+          match: r
+        }
+      }, {}],
+      4: [function(n, e, t) {
+        function r(n, e) {
+          var t = [],
+            r = "",
+            o = 0;
+          for (r in n) i.call(n, r) && (t[o] = e(r, n[r]), o += 1);
+          return t
+        }
+        var i = Object.prototype.hasOwnProperty;
+        e.exports = r
+      }, {}],
+      5: [function(n, e, t) {
+        function r(n, e, t) {
+          e || (e = 0), "undefined" == typeof t && (t = n ? n.length : 0);
+          for (var r = -1, i = t - e || 0, o = Array(i < 0 ? 0 : i); ++r < i;) o[r] = n[e + r];
+          return o
+        }
+        e.exports = r
+      }, {}],
+      6: [function(n, e, t) {
+        e.exports = {
+          exists: "undefined" != typeof window.performance && window.performance.timing && "undefined" != typeof window.performance.timing.navigationStart
+        }
+      }, {}],
+      ee: [function(n, e, t) {
+        function r() {}
+
+        function i(n) {
+          function e(n) {
+            return n && n instanceof r ? n : n ? c(n, f, o) : o()
+          }
+
+          function t(t, r, i, o) {
+            if (!d.aborted || o) {
+              n && n(t, r, i);
+              for (var a = e(i), f = v(t), c = f.length, u = 0; u < c; u++) f[u].apply(a, r);
+              var p = s[y[t]];
+              return p && p.push([b, t, r, a]), a
+            }
+          }
+
+          function l(n, e) {
+            h[n] = v(n).concat(e)
+          }
+
+          function m(n, e) {
+            var t = h[n];
+            if (t)
+              for (var r = 0; r < t.length; r++) t[r] === e && t.splice(r, 1)
+          }
+
+          function v(n) {
+            return h[n] || []
+          }
+
+          function g(n) {
+            return p[n] = p[n] || i(t)
+          }
+
+          function w(n, e) {
+            u(n, function(n, t) {
+              e = e || "feature", y[t] = e, e in s || (s[e] = [])
+            })
+          }
+          var h = {},
+            y = {},
+            b = {
+              on: l,
+              addEventListener: l,
+              removeEventListener: m,
+              emit: t,
+              get: g,
+              listeners: v,
+              context: e,
+              buffer: w,
+              abort: a,
+              aborted: !1
+            };
+          return b
+        }
+
+        function o() {
+          return new r
+        }
+
+        function a() {
+          (s.api || s.feature) && (d.aborted = !0, s = d.backlog = {})
+        }
+        var f = "nr@context",
+          c = n("gos"),
+          u = n(4),
+          s = {},
+          p = {},
+          d = e.exports = i();
+        d.backlog = s
+      }, {}],
+      gos: [function(n, e, t) {
+        function r(n, e, t) {
+          if (i.call(n, e)) return n[e];
+          var r = t();
+          if (Object.defineProperty && Object.keys) try {
+            return Object.defineProperty(n, e, {
+              value: r,
+              writable: !0,
+              enumerable: !1
+            }), r
+          } catch (o) {}
+          return n[e] = r, r
+        }
+        var i = Object.prototype.hasOwnProperty;
+        e.exports = r
+      }, {}],
+      handle: [function(n, e, t) {
+        function r(n, e, t, r) {
+          i.buffer([n], r), i.emit(n, e, t)
+        }
+        var i = n("ee").get("handle");
+        e.exports = r, r.ee = i
+      }, {}],
+      id: [function(n, e, t) {
+        function r(n) {
+          var e = typeof n;
+          return !n || "object" !== e && "function" !== e ? -1 : n === window ? 0 : a(n, o, function() {
+            return i++
+          })
+        }
+        var i = 1,
+          o = "nr@id",
+          a = n("gos");
+        e.exports = r
+      }, {}],
+      loader: [function(n, e, t) {
+        function r() {
+          if (!x++) {
+            var n = E.info = NREUM.info,
+              e = l.getElementsByTagName("script")[0];
+            if (setTimeout(s.abort, 3e4), !(n && n.licenseKey && n.applicationID && e)) return s.abort();
+            u(y, function(e, t) {
+              n[e] || (n[e] = t)
+            }), c("mark", ["onload", a() + E.offset], null, "api");
+            var t = l.createElement("script");
+            t.src = "https://" + n.agent, e.parentNode.insertBefore(t, e)
+          }
+        }
+
+        function i() {
+          "complete" === l.readyState && o()
+        }
+
+        function o() {
+          c("mark", ["domContent", a() + E.offset], null, "api")
+        }
+
+        function a() {
+          return O.exists && performance.now ? Math.round(performance.now()) : (f = Math.max((new Date).getTime(), f)) - E.offset
+        }
+        var f = (new Date).getTime(),
+          c = n("handle"),
+          u = n(4),
+          s = n("ee"),
+          p = n(3),
+          d = window,
+          l = d.document,
+          m = "addEventListener",
+          v = "attachEvent",
+          g = d.XMLHttpRequest,
+          w = g && g.prototype;
+        NREUM.o = {
+          ST: setTimeout,
+          SI: d.setImmediate,
+          CT: clearTimeout,
+          XHR: g,
+          REQ: d.Request,
+          EV: d.Event,
+          PR: d.Promise,
+          MO: d.MutationObserver
+        };
+        var h = "" + location,
+          y = {
+            beacon: "bam.nr-data.net",
+            errorBeacon: "bam.nr-data.net",
+            agent: "js-agent.newrelic.com/nr-1158.min.js"
+          },
+          b = g && w && w[m] && !/CriOS/.test(navigator.userAgent),
+          E = e.exports = {
+            offset: f,
+            now: a,
+            origin: h,
+            features: {},
+            xhrWrappable: b,
+            userAgent: p
+          };
+        n(1), n(2), l[m] ? (l[m]("DOMContentLoaded", o, !1), d[m]("load", r, !1)) : (l[v]("onreadystatechange", i), d[v]("onload", r)), c("mark", ["firstbyte", f], null, "api");
+        var x = 0,
+          O = n(6)
+      }, {}],
+      "wrap-function": [function(n, e, t) {
+        function r(n) {
+          return !(n && n instanceof Function && n.apply && !n[a])
+        }
+        var i = n("ee"),
+          o = n(5),
+          a = "nr@original",
+          f = Object.prototype.hasOwnProperty,
+          c = !1;
+        e.exports = function(n, e) {
+          function t(n, e, t, i) {
+            function nrWrapper() {
+              var r, a, f, c;
+              try {
+                a = this, r = o(arguments), f = "function" == typeof t ? t(r, a) : t || {}
+              } catch (u) {
+                d([u, "", [r, a, i], f])
+              }
+              s(e + "start", [r, a, i], f);
+              try {
+                return c = n.apply(a, r)
+              } catch (p) {
+                throw s(e + "err", [r, a, p], f), p
+              } finally {
+                s(e + "end", [r, a, c], f)
+              }
+            }
+            return r(n) ? n : (e || (e = ""), nrWrapper[a] = n, p(n, nrWrapper), nrWrapper)
+          }
+
+          function u(n, e, i, o) {
+            i || (i = "");
+            var a, f, c, u = "-" === i.charAt(0);
+            for (c = 0; c < e.length; c++) f = e[c], a = n[f], r(a) || (n[f] = t(a, u ? f + i : i, o, f))
+          }
+
+          function s(t, r, i) {
+            if (!c || e) {
+              var o = c;
+              c = !0;
+              try {
+                n.emit(t, r, i, e)
+              } catch (a) {
+                d([a, t, r, i])
+              }
+              c = o
+            }
+          }
+
+          function p(n, e) {
+            if (Object.defineProperty && Object.keys) try {
+              var t = Object.keys(n);
+              return t.forEach(function(t) {
+                Object.defineProperty(e, t, {
+                  get: function() {
+                    return n[t]
+                  },
+                  set: function(e) {
+                    return n[t] = e, e
+                  }
+                })
+              }), e
+            } catch (r) {
+              d([r])
+            }
+            for (var i in n) f.call(n, i) && (e[i] = n[i]);
+            return e
+          }
+
+          function d(e) {
+            try {
+              n.emit("internal-error", e)
+            } catch (t) {}
+          }
+          return n || (n = i), t.inPlace = u, t.flag = a, t
+        }
+      }, {}]
+    }, {}, ["loader"]);
+  </script>
+
+  <title>Breckenridge Christmas Ale - Where to Buy Near Me - BeerMenus</title>
+  <meta name="description" content="See bars, beer stores, and restaurants near me selling Breckenridge Christmas Ale with prices and whether it's on tap or in a bottle, can, growler, etc." />
+  <link rel="canonical" href="https://www.beermenus.com/beers/6484-breckenridge-christmas-ale" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@BeerMenus" />
+  <meta name="twitter:title" content="Breckenridge Christmas Ale - Where to Buy Near Me - BeerMenus" />
+  <meta name="twitter:description" content="See bars, beer stores, and restaurants near me selling Breckenridge Christmas Ale with prices and whether it's on tap or in a bottle, can, growler, etc." />
+  <meta name="twitter:app:name:iphone" content="BeerMenus - Find Great Beer" />
+  <meta name="twitter:app:id:iphone" content="917882057" />
+  <meta name="twitter:app:url:iphone" content="beermenus://beers/6484-breckenridge-christmas-ale" />
+  <meta name="twitter:app:name:googleplay" content="BeerMenus - Find Great Beer">
+  <meta name="twitter:app:id:googleplay" content="com.beermenus.beermenus">
+  <meta name="twitter:image" content="https://www.beermenus.com/assets/sprites/logo.png">
+
+  <meta property="og:url" content="https://www.beermenus.com/beers/6484-breckenridge-christmas-ale" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Breckenridge Christmas Ale - Where to Buy Near Me - BeerMenus" />
+  <meta property="og:description" content="See bars, beer stores, and restaurants near me selling Breckenridge Christmas Ale with prices and whether it's on tap or in a bottle, can, growler, etc." />
+  <meta property="og:image" content="https://www.beermenus.com/assets/sprites/logo.png" />
+  <meta property="fb:app_id" content="102382313187511" />
+
+  <link rel="shortcut icon" href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/favicon-af1a8d564621e02dc8e29aa32fc5f45edbeb492f8b1b9cc707f0dd88cad2cd64.ico">
+  <link rel="icon" type="image/png" href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/android-chrome-192x192-e044eea727d615fae8147e2a5e6a9575fe40c727ec9e3d96cc195c5550fab130.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/favicon-194x194-bc9abda30115c79ebc2152aedf60449de7b36cc97f32e5ac534c87f9e5e9e811.png" sizes="194x194">
+
+  <link rel="stylesheet" media="screen" href="https://d301kf52wiw73w.cloudfront.net/assets/desktop-c4519de544e7e2118e9a125af83a76285fde20be222c684f4e7248343dbd002a.css" />
+  <script src="https://d301kf52wiw73w.cloudfront.net/packs/js/desktop-954edf86c16941164e82.js" defer="defer"></script>
+  <meta name="action-cable-url" content="wss://beermenus.com" />
+  <meta name="csrf-param" content="authenticity_token" />
+  <meta name="csrf-token" content="3JBiLIYiEvLp2+ZgVcZz5MxZ00i2TQILmWntUFQKgiBCKCaT0EXMBQJ9BJ/upKRQxaygMsTDsJJPiPz2GSqP+A==" />
+
+  <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-1198075-3"></script>
+
+  <script>
+    //<![CDATA[
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+    gtag("config", "UA-1198075-3");
+
+//]]>
+</script>
+
+
+</head>
+
+<body class="web" style="height: auto;">
+  <div data-controller="honeybadger"></div>
+
+
+  <div id="header" class="header header-signed-out">
+
+    <div class="header-main">
+      <div class="content-inner">
+        <div class="pure-g">
+          <div class="pure-u-1-6">
+            <a class="logo" href="/">BEERMENUS</a>
+          </div>
+          <div class="pure-u-1-3 header-search">
+            <form action="/search" method="get" class="pure-form search-form">
+              <label class="pure-icon pure-icon-search" for="search-input"></label>
+              <input type="text" name="q" id="search-input" class="pure-input search-input" placeholder="Search for beers or places..." value="">
+              <button type="submit" class="pure-button pure-button-primary" id="search-button">Search</button>
+            </form>
+          </div>
+
+          <div class="pure-u-1-2 header-account">
+            <a rel="nofollow" class="pure-button pure-button-naked" href="/sessions/new">Log In</a>
+            <a class="pure-button pure-button-naked" href="/join">Sign Up</a>
+            <a class="pure-button pure-button-primary-outline" href="/places/new?ref=d_header_u2">Add My Business</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="header-nav">
+      <div class="content-inner">
+        <div class="header-browse">
+          <a href="/">Home</a>
+          <a href="/my_feed">Feed</a>
+          <a href="/places">Places</a>
+          <a href="/large_map">Map</a>
+          <a href="/events">Events</a>
+          <a href="/specials">Specials</a>
+          <a href="/business-blog">Behind the Bar</a>
+        </div>
+
+        <p class="header-help header-lp-links">
+          <a class="first" href="/print-menus?ref=d_header_u2">One-Click Print Menus</a>
+          <a href="/digital-beer-boards?ref=d_header_u2">Digital TV Menus</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="global-messages">
+
+
+
+  </div>
+
+
+  <div data-controller="structured-data" data-structured-data-path="/api/internal/structured_data/6484?resource=beer"></div>
+
+  <div class="content">
+
+
+
+    <div class="splash splash-small">
+      <div class="content-inner">
+        <div class="inline-block mr va-t">
+          <a class="inline-block beer-label-img mb-0" href="/beers/6484-breckenridge-christmas-ale/label"><img class="pure-img ms-auto" alt="Breckenridge Christmas Ale beer" src="https://d2sochvv0rudri.cloudfront.net/beer_labels/6484/thumb_breckenridge-christmas-ale-4.png" /></a>
+        </div>
+        <div class="inline-block">
+          <h1 class="text-bigger mb-less-small">Breckenridge Christmas Ale</h1>
+          <div data-controller="beer-info">
+            <p class="mb-tiny">
+              Winter Warmer &middot; 7.1% ABV
+              &middot; ~160 calories
+            </p>
+            <p class="mb-0">
+              <a href="/breweries/731-breckenridge-brewery">Breckenridge Brewery</a>
+              &middot; Littleton, CO
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="content-inner pt-biggish">
+      <div class="pure-g">
+        <div class="pure-u-2-3">
+          <div class="pure-card pure-card-p-small ba-0 bl b-thick b-green background-light-gray mb-biggish">
+            <div class="pure-f">
+              <div class="pure-f-item va-m text-bigger pl-tiny">📣</div>
+              <div class="pure-f-body">
+                <div class="pure-g pure-g-small-gutter">
+                  <div class="pure-u-2-3">
+                    <h3 class="mb-tiny text-500">Sell great beer? Tell the BeerMenus community!</h3>
+                    <p class="mb-0 caption">Add your business, list your beers, bring in your locals.</p>
+                  </div>
+                  <div class="pure-u-1-3 mt-tiny">
+                    <a class="pure-button pure-button-round pure-button-primary-outline" href="/places/new?ref=d_beer_137_1">Add my business</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-less-small pl-0 pure-u-1">
+            <div data-controller="location-autocomplete" class="location-updater">
+              <form class="pure-form" data-target="location-autocomplete.form" action="/locations" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="CNygPOqrD1TFoQHTKx1SGZprDnXqc4u6VL4zxkWCvTaWZOSDvMzRoy4H4yyQf4Wtk559D5j9OSOCXyJgCKKw7g==" />
+                <input value="34.71350000000001" data-target="location-autocomplete.latitude" type="hidden" name="location[latitude]" id="location_latitude" />
+                <input value="-86.7421" data-target="location-autocomplete.longitude" type="hidden" name="location[longitude]" id="location_longitude" />
+                <input value="Madison, AL, 35758, US" data-target="location-autocomplete.name" type="hidden" name="location[name]" id="location_name" />
+
+
+
+
+                <div class="pure-input-2-3 pure-input-prepend">
+                  <label for="location_address" class="prepend">Near</label>
+                  <input value="Madison, AL, 35758, US" class="address va-m pure-input pure-input-1" placeholder="Address, City, State or Zip" data-target="location-autocomplete.input" type="text" name="location[address]" id="location_address" />
+                </div>
+                <input type="submit" name="commit" value="Update" class="pure-button pure-button-round" data-disable-with="Updating..." data-action="location-autocomplete#submit" data-disable-with="Update" />
+              </form>
+            </div>
+
+          </div>
+          <h2 class="mb-tiny">
+            17 places have this beer near you
+          </h2>
+
+          <p class="mb-less-small caption">
+            These places list their beers on BeerMenus. Join them for free &mdash; <a href="/places/new?ref=d_beer_jtff">Add my business</a>
+          </p>
+
+          <ul id="places" class="pure-list pure-list-less-short">
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/64594-bad-daddy-s-burger-bar-huntsville">Bad Daddy&#39;s Burger Bar - Huntsville</a>
+              </h3>
+              <p class="caption mb-small">
+                8.6 miles away
+                &middot;
+                2317 Memorial Parkway Southwest, Huntsville, AL 35801
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 12/14/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/64416-bad-daddy-s-burger-bar-murfreesboro">Bad Daddy&#39;s Burger Bar - Murfreesboro</a>
+              </h3>
+              <p class="caption mb-small">
+                80.9 miles away
+                &middot;
+                2243 Medical Center Parkway, Murfreesboro, TN 37129
+              </p>
+              <p class="caption mb-0">
+
+                Menu Updated: 12/13/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/66203-impellizzeri-s-pizza">Impellizzeri&#39;s Pizza</a>
+              </h3>
+              <p class="caption mb-small">
+                252.0 miles away
+                &middot;
+                805 Blankenbaker Parkway, Louisville, KY 40243
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 12/12/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/49079-zeddie-s-party-shop-bar">Zeddie&#39;s Party Shop &amp; Bar</a>
+              </h3>
+              <p class="caption mb-small">
+                318.1 miles away
+                &middot;
+                203 Hwy 378W, Lexington, SC 29072
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 12/13/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  6 Pack Bottles $9.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/60485-clifton-market">Clifton Market</a>
+              </h3>
+              <p class="caption mb-small">
+                329.7 miles away
+                &middot;
+                319 Ludlow Avenue, Cincinnati, OH 45220
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/04/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+
+                  5 Liter Keg $19.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/51215-village-shoppe-go-drive-thru">Village Shoppe &amp; Go Drive Thru</a>
+              </h3>
+              <p class="caption mb-small">
+                338.7 miles away
+                &middot;
+                3011 Glendale Milford Road, Cincinnati, OH 45241
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/10/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  6 Pack Bottles $8.99
+                </span>
+                &middot;
+                <span>
+
+                  5 Liter Keg $19.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/39816-the-growler-pub-grub">The Growler Pub &amp; Grub</a>
+              </h3>
+              <p class="caption mb-small">
+                372.7 miles away
+                &middot;
+                3808 Wilmington Pike, Kettering, OH 45429
+              </p>
+              <p class="caption mb-0">
+                Bar &middot;
+                Menu Updated: 01/05/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/17813-route-6-liquors">Route 6 Liquors</a>
+              </h3>
+              <p class="caption mb-small">
+                470.7 miles away
+                &middot;
+                25445 Pheasant Lane, Channahon, IL 60410
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/03/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  Bottle $10.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/7448-cheap-cheap-liquors">Cheap Cheap Liquors</a>
+              </h3>
+              <p class="caption mb-small">
+                479.7 miles away
+                &middot;
+                2211 Illinois 59, Plainfield, IL 60586
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/09/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  6 Pack Bottles $0.01
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/7669-pete-s-wine-liquors">Pete&#39;s Wine &amp; Liquors</a>
+              </h3>
+              <p class="caption mb-small">
+                484.9 miles away
+                &middot;
+                11428 Harlem Avenue, Worth, IL 60482
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 12/04/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+
+                  6 Pack Bottles
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/53212-captain-jacks-beverages">Captain Jacks Beverages</a>
+              </h3>
+              <p class="caption mb-small">
+                485.4 miles away
+                &middot;
+                7030 West 111th Street, Worth, IL 60482
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/11/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  6 Pack Bottles $9.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/10948-bridgeview-liquors">Bridgeview Liquors</a>
+              </h3>
+              <p class="caption mb-small">
+                488.8 miles away
+                &middot;
+                8340 Harlem Avenue, Bridgeview, IL 60455
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/10/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  6 Pack Bottles $8.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/39774-bg-beverage-center">BG Beverage Center</a>
+              </h3>
+              <p class="caption mb-small">
+                490.3 miles away
+                &middot;
+                811 Haskins Road, Bowling Green, OH 43402
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/12/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+
+                  6 Pack Bottles
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/4057-leo-s-wine-s-spirits">Leo&#39;s Wine&#39;s &amp; Spirits</a>
+              </h3>
+              <p class="caption mb-small">
+                492.4 miles away
+                &middot;
+                3018 Hobson Road, Woodridge, IL 60517
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/11/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  6 Pack Bottles $9.99
+                </span>
+                &middot;
+                <span>
+
+                  5 Liter Keg $19.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/19825-archer-liquors">Archer Liquors</a>
+              </h3>
+              <p class="caption mb-small">
+                492.4 miles away
+                &middot;
+                5996 South Archer Avenue, Chicago, IL 60638
+              </p>
+              <p class="caption mb-0">
+                Beer Store &middot;
+                Menu Updated: 01/12/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  5L
+                  Can $18.99
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/1235-palmer-place-restaurant">Palmer Place Restaurant </a>
+              </h3>
+              <p class="caption mb-small">
+                494.3 miles away
+                &middot;
+                56 South La Grange Road, La Grange, IL 60525
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 01/12/2020
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  16oz
+                  Draft $6
+                </span>
+
+              </p>
+            </li>
+
+            <li class="pure-list-item">
+              <h3 class="mb-0 text-normal">
+                <a href="/places/31099-delta-109">Delta 109</a>
+              </h3>
+              <p class="caption mb-small">
+                496.7 miles away
+                &middot;
+                214 West Main Street, Delta, OH 43515
+              </p>
+              <p class="caption mb-0">
+                Restaurant &middot;
+                Menu Updated: 12/13/2019
+              </p>
+              <p class="caption mb-0 text-dark-gray">
+                <span>
+                  12oz
+                  Bottle $5.50
+                </span>
+
+              </p>
+            </li>
+
+
+          </ul>
+
+          <h3 class="mb-tiny">Make sure your business is on this list.</h3>
+          <p class="mb-bigger"><a href="/places/new?ref=d_beer_msol">Add my business</a></p>
+
+        </div>
+        <div class="pure-u-1-3">
+          <div class="background-light-gray bl b-thick b-blue pl pt-small pb-small mb-biggish caption">
+            Follow this beer to get emailed when local businesses get it.
+          </div>
+
+          <div class="follow-beer action mb-biggish">
+
+            <div class="follow-beer follow-beer-6484">
+
+              <form class="new_beer_relationship" id="new_beer_relationship" action="/beer_relationships" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+                <input value="6484" type="hidden" name="beer_relationship[beer_id]" id="beer_relationship_beer_id" />
+                <input type="hidden" name="list" id="list" value="false" />
+                <input type="submit" name="commit" value="Follow this beer" data-disable-with="Following..." class="pure-button pure-button-round pure-button-primary" />
+              </form>
+            </div>
+
+          </div>
+
+          <div class="mb" data-controller="beer-info">
+            <h3 class="mb-tiny text-500">Beer Description</h3>
+            <div class="caption" data-target="beer-info.description">
+              <p>The chill of a Colorado high-country winter calls for a beer with extra flavor and strength.</p>
+            </div>
+            <div class="caption">
+              <div data-target="beer-info.description">
+                <p>Here it is. At over 7% alcohol, with a sturdy texture and rich flavors of caramel and chocolate, our holiday seasonal is the fermented equivalent of a good fire.</p>
+              </div>
+            </div>
+            <div class="mt-less-small">
+              <a data-action="beer-info#copyDescription" class="clipboard-button pure-button pure-button-small pure-button-round mb" href="#">Copy description</a>
+            </div>
+          </div>
+
+          <div class="pure-card pure-card-p-0">
+            <div class="background-black pt-small bb">
+              <img src="https://d301kf52wiw73w.cloudfront.net/assets/promos/print-menu-examples-promo-7d67488d065f36debce35ed5ac27c57da2cabfbea0a3e6bac012d06e2cd2bad0.png" alt="" class="pure-img" />
+            </div>
+            <div class="ml ml mt mb">
+              <p class="mb-tiny"><strong>The print menu customers want.</strong></p>
+              <p class="text-gray">Sell more beer: print menus designed to help your customers choose beers.</p>
+              <a class="pure-button pure-button-round pure-button-primary-outline" href="/print-menus?ref=d_beer_sidebar_u2">Learn more</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal-narrow fade" id="print-menu" tabindex="-1" role="dialog" aria-labelledby="">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="background-light-green">
+            <div class="content-inner pt-less-small pb-less-small">
+              <span class="pure-icon pure-icon-check"></span>
+              Beer info copied to your clipboard.
+            </div>
+          </div>
+          <div class="background-black pt-small">
+            <img src="https://d301kf52wiw73w.cloudfront.net/assets/promos/print-menu-examples-promo-7d67488d065f36debce35ed5ac27c57da2cabfbea0a3e6bac012d06e2cd2bad0.png" alt="" class="pure-img" />
+          </div>
+          <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span class="pure-icon pure-icon-close"></span>
+            </button>
+
+            <h2>Copying beer info for your print menu?</h2>
+
+            <p>Save time&mdash;automatically create your print menu with one click.</p>
+
+            <a class="pure-button pure-button-round pure-button-primary" href="/print-menus?ref=d_beer_print">Learn More</a>
+            <p class="caption mt mb-0">
+              <span class="text-gray">or</span>
+              <a class="text-black" data-remote="true" href="/hide_print_menu_promo">Don&#39;t show this message again</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-container"></div>
+  </div>
+
+
+
+  <div class="footer caption ">
+
+    <div class="content-inner">
+      <div class="pure-g">
+        <div class="pure-u-1-4">
+          <h4 class="small-caps mb-small">Info</h4>
+          <ul class="pure-list pure-list-naked">
+            <li class="pure-list-item"><a href="/about">About</a></li>
+            <li class="pure-list-item"><a href="/careers">Careers</a></li>
+            <li class="pure-list-item"><a href="/contact">Contact</a></li>
+            <li class="pure-list-item"><a href="https://help.beermenus.com/">Help Center</a></li>
+            <li class="pure-list-item"><a href="/press">Press</a></li>
+            <li class="pure-list-item"><a href="/blog">Blog</a></li>
+            <li class="pure-list-item"><a href="/cities">Cities</a></li>
+            <li class="pure-list-item"><a href="/recruit?ref=footer">Recruit a Business</a></li>
+          </ul>
+        </div>
+
+        <div class="pure-u-1-4">
+          <h4 class="small-caps mb-small">I sell craft beer.</h4>
+          <a class="pure-button pure-button-round pure-button-primary-outline pure-button-small" href="/places/new?ref=footer_781">Add my business</a>
+
+          <h4 class="small-caps mt mb-small">For Breweries</h4>
+          <ul class="pure-list pure-list-naked mb-0">
+            <li class="pure-list-item"><a href="/beer-releases?ref=d_footer">Beer Releases</a></li>
+          </ul>
+
+          <h4 class="small-caps mt mb-small">Stats</h4>
+          <ul class="pure-list pure-list-naked">
+            <li class="pure-list-item"><span>17 Places</span></li>
+            <li class="pure-list-item"><span>242,893 Beers</span></li>
+            <li class="pure-list-item"><span>77 Events</span></li>
+          </ul>
+        </div>
+
+        <div class="pure-u-1-4">
+          <h4 class="small-caps mb-small">Stay in touch</h4>
+          <ul class="pure-list pure-list-naked">
+            <li class="pure-list-item">
+              <a href="https://www.facebook.com/beermenus">Facebook</a>
+            </li>
+            <li class="pure-list-item">
+              <a href="https://www.twitter.com/beermenus">Twitter</a>
+            </li>
+            <li class="pure-list-item">
+              <a href="http://www.instagram.com/beermenus">Instagram</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="pure-u-1-4">
+          <h4 class="small-caps mb-small">iPhone App</h4>
+          <a class="app-store-link" href="https://itunes.apple.com/app/apple-store/id917882057?pt=106837806&amp;ct=d-footer&amp;mt=8">Download on the App Store</a>
+
+          <h4 class="small-caps mt-big mb-small">Android App</h4>
+          <a class="footer-link" href="https://play.google.com/store/apps/details?id=com.beermenus.beermenus">Download on the Google Play Store</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="copyright">
+      <div class="content-inner">
+        <span>&copy; 2020 BeerMenus</span>
+        &middot; <a rel="nofollow" href="/terms">Terms</a>
+        &middot; <a rel="nofollow" href="/privacy">Privacy</a>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <div class="modal fade" id="customer-type-survey" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header text-center">
+          <h2 class="mb-tiny">Get the most out of BeerMenus</h2>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span class="pure-icon pure-icon-close"></span>
+          </button>
+        </div>
+
+        <form id="user-type-survey" action="/survey_response" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+          <input type="hidden" name="survey" id="survey" value="user_type_logged_out" />
+          <div class="modal-body">
+            <div class="pure-form">
+              <div class="pure-checkbox">
+                <input type="checkbox" name="user[segments][user_type][]" id="user_type_owner" value="owner" />
+                <label for="user_type_owner">I own a business that sells beer, wine, or spirits to local drinkers.</label>
+              </div>
+
+              <hr class="pure-divider">
+              <div class="pure-checkbox">
+                <input type="checkbox" name="user[segments][user_type][]" id="user_type_manager" value="manager" />
+                <label for="user_type_manager">I manage a business that sells beer, wine, or spirits to local drinkers.</label>
+              </div>
+
+              <hr class="pure-divider">
+              <div class="pure-checkbox">
+                <input type="checkbox" name="user[segments][user_type][]" id="user_type_drinker" value="drinker" />
+                <label for="user_type_drinker">I&#39;m a beer, wine, or spirits drinker.</label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" name="commit" value="Continue" data-disable-with="Saving..." id="user_type_save_button" class="disabled pure-button pure-button-round pure-button-primary pure-button-big pure-button-1" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="analytics" data-event-name="Viewed logged out user type survey">
+    <div data-name="Viewed lo uts on entrance" data-value="Yes"></div>
+    <div data-name="AB 142" data-value="experiment"></div>
+    <div data-name="Logged In" data-value="false"></div>
+    <div data-name="Platform" data-value="Desktop"></div>
+  </div>
+
+
+  <script>
+    //<![CDATA[
+    function execute_vozrbhxg() {
+      $("#customer-type-survey").modal();
+      $(".pure-checkbox input[type=checkbox]").change(function() {
+        var checked = $(".pure-checkbox input[type=checkbox]:checked").length;
+        if (checked > 0) {
+          $("#user_type_save_button").removeClass("disabled").prop("disabled", false);
+        } else {
+          $("#user_type_save_button").addClass("disabled").prop("disabled", true);
+        }
+      });
+
+
+      $(".modal-content button.close").click(function() {
+        var future = new Date();
+        future.setDate(future.getDate() + 7);
+        var cookie_string = "user_type_logged_out=disable; expires=" + future.toUTCString() + "; path=/";
+        document.cookie = cookie_string;
+
+        BeerMenus.Analytics.track("Closed logged out user type survey", {
+          "platform": "Desktop"
+        });
+      });
+    }
+    if (document.readyState == 'loading') {
+      document.addEventListener('DOMContentLoaded', execute_vozrbhxg)
+    } else {
+      execute_vozrbhxg()
+    }
+    //]]>
+  </script>
+
+
+  <div id="sortable-mirror-wrapper" class="sortable"></div>
+
+</body>
+
+</html>
