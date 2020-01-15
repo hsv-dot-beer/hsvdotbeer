@@ -19,6 +19,7 @@ class Venue(models.Model):
         ('test', 'TEST LOCAL PROVIDER'),
         ('stemandstein', 'The Stem & Stein\'s HTML'),
         ('taplist.io', 'taplist.io'),
+        ('beermenus', 'BeerMenus'),
     )
 
     # NOTE if this ever grows beyond HSV, we'll have to revisit uniqueness
@@ -87,3 +88,10 @@ class VenueAPIConfiguration(models.Model):
     )
     taplist_io_display_id = models.CharField(max_length=50, blank=True)
     taplist_io_access_code = models.CharField(max_length=50, blank=True)
+    beermenus_categories = ArrayField(
+        models.TextField(),
+        default=list,
+        blank=True,
+        null=True,
+    )
+    beermenus_slug = models.CharField(max_length=250, blank=True)

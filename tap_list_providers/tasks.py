@@ -18,7 +18,7 @@ from taps.models import Tap
 from tap_list_providers.base import BaseTapListProvider
 # this import is needed for the subclass lookup to work
 from tap_list_providers.parsers import (  # noqa
-    digitalpour, taphunter, untappd, stemandstein, taplist_io,
+    digitalpour, taphunter, untappd, stemandstein, taplist_io, beermenus,
 )
 from tap_list_providers.twitter_api import ThreadedApi
 
