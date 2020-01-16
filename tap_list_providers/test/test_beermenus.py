@@ -6,7 +6,7 @@ from django.core.management import call_command
 from django.test import TestCase
 import responses
 
-from beers.models import Beer, Manufacturer
+from beers.models import Beer, Manufacturer, ManufacturerAlternateName
 from beers.test.factories import ManufacturerFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
@@ -61,7 +61,10 @@ class CommandsTestCase(TestCase):
                 )
                 with open(os.path.join(PATH, name)) as infile:
                     cls.locations.append((url, name, infile.read()))
-        ManufacturerFactory(name='Rocket Republic Brewing Company')
+        rocket = ManufacturerFactory(name='Rocket Republic Brewing Company')
+        ManufacturerAlternateName.objects.create(
+            name='Rocket Republic', manufacturer=rocket,
+        )
 
     def beer_menu_callback(self, request):
         if request.url.endswith('?section_id=12'):
@@ -142,4 +145,6 @@ class CommandsTestCase(TestCase):
 
             tap = taps[3]
             self.assertEqual(tap.beer.name, 'Vapor Trail Cream Ale')
-            self.assertEqual(tap.beer.manufacturer.name, 'Rocket Republic Brewing Copmany')
+            self.assertEqual(
+                tap.beer.manufacturer.name, 'Rocket Republic Brewing Company',
+            )
