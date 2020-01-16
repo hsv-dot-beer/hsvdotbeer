@@ -267,6 +267,10 @@ class BaseTapListProvider():
                         beer,
                     )
                     continue
+                LOG.debug('Rounding volume')
+                price_info['volume_oz'] = Decimal(
+                    round(price_info['volume_oz'], 1)
+                )
                 try:
                     serving_size = serving_sizes[price_info['volume_oz']]
                 except KeyError:
