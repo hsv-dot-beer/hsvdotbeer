@@ -101,7 +101,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Manufacturer.objects.count(), 22)
             self.assertEqual(Tap.objects.count(), 24)
             taps = Tap.objects.filter(
-                venue=self.venue, tap_number__in=[1, 17],
+                venue=self.venue, tap_number__in=[1, 17, 2],
             ).select_related(
                 'beer__style', 'beer__manufacturer',
             ).order_by('tap_number')
@@ -121,6 +121,10 @@ class CommandsTestCase(TestCase):
             self.assertEqual(price.serving_size.volume_oz, 16)
 
             tap = taps[1]
+            self.assertEqual(tap.beer.name, 'Crisp Apple Cider')
+            self.assertEqual(tap.beer.manufacturer.name, 'Angry Orchard')
+
+            tap = taps[2]
             self.assertEqual(
                 tap.beer.name,
                 'Modelo Especial',

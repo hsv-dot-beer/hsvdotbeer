@@ -121,6 +121,7 @@ class BaseTapListProvider():
             'get_beer(): name %s, mfg %s, defaults %s',
             name, manufacturer, defaults,
         )
+        name = name.replace(manufacturer.name, '').strip()
         unique_fields = (
             'manufacturer_url', 'untappd_url', 'beer_advocate_url',
             'taphunter_url', 'taplist_io_pk', 'beermenus_slug',
