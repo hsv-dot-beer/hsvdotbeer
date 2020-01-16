@@ -888,7 +888,7 @@
         "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": "",
-        "beermenus_categories": "[\"local_draft\", \"craft_beer\", \"domestic\"]",
+        "beermenus_categories": "[\"local\", \"craft_beer\", \"domestic_draft\"]",
         "beermenus_slug": "52478-beauregard-s"
     }
 }
