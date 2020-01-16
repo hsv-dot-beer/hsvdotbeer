@@ -121,7 +121,11 @@ class BaseTapListProvider():
             'get_beer(): name %s, mfg %s, defaults %s',
             name, manufacturer, defaults,
         )
-        name = name.replace(manufacturer.name, '').strip()
+        mfg_name = manufacturer.name
+        for ending in COMMON_BREWERY_ENDINGS:
+            if mfg_name.endswith(ending):
+                mfg_name = mfg_name.replace(ending, '').strip()
+        name = name.replace(mfg_name, '').strip()
         unique_fields = (
             'manufacturer_url', 'untappd_url', 'beer_advocate_url',
             'taphunter_url', 'taplist_io_pk', 'beermenus_slug',

@@ -7,6 +7,7 @@ from django.test import TestCase
 import responses
 
 from beers.models import Beer, Manufacturer
+from beers.test.factories import ManufacturerFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
@@ -60,6 +61,7 @@ class CommandsTestCase(TestCase):
                 )
                 with open(os.path.join(PATH, name)) as infile:
                     cls.locations.append((url, name, infile.read()))
+        ManufacturerFactory(name='Rocket Republic Brewing Company')
 
     def beer_menu_callback(self, request):
         if request.url.endswith('?section_id=12'):
@@ -85,7 +87,6 @@ class CommandsTestCase(TestCase):
         self.assertFalse(Tap.objects.exists())
         self.assertEqual(Venue.objects.count(), 1)
         self.assertFalse(Beer.objects.exists())
-        self.assertFalse(Manufacturer.objects.exists())
         deleted_tap = Tap.objects.create(
             venue=self.venue,
             tap_number=3000,
@@ -101,7 +102,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Manufacturer.objects.count(), 22)
             self.assertEqual(Tap.objects.count(), 24)
             taps = Tap.objects.filter(
-                venue=self.venue, tap_number__in=[1, 17, 2],
+                venue=self.venue, tap_number__in=[1, 17, 2, 19],
             ).select_related(
                 'beer__style', 'beer__manufacturer',
             ).order_by('tap_number')
@@ -138,3 +139,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(price.price, 6)
             self.assertEqual(price.serving_size.volume_oz, 16)
             self.assertFalse(Tap.objects.filter(id=deleted_tap.id).exists())
+
+            tap = taps[3]
+            self.assertEqual(tap.beer.name, 'Vapor Trail Cream Ale')
+            self.assertEqual(tap.beer.manufacturer.name, 'Rocket Republic Brewing Copmany')
