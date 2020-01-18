@@ -248,7 +248,7 @@ class DigitalPourParser(BaseTapListProvider):
             if not price.get('DisplayOnMenu'):
                 continue
             p = {
-                'volume_oz': Decimal(price['DisplaySize']),
+                'volume_oz': Decimal(round(price['DisplaySize'], 1)),
                 # 6oz --> 6 oz
                 'name': f'{price["DisplayName"][:-2]} '
                 f'{price["DisplayName"][-2:]}',
@@ -287,7 +287,9 @@ if __name__ == '__main__':
         'wywb805': ('57b130dd5e002c0388f8b686', 2),
         'otbx': ('5502506cb3b70304a8f2e0d2', 1),
         'rccb': ('5aa1a8135e002c0924805971', 1),
-        'bufeddies': ('5afe0f3a5e002c0b8060a5b8', 1)
+        'bufeddies': ('5afe0f3a5e002c0b8060a5b8', 1),
+        'rrmad': ('5d657d943527260064257abf', 1),
+        'rrdowntown': ('5d657d943527260064257abf', 2),
     }
 
     parser = argparse.ArgumentParser()

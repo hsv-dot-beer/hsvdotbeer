@@ -83,6 +83,18 @@ class Manufacturer(models.Model):
         blank=True, null=True, unique=True,
     )
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
+    beermenus_slug = models.CharField(
+        max_length=250, blank=True, null=True, unique=True,
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.beermenus_slug:
+            self.beermenus_slug = None
+        if not self.taphunter_url:
+            self.taphunter_url = None
+        if not self.untappd_url:
+            self.untappd_url = None
+        return super().save(*args, **kwargs)
 
     def merge_from(self, other):
         LOG.info('merging %s into %s', other, self)
@@ -181,6 +193,9 @@ class Beer(models.Model):
     )
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
     tweeted_about = models.BooleanField(default=False, db_index=True)
+    beermenus_slug = models.CharField(
+        max_length=250, blank=True, null=True, unique=True,
+    )
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
@@ -194,6 +209,8 @@ class Beer(models.Model):
             self.manufacturer_url = None
         if not self.taphunter_url:
             self.taphunter_url = None
+        if not self.beermenus_slug:
+            self.beermenus_slug = None
         return super().save(*args, **kwargs)
 
     def __str__(self):

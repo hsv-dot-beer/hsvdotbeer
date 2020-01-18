@@ -1,0 +1,2513 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript">
+    window.NREUM || (NREUM = {});
+    NREUM.info = {
+      "beacon": "bam.nr-data.net",
+      "errorBeacon": "bam.nr-data.net",
+      "licenseKey": "5dd8520f86",
+      "applicationID": "313557",
+      "transactionName": "Jg1YTBRWCQhcRU5ECAQBU0tJSg0LTg==",
+      "queueTime": 325,
+      "applicationTime": 173,
+      "agent": ""
+    }
+  </script>
+  <script type="text/javascript">
+    (window.NREUM || (NREUM = {})).loader_config = {
+      licenseKey: "5dd8520f86",
+      applicationID: "313557"
+    };
+    window.NREUM || (NREUM = {}), __nr_require = function(n, e, t) {
+      function r(t) {
+        if (!e[t]) {
+          var i = e[t] = {
+            exports: {}
+          };
+          n[t][0].call(i.exports, function(e) {
+            var i = n[t][1][e];
+            return r(i || e)
+          }, i, i.exports)
+        }
+        return e[t].exports
+      }
+      if ("function" == typeof __nr_require) return __nr_require;
+      for (var i = 0; i < t.length; i++) r(t[i]);
+      return r
+    }({
+      1: [function(n, e, t) {
+        function r() {}
+
+        function i(n, e, t) {
+          return function() {
+            return o(n, [u.now()].concat(f(arguments)), e ? null : this, t), e ? void 0 : this
+          }
+        }
+        var o = n("handle"),
+          a = n(4),
+          f = n(5),
+          c = n("ee").get("tracer"),
+          u = n("loader"),
+          s = NREUM;
+        "undefined" == typeof window.newrelic && (newrelic = s);
+        var p = ["setPageViewName", "setCustomAttribute", "setErrorHandler", "finished", "addToTrace", "inlineHit", "addRelease"],
+          d = "api-",
+          l = d + "ixn-";
+        a(p, function(n, e) {
+          s[e] = i(d + e, !0, "api")
+        }), s.addPageAction = i(d + "addPageAction", !0), s.setCurrentRouteName = i(d + "routeName", !0), e.exports = newrelic, s.interaction = function() {
+          return (new r).get()
+        };
+        var m = r.prototype = {
+          createTracer: function(n, e) {
+            var t = {},
+              r = this,
+              i = "function" == typeof e;
+            return o(l + "tracer", [u.now(), n, t], r),
+              function() {
+                if (c.emit((i ? "" : "no-") + "fn-start", [u.now(), r, i], t), i) try {
+                  return e.apply(this, arguments)
+                } catch (n) {
+                  throw c.emit("fn-err", [arguments, this, n], t), n
+                } finally {
+                  c.emit("fn-end", [u.now()], t)
+                }
+              }
+          }
+        };
+        a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","), function(n, e) {
+          m[e] = i(l + e)
+        }), newrelic.noticeError = function(n, e) {
+          "string" == typeof n && (n = new Error(n)), o("err", [n, u.now(), !1, e])
+        }
+      }, {}],
+      2: [function(n, e, t) {
+        function r(n, e) {
+          var t = n.getEntries();
+          t.forEach(function(n) {
+            "first-paint" === n.name ? a("timing", ["fp", Math.floor(n.startTime)]) : "first-contentful-paint" === n.name && a("timing", ["fcp", Math.floor(n.startTime)])
+          })
+        }
+
+        function i(n) {
+          if (n instanceof c && !s) {
+            var e, t = Math.round(n.timeStamp);
+            e = t > 1e12 ? Date.now() - t : f.now() - t, s = !0, a("timing", ["fi", t, {
+              type: n.type,
+              fid: e
+            }])
+          }
+        }
+        if (!("init" in NREUM && "page_view_timing" in NREUM.init && "enabled" in NREUM.init.page_view_timing && NREUM.init.page_view_timing.enabled === !1)) {
+          var o, a = n("handle"),
+            f = n("loader"),
+            c = NREUM.o.EV;
+          if ("PerformanceObserver" in window && "function" == typeof window.PerformanceObserver) {
+            o = new PerformanceObserver(r);
+            try {
+              o.observe({
+                entryTypes: ["paint"]
+              })
+            } catch (u) {}
+          }
+          if ("addEventListener" in document) {
+            var s = !1,
+              p = ["click", "keydown", "mousedown", "pointerdown", "touchstart"];
+            p.forEach(function(n) {
+              document.addEventListener(n, i, !1)
+            })
+          }
+        }
+      }, {}],
+      3: [function(n, e, t) {
+        function r(n, e) {
+          if (!i) return !1;
+          if (n !== i) return !1;
+          if (!e) return !0;
+          if (!o) return !1;
+          for (var t = o.split("."), r = e.split("."), a = 0; a < r.length; a++)
+            if (r[a] !== t[a]) return !1;
+          return !0
+        }
+        var i = null,
+          o = null,
+          a = /Version\/(\S+)\s+Safari/;
+        if (navigator.userAgent) {
+          var f = navigator.userAgent,
+            c = f.match(a);
+          c && f.indexOf("Chrome") === -1 && f.indexOf("Chromium") === -1 && (i = "Safari", o = c[1])
+        }
+        e.exports = {
+          agent: i,
+          version: o,
+          match: r
+        }
+      }, {}],
+      4: [function(n, e, t) {
+        function r(n, e) {
+          var t = [],
+            r = "",
+            o = 0;
+          for (r in n) i.call(n, r) && (t[o] = e(r, n[r]), o += 1);
+          return t
+        }
+        var i = Object.prototype.hasOwnProperty;
+        e.exports = r
+      }, {}],
+      5: [function(n, e, t) {
+        function r(n, e, t) {
+          e || (e = 0), "undefined" == typeof t && (t = n ? n.length : 0);
+          for (var r = -1, i = t - e || 0, o = Array(i < 0 ? 0 : i); ++r < i;) o[r] = n[e + r];
+          return o
+        }
+        e.exports = r
+      }, {}],
+      6: [function(n, e, t) {
+        e.exports = {
+          exists: "undefined" != typeof window.performance && window.performance.timing && "undefined" != typeof window.performance.timing.navigationStart
+        }
+      }, {}],
+      ee: [function(n, e, t) {
+        function r() {}
+
+        function i(n) {
+          function e(n) {
+            return n && n instanceof r ? n : n ? c(n, f, o) : o()
+          }
+
+          function t(t, r, i, o) {
+            if (!d.aborted || o) {
+              n && n(t, r, i);
+              for (var a = e(i), f = v(t), c = f.length, u = 0; u < c; u++) f[u].apply(a, r);
+              var p = s[y[t]];
+              return p && p.push([b, t, r, a]), a
+            }
+          }
+
+          function l(n, e) {
+            h[n] = v(n).concat(e)
+          }
+
+          function m(n, e) {
+            var t = h[n];
+            if (t)
+              for (var r = 0; r < t.length; r++) t[r] === e && t.splice(r, 1)
+          }
+
+          function v(n) {
+            return h[n] || []
+          }
+
+          function g(n) {
+            return p[n] = p[n] || i(t)
+          }
+
+          function w(n, e) {
+            u(n, function(n, t) {
+              e = e || "feature", y[t] = e, e in s || (s[e] = [])
+            })
+          }
+          var h = {},
+            y = {},
+            b = {
+              on: l,
+              addEventListener: l,
+              removeEventListener: m,
+              emit: t,
+              get: g,
+              listeners: v,
+              context: e,
+              buffer: w,
+              abort: a,
+              aborted: !1
+            };
+          return b
+        }
+
+        function o() {
+          return new r
+        }
+
+        function a() {
+          (s.api || s.feature) && (d.aborted = !0, s = d.backlog = {})
+        }
+        var f = "nr@context",
+          c = n("gos"),
+          u = n(4),
+          s = {},
+          p = {},
+          d = e.exports = i();
+        d.backlog = s
+      }, {}],
+      gos: [function(n, e, t) {
+        function r(n, e, t) {
+          if (i.call(n, e)) return n[e];
+          var r = t();
+          if (Object.defineProperty && Object.keys) try {
+            return Object.defineProperty(n, e, {
+              value: r,
+              writable: !0,
+              enumerable: !1
+            }), r
+          } catch (o) {}
+          return n[e] = r, r
+        }
+        var i = Object.prototype.hasOwnProperty;
+        e.exports = r
+      }, {}],
+      handle: [function(n, e, t) {
+        function r(n, e, t, r) {
+          i.buffer([n], r), i.emit(n, e, t)
+        }
+        var i = n("ee").get("handle");
+        e.exports = r, r.ee = i
+      }, {}],
+      id: [function(n, e, t) {
+        function r(n) {
+          var e = typeof n;
+          return !n || "object" !== e && "function" !== e ? -1 : n === window ? 0 : a(n, o, function() {
+            return i++
+          })
+        }
+        var i = 1,
+          o = "nr@id",
+          a = n("gos");
+        e.exports = r
+      }, {}],
+      loader: [function(n, e, t) {
+        function r() {
+          if (!x++) {
+            var n = E.info = NREUM.info,
+              e = l.getElementsByTagName("script")[0];
+            if (setTimeout(s.abort, 3e4), !(n && n.licenseKey && n.applicationID && e)) return s.abort();
+            u(y, function(e, t) {
+              n[e] || (n[e] = t)
+            }), c("mark", ["onload", a() + E.offset], null, "api");
+            var t = l.createElement("script");
+            t.src = "https://" + n.agent, e.parentNode.insertBefore(t, e)
+          }
+        }
+
+        function i() {
+          "complete" === l.readyState && o()
+        }
+
+        function o() {
+          c("mark", ["domContent", a() + E.offset], null, "api")
+        }
+
+        function a() {
+          return O.exists && performance.now ? Math.round(performance.now()) : (f = Math.max((new Date).getTime(), f)) - E.offset
+        }
+        var f = (new Date).getTime(),
+          c = n("handle"),
+          u = n(4),
+          s = n("ee"),
+          p = n(3),
+          d = window,
+          l = d.document,
+          m = "addEventListener",
+          v = "attachEvent",
+          g = d.XMLHttpRequest,
+          w = g && g.prototype;
+        NREUM.o = {
+          ST: setTimeout,
+          SI: d.setImmediate,
+          CT: clearTimeout,
+          XHR: g,
+          REQ: d.Request,
+          EV: d.Event,
+          PR: d.Promise,
+          MO: d.MutationObserver
+        };
+        var h = "" + location,
+          y = {
+            beacon: "bam.nr-data.net",
+            errorBeacon: "bam.nr-data.net",
+            agent: "js-agent.newrelic.com/nr-1158.min.js"
+          },
+          b = g && w && w[m] && !/CriOS/.test(navigator.userAgent),
+          E = e.exports = {
+            offset: f,
+            now: a,
+            origin: h,
+            features: {},
+            xhrWrappable: b,
+            userAgent: p
+          };
+        n(1), n(2), l[m] ? (l[m]("DOMContentLoaded", o, !1), d[m]("load", r, !1)) : (l[v]("onreadystatechange", i), d[v]("onload", r)), c("mark", ["firstbyte", f], null, "api");
+        var x = 0,
+          O = n(6)
+      }, {}],
+      "wrap-function": [function(n, e, t) {
+        function r(n) {
+          return !(n && n instanceof Function && n.apply && !n[a])
+        }
+        var i = n("ee"),
+          o = n(5),
+          a = "nr@original",
+          f = Object.prototype.hasOwnProperty,
+          c = !1;
+        e.exports = function(n, e) {
+          function t(n, e, t, i) {
+            function nrWrapper() {
+              var r, a, f, c;
+              try {
+                a = this, r = o(arguments), f = "function" == typeof t ? t(r, a) : t || {}
+              } catch (u) {
+                d([u, "", [r, a, i], f])
+              }
+              s(e + "start", [r, a, i], f);
+              try {
+                return c = n.apply(a, r)
+              } catch (p) {
+                throw s(e + "err", [r, a, p], f), p
+              } finally {
+                s(e + "end", [r, a, c], f)
+              }
+            }
+            return r(n) ? n : (e || (e = ""), nrWrapper[a] = n, p(n, nrWrapper), nrWrapper)
+          }
+
+          function u(n, e, i, o) {
+            i || (i = "");
+            var a, f, c, u = "-" === i.charAt(0);
+            for (c = 0; c < e.length; c++) f = e[c], a = n[f], r(a) || (n[f] = t(a, u ? f + i : i, o, f))
+          }
+
+          function s(t, r, i) {
+            if (!c || e) {
+              var o = c;
+              c = !0;
+              try {
+                n.emit(t, r, i, e)
+              } catch (a) {
+                d([a, t, r, i])
+              }
+              c = o
+            }
+          }
+
+          function p(n, e) {
+            if (Object.defineProperty && Object.keys) try {
+              var t = Object.keys(n);
+              return t.forEach(function(t) {
+                Object.defineProperty(e, t, {
+                  get: function() {
+                    return n[t]
+                  },
+                  set: function(e) {
+                    return n[t] = e, e
+                  }
+                })
+              }), e
+            } catch (r) {
+              d([r])
+            }
+            for (var i in n) f.call(n, i) && (e[i] = n[i]);
+            return e
+          }
+
+          function d(e) {
+            try {
+              n.emit("internal-error", e)
+            } catch (t) {}
+          }
+          return n || (n = i), t.inPlace = u, t.flag = a, t
+        }
+      }, {}]
+    }, {}, ["loader"]);
+  </script>
+
+  <title>Bad Daddy's Burger Bar - Huntsville - Beer Menu - Huntsville, AL</title>
+  <meta name="description" content="View full beer menu with prices for Bad Daddy's Burger Bar - Huntsville , including on tap, cask, bottles, and cans." />
+  <link rel="canonical" href="https://www.beermenus.com/places/64594-bad-daddy-s-burger-bar-huntsville" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@BeerMenus" />
+  <meta name="twitter:title" content="See Bad Daddy's Burger Bar - Huntsville's Full Beer List on BeerMenus" />
+  <meta name="twitter:description" content="On Tap:  24 | Bottles:  22 | Cans:  2" />
+  <meta name="twitter:app:name:iphone" content="BeerMenus - Find Great Beer" />
+  <meta name="twitter:app:id:iphone" content="917882057" />
+  <meta name="twitter:app:url:iphone" content="beermenus://places/64594-bad-daddy-s-burger-bar-huntsville" />
+  <meta name="twitter:app:name:googleplay" content="BeerMenus - Find Great Beer">
+  <meta name="twitter:app:id:googleplay" content="com.beermenus.beermenus">
+  <meta name="twitter:image" content="https://www.beermenus.com/assets/sprites/logo.png">
+
+  <meta property="og:url" content="https://www.beermenus.com/places/64594-bad-daddy-s-burger-bar-huntsville" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="See Bad Daddy's Burger Bar - Huntsville's Full Beer List on BeerMenus" />
+  <meta property="og:description" content="On Tap:  24 | Bottles:  22 | Cans:  2" />
+  <meta property="og:image" content="https://www.beermenus.com/assets/sprites/logo.png" />
+  <meta property="fb:app_id" content="102382313187511" />
+
+  <link rel="shortcut icon" href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/favicon-af1a8d564621e02dc8e29aa32fc5f45edbeb492f8b1b9cc707f0dd88cad2cd64.ico">
+  <link rel="icon" type="image/png" href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/android-chrome-192x192-e044eea727d615fae8147e2a5e6a9575fe40c727ec9e3d96cc195c5550fab130.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/favicon-194x194-bc9abda30115c79ebc2152aedf60449de7b36cc97f32e5ac534c87f9e5e9e811.png" sizes="194x194">
+
+  <link rel="stylesheet" media="screen" href="https://d301kf52wiw73w.cloudfront.net/assets/desktop-c4519de544e7e2118e9a125af83a76285fde20be222c684f4e7248343dbd002a.css" />
+  <script src="https://d301kf52wiw73w.cloudfront.net/packs/js/desktop-954edf86c16941164e82.js" defer="defer"></script>
+  <meta name="action-cable-url" content="wss://beermenus.com" />
+  <meta name="csrf-param" content="authenticity_token" />
+  <meta name="csrf-token" content="J4gqIZourcXTnpGchWavoX4gymK90RmxeR80HAJqdU65HzLQhum20qzoN1cjsWPRe3WowR4qcqUS/cDqCeCt8Q==" />
+
+  <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-1198075-3"></script>
+
+  <script>
+    //<![CDATA[
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+    gtag("config", "UA-1198075-3");
+
+//]]>
+</script>
+
+
+</head>
+
+<body class="web" style="height: auto;">
+  <div data-controller="honeybadger"></div>
+
+
+  <div id="header" class="header header-signed-out">
+
+    <div class="header-main">
+      <div class="content-inner">
+        <div class="pure-g">
+          <div class="pure-u-1-6">
+            <a class="logo" href="/">BEERMENUS</a>
+          </div>
+          <div class="pure-u-1-3 header-search">
+            <form action="/search" method="get" class="pure-form search-form">
+              <label class="pure-icon pure-icon-search" for="search-input"></label>
+              <input type="text" name="q" id="search-input" class="pure-input search-input" placeholder="Search for beers or places..." value="">
+              <button type="submit" class="pure-button pure-button-primary" id="search-button">Search</button>
+            </form>
+          </div>
+
+          <div class="pure-u-1-2 header-account">
+            <a rel="nofollow" class="pure-button pure-button-naked" href="/sessions/new">Log In</a>
+            <a class="pure-button pure-button-naked" href="/join">Sign Up</a>
+            <a class="pure-button pure-button-primary-outline" href="/places/new?ref=d_header_u2">Add My Business</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="header-nav">
+      <div class="content-inner">
+        <div class="header-browse">
+          <a href="/">Home</a>
+          <a href="/my_feed">Feed</a>
+          <a href="/places">Places</a>
+          <a href="/large_map">Map</a>
+          <a href="/events">Events</a>
+          <a href="/specials">Specials</a>
+          <a href="/business-blog">Behind the Bar</a>
+        </div>
+
+        <p class="header-help header-lp-links">
+          <a class="first" href="/print-menus?ref=d_header_u2">One-Click Print Menus</a>
+          <a href="/digital-beer-boards?ref=d_header_u2">Digital TV Menus</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="global-messages">
+
+
+
+  </div>
+
+
+  <div data-controller="structured-data" data-structured-data-path="/api/internal/structured_data/64594?resource=place"></div>
+
+
+  <div class="content">
+
+
+
+
+    <div class="splash">
+      <div class="content-inner text-center">
+        <h1 class="mb-0 text-biggest">
+          Bad Daddy&#39;s Burger Bar - Huntsville
+        </h1>
+        <p class="place-in mb-0 text-gray text-big" id="geo-form">
+          <span class="text-light-gray">in</span>
+          Huntsville, AL
+        </p>
+
+
+      </div>
+    </div>
+
+    <div class="content-inner content-inner-surround">
+      <div class="pure-g">
+        <div class="pure-u-1-4 caption">
+          <div class="pure-msg pure-msg-action mb-big">
+            <p class="caption-small mb-small">Email me when this place gets new beers.</p>
+            <div class="action">
+
+              <div class="follow-place-64594">
+
+                <form class="x-follow" id="new_place_relationship" action="/place_relationships" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+                  <input value="64594" type="hidden" name="place_relationship[bar_id]" id="place_relationship_bar_id" />
+                  <input type="hidden" name="list" id="list" value="false" />
+                  <button name="button" type="submit" class="pure-button pure-button-primary pure-button-round pure-button-1" data-disable-with="Following...">
+                    Follow this Place
+                  </button></form>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-big">
+            <div class="pure-msg" id="social-buttons">
+              <p class="caption-small mb-small">Share this beer menu with your friends!</p>
+
+              <a data-source="twitter" data-event-type="MenuSharesViaTwitter" data-bar-id="64594" class="trackable" href="https://twitter.com/intent/tweet?text=Check+out+Bad+Daddy%27s+Burger+Bar+-+Huntsville%27s+awesome+beer+list%21+&amp;original_referer=https%3A%2F%2Fwww.beermenus.com%2Fplaces%2F64594-bad-daddy-s-burger-bar-huntsville&amp;url=https%3A%2F%2Fwww.beermenus.com%2Fplaces%2F64594-bad-daddy-s-burger-bar-huntsville%3Futm_medium%3Dmenu-share%26utm_source%3Dtwitter&amp;via=BeerMenus">
+                <button class="pure-button pure-button-1 pure-button-twitter mb-small">
+                  <span class="pure-icon button-icon button-icon-left pure-icon-twitter"></span>
+                  Tweet
+                </button>
+              </a>
+              <a data-source="facebook" data-event-type="MenuSharesViaFacebook" data-bar-id="64594" class="trackable" href="https://www.facebook.com/sharer/sharer.php?quote=Check+out+Bad+Daddy%27s+Burger+Bar+-+Huntsville%27s+awesome+beer+list%21+&amp;u=https%3A%2F%2Fwww.beermenus.com%2Fplaces%2F64594-bad-daddy-s-burger-bar-huntsville%3Futm_medium%3Dmenu-share%26utm_source%3Dfacebook&amp;redirect_uri=https%3A%2F%2Fwww.beermenus.com%2Fplaces%2F64594-bad-daddy-s-burger-bar-huntsville&amp;app_id=102382313187511">
+                <button class="pure-button pure-button-1 pure-button-facebook mb-small">
+                  <span class="pure-icon button-icon button-icon-left pure-icon-facebook"></span>
+                  Share
+                </button>
+              </a>
+              <a data-source="email" data-event-type="MenuSharesViaEmail" data-bar-id="64594" class="trackable" href="mailto:?subject=Check out Bad Daddy&#39;s Burger Bar - Huntsville&#39;s beer list! &amp;body=I just saw Bad Daddy&#39;s Burger Bar - Huntsville&#39;s beer list on BeerMenus. It looks awesome!%0A%0A%0Ahttps://www.beermenus.com/places/64594-bad-daddy-s-burger-bar-huntsville?utm_campaign=social_buttons.email">
+                <button class="pure-button pure-button-1 pure-button-email mb-small">
+                  <span class="pure-icon button-icon button-icon-left pure-icon-email"></span>
+                  Email
+                </button>
+              </a>
+            </div>
+
+            <script>
+              //<![CDATA[
+function execute_bwkqmilr() {
+  var eventName = "Clicked Share Place";
+  var platform = 'Desktop';
+  var cookieName = 'clicked_social_button';
+
+  $("#social-buttons a").on('click', function() {
+    // show the promo again if no clicks within 60 days
+    var now = new Date();
+    var time = now.getTime();
+    var expireTime = time + 5184000000; // ms in 2 months
+    now.setTime(expireTime);
+    document.cookie = cookieName + '=true;expires=' + now.toGMTString();
+
+    var source = $(this).data("source");
+    BeerMenus.Analytics.track(eventName, {
+      source: source,
+      platform: platform
+    });
+  });
+}if (document.readyState == 'loading') {document.addEventListener('DOMContentLoaded', execute_bwkqmilr)} else {execute_bwkqmilr()}
+//]]>
+</script>
+
+          </div>
+
+
+
+          <div class="mb-big place-info">
+            <h4 class="small-caps mb-small">Place Info</h4>
+            <iframe width="226" height="190" frameborder="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA9XrASM_tPt9ELCVoZ33ZfS5lpM2Nmlew&amp;q=place_id:ChIJd884D7BsYogRCYrCttYlUOI"></iframe>
+
+            <ul class="pure-list pure-list-short">
+              <li class="pure-list-item lead-by-icon">
+                <span class="pure-icon pure-icon-map"></span>
+                <a class="trackable" data-event-type="MapClicks" data-bar-id="64594" href="https://maps.google.com/maps?q=2317 Memorial Parkway Southwest, Huntsville, AL 35801">2317 Memorial Parkway Southwest, Huntsville, AL 35801</a>
+              </li>
+              <li class="pure-list-item lead-by-icon">
+                <span class="pure-icon pure-icon-link"></span>
+                <span><a class="trackable" data-event-type="WebsiteClicks" data-bar-id="64594" href="https://baddaddysburgerbar.com/store/al/huntsville-al">baddaddysburgerba...</a></span>
+              </li>
+              <li class='pure-list-item lead-by-icon'><span class='pure-icon-time'></span>
+                <div class='pure-g pure-g-small-gutter'>
+                  <div class='pure-u-2-5 mb-tiny'>Mon &ndash; Thu</div>
+                  <div class='pure-u-3-5 mb-tiny'>11am &ndash; 10pm</div>
+                  <div class='pure-u-2-5 mb-tiny'>Fri, Sat</div>
+                  <div class='pure-u-3-5 mb-tiny'>11am &ndash; 11pm</div>
+                  <div class='pure-u-2-5 mb-tiny'>Sun</div>
+                  <div class='pure-u-3-5 mb-tiny'>11am &ndash; 10pm</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div data-controller="tabs" class="pure-u-5-8">
+
+
+
+          <ul class="pure-tabs mb-big">
+            <li class="pure-tabs-item" data-target="tabs.tab" data-action="click-&gt;tabs#change" data-hash="menu"><a href="#">Beer Menu</a></li>
+            <li class="pure-tabs-item" data-target="tabs.tab" data-action="click-&gt;tabs#change" data-hash="logged">
+              <a href="">
+                Logged <span class="pure-tabs-count">0</span>
+              </a></li>
+            <li class="pure-tabs-item" data-target="tabs.tab" data-action="click-&gt;tabs#change" data-hash="events">
+              <a href="">
+                Events <span class="pure-tabs-count">0</span>
+              </a></li>
+          </ul>
+
+          <div class="hidden" data-target="tabs.panel" data-hash="menu">
+
+            <div class="pure-g caption text-gray mb">
+              <div class="pure-u-1-3">
+                <span>Updated: 12/14/2019</span>
+              </div>
+              <div class="pure-u-2-3 text-right">
+                On Tap: 24 <span class='soft'>|</span> Bottles: 22 <span class='soft'>|</span> Cans: 2
+              </div>
+            </div>
+
+
+            <div id="menu-search" class="mt-0 header-search" data-controller="menu-search" data-menu-search-bar-id="64594" data-menu-search-scroll-offset="32" data-menu-search-is-edit="false" data-menu-search-edit-menu-version="8">
+              <div class="pure-form search-form mb">
+                <input type="text" name="query" id="query" class="pure-input pure-input-1 search-input" placeholder="Search this menu..." data-target="menu-search.search" />
+                <label class="pure-icon pure-icon-search"></label>
+              </div>
+
+              <div data-target="menu-search.beerTemplate" class="hidden caption pt-small pb-0 bb">
+                <div class="pure-g">
+                  <div class="pure-u-1-2 pl-biggish mb-small">
+                    <strong data-ref="name" class="block mb-0"></strong>
+                    <span data-ref="meta" class="text-gray"></span>
+                  </div>
+                  <div class="pure-u-1-2 mb-tiny">
+                    <div data-ref="servings"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div data-target="menu-search.servingTemplate" class="hidden mb-tiny">
+                <span data-ref="availability" class="availability">
+                  <span class="pure-icon pure-icon-lock hidden"></span>
+                  <span class="pure-icon pure-icon-announcement hidden"></span>
+                </span>
+                <span data-ref="details"></span>
+              </div>
+            </div>
+
+
+
+            <ul id="featured" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+              <lh>
+                Featured
+              </lh>
+
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/335023-bad-daddys-amber-ale">Bad Daddys Amber Ale</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Amber Ale &middot 5.0% &middot Littleton, CO
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Crafted with chocolate & caramel malts with a clean finish. The ultimate refreshing but flavorful, anytime beer.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $4</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+
+            </ul>
+
+
+            <ul id="on_tap" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+              <lh>
+                On Tap
+              </lh>
+
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/11528-angry-orchard-crisp-apple-cider">Angry Orchard Crisp Apple Cider</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Cider &middot 5.0% &middot Cincinnati, OH
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      A balance of sweetness, bright acidity, and dryness of traditional cider making, resulting in a refreshing hard cider with crisp apple flavor.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $6</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/16012-avondale-miss-fancy-s-tripel">Avondale Miss Fancy&#39;s Tripel</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Tripel &middot 9.7% &middot Birmingham, AL
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      The term tripel is a style of beer that is meant to indicate strength of alcohol. This unique Belgian ale is rich in flavor and alcohol.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">10oz Draft $6</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/60181-blue-moon-belgian-style-wheat">Blue Moon Belgian Style Wheat</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Witbier &middot 5.4% &middot Denver, CO
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Brewed with oats for creaminess and spiced with the perfect combination of orange peel for subtle sweetness.
+
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $6</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/773-blue-point-toasted-lager">Blue Point Toasted Lager</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Vienna Lager &middot 5.5% &middot Patchogue, NY
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      6 different malts..English Pale, Crystal, Munich, Carapils, Wheat and Belgian Caravienna.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $5</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/6484-breckenridge-christmas-ale">Breckenridge Christmas Ale</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Winter Warmer &middot 7.1% &middot Littleton, CO
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      The chill of a Colorado high-country winter calls for a beer with extra flavor and strength.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $6</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/4292-breckenridge-vanilla-porter">Breckenridge Vanilla Porter</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Porter &middot 5.4% &middot Littleton, CO
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      An ale that has all the chocolate and roasted nut flavor of a classic Porter, with an enigmatic surprise thrown in for good measure.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $6</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/9-bud-light">Bud Light</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 4.2% &middot St. Louis, MO
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Bud Light is brewed with a malt and hops ratio different from Budweiser for a distinctively crisp taste with fewer calories.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $4.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/23871-elysian-space-dust">Elysian Space Dust</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      IPA &middot 8.2% &middot Seattle, WA
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      The hopping is pure starglow energy, with Chinook to bitter and late and dry additions of Citra and Amarillo.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">10oz Draft $5.50</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/10313-founders-all-day-ipa">Founders All Day IPA</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      IPA &middot 4.7% &middot Grand Rapids, MI
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Naturally brewed with a complex array of malts, grains and hops. Balanced for optimal aromatics and a clean finish.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $5.75</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/244036-goat-island-blood-orange-berliner-weisse">Goat Island Blood Orange Berliner Weisse</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Berliner Weisse &middot 5.5% &middot Cullman, AL
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Sour- Berliner Weisse.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $7</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/16010-good-people-coffee-oatmeal-stout">Good People Coffee Oatmeal Stout</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Stout &middot 6.0% &middot Birmingham, AL
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Big coffee flavors dominate early only to be wiped out by an enormous about of Willamette hop flavors.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $6</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/143443-lagunitas-ipa">Lagunitas IPA</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      IPA &middot 6.2% &middot Petaluma, CA
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      A well-rounded, highly drinkable IPA. A bit of Caramel Malt barley provides the richness that mellows out the twang of hops.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $5.75</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/14628-left-hand-milk-stout-nitro">Left Hand Milk Stout Nitro</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Milk Stout &middot 6.0% &middot Longmont, CO
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      The aroma is of brown sugar and vanilla cream, with hints of roasted coffee. Roasty, mocha flavors rise up, with slight hop and roast bitterness in the finish.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $6</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/11979-lexington-kentucky-bourbon-barrel-ale">Lexington Kentucky Bourbon Barrel Ale</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      American Strong Ale &middot 8.19% &middot Lexington, KY
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Aged in bourbon barrels, this beer has subtle yet familiar flavors of vanilla and oak.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">10oz Draft $6</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/310-miller-lite">Miller Lite</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 4.2% &middot Milwaukee, WI
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      This carefully crafted pilsner uses the finest ingredients and brewing techniques to ensure rich, full-bodied beer taste at only 96 calories.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $4.50</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/840-modelo-especial">Modelo Especial</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 4.4% &middot Anáhuac, México DF
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      A pilsner-style lager whose original recipe was first brewed in Mexico in 1925, under the vision to create a ‘model’ beer.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $6</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/239304-new-belgium-voodoo-ranger-juicy-haze-ipa">New Belgium Voodoo Ranger Juicy Haze IPA</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      IPA &middot 7.5% &middot CO & NC
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Packed with bright tropical aromas and brilliant citrusy flavors, this unfiltered IPA wraps up with a pleasantly smooth finish.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $7</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/42421-rocket-republic-vapor-trail-cream-ale">Rocket Republic Vapor Trail Cream Ale</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Cream Ale &middot 5.0% &middot Madison, AL
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      With a generous amount of honey and biscuit malts, this smooth, sweet, easy-to drink-ale
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $6.50</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/933-sam-adams-winter-lager">Sam Adams Winter Lager</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Maibock &middot 5.6% &middot Boston, MA
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      The cinnamon, ginger, and hint of citrus from the orange peel blend with the roasty sweetness of the malts to deliver a warming, spicy flavor.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $6</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/308380-straight-to-ale-chill-pils">Straight To Ale Chill Pils</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Czech Pilsner &middot 4.5% &middot Huntsville, AL
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Refreshingly crisp, easy to drink, perfect in any weather.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Draft $5.50</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+
+              <li class="pure-list-item pure-list-item-more">
+                <a class="on_tap block text-center" data-remote="true" href="/places/64594-bad-daddy-s-burger-bar-huntsville?section_id=12">
+                  View all On Tap
+                  <span class="pure-icon pure-icon-arrow-down"></span>
+                </a> <span class="loading"></span>
+              </li>
+            </ul>
+
+
+            <ul id="bottles_and_cans" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+              <lh>
+                Bottles and Cans
+              </lh>
+
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/243631-angry-orchard-ros">Angry Orchard Rosé</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Cider &middot 5.5% &middot Cincinnati, OH
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Angry Orchard Rose has a delicate floral aroma, is apple forward in taste and complimented by refreshingly light tannins, similar to a semi-dry wine.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $5.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/3216-bell-s-two-hearted">Bell&#39;s Two Hearted</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      IPA &middot 7.0% &middot Comstock, MI
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Citrusy & piney IPA with 100% Centennial hops.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $5.75</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/8-budweiser">Budweiser</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 5.0% &middot St. Louis, MO
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Brewed using a blend of imported and classic American aroma hops, and a blend of barley malts and rice resulting in unparalleled balance and character.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $4.35</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/283-coors-light">Coors Light</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 4.2% &middot Golden, CO
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      First, aged (lagered) below freezing to give our beer its crisp taste. Then it’s filtered cold so that it gets that brilliant, bright appearance.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $4.50</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/512-corona">Corona</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 4.6% &middot Anáhuac, México DF
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Made with the finest quality blend of filtered water, malted barley, hops, corn, and yeast.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $5.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/513-corona-light">Corona Light</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 4.1% &middot Anáhuac, México DF
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      A pleasant fruit-honey malt aroma and distinctive hop flavor, with only 99 calories and 5 grams of carbohydrates. Light, gold color with refreshing crisp taste.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $5.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/205127-corona-premier">Corona Premier</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 4.0% &middot Anáhuac, México DF
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Corona Premier offers the premium low-carb, light beer experience you’ve been waiting for.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $5.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/42600-dos-equis">Dos Equis</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 4.45% &middot Monterrey, Mexico
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      A crisp and refreshing full bodied lager from Mexico. This pilsner style beer is light-tasting with a smooth composition and a clean finish.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $5.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/486-heineken">Heineken</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pilsner &middot 5.4% &middot Zoeterwoude, Netherlands
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Crisp & smooth Euro Lager.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $5.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/252868-heineken-0-0">Heineken 0.0</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Non-Alcoholic &middot 0.0% &middot Zoeterwoude, Netherlands
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Alcohol free. Brewed with a unique recipe for a distinct balanced taste.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $5.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/205-michelob-ultra">Michelob Ultra</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 4.2% &middot St. Louis, MO
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Low-carb light beer with taste smooth enough to carry the Michelob name.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $4.50</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/4115-new-belgium-fat-tire-amber-ale">New Belgium Fat Tire Amber Ale</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Amber Ale &middot 5.2% &middot CO & NC
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Fat Tire Amber is the easy-drinking Amber Ale born in Colorado from New Belgium Brewing Company, a certified B-Corp. 
+
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $5.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/277-pabst-blue-ribbon-pbr">Pabst Blue Ribbon (PBR)</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 4.7% &middot Los Angeles, CA
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Selected as America’s Best in 1893.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">16oz Can $4</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/374-stella-artois">Stella Artois</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 5.2% &middot Leuven, Belgium
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Premium European lager of noble traditions that is still brewed using natural ingredients in the same processes of mixing and fermentation used in the old days.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $5.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/335788-truly-spiked-seltzer-wild-berry">Truly Spiked Seltzer: Wild Berry</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Hard Seltzer &middot 5.0% &middot
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Naturally sweet flavors of juicy California strawberries, raspberries & Marion blackberries.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Can $5.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+
+            </ul>
+
+
+            <ul id="fresh_crafted_cocktails" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids"
+              class="pure-list">
+              <lh>
+                Fresh Crafted Cocktails
+              </lh>
+
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+                      <span class="text-gray text-normal">1.</span>
+                      <span class="custom">Bad Ass Rocks Margarita</span>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Fresh lime &amp; mucho Margaritavile tequila. Limit 2 per customer.
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$6.50</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+                      <span class="text-gray text-normal">2.</span>
+                      <span class="custom">Bad Ass Strawberry Habanero Margarita</span>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Our BA Rocks Marg with housemade strawberry habanero jam. Limit 2 per customer
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$7.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+                      <span class="text-gray text-normal">3.</span>
+                      <span class="custom">Rich Uncle Denny&#39;s Margarita</span>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Corazon Reposado, Gran Gala, lime, agave nectar. Upgrade to Patron +3.00
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$8</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+                      <span class="text-gray text-normal">4.</span>
+                      <span class="custom">Moscow Mule</span>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Tito&#39;s Handmade Vodka, ginger beer, lime.
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$7.75</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+                      <span class="text-gray text-normal">5.</span>
+                      <span class="custom">Bourbon Apple Mule</span>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Breckenridge Bourbon, lemon, apple puree, ginger beer
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$8.75</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+                      <span class="text-gray text-normal">6.</span>
+                      <span class="custom">Mule of Paradise</span>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Tito&#39;s Handmade Vodka &amp; pineapple juice with a hint of habanero &amp; lime topped with ginger beer
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$8</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+                      <span class="text-gray text-normal">7.</span>
+                      <span class="custom">Mixed Berry Sangria</span>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Red sangria, Gran Gala, fresh berries. 30.00 Pitcher
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$7.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+                      <span class="text-gray text-normal">8.</span>
+                      <span class="custom">Bad Betty</span>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Deep Eddy Ruby Red Vodka, blood orange sour &amp; ginger ale.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$8</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+                      <span class="text-gray text-normal">9.</span>
+                      <span class="custom">Daddy&#39;s Dragonberry</span>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Bacardi Dragonberry Rum, berries, lime sour, fizz
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$8.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+                      <span class="text-gray text-normal">11.</span>
+                      <span class="custom">Daddy&#39;s Bloody Mary</span>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Wheatley Vodka garnished with celery, pepperoncini,olives, lime &amp; jalepeño bacon with a salted rim.
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$8</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+
+            </ul>
+
+
+            <ul id="bottles" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+              <lh>
+                Bottles
+              </lh>
+
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/beers/512-corona">Corona</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pale Lager &middot 4.6% &middot Anáhuac, México DF
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Made with the finest quality blend of filtered water, malted barley, hops, corn, and yeast.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">12oz Bottle $5.25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+
+            </ul>
+
+
+            <ul id="red_wine" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+              <lh>
+                Red Wine
+              </lh>
+
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/wines/85269-mark-west-pinot-noir">Mark West Pinot Noir</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pinot Noir &middot 13.8% &middot Graton, CA
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Black cherry, cola, strawberry, plum and soft tannins.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">Glass $8.50</p>
+                    <p class="caption text-right mb-0">Bottle $30</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/wines/192724-rodney-strong-cabernet">Rodney Strong Cabernet</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">Glass $9.50</p>
+                    <p class="caption text-right mb-0">Bottle $33</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/wines/308519-the-seeker-red-blend">The Seeker Red Blend</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Red Wine &middot Purchase, NY
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">Glass $7</p>
+                    <p class="caption text-right mb-0">Bottle $25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+
+            </ul>
+
+
+            <ul id="white_wine" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+              <lh>
+                White Wine
+              </lh>
+
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/wines/132090-dark-horse-chardonnay">Dark Horse Chardonnay</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Chardonnay &middot 13.0% &middot California
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Rich flavors of baked apple and pear, layered with toasted oak, notes of caramel and brown spice with a smooth, lingering finish.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">Glass $7</p>
+                    <p class="caption text-right mb-0">Bottle $25</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/wines/236991-nobilo-sauvignon-blanc">Nobilo Sauvignon Blanc</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Sauvignon Blanc &middot New Zealand
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">Glass $8.50</p>
+                    <p class="caption text-right mb-0">Bottle $30</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/wines/121340-ruffino-pinot-grigio">Ruffino Pinot Grigio</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Pinot Grigio &middot Veneto, Italy
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Notes of meadow flowers, pears, and golden apple. The bouquet is fresh and complex, showing refined notes of sage and mint. Medium bodied, lively, and elegant.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">Glass $8</p>
+                    <p class="caption text-right mb-0">Bottle $29</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/wines/128491-simi-chardonnay">Simi Chardonnay</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Chardonnay &middot 13.5% &middot Healdsburg, CA
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Columbia Valley
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">Glass $9.50</p>
+                    <p class="caption text-right mb-0">Bottle $33</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+
+            </ul>
+
+
+            <ul id="pink_bubbly" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+              <lh>
+                Pink &amp; Bubbly
+              </lh>
+
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/wines/325599-ava-grace-ros">Ava Grace Rosé</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Rosé &middot 13.0% &middot Livermore, CA
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      With notes of red berries, apricot, and watermelon, you’ll love every sip.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">Glass $7</p>
+                    <p class="caption text-right mb-0">Bottle $12</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <a href="/wines/125270-ruffino-prosecco">Ruffino Prosecco</a>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                      Prosecco &middot 11.0% &middot Veneto, Italy
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      The bouquet is fragrant and intensely fruity. It shows clean notes of apples, pears and citrus, accompanied by slight hints of hawthorn, wisteria and elder.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">Glass $8</p>
+                    <p class="caption text-right mb-0">Bottle $29</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+
+            </ul>
+
+
+            <ul id="spiked_milkshakes" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+              <lh>
+                Spiked Milkshakes
+              </lh>
+
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <span class="custom">Mud Slide</span>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Vodka, Irish créme liqueur &amp; coffee liqueur hand-spun with ice cream.
+
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$8</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+
+                    <h3 class="mb-0 text-normal">
+
+                      <span class="custom">Nitro B&amp;B Milkshake</span>
+                    </h3>
+
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Left Hand Nitro Milk Stout, Breckenridge Bourbon &amp; caramel, hand-spun with ice cream.
+                    </p>
+                  </div>
+
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$8</p>
+                  </div>
+                </div>
+
+
+              </li>
+
+
+            </ul>
+
+
+
+
+
+            <div class="pure-msg text-center">
+              <h3 class="mb-small">Own or manage a bar, restaurant, or beer store?</h3>
+              <a class="pure-button pure-button-small" href="/places/new?ref=place930">Create a Page for My Business</a>
+            </div>
+
+
+          </div>
+
+          <div class="hidden" data-target="tabs.panel" data-hash="logged">
+            <div class="pure-msg pure-msg-empty">
+              <span class="pure-icon pure-icon-comments"></span>
+              <p class="mb-0">No beers logged at this place recently.</p>
+            </div>
+          </div>
+          <div class="hidden" data-target="tabs.panel" data-hash="events">
+            <div class="pure-msg pure-msg-empty">
+              <span class="pure-icon pure-icon-ticket"></span>
+              <p class="mb-0">No upcoming events.</p>
+            </div>
+          </div>
+          <div class="hidden" data-target="tabs.panel" data-hash="claim">
+            <p>
+              <a class="pure-button pure-button-round pure-button-primary-outline" rel="nofollow" href="/places/64594-bad-daddy-s-burger-bar-huntsville/management_requests/new">Update this Beer Menu</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="pure-u-1-8">
+          <h4 class="small-caps mb-small">photos</h4>
+          <div class="photo mb-small">
+            <a href="/place_photos/17446"><img class="pure-img" src="https://d2sochvv0rudri.cloudfront.net/place_photos/17446/thumb_bad-daddy-s-burger-bar-huntsville.png" alt="Thumb bad daddy s burger bar huntsville" /></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-container"></div>
+
+
+
+
+  <script>
+    //<![CDATA[
+function execute_qormagkl() {
+ $(".x-promo").click(function() {
+   BeerMenus.Analytics.track("Clicked pro promo", {
+     "pro promo page": "Menu page chalkboard",
+   });
+ });
+}if (document.readyState == 'loading') {document.addEventListener('DOMContentLoaded', execute_qormagkl)} else {execute_qormagkl()}
+//]]>
+</script>
+
+
+  <div class="footer caption ">
+
+    <div class="content-inner">
+      <div class="pure-g">
+        <div class="pure-u-1-4">
+          <h4 class="small-caps mb-small">Info</h4>
+          <ul class="pure-list pure-list-naked">
+            <li class="pure-list-item"><a href="/about">About</a></li>
+            <li class="pure-list-item"><a href="/careers">Careers</a></li>
+            <li class="pure-list-item"><a href="/contact">Contact</a></li>
+            <li class="pure-list-item"><a href="https://help.beermenus.com/">Help Center</a></li>
+            <li class="pure-list-item"><a href="/press">Press</a></li>
+            <li class="pure-list-item"><a href="/blog">Blog</a></li>
+            <li class="pure-list-item"><a href="/cities">Cities</a></li>
+            <li class="pure-list-item"><a href="/recruit?ref=footer">Recruit a Business</a></li>
+          </ul>
+        </div>
+
+        <div class="pure-u-1-4">
+          <h4 class="small-caps mb-small">I sell craft beer.</h4>
+          <a class="pure-button pure-button-round pure-button-primary-outline pure-button-small" href="/places/new?ref=footer_781">Add my business</a>
+
+          <h4 class="small-caps mt mb-small">For Breweries</h4>
+          <ul class="pure-list pure-list-naked mb-0">
+            <li class="pure-list-item"><a href="/beer-releases?ref=d_footer">Beer Releases</a></li>
+          </ul>
+
+          <h4 class="small-caps mt mb-small">Stats</h4>
+          <ul class="pure-list pure-list-naked">
+            <li class="pure-list-item"><span>48,470 Places</span></li>
+            <li class="pure-list-item"><span>242,893 Beers</span></li>
+            <li class="pure-list-item"><span>77 Events</span></li>
+          </ul>
+        </div>
+
+        <div class="pure-u-1-4">
+          <h4 class="small-caps mb-small">Stay in touch</h4>
+          <ul class="pure-list pure-list-naked">
+            <li class="pure-list-item">
+              <a href="https://www.facebook.com/beermenus">Facebook</a>
+            </li>
+            <li class="pure-list-item">
+              <a href="https://www.twitter.com/beermenus">Twitter</a>
+            </li>
+            <li class="pure-list-item">
+              <a href="http://www.instagram.com/beermenus">Instagram</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="pure-u-1-4">
+          <h4 class="small-caps mb-small">iPhone App</h4>
+          <a class="app-store-link" href="https://itunes.apple.com/app/apple-store/id917882057?pt=106837806&amp;ct=d-footer&amp;mt=8">Download on the App Store</a>
+
+          <h4 class="small-caps mt-big mb-small">Android App</h4>
+          <a class="footer-link" href="https://play.google.com/store/apps/details?id=com.beermenus.beermenus">Download on the Google Play Store</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="copyright">
+      <div class="content-inner">
+        <span>&copy; 2020 BeerMenus</span>
+        &middot; <a rel="nofollow" href="/terms">Terms</a>
+        &middot; <a rel="nofollow" href="/privacy">Privacy</a>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <div class="modal fade" id="customer-type-survey" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header text-center">
+          <h2 class="mb-tiny">Get the most out of BeerMenus</h2>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span class="pure-icon pure-icon-close"></span>
+          </button>
+        </div>
+
+        <form id="user-type-survey" action="/survey_response" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+          <input type="hidden" name="survey" id="survey" value="user_type_logged_out" />
+          <div class="modal-body">
+            <div class="pure-form">
+              <div class="pure-checkbox">
+                <input type="checkbox" name="user[segments][user_type][]" id="user_type_owner" value="owner" />
+                <label for="user_type_owner">I own a business that sells beer, wine, or spirits to local drinkers.</label>
+              </div>
+
+              <hr class="pure-divider">
+              <div class="pure-checkbox">
+                <input type="checkbox" name="user[segments][user_type][]" id="user_type_manager" value="manager" />
+                <label for="user_type_manager">I manage a business that sells beer, wine, or spirits to local drinkers.</label>
+              </div>
+
+              <hr class="pure-divider">
+              <div class="pure-checkbox">
+                <input type="checkbox" name="user[segments][user_type][]" id="user_type_drinker" value="drinker" />
+                <label for="user_type_drinker">I&#39;m a beer, wine, or spirits drinker.</label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" name="commit" value="Continue" data-disable-with="Saving..." id="user_type_save_button" class="disabled pure-button pure-button-round pure-button-primary pure-button-big pure-button-1" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="analytics" data-event-name="Viewed logged out user type survey">
+    <div data-name="Viewed lo uts on entrance" data-value="Yes"></div>
+    <div data-name="AB 142" data-value="experiment"></div>
+    <div data-name="Logged In" data-value="false"></div>
+    <div data-name="Platform" data-value="Desktop"></div>
+  </div>
+
+
+  <script>
+    //<![CDATA[
+    function execute_yvfcatdx() {
+      $("#customer-type-survey").modal();
+      $(".pure-checkbox input[type=checkbox]").change(function() {
+        var checked = $(".pure-checkbox input[type=checkbox]:checked").length;
+        if (checked > 0) {
+          $("#user_type_save_button").removeClass("disabled").prop("disabled", false);
+        } else {
+          $("#user_type_save_button").addClass("disabled").prop("disabled", true);
+        }
+      });
+
+
+      $(".modal-content button.close").click(function() {
+        var future = new Date();
+        future.setDate(future.getDate() + 7);
+        var cookie_string = "user_type_logged_out=disable; expires=" + future.toUTCString() + "; path=/";
+        document.cookie = cookie_string;
+
+        BeerMenus.Analytics.track("Closed logged out user type survey", {
+          "platform": "Desktop"
+        });
+      });
+    }
+    if (document.readyState == 'loading') {
+      document.addEventListener('DOMContentLoaded', execute_yvfcatdx)
+    } else {
+      execute_yvfcatdx()
+    }
+    //]]>
+  </script>
+
+
+  <div id="sortable-mirror-wrapper" class="sortable"></div>
+
+</body>
+
+</html>

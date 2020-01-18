@@ -123,7 +123,7 @@ class BaseTapListProvider():
         )
         unique_fields = (
             'manufacturer_url', 'untappd_url', 'beer_advocate_url',
-            'taphunter_url', 'taplist_io_pk',
+            'taphunter_url', 'taplist_io_pk', 'beermenus_slug',
         )
         field_names = {i.name for i in Beer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
@@ -148,9 +148,6 @@ class BaseTapListProvider():
         serving_sizes = {i.volume_oz: i for i in ServingSize.objects.all()}
         if 'style' in defaults and not isinstance(defaults['style'], Style):
             defaults['style'] = self.get_style(defaults['style'])
-        # TODO: delete this
-        if isinstance(defaults.get('style'), Style):
-            defaults['style'] = defaults.pop('style')
         beer = None
         if unique_fields_present:
             filter_expr = Q()
@@ -270,6 +267,10 @@ class BaseTapListProvider():
                         beer,
                     )
                     continue
+                LOG.debug('Rounding volume')
+                price_info['volume_oz'] = Decimal(
+                    round(price_info['volume_oz'], 1)
+                )
                 try:
                     serving_size = serving_sizes[price_info['volume_oz']]
                 except KeyError:
@@ -314,7 +315,7 @@ class BaseTapListProvider():
         manufacturer = None
         filter_expr = Q()
         unique_fields = {
-            'untappd_url', 'taphunter_url', 'taplist_io_pk',
+            'untappd_url', 'taphunter_url', 'taplist_io_pk', 'beermenus_slug',
         }
         for field in unique_fields:
             value = kwargs.get(field)
