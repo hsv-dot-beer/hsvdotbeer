@@ -18,7 +18,7 @@ from taps.models import Tap
 from tap_list_providers.base import BaseTapListProvider
 # this import is needed for the subclass lookup to work
 from tap_list_providers.parsers import (  # noqa
-    digitalpour, taphunter, untappd, stemandstein, taplist_io,
+    digitalpour, taphunter, untappd, stemandstein, taplist_io, beermenus,
 )
 from tap_list_providers.twitter_api import ThreadedApi
 
@@ -204,6 +204,7 @@ def tweet_about_beers(self, beer_pks):
         LOG.warning('Hit twitter error: %s', exc)
         if str(exc) in RETRYABLE_ERRORS:
             raise self.retry(exc=exc)
+        LOG.error('Tweet(s) that caused error was %s', message)
         delay = get_twitter_rate_limit_delay(api)
         if delay is None:
             LOG.error('No idea what to do with twitter error %s', exc)
