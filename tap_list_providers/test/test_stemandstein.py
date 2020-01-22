@@ -6,7 +6,9 @@ from django.core.management import call_command
 from django.test import TestCase
 import responses
 
-from beers.models import Beer, Manufacturer, ManufacturerAlternateName, Style
+from beers.models import (
+    Beer, Manufacturer, ManufacturerAlternateName, Style, StyleAlternateName,
+)
 from beers.test.factories import ManufacturerFactory, BeerFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
@@ -69,6 +71,8 @@ class CommandsTestCase(TestCase):
         )
         mfg = ManufacturerFactory(name='Founders')
         beer = BeerFactory(name='Dirty Bastard', manufacturer=mfg)
+        style = Style.objects.create(name='Fruit Beer')
+        StyleAlternateName.objects.create(name='Fruit Ale', style=style)
         for dummy in range(2):
             # running twice to make sure we're not double-creating
             args = []
@@ -80,7 +84,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Manufacturer.objects.count(), 15)
             self.assertEqual(Tap.objects.count(), 17)
             taps = Tap.objects.filter(
-                venue=self.venue, tap_number__in=[1, 9, 17],
+                venue=self.venue, tap_number__in=[1, 3, 9, 17],
             ).select_related(
                 'beer__style', 'beer__manufacturer',
             ).order_by('tap_number')
@@ -97,7 +101,7 @@ class CommandsTestCase(TestCase):
             price = prices[0]
             self.assertEqual(price.price, 5)
             self.assertEqual(price.serving_size.volume_oz, 16)
-            tap = taps[2]
+            tap = taps[3]
             # this one ends with an asterisk. Make sure it's stripped.
             self.assertTrue(
                 tap.beer.name.endswith('Karmeliet'),
@@ -111,11 +115,15 @@ class CommandsTestCase(TestCase):
             self.assertEqual(price.serving_size.volume_oz, 10)
             self.assertFalse(Tap.objects.filter(id=deleted_tap.id).exists())
             # make sure style stripping works
-            tap = taps[1]
+            tap = taps[2]
             self.assertEqual(tap.beer.style.name, 'Scotch Ale')
             self.assertEqual(tap.beer.name, 'Dirty Bastard')
             self.assertEqual(tap.beer.id, beer.id)
             self.assertEqual(tap.beer.manufacturer_id, mfg.id)
+            tap = taps[1]
+            # style is set to Fruit Ale but the beer name is preserved
+            self.assertEqual(tap.beer.style_id, style.id)
+            self.assertTrue(tap.beer.name.endswith('Fruit Ale'))
 
     def test_guess_manufacturer_good_people(self):
         mfg_names = [
