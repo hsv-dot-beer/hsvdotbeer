@@ -131,7 +131,7 @@ class BaseTapListProvider():
             for alt_name in style.alternate_names.all():
                 heappush(
                     alt_names,
-                    (len(alt_name.name), alt_name.name.casefold(), style),
+                    (0 - len(alt_name.name), alt_name.name.casefold(), style),
                 )
         while alt_names:
             _, alt_name, style = heappop(alt_names)

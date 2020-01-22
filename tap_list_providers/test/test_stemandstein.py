@@ -71,6 +71,10 @@ class CommandsTestCase(TestCase):
         )
         mfg = ManufacturerFactory(name='Founders')
         beer = BeerFactory(name='Dirty Bastard', manufacturer=mfg)
+        other = Style.objects.create(name='other')
+        # Create a fake shorter style name that the search for fruit ale should
+        # ignore
+        StyleAlternateName.objects.create(name='t Ale', style=other)
         style = Style.objects.create(name='Fruit Beer')
         StyleAlternateName.objects.create(name='Fruit Ale', style=style)
         for dummy in range(2):
