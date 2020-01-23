@@ -9,7 +9,6 @@ import re
 from decimal import Decimal, InvalidOperation
 from urllib.parse import urlparse, unquote
 import logging
-from heapq import heappush, heappop
 
 from django.db.models import Prefetch, Q
 from django.db.models.functions import Length
@@ -128,13 +127,13 @@ class BaseTapListProvider():
                 return style
         alt_names = []
         for style in self.styles.values():
-            for alt_name in style.alternate_names.all():
-                heappush(
-                    alt_names,
-                    (0 - len(alt_name.name), alt_name.name.casefold(), style),
-                )
-        while alt_names:
-            _, alt_name, style = heappop(alt_names)
+            alt_names += list(
+                (i.name.casefold(), style)
+                for i in style.alternate_names.all()
+            )
+        for alt_name, style in sorted(
+            alt_names, key=lambda k: len(k[0]), reverse=True,
+        ):
             if alt_name in ci_name:
                 LOG.debug('Guessed alternate style %s for beer %s', style, beer_name)
                 return style
