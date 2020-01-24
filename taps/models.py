@@ -28,6 +28,6 @@ class Tap(models.Model):
     time_updated = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        unique_together = (
-            ('venue', 'tap_number'),
-        )
+        constraints = [
+            models.UniqueConstraint(fields=['venue', 'tap_number'], name='venue_tapnumber'),
+        ]
