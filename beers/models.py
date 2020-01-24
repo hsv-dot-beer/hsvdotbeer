@@ -71,6 +71,7 @@ class StyleAlternateName(models.Model):
             models.UniqueConstraint(fields=['name'], name='unique_alt_name_name')
         ]
 
+
 class Manufacturer(models.Model):
     name = CITextField()
     url = models.URLField(blank=True)
