@@ -8,6 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 import configurations
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
+from django.db.models import Q
 
 # boilerplate code necessary for launching outside manage.py
 try:
@@ -18,6 +19,7 @@ except (ImproperlyConfigured, AppRegistryNotReady):
     configurations.setup()
     from ..base import BaseTapListProvider
 
+from beers.models import Style
 from taps.models import Tap
 
 LOG = logging.getLogger(__name__)
@@ -92,14 +94,6 @@ class UntappdParser(BaseTapListProvider):
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer, creating if necessary
             beer_name = tap_info['beer'].pop('name')
-            style = tap_info['beer'].pop('style', {})
-            if style:
-                if style['category']:
-                    tap_info['beer'][
-                        'style'
-                    ] = f"{style['category']} - {style['name']}"
-                else:
-                    tap_info['beer']['style'] = style['name']
             beer = self.get_beer(
                 beer_name, manufacturer, venue=venue,
                 pricing=tap_info['pricing'],
@@ -137,12 +131,44 @@ class UntappdParser(BaseTapListProvider):
 
     def parse_style(self, style):
         if '-' in style:
-            cat = style.split('-')[0].strip()
-            name = style.split('-')[1].strip()
-        else:
-            cat = None
-            name = style
-        return {'name': name, 'category': cat}
+            cat, name = [i.strip() for i in style.split('-')]
+            # attempt 1: has the style been moderated already?
+            try:
+                return Style.objects.get(alternate_names__name__iexact=style)
+            except Style.DoesNotExist:
+                # don't care
+                pass
+            # attempt 2: change IPA - Belgian to Belgian IPA
+            try:
+                candidate = f'{name} {cat}'
+                return Style.objects.filter(
+                    Q(name__iexact=candidate) |
+                    Q(alternate_names__name__iexact=candidate)
+                ).distinct().get()
+            except Style.DoesNotExist:
+                # don't care
+                pass
+            except Style.MultipleObjectsReturned:
+                # we have two different options
+                # pick the exact match and move on
+                LOG.error('Two different matches for style %s', candidate)
+                return Style.objects.get(name__iexact=candidate)
+            # attempt 3: try name by itself
+            # (e.g. Ciders and Meads - English Cider -> English Cider)
+            try:
+                return Style.objects.filter(
+                    Q(name__iexact=name) | Q(alternate_names__name__iexact=name)
+                ).distinct().get()
+            except Style.MultipleObjectsReturned:
+                LOG.error('Two different matches for name %s', name)
+                return Style.objects.get(name__iexact=name)
+            except Style.DoesNotExist:
+                # womp womp
+                return Style.objects.get_or_create(name=f'{cat} - {name}')[0]
+
+        cat = None
+        name = style
+        return Style.objects.get_or_create(name=style)[0]
 
     def parse_size(self, size):
         if size == '1/6 Barrel':
