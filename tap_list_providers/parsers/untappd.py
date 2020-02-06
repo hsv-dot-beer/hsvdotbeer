@@ -39,6 +39,8 @@ class UntappdParser(BaseTapListProvider):
             self.location_url = self.URL.format(location, theme)
         LOG.debug('categories: %s', cats)
         self.categories = [i.casefold() for i in cats] if cats else []
+        self.soup = None
+        self.taplists = []
         super().__init__()
 
     def fetch_data(self):
@@ -137,6 +139,7 @@ class UntappdParser(BaseTapListProvider):
 
     def parse_style(self, style):
         if '-' in style:
+            print('style %s' % style)
             split_names = [i.strip() for i in style.split(' - ')]
             cat = None
             name = None
@@ -412,7 +415,7 @@ class UntappdParser(BaseTapListProvider):
         return ret
 
 
-if __name__ == '__main__':
+def main():
     import argparse
 
     logging.basicConfig(level=logging.DEBUG)
@@ -440,3 +443,7 @@ if __name__ == '__main__':
 
     for tap in t.taps():
         PrettyPrinter(indent=4).pprint(tap)
+
+
+if __name__ == '__main__':
+    main()
