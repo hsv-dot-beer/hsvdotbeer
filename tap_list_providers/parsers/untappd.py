@@ -420,7 +420,7 @@ def main():
 
     logging.basicConfig(level=logging.DEBUG)
 
-    LOCATIONS = {
+    locations = {
         'dsb': ('3884', '11913', ['Tap List']),
         'cpp': ('18351', '69229', ['On Tap']),
         'yh': ('5949', '20074', ['YEAR-ROUND', 'SEASONALS', 'Beer']),
@@ -434,14 +434,14 @@ def main():
     parser.add_argument('location')
     args = parser.parse_args()
 
-    t = UntappdParser(*LOCATIONS[args.location])
-    data = t.fetch_data()
-    t.parse_html_and_js(data)
+    untappd_parser = UntappdParser(*locations[args.location])
+    data = untappd_parser.fetch_data()
+    untappd_parser.parse_html_and_js(data)
 
     if args.dump:
-        print(t.soup.prettify())
+        print(untappd_parser.soup.prettify())
 
-    for tap in t.taps():
+    for tap in untappd_parser.taps():
         PrettyPrinter(indent=4).pprint(tap)
 
 
