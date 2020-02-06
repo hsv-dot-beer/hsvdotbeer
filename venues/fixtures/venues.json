@@ -513,6 +513,33 @@
     }
 },
 {
+    "model": "venues.venue",
+    "pk": 23,
+    "fields": {
+        "name": "Von Brewski Beer Festival",
+        "address": "700 Monroe St",
+        "city": "Huntsville",
+        "state": "AL",
+        "postal_code": "35801",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "https://www.vonbrauncenter.com/von-brewski-beer-festival/",
+        "facebook_page": "",
+        "twitter_handle": "",
+        "instagram_handle": "",
+        "tap_list_provider": "untappd",
+        "untappd_url": "",
+        "email": "",
+        "phone_number": "2565331953",
+        "logo_url": "https://hsv-dot-beer.s3.amazonaws.com/venues/png/von-brewski.png",
+        "slug": "yellowhammer",
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.7269",
+        "longitude": "-86.5897",
+        "twitter_short_location_description": ""
+    }
+},
+{
     "model": "venues.venueapiconfiguration",
     "pk": 1,
     "fields": {
@@ -890,6 +917,26 @@
         "taplist_io_access_code": "",
         "beermenus_categories": "[\"local\", \"craft_beer\", \"domestic_draft\"]",
         "beermenus_slug": "52478-beauregard-s"
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 23,
+    "fields": {
+        "venue": 23,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": 19449,
+        "untappd_theme": 73621,
+        "untappd_categories": "[\"Left Wall\", \"Back Wall\", \"Right Wall\", \"Trailer\", \"On Deck\"]",
+        "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": "",
+        "beermenus_categories": "[]",
+        "beermenus_slug": ""
     }
 }
 ]
