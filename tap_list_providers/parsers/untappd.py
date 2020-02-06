@@ -176,7 +176,6 @@ class UntappdParser(BaseTapListProvider):
         name = style.strip()
         return Style.objects.get_or_create(name=style)[0]
 
-
     def parse_size(self, size):
         if size == '1/6 Barrel':
             return 660
