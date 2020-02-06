@@ -2,6 +2,7 @@ from decimal import Decimal
 from pprint import PrettyPrinter
 import logging
 import os
+import re
 
 import dateutil.parser
 import requests
@@ -23,6 +24,8 @@ from beers.models import Style
 from taps.models import Tap
 
 LOG = logging.getLogger(__name__)
+ABV_REGEX = re.compile(r'\d{1,2}(\.\d{1,3})?')
+IBU_REGEX = re.compile(r'\d{1,3}(\.\d{1,3})?')
 
 
 class UntappdParser(BaseTapListProvider):
@@ -122,8 +125,11 @@ class UntappdParser(BaseTapListProvider):
         self.taplists = []
 
         for element in info_elements:
-            text = element.find('div', {'class': 'section-name'}).text
-            if text.casefold() in self.categories:
+            header = element.find('div', {'class': 'section-name'})
+            if header is None:
+                header = element.find('div', {'class': 'section-heading'})
+            text = header.text
+            if text.casefold().strip() in self.categories:
                 LOG.debug('Adding tap list %s', text)
                 self.taplists.append(element)
             else:
@@ -167,8 +173,9 @@ class UntappdParser(BaseTapListProvider):
                 return Style.objects.get_or_create(name=f'{cat} - {name}')[0]
 
         cat = None
-        name = style
+        name = style.strip()
         return Style.objects.get_or_create(name=style)[0]
+
 
     def parse_size(self, size):
         if size == '1/6 Barrel':
@@ -202,7 +209,10 @@ class UntappdParser(BaseTapListProvider):
         return pricing
 
     def parse_tap(self, entry):
-        beer_info = entry.find('p', {'class': 'beer-name'}).text
+        beer_name_p = entry.find('p', {'class': 'beer-name'})
+        if beer_name_p is None:
+            return self.parse_item_tap(entry)
+        beer_info = beer_name_p.text
         LOG.debug('parsing beer %s', beer_info)
         tap_num = entry.find(
             'span', {'class': 'tap-number-hideable'},
@@ -270,11 +280,97 @@ class UntappdParser(BaseTapListProvider):
 
         return t
 
+    def parse_item_tap(self, entry):
+        beer_name_span = entry.find('span', {'class': 'item'})
+        beer_info = beer_name_span.text
+        LOG.debug('parsing beer %s', beer_info)
+        tap_num = entry.find(
+            'span', {'class': 'tap-number-hideable'},
+        ).text.strip()
+        beer_link = entry.find(
+            'div', {'class': 'label-image-hideable beer-label pull-left'},
+        )
+        url = None
+        beer_image = None
+        if beer_link:
+            beer_link_tag = beer_link.find('a')
+            beer_image = beer_link.find('img').attrs['src']
+            if beer_link_tag:
+                url = beer_link_tag.attrs['href']
+
+        beer_style = entry.find(
+            'span',
+            {'class': 'beer-style'},
+        ).text.replace('•', '').replace('\xa0', '').strip()
+        brewery_span = entry.find('span', {'class': 'brewery'})
+        brewery = brewery_span.text.strip()
+        brewery_url_a = brewery_span.find('a')
+        brewery_url = None
+        if brewery_url_a:
+            brewery_url = brewery_url_a.attrs['href']
+
+        location_span = entry.find('span', {'class': 'location'})
+        if location_span:
+            loc = location_span.text
+        else:
+            loc = ''
+
+        beer_info = beer_info.replace(tap_num, '')
+        beer_info = beer_info.replace(beer_style, '')
+        beer_info = beer_info.strip()
+        if not beer_info or beer_info == brewery:
+            beer_info = f'{brewery} {beer_style}'
+
+        t = {
+            'beer': {
+                'name': beer_info,
+                'untappd_url': url,
+                'style': self.parse_style(beer_style),
+                'logo_url': beer_image,
+            },
+            'manufacturer': {
+                'name': brewery,
+                'location': loc,
+                'untappd_url': brewery_url,
+            },
+            'pricing': self.parse_pricing(entry),
+            'added': None,
+            'updated': None,
+            'tap_number': int(tap_num.replace('.', '')) if tap_num else None
+        }
+
+        abv_span = entry.find('span', {'class': 'abv'})
+        if abv_span:
+            abv = abv_span.text
+            match = ABV_REGEX.search(abv)
+            try:
+                abv = float(match[0])
+            except (TypeError, IndexError):
+                LOG.warning('Unable to parse ABV %r', abv_span.text)
+                abv = None
+        else:
+            abv = None
+
+        t['beer']['abv'] = abv
+
+        ibu = entry.find('span', {'class': 'ibu'})
+        if ibu:
+            match = IBU_REGEX.search(ibu.text)
+            try:
+                ibu = float(match[0])
+            except (TypeError, IndexError):
+                LOG.warning('Unable to parse IBU %r', ibu.text)
+                ibu = None
+
+            t['beer']['ibu'] = ibu
+
+        return t
+
     def taps(self):
         ret = []
         for taplist in self.taplists:
             LOG.debug('Opening tap list')
-            entries = taplist.find_all('div', {'class': 'beer'})
+            entries = taplist.find_all('div', {'class': 'menu-item'})
             LOG.debug('Found %s entries', len(entries))
             updated = None
             menus = self.soup.find_all('div', {'class': 'menu-info'})
@@ -309,11 +405,14 @@ class UntappdParser(BaseTapListProvider):
 if __name__ == '__main__':
     import argparse
 
+    logging.basicConfig(level=logging.DEBUG)
+
     LOCATIONS = {
         'dsb': ('3884', '11913', ['Tap List']),
         'cpp': ('18351', '69229', ['On Tap']),
         'yh': ('5949', '20074', ['YEAR-ROUND', 'SEASONALS', 'Beer']),
-        'mm': ('8588', '30573', ['Favorites', 'Seasonals', 'Exclusives'])
+        'mm': ('8588', '30573', ['Favorites', 'Seasonals', 'Exclusives']),
+        'vonbrewski': ('19449', '73621', ['Left Wall', 'Right Wall', 'Trailer', 'Back Wall', 'On Deck']),
     }
 
     parser = argparse.ArgumentParser()
