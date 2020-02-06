@@ -137,7 +137,18 @@ class UntappdParser(BaseTapListProvider):
 
     def parse_style(self, style):
         if '-' in style:
-            cat, name = [i.strip() for i in style.split('-')]
+            split_names = [i.strip() for i in style.split(' - ')]
+            cat = None
+            name = None
+            if len(split_names) == 2:
+                cat, name = split_names
+            elif len(split_names) > 2:
+                # use the last two
+                cat, name = split_names[-2:]
+            else:
+                # we have bad padding
+                # pad it and retry
+                return self.parse_style(style.replace('-', ' - '))
             # attempt 1: has the style been moderated already?
             try:
                 return Style.objects.get(alternate_names__name__iexact=style)
