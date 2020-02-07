@@ -1,3 +1,5 @@
+"""Parse data from untappd"""
+import argparse
 from decimal import Decimal
 from pprint import PrettyPrinter
 import logging
@@ -257,7 +259,7 @@ class UntappdParser(BaseTapListProvider):
         if not beer_info or beer_info == brewery:
             beer_info = f'{brewery} {beer_style}'
 
-        t = {
+        tap_dict = {
             'beer': {
                 'name': beer_info,
                 'untappd_url': url,
@@ -283,15 +285,15 @@ class UntappdParser(BaseTapListProvider):
         else:
             abv = None
 
-        t['beer']['abv'] = abv
+        tap_dict['beer']['abv'] = abv
 
         ibu = entry.find('span', {'class': 'ibu'})
         if ibu:
             ibu = ibu.text.replace('IBU', '')
             ibu = float(ibu)
-            t['beer']['ibu'] = ibu
+            tap_dict['beer']['ibu'] = ibu
 
-        return t
+        return tap_dict
 
     def parse_item_tap(self, entry):
         beer_name_span = entry.find('span', {'class': 'item'})
@@ -416,7 +418,6 @@ class UntappdParser(BaseTapListProvider):
 
 
 def main():
-    import argparse
 
     logging.basicConfig(level=logging.DEBUG)
 
