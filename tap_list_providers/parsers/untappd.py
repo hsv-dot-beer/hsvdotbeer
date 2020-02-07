@@ -141,7 +141,6 @@ class UntappdParser(BaseTapListProvider):
 
     def parse_style(self, style):
         if '-' in style:
-            print('style %s' % style)
             split_names = [i.strip() for i in style.split(' - ')]
             cat = None
             name = None
