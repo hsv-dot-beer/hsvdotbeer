@@ -8,6 +8,7 @@ from django.test import TestCase
 import responses
 
 from beers.models import Beer, Manufacturer
+from beers.test.factories import StyleFactory, StyleAlternateNameFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
@@ -105,3 +106,31 @@ class CommandsTestCase(TestCase):
                     price_instance,
                 )
             mock_beer_lookup.delay.assert_called_with(tap.beer.id)
+
+
+class StyleParsingTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.belgian_ipa = StyleFactory(name='Belgian IPA')
+        cls.english_cider = StyleFactory(name='English Cider')
+        cls.farmhouse_ale = StyleFactory(name='foo')
+        StyleAlternateNameFactory(style=cls.farmhouse_ale, name='Farmhouse Ale - Other')
+        cls.parser = UntappdParser()
+
+    def test_belgian_ipa(self):
+        style = self.parser.parse_style('IPA - Belgian')
+        self.assertEqual(style.id, self.belgian_ipa.id)
+
+    def test_english_cider(self):
+        style = self.parser.parse_style('Ciders and Meads - English Cider')
+        self.assertEqual(style.id, self.english_cider.id)
+
+    def test_farmhouse_ale(self):
+        style = self.parser.parse_style('Farmhouse Ale - Other')
+        self.assertEqual(style.id, self.farmhouse_ale.id)
+
+    def test_kellerbier(self):
+        style = self.parser.parse_style('Zwickelbier- German style Lager')
+        # assert that we fix the name to add the missing space if nothing else
+        self.assertEqual(style.name, 'Zwickelbier - German style Lager')
