@@ -1,3 +1,5 @@
+"""Parse beers from TapHunter"""
+import argparse
 import decimal
 import logging
 import os
@@ -31,6 +33,7 @@ class TaphunterParser(BaseTapListProvider):
     def __init__(self, location=None):
         """Constructor."""
         self.url = None
+        self.json = {}
         if location:
             self.url = self.URL.format(location)
         super().__init__()
@@ -92,7 +95,7 @@ class TaphunterParser(BaseTapListProvider):
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer, creating if necessary
             parsed_beer = self.parse_beer(entry)
-            name = parsed_beer.pop('name')
+            name = parsed_beer['name']
             style = parsed_beer.pop('style', {})
             if style:
                 parsed_beer['style'] = f"{style['category']} - {style['name']}"
@@ -104,7 +107,7 @@ class TaphunterParser(BaseTapListProvider):
                 name, manufacturer, parsed_beer,
             )
             beer = self.get_beer(
-                name, manufacturer, pricing=self.parse_pricing(entry),
+                manufacturer=manufacturer, pricing=self.parse_pricing(entry),
                 venue=venue, **parsed_beer,
             )
             # 4. assign the beer to the tap
@@ -182,6 +185,7 @@ class TaphunterParser(BaseTapListProvider):
 
     def fetch(self):
         data = requests.get(self.url).json()
+        self.json = data
         return data
 
     def taps(self):
@@ -195,9 +199,8 @@ class TaphunterParser(BaseTapListProvider):
         return ret
 
 
-if __name__ == '__main__':
-    import argparse
-
+def main():
+    """Simple console stuff"""
     locations = {
         'wholefoods': '5963904507707392',
         'lexpress': '6200813693698048',
@@ -217,3 +220,7 @@ if __name__ == '__main__':
     else:
         for tap in t.taps():
             print(json.dumps(tap, indent=4))
+
+
+if __name__ == '__main__':
+    main()
