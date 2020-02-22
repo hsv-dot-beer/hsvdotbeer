@@ -116,6 +116,15 @@ class BaseTapListProvider():
         self.styles[name.casefold()] = style
         return style
 
+    def reformat_beer_name(self, name: str, mfg_name: str) -> str:
+        """Try to strip the manufacturer name if possible"""
+        original_name = name.strip()
+        name = name.replace(mfg_name, '').strip()
+        if name.startswith(tuple('/-_')):
+            # it's likely a collaboration beer. Put the manufacturer back in there.
+            name = original_name
+        return name
+
     def guess_style(self, beer_name):
         """Try to guess the style from the beer name"""
         ci_name = beer_name.casefold()
@@ -157,6 +166,11 @@ class BaseTapListProvider():
             'get_beer(): name %s, mfg %s, defaults %s',
             name, manufacturer, defaults,
         )
+        mfg_name = manufacturer.name
+        for ending in COMMON_BREWERY_ENDINGS:
+            if mfg_name.endswith(ending):
+                mfg_name = mfg_name.replace(ending, '').strip()
+        name = self.reformat_beer_name(name, mfg_name)
         unique_fields = (
             'manufacturer_url', 'untappd_url', 'beer_advocate_url',
             'taphunter_url', 'taplist_io_pk', 'beermenus_slug',
