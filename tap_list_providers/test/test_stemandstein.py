@@ -6,8 +6,10 @@ from django.core.management import call_command
 from django.test import TestCase
 import responses
 
-from beers.models import Beer, Manufacturer, ManufacturerAlternateName
-from beers.test.factories import ManufacturerFactory
+from beers.models import (
+    Beer, Manufacturer, ManufacturerAlternateName, Style, StyleAlternateName,
+)
+from beers.test.factories import ManufacturerFactory, BeerFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
@@ -29,6 +31,7 @@ class CommandsTestCase(TestCase):
             digital_pour_venue_id=12345,
             digital_pour_location_number=1,
         )
+        Style.objects.create(name='Scotch Ale')
         cls.html_data = {}
         with open(os.path.join(
             os.path.dirname(BASE_DIR),
@@ -66,6 +69,14 @@ class CommandsTestCase(TestCase):
             venue=self.venue,
             tap_number=3000,
         )
+        mfg = ManufacturerFactory(name='Founders')
+        beer = BeerFactory(name='Dirty Bastard', manufacturer=mfg)
+        other = Style.objects.create(name='other')
+        # Create a fake shorter style name that the search for fruit ale should
+        # ignore
+        StyleAlternateName.objects.create(name='t Ale', style=other)
+        style = Style.objects.create(name='Fruit Beer')
+        StyleAlternateName.objects.create(name='Fruit Ale', style=style)
         for dummy in range(2):
             # running twice to make sure we're not double-creating
             args = []
@@ -77,7 +88,7 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Manufacturer.objects.count(), 15)
             self.assertEqual(Tap.objects.count(), 17)
             taps = Tap.objects.filter(
-                venue=self.venue, tap_number__in=[1, 17],
+                venue=self.venue, tap_number__in=[1, 3, 9, 17],
             ).select_related(
                 'beer__style', 'beer__manufacturer',
             ).order_by('tap_number')
@@ -94,7 +105,7 @@ class CommandsTestCase(TestCase):
             price = prices[0]
             self.assertEqual(price.price, 5)
             self.assertEqual(price.serving_size.volume_oz, 16)
-            tap = taps[1]
+            tap = taps[3]
             # this one ends with an asterisk. Make sure it's stripped.
             self.assertTrue(
                 tap.beer.name.endswith('Karmeliet'),
@@ -107,6 +118,16 @@ class CommandsTestCase(TestCase):
             self.assertEqual(price.price, 8)
             self.assertEqual(price.serving_size.volume_oz, 10)
             self.assertFalse(Tap.objects.filter(id=deleted_tap.id).exists())
+            # make sure style stripping works
+            tap = taps[2]
+            self.assertEqual(tap.beer.style.name, 'Scotch Ale')
+            self.assertEqual(tap.beer.name, 'Dirty Bastard')
+            self.assertEqual(tap.beer.id, beer.id)
+            self.assertEqual(tap.beer.manufacturer_id, mfg.id)
+            tap = taps[1]
+            # style is set to Fruit Ale but the beer name is preserved
+            self.assertEqual(tap.beer.style_id, style.id)
+            self.assertTrue(tap.beer.name.endswith('Fruit Ale'))
 
     def test_guess_manufacturer_good_people(self):
         mfg_names = [
