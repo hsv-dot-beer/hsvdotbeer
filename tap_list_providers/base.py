@@ -11,6 +11,7 @@ from urllib.parse import urlparse, unquote
 import logging
 
 from django.db.models import Prefetch, Q
+from django.db.models.functions import Length
 from django.db import transaction
 from kombu.exceptions import OperationalError
 
@@ -124,7 +125,42 @@ class BaseTapListProvider():
             name = original_name
         return name
 
+    def guess_style(self, beer_name):
+        """Try to guess the style from the beer name"""
+        ci_name = beer_name.casefold()
+        for name, style in sorted(
+            self.styles.items(), key=lambda k: len(k[0]), reverse=True,
+        ):
+            if name in ci_name:
+                LOG.debug('Guessed style %s for beer %s', style, beer_name)
+                return style
+        alt_names = []
+        for style in self.styles.values():
+            alt_names += list(
+                (i.name.casefold(), style)
+                for i in style.alternate_names.all()
+            )
+        for alt_name, style in sorted(
+            alt_names, key=lambda k: len(k[0]), reverse=True,
+        ):
+            if alt_name in ci_name:
+                LOG.debug('Guessed alternate style %s for beer %s', style, beer_name)
+                return style
+        LOG.info('Could not find a style for beer %s', beer_name)
+
+    def fetch_styles(self):
+        self.styles = {
+            style.name.casefold(): style
+            for style in Style.objects.prefetch_related(
+                'alternate_names',
+            ).annotate(
+                name_chars=Length('name')
+            ).order_by('-name_chars')
+        }
+
     def get_beer(self, name, manufacturer, pricing=None, venue=None, **defaults):
+        if not self.styles:
+            self.fetch_styles()
         name = name.strip()
         LOG.debug(
             'get_beer(): name %s, mfg %s, defaults %s',
@@ -162,6 +198,8 @@ class BaseTapListProvider():
         serving_sizes = {i.volume_oz: i for i in ServingSize.objects.all()}
         if 'style' in defaults and not isinstance(defaults['style'], Style):
             defaults['style'] = self.get_style(defaults['style'])
+        elif not defaults.get('style'):
+            defaults['style'] = self.guess_style(name)
         beer = None
         if unique_fields_present:
             filter_expr = Q()
@@ -199,12 +237,34 @@ class BaseTapListProvider():
                     Q(name=name) | Q(alternate_names__name=name),
                     manufacturer=manufacturer,
                 ).distinct().get()
+                LOG.debug('looked up %s for %s', beer, name)
             except Beer.DoesNotExist:
-                beer = Beer.objects.create(
-                    name=name,
-                    manufacturer=manufacturer,
-                    **defaults,
-                )
+                LOG.debug('beer %s not found', name)
+                beer = None
+                if defaults.get('style') and defaults[
+                    'style'
+                ].name.casefold() in name.casefold():
+                    subbed_name = re.sub(
+                        rf'\s{defaults["style"].name}$',
+                        '',
+                        name,
+                        flags=re.IGNORECASE,
+                    ).strip()
+                    try:
+                        beer = Beer.objects.filter(
+                            Q(name=subbed_name) | Q(alternate_names__name=subbed_name),
+                            manufacturer=manufacturer,
+                        ).distinct().get()
+                    except Beer.DoesNotExist:
+                        LOG.debug('Substituted name %s does not exist', subbed_name)
+                    else:
+                        LOG.debug('Successfully replaced %s with %s', name, beer)
+                if not beer:
+                    beer = Beer.objects.create(
+                        name=name,
+                        manufacturer=manufacturer,
+                        **defaults,
+                    )
             except Beer.MultipleObjectsReturned:
                 LOG.error(
                     'Found duplicate results for name %s from mfg %s!',
