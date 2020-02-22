@@ -53,3 +53,19 @@ class StyleTestCase(TestCase):
         style = StyleFactory(name='test style')
         looked_up = provider.get_style('None - TEST STYLE')
         self.assertEqual(looked_up, style)
+
+
+class FixBeerNameTestCase(TestCase):
+    """Test reformatting beer names"""
+
+    def test_standard(self):
+        """Test the standard case"""
+        provider = BaseTapListProvider()
+        name = provider.reformat_beer_name('Stone IPA', 'Stone')
+        self.assertEqual(name, 'IPA')
+
+    def test_collab(self):
+        """Test collaborations (See #321)"""
+        provider = BaseTapListProvider()
+        name = provider.reformat_beer_name('Hi-Wire / New Belgium Belgian Stout', 'Hi-Wire')
+        self.assertEqual(name, 'Hi-Wire / New Belgium Belgian Stout')
