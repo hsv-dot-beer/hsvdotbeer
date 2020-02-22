@@ -125,7 +125,11 @@ class BaseTapListProvider():
         for ending in COMMON_BREWERY_ENDINGS:
             if mfg_name.endswith(ending):
                 mfg_name = mfg_name.replace(ending, '').strip()
+        original_name = name.strip()
         name = name.replace(mfg_name, '').strip()
+        if name.startswith(tuple('/-_')):
+            # it's likely a collaboration beer. Put the manufacturer back in there.
+            name = original_name
         unique_fields = (
             'manufacturer_url', 'untappd_url', 'beer_advocate_url',
             'taphunter_url', 'taplist_io_pk', 'beermenus_slug',
