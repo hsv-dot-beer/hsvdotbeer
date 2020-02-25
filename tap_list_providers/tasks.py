@@ -146,6 +146,11 @@ def tweet_about_beers(self, beer_pks):
         access_token_key=access_key,
         access_token_secret=access_secret,
     )
+    # Mark beers which have been removed from the tap list as tweeted about
+    Beer.objects.filter(
+        tweeted_about=False,
+        taps__isnull=True,
+    ).update(tweeted_about=True)
     beers = list(
         Beer.objects.filter(
             id__in=beer_pks,
