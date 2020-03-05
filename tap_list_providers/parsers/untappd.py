@@ -1,3 +1,5 @@
+"""Parse data from untappd"""
+import argparse
 from decimal import Decimal
 from pprint import PrettyPrinter
 import logging
@@ -9,6 +11,7 @@ import requests
 from bs4 import BeautifulSoup
 import configurations
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
+from django.db.models import Q
 
 # boilerplate code necessary for launching outside manage.py
 try:
@@ -19,6 +22,7 @@ except (ImproperlyConfigured, AppRegistryNotReady):
     configurations.setup()
     from ..base import BaseTapListProvider
 
+from beers.models import Style
 from taps.models import Tap
 
 LOG = logging.getLogger(__name__)
@@ -37,6 +41,8 @@ class UntappdParser(BaseTapListProvider):
             self.location_url = self.URL.format(location, theme)
         LOG.debug('categories: %s', cats)
         self.categories = [i.casefold() for i in cats] if cats else []
+        self.soup = None
+        self.taplists = []
         super().__init__()
 
     def fetch_data(self):
@@ -93,14 +99,6 @@ class UntappdParser(BaseTapListProvider):
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer, creating if necessary
             beer_name = tap_info['beer'].pop('name')
-            style = tap_info['beer'].pop('style', {})
-            if style:
-                if style['category']:
-                    tap_info['beer'][
-                        'style'
-                    ] = f"{style['category']} - {style['name']}"
-                else:
-                    tap_info['beer']['style'] = style['name']
             beer = self.get_beer(
                 beer_name, manufacturer, venue=venue,
                 pricing=tap_info['pricing'],
@@ -144,12 +142,55 @@ class UntappdParser(BaseTapListProvider):
 
     def parse_style(self, style):
         if '-' in style:
-            cat = style.split('-')[0].strip()
-            name = style.split('-')[1].strip()
-        else:
+            split_names = [i.strip() for i in style.split(' - ')]
             cat = None
-            name = style.strip()
-        return {'name': name, 'category': cat}
+            name = None
+            if len(split_names) == 2:
+                cat, name = split_names
+            elif len(split_names) > 2:
+                # use the last two
+                cat, name = split_names[-2:]
+            else:
+                # we have bad padding
+                # pad it and retry
+                return self.parse_style(style.replace('-', ' - '))
+            # attempt 1: has the style been moderated already?
+            try:
+                return Style.objects.get(alternate_names__name__iexact=style)
+            except Style.DoesNotExist:
+                # don't care
+                pass
+            # attempt 2: change IPA - Belgian to Belgian IPA
+            try:
+                candidate = f'{name} {cat}'
+                return Style.objects.filter(
+                    Q(name__iexact=candidate) |
+                    Q(alternate_names__name__iexact=candidate)
+                ).distinct().get()
+            except Style.DoesNotExist:
+                # don't care
+                pass
+            except Style.MultipleObjectsReturned:
+                # we have two different options
+                # pick the exact match and move on
+                LOG.error('Two different matches for style %s', candidate)
+                return Style.objects.get(name__iexact=candidate)
+            # attempt 3: try name by itself
+            # (e.g. Ciders and Meads - English Cider -> English Cider)
+            try:
+                return Style.objects.filter(
+                    Q(name__iexact=name) | Q(alternate_names__name__iexact=name)
+                ).distinct().get()
+            except Style.MultipleObjectsReturned:
+                LOG.error('Two different matches for name %s', name)
+                return Style.objects.get(name__iexact=name)
+            except Style.DoesNotExist:
+                # womp womp
+                return Style.objects.get_or_create(name=f'{cat} - {name}')[0]
+
+        cat = None
+        name = style.strip()
+        return Style.objects.get_or_create(name=style)[0]
 
     def parse_size(self, size):
         if size == '1/6 Barrel':
@@ -218,7 +259,7 @@ class UntappdParser(BaseTapListProvider):
         if not beer_info or beer_info == brewery:
             beer_info = f'{brewery} {beer_style}'
 
-        t = {
+        tap_dict = {
             'beer': {
                 'name': beer_info,
                 'untappd_url': url,
@@ -244,15 +285,15 @@ class UntappdParser(BaseTapListProvider):
         else:
             abv = None
 
-        t['beer']['abv'] = abv
+        tap_dict['beer']['abv'] = abv
 
         ibu = entry.find('span', {'class': 'ibu'})
         if ibu:
             ibu = ibu.text.replace('IBU', '')
             ibu = float(ibu)
-            t['beer']['ibu'] = ibu
+            tap_dict['beer']['ibu'] = ibu
 
-        return t
+        return tap_dict
 
     def parse_item_tap(self, entry):
         beer_name_span = entry.find('span', {'class': 'item'})
@@ -376,12 +417,11 @@ class UntappdParser(BaseTapListProvider):
         return ret
 
 
-if __name__ == '__main__':
-    import argparse
+def main():
 
     logging.basicConfig(level=logging.DEBUG)
 
-    LOCATIONS = {
+    locations = {
         'dsb': ('3884', '11913', ['Tap List']),
         'cpp': ('18351', '69229', ['On Tap']),
         'yh': ('5949', '20074', ['YEAR-ROUND', 'SEASONALS', 'Beer']),
@@ -395,12 +435,16 @@ if __name__ == '__main__':
     parser.add_argument('location')
     args = parser.parse_args()
 
-    t = UntappdParser(*LOCATIONS[args.location])
-    data = t.fetch_data()
-    t.parse_html_and_js(data)
+    untappd_parser = UntappdParser(*locations[args.location])
+    data = untappd_parser.fetch_data()
+    untappd_parser.parse_html_and_js(data)
 
     if args.dump:
-        print(t.soup.prettify())
+        print(untappd_parser.soup.prettify())
 
-    for tap in t.taps():
+    for tap in untappd_parser.taps():
         PrettyPrinter(indent=4).pprint(tap)
+
+
+if __name__ == '__main__':
+    main()
