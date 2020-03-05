@@ -25,7 +25,7 @@ django-countries = "*"
 lxml = "*"
 requests = "*"
 celery = {extras = ["redis"],version = ">=4.3.0"}
-django-celery-beat = "<1.6.0"
+django-celery-beat = ">=2.0.0"
 django-cors-headers = "*"
 python-dateutil = "*"
 pylibmc = "*"
