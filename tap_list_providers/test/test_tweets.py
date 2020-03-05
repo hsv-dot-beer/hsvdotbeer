@@ -44,7 +44,7 @@ class TweetTestCase(TestCase):
         beer = BeerFactory()
         TapFactory(venue=self.venue, beer=beer)
         with self.settings_context_manager():
-            tweet_about_beers([beer.id])
+            tweet_about_beers([beer.id])  # pylint: disable=no-value-for-parameter
         mock_retry.assert_not_called()
         mock_api.assert_called_once_with(
             consumer_key=self.consumer_key,
@@ -70,7 +70,7 @@ class TweetTestCase(TestCase):
         beer.manufacturer.save()
         TapFactory(venue=self.venue, beer=beer)
         with self.settings_context_manager():
-            tweet_about_beers([beer.id])
+            tweet_about_beers([beer.id])  # pylint: disable=no-value-for-parameter
         mock_retry.assert_not_called()
         mock_api.assert_called_once_with(
             consumer_key=self.consumer_key,
@@ -96,7 +96,7 @@ class TweetTestCase(TestCase):
         self.venue.save()
         TapFactory(venue=self.venue, beer=beer)
         with self.settings_context_manager():
-            tweet_about_beers([beer.id])
+            tweet_about_beers([beer.id])  # pylint: disable=no-value-for-parameter
         mock_retry.assert_not_called()
         mock_api.assert_called_once_with(
             consumer_key=self.consumer_key,
@@ -120,7 +120,7 @@ class TweetTestCase(TestCase):
         beer = BeerFactory(tweeted_about=True)
         TapFactory(venue=self.venue, beer=beer)
         with self.settings_context_manager():
-            tweet_about_beers([beer.id])
+            tweet_about_beers([beer.id])  # pylint: disable=no-value-for-parameter
         mock_retry.assert_not_called()
         mock_api.assert_called_once_with(
             consumer_key=self.consumer_key,
@@ -133,6 +133,24 @@ class TweetTestCase(TestCase):
 
     @patch('tap_list_providers.tasks.ThreadedApi')
     @patch.object(Task, 'retry')
+    def test_single_beer_removed_from_draft(self, mock_retry, mock_api):
+        beer = BeerFactory()
+        with self.settings_context_manager():
+            tweet_about_beers([beer.id])  # pylint: disable=no-value-for-parameter
+        mock_retry.assert_not_called()
+        mock_api.assert_called_once_with(
+            consumer_key=self.consumer_key,
+            consumer_secret=self.consumer_secret,
+            access_token_key=self.api_key,
+            access_token_secret=self.api_secret,
+        )
+        mock_api.return_value.PostUpdate.assert_not_called()
+        mock_api.return_value.PostUpdates.assert_not_called()
+        beer.refresh_from_db()
+        self.assertTrue(beer.tweeted_about)
+
+    @patch('tap_list_providers.tasks.ThreadedApi')
+    @patch.object(Task, 'retry')
     def test_single_beer_no_creds(self, mock_retry, mock_api):
         beer = BeerFactory()
         TapFactory(venue=self.venue, beer=beer)
@@ -142,7 +160,7 @@ class TweetTestCase(TestCase):
             TWITTER_ACCESS_TOKEN_KEY='',
             TWITTER_ACCESS_TOKEN_SECRET='',
         ):
-            tweet_about_beers([beer.id])
+            tweet_about_beers([beer.id])  # pylint: disable=no-value-for-parameter
         mock_retry.assert_not_called()
         mock_api.assert_not_called()
 
@@ -158,6 +176,7 @@ class TweetTestCase(TestCase):
             for beer in beers
         )
         with self.settings_context_manager():
+            # pylint: disable=no-value-for-parameter
             tweet_about_beers([i.id for i in beers])
         mock_retry.assert_not_called()
         mock_api.assert_called_once_with(
@@ -198,7 +217,7 @@ class TweetTestCase(TestCase):
             for beer in beers
         )
         with self.settings_context_manager():
-            tweet_about_beers([i.id for i in beers])
+            tweet_about_beers([i.id for i in beers])  # pylint: disable=no-value-for-parameter
         beers = beers[:10]
         mock_retry.assert_not_called()
         mock_api.assert_called_once_with(
@@ -232,7 +251,7 @@ class TweetTestCase(TestCase):
         beer_pks = [1234, 5678]
         with self.settings_context_manager():
             with self.assertRaises(Retry):
-                tweet_about_beers(beer_pks)
+                tweet_about_beers(beer_pks)  # pylint: disable=no-value-for-parameter
         mock_api.assert_called_once_with(
             consumer_key=self.consumer_key,
             consumer_secret=self.consumer_secret,

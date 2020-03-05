@@ -1,13 +1,17 @@
+"""Parse data from untappd"""
+import argparse
 from decimal import Decimal
 from pprint import PrettyPrinter
 import logging
 import os
+import re
 
 import dateutil.parser
 import requests
 from bs4 import BeautifulSoup
 import configurations
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
+from django.db.models import Q
 
 # boilerplate code necessary for launching outside manage.py
 try:
@@ -18,9 +22,12 @@ except (ImproperlyConfigured, AppRegistryNotReady):
     configurations.setup()
     from ..base import BaseTapListProvider
 
+from beers.models import Style
 from taps.models import Tap
 
 LOG = logging.getLogger(__name__)
+ABV_REGEX = re.compile(r'\d{1,2}(\.\d{1,3})?')
+IBU_REGEX = re.compile(r'\d{1,3}(\.\d{1,3})?')
 
 
 class UntappdParser(BaseTapListProvider):
@@ -34,6 +41,8 @@ class UntappdParser(BaseTapListProvider):
             self.location_url = self.URL.format(location, theme)
         LOG.debug('categories: %s', cats)
         self.categories = [i.casefold() for i in cats] if cats else []
+        self.soup = None
+        self.taplists = []
         super().__init__()
 
     def fetch_data(self):
@@ -92,14 +101,6 @@ class UntappdParser(BaseTapListProvider):
                 manufacturers[manufacturer.name] = manufacturer
             # 3. get the beer, creating if necessary
             beer_name = tap_info['beer'].pop('name')
-            style = tap_info['beer'].pop('style', {})
-            if style:
-                if style['category']:
-                    tap_info['beer'][
-                        'style'
-                    ] = f"{style['category']} - {style['name']}"
-                else:
-                    tap_info['beer']['style'] = style['name']
             beer = self.get_beer(
                 beer_name, manufacturer, venue=venue,
                 pricing=tap_info['pricing'],
@@ -128,8 +129,11 @@ class UntappdParser(BaseTapListProvider):
         self.taplists = []
 
         for element in info_elements:
-            text = element.find('div', {'class': 'section-name'}).text
-            if text.casefold() in self.categories:
+            header = element.find('div', {'class': 'section-name'})
+            if header is None:
+                header = element.find('div', {'class': 'section-heading'})
+            text = header.text
+            if text.casefold().strip() in self.categories:
                 LOG.debug('Adding tap list %s', text)
                 self.taplists.append(element)
             else:
@@ -137,12 +141,55 @@ class UntappdParser(BaseTapListProvider):
 
     def parse_style(self, style):
         if '-' in style:
-            cat = style.split('-')[0].strip()
-            name = style.split('-')[1].strip()
-        else:
+            split_names = [i.strip() for i in style.split(' - ')]
             cat = None
-            name = style
-        return {'name': name, 'category': cat}
+            name = None
+            if len(split_names) == 2:
+                cat, name = split_names
+            elif len(split_names) > 2:
+                # use the last two
+                cat, name = split_names[-2:]
+            else:
+                # we have bad padding
+                # pad it and retry
+                return self.parse_style(style.replace('-', ' - '))
+            # attempt 1: has the style been moderated already?
+            try:
+                return Style.objects.get(alternate_names__name__iexact=style)
+            except Style.DoesNotExist:
+                # don't care
+                pass
+            # attempt 2: change IPA - Belgian to Belgian IPA
+            try:
+                candidate = f'{name} {cat}'
+                return Style.objects.filter(
+                    Q(name__iexact=candidate) |
+                    Q(alternate_names__name__iexact=candidate)
+                ).distinct().get()
+            except Style.DoesNotExist:
+                # don't care
+                pass
+            except Style.MultipleObjectsReturned:
+                # we have two different options
+                # pick the exact match and move on
+                LOG.error('Two different matches for style %s', candidate)
+                return Style.objects.get(name__iexact=candidate)
+            # attempt 3: try name by itself
+            # (e.g. Ciders and Meads - English Cider -> English Cider)
+            try:
+                return Style.objects.filter(
+                    Q(name__iexact=name) | Q(alternate_names__name__iexact=name)
+                ).distinct().get()
+            except Style.MultipleObjectsReturned:
+                LOG.error('Two different matches for name %s', name)
+                return Style.objects.get(name__iexact=name)
+            except Style.DoesNotExist:
+                # womp womp
+                return Style.objects.get_or_create(name=f'{cat} - {name}')[0]
+
+        cat = None
+        name = style.strip()
+        return Style.objects.get_or_create(name=style)[0]
 
     def parse_size(self, size):
         if size == '1/6 Barrel':
@@ -176,7 +223,10 @@ class UntappdParser(BaseTapListProvider):
         return pricing
 
     def parse_tap(self, entry):
-        beer_info = entry.find('p', {'class': 'beer-name'}).text
+        beer_name_p = entry.find('p', {'class': 'beer-name'})
+        if beer_name_p is None:
+            return self.parse_item_tap(entry)
+        beer_info = beer_name_p.text
         LOG.debug('parsing beer %s', beer_info)
         tap_num = entry.find(
             'span', {'class': 'tap-number-hideable'},
@@ -195,6 +245,83 @@ class UntappdParser(BaseTapListProvider):
         brewery_span = entry.find('span', {'class': 'brewery'})
         brewery = brewery_span.text.strip()
         brewery_url = brewery_span.find('a').attrs['href']
+
+        location_span = entry.find('span', {'class': 'location'})
+        if location_span:
+            loc = location_span.text
+        else:
+            loc = ''
+
+        beer_info = beer_info.replace(tap_num, '')
+        beer_info = beer_info.replace(beer_style, '')
+        beer_info = beer_info.strip()
+        if not beer_info or beer_info == brewery:
+            beer_info = f'{brewery} {beer_style}'
+
+        tap_dict = {
+            'beer': {
+                'name': beer_info,
+                'untappd_url': url,
+                'style': self.parse_style(beer_style),
+                'logo_url': beer_image,
+            },
+            'manufacturer': {
+                'name': brewery,
+                'location': loc,
+                'untappd_url': brewery_url,
+            },
+            'pricing': self.parse_pricing(entry),
+            'added': None,
+            'updated': None,
+            'tap_number': int(tap_num.replace('.', '')) if tap_num else None
+        }
+
+        abv_span = entry.find('span', {'class': 'abv'})
+        if abv_span:
+            abv = abv_span.text
+            abv = abv.replace('ABV', '')
+            abv = float(abv.replace('%', ''))
+        else:
+            abv = None
+
+        tap_dict['beer']['abv'] = abv
+
+        ibu = entry.find('span', {'class': 'ibu'})
+        if ibu:
+            ibu = ibu.text.replace('IBU', '')
+            ibu = float(ibu)
+            tap_dict['beer']['ibu'] = ibu
+
+        return tap_dict
+
+    def parse_item_tap(self, entry):
+        beer_name_span = entry.find('span', {'class': 'item'})
+        beer_info = beer_name_span.text
+        LOG.debug('parsing beer %s', beer_info)
+        tap_num = entry.find(
+            'span', {'class': 'tap-number-hideable'},
+        ).text.strip()
+        beer_link = entry.find(
+            'div', {'class': 'label-image-hideable beer-label pull-left'},
+        )
+        url = None
+        beer_image = None
+        if beer_link:
+            beer_link_tag = beer_link.find('a')
+            beer_image = beer_link.find('img').attrs['src']
+            if beer_link_tag:
+                url = beer_link_tag.attrs['href']
+
+        beer_style = entry.find(
+            'span',
+            {'class': 'beer-style'},
+        ).text.replace('•', '').replace('\xa0', '').strip()
+        brewery_span = entry.find('span', {'class': 'brewery'})
+        brewery = brewery_span.text.strip()
+        brewery_url_a = brewery_span.find('a')
+        brewery_url = None
+        if brewery_url_a:
+            brewery_url = brewery_url_a.attrs['href']
 
         location_span = entry.find('span', {'class': 'location'})
         if location_span:
@@ -229,8 +356,12 @@ class UntappdParser(BaseTapListProvider):
         abv_span = entry.find('span', {'class': 'abv'})
         if abv_span:
             abv = abv_span.text
-            abv = abv.replace('ABV', '')
-            abv = float(abv.replace('%', ''))
+            match = ABV_REGEX.search(abv)
+            try:
+                abv = float(match[0])
+            except (TypeError, IndexError):
+                LOG.warning('Unable to parse ABV %r', abv_span.text)
+                abv = None
         else:
             abv = None
 
@@ -238,8 +369,13 @@ class UntappdParser(BaseTapListProvider):
 
         ibu = entry.find('span', {'class': 'ibu'})
         if ibu:
-            ibu = ibu.text.replace('IBU', '')
-            ibu = float(ibu)
+            match = IBU_REGEX.search(ibu.text)
+            try:
+                ibu = float(match[0])
+            except (TypeError, IndexError):
+                LOG.warning('Unable to parse IBU %r', ibu.text)
+                ibu = None
+
             t['beer']['ibu'] = ibu
 
         return t
@@ -248,7 +384,7 @@ class UntappdParser(BaseTapListProvider):
         ret = []
         for taplist in self.taplists:
             LOG.debug('Opening tap list')
-            entries = taplist.find_all('div', {'class': 'beer'})
+            entries = taplist.find_all('div', {'class': 'menu-item'})
             LOG.debug('Found %s entries', len(entries))
             updated = None
             menus = self.soup.find_all('div', {'class': 'menu-info'})
@@ -280,14 +416,16 @@ class UntappdParser(BaseTapListProvider):
         return ret
 
 
-if __name__ == '__main__':
-    import argparse
+def main():
 
-    LOCATIONS = {
+    logging.basicConfig(level=logging.DEBUG)
+
+    locations = {
         'dsb': ('3884', '11913', ['Tap List']),
         'cpp': ('18351', '69229', ['On Tap']),
         'yh': ('5949', '20074', ['YEAR-ROUND', 'SEASONALS', 'Beer']),
-        'mm': ('8588', '30573', ['Favorites', 'Seasonals', 'Exclusives'])
+        'mm': ('8588', '30573', ['Favorites', 'Seasonals', 'Exclusives']),
+        'vonbrewski': ('19449', '73621', ['Left Wall', 'Right Wall', 'Trailer', 'Back Wall', 'On Deck']),
     }
 
     parser = argparse.ArgumentParser()
@@ -296,12 +434,16 @@ if __name__ == '__main__':
     parser.add_argument('location')
     args = parser.parse_args()
 
-    t = UntappdParser(*LOCATIONS[args.location])
-    data = t.fetch_data()
-    t.parse_html_and_js(data)
+    untappd_parser = UntappdParser(*locations[args.location])
+    data = untappd_parser.fetch_data()
+    untappd_parser.parse_html_and_js(data)
 
     if args.dump:
-        print(t.soup.prettify())
+        print(untappd_parser.soup.prettify())
 
-    for tap in t.taps():
+    for tap in untappd_parser.taps():
         PrettyPrinter(indent=4).pprint(tap)
+
+
+if __name__ == '__main__':
+    main()
