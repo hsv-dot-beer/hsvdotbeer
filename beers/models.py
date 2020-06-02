@@ -208,6 +208,10 @@ class Beer(models.Model):
                 check=models.Q(ibu__lte=1000) | models.Q(ibu__isnull=True),
                 name='ibu_not_unreal'
             ),
+            models.CheckConstraint(
+                check=models.Q(color_srm__lte=500, color_srm__gte=1) | models.Q(color_srm__isnull=True),
+                name='srm_not_unrealistic',
+            ),
             models.UniqueConstraint(
                 fields=['beermenus_slug'], name='unique_beermenus_slug',
             ),
