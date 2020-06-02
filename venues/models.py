@@ -23,7 +23,7 @@ class Venue(models.Model):
     )
 
     # NOTE if this ever grows beyond HSV, we'll have to revisit uniqueness
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     address = models.CharField(max_length=50, blank=True)
     city = models.CharField(max_length=50, blank=True)
     state = models.CharField(max_length=25, blank=True)
@@ -38,7 +38,7 @@ class Venue(models.Model):
         'What service the venue uses for digital tap lists',
         blank=True, max_length=30, choices=TAP_LIST_PROVIDERS,
     )
-    untappd_url = models.URLField(blank=True, null=True, unique=True)
+    untappd_url = models.URLField(blank=True, null=True)
     email = models.EmailField(blank=True)
     phone_number = models.CharField(max_length=50, blank=True)
     logo_url = models.URLField(blank=True)
@@ -59,6 +59,12 @@ class Venue(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name'], name='unique_venue_name'),
+            models.UniqueConstraint(fields=['untappd_url'], name='unique_venue_untappd_url'),
+        ]
 
 
 class VenueAPIConfiguration(models.Model):
