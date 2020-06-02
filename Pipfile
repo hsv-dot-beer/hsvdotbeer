@@ -25,8 +25,9 @@ django-countries = "*"
 lxml = "*"
 requests = "*"
 celery = {extras = ["redis"],version = ">=4.3.0"}
-django-celery-beat = "*"
+django-celery-beat = ">=2.0.0"
 django-cors-headers = "*"
+python-dateutil = "*"
 pylibmc = "*"
 django-bmemcached = "*"
 python-binary-memcached = "*"
@@ -43,6 +44,7 @@ coverage = "*"
 factory_boy = "*"
 pylint-django = "*"
 responses = "*"
+freezegun = "*"
 
 [requires]
 python_version = "3.7"
