@@ -21,7 +21,7 @@ class TestUntappdRateLimit(TestCase):
         self.beer = BeerFactory(
             untappd_url='https://untappd.com/b/omnipollo-hypnopompa/432069'
         )
-        self.untappd_url = f'https://api.untappd.com/v4/beer/info/432069'
+        self.untappd_url = 'https://api.untappd.com/v4/beer/info/432069'
         # just enough to avoid exceptions
         self.json_data = json.dumps({
             'response': {'beer': {}},
