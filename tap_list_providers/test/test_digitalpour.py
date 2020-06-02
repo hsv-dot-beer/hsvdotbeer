@@ -416,8 +416,8 @@ class CommandsTestCase(TestCase):
                         'Glassware': 'Half Snifter',
                         'DisplayOnMenu': True,
                         'Deactivated': False,
-                     },
-                     {
+                    },
+                    {
                         'Id': 'C',
                         'Size': 35.2,
                         'Price': 18.5,
