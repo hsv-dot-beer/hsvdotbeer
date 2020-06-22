@@ -201,8 +201,8 @@ class UntappdParser(BaseTapListProvider):
         else:
             return int(size.split('oz')[0])
 
-    def parse_price(self, price):
-        price = price.replace('$', '')
+    def parse_price(self, price: str) -> float:
+        price = price.replace('$', '').strip().replace('\\', '')
         return float(price)
 
     def parse_pricing(self, entry):

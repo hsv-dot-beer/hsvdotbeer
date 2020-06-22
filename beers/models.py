@@ -60,32 +60,42 @@ class Style(models.Model):
 
 
 class StyleAlternateName(models.Model):
-    name = CITextField(unique=True)
+    name = CITextField()
     style = models.ForeignKey(
         Style, models.CASCADE, related_name='alternate_names')
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name'], name='unique_alt_name_name')
+        ]
+
 
 class Manufacturer(models.Model):
-    name = CITextField(unique=True)
+    name = CITextField()
     url = models.URLField(blank=True)
     location = models.CharField(blank=True, max_length=50)
     logo_url = models.URLField(blank=True)
     facebook_url = models.URLField(blank=True)
     twitter_handle = models.CharField(max_length=50, blank=True)
     instagram_handle = models.CharField(max_length=50, blank=True)
-    untappd_url = models.URLField(blank=True, unique=True, null=True)
+    untappd_url = models.URLField(blank=True, null=True)
     automatic_updates_blocked = models.NullBooleanField(default=False)
-    taphunter_url = models.URLField(blank=True, null=True, unique=True)
-    taplist_io_pk = models.PositiveIntegerField(
-        blank=True, null=True, unique=True,
-    )
+    taphunter_url = models.URLField(blank=True, null=True)
+    taplist_io_pk = models.PositiveIntegerField(blank=True, null=True)
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
-    beermenus_slug = models.CharField(
-        max_length=250, blank=True, null=True, unique=True,
-    )
+    beermenus_slug = models.CharField(max_length=250, blank=True, null=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name'], name='unique_mfg_name'),
+            models.UniqueConstraint(fields=['taplist_io_pk'], name='unique_mfg_taplist_io_pk'),
+            models.UniqueConstraint(fields=['taphunter_url'], name='unique_mfg_taphunter_url'),
+            models.UniqueConstraint(fields=['untappd_url'], name='unique_mfg_untappd_url'),
+            models.UniqueConstraint(fields=['beermenus_slug'], name='unique_mfg_beermenus_slug'),
+        ]
 
     def save(self, *args, **kwargs):
         if not self.beermenus_slug:
@@ -97,6 +107,7 @@ class Manufacturer(models.Model):
         return super().save(*args, **kwargs)
 
     def merge_from(self, other):
+        """Merge the data from other into self"""
         LOG.info('merging %s into %s', other, self)
         with transaction.atomic():
             other_beers = list(other.beers.all())
@@ -149,16 +160,14 @@ class Manufacturer(models.Model):
 class Beer(models.Model):
     name = CITextField()
     style = models.ForeignKey(
-        Style, models.DO_NOTHING, related_name='beers',
-        blank=True, null=True,
+        Style, models.DO_NOTHING, related_name='beers', blank=True, null=True,
     )
     manufacturer = models.ForeignKey(
         Manufacturer, models.CASCADE, related_name='beers',
     )
     in_production = models.BooleanField(default=True)
     abv = models.DecimalField(
-        'Alcohol content (% by volume)',
-        max_digits=4, decimal_places=2, blank=True, null=True,
+        'Alcohol content (% by volume)', max_digits=4, decimal_places=2, blank=True, null=True,
     )
     ibu = models.PositiveSmallIntegerField(
         'Bitterness (International Bitterness Units)',
@@ -168,34 +177,71 @@ class Beer(models.Model):
         'Color (Standard Reference Method)',
         max_digits=4, decimal_places=1, blank=True, null=True,
     )
-    untappd_url = models.URLField(blank=True, null=True, unique=True)
-    beer_advocate_url = models.URLField(
-        'BeerAdvocate URL (if known)', null=True, blank=True, unique=True,
-    )
-    rate_beer_url = models.URLField(blank=True, null=True, unique=True)
+    untappd_url = models.URLField(blank=True, null=True)
+    beer_advocate_url = models.URLField('BeerAdvocate URL (if known)', null=True, blank=True)
+    rate_beer_url = models.URLField(blank=True, null=True)
     logo_url = models.URLField(blank=True, null=True)
     color_html = models.CharField(
-        'HTML Color (in hex)', max_length=9,  # #00112233 -> RGBA
-        blank=True,
+        'HTML Color (in hex)', max_length=9, blank=True,  # #00112233 -> RGBA
     )
     api_vendor_style = models.CharField(
-        'API vendor-provided style (hidden from API)', max_length=100,
-        blank=True,
+        'API vendor-provided style (hidden from API)', max_length=100, blank=True,
     )
-    manufacturer_url = models.URLField(blank=True, null=True, unique=True)
+    manufacturer_url = models.URLField(blank=True, null=True)
     automatic_updates_blocked = models.NullBooleanField(default=False)
-    taphunter_url = models.URLField(blank=True, null=True, unique=True)
-    stem_and_stein_pk = models.PositiveIntegerField(
-        blank=True, null=True, unique=True,
-    )
-    taplist_io_pk = models.PositiveIntegerField(
-        blank=True, null=True, unique=True,
-    )
+    taphunter_url = models.URLField(blank=True, null=True)
+    stem_and_stein_pk = models.PositiveIntegerField(blank=True, null=True)
+    taplist_io_pk = models.PositiveIntegerField(blank=True, null=True)
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
-    tweeted_about = models.BooleanField(default=False, db_index=True)
-    beermenus_slug = models.CharField(
-        max_length=250, blank=True, null=True, unique=True,
-    )
+    tweeted_about = models.BooleanField(default=False)
+    beermenus_slug = models.CharField(max_length=250, blank=True, null=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['tweeted_about']),
+        ]
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(abv__gte=0, abv__lte=100) | models.Q(abv__isnull=True),
+                name='abv_positive',
+            ),
+            models.CheckConstraint(
+                check=models.Q(ibu__lte=1000) | models.Q(ibu__isnull=True),
+                name='ibu_not_unreal'
+            ),
+            models.CheckConstraint(
+                check=models.Q(color_srm__lte=500, color_srm__gte=1) | models.Q(color_srm__isnull=True),
+                name='srm_not_unrealistic',
+            ),
+            models.UniqueConstraint(
+                fields=['beermenus_slug'], name='unique_beermenus_slug',
+            ),
+            models.UniqueConstraint(
+                fields=['taplist_io_pk'], name='unique_taplist_io_pk',
+            ),
+            models.UniqueConstraint(
+                fields=['stem_and_stein_pk'], name='unique_stem_and_stein_pk',
+            ),
+            models.UniqueConstraint(
+                fields=['taphunter_url'], name='unique_taphunter_url',
+            ),
+            models.UniqueConstraint(
+                fields=['manufacturer_url'], name='unique_manufacturer_url',
+            ),
+            models.UniqueConstraint(
+                fields=['rate_beer_url'], name='unique_rate_beer_url',
+            ),
+            models.UniqueConstraint(
+                fields=['untappd_url'], name='unique_untappd_url',
+            ),
+            models.UniqueConstraint(
+                fields=['beer_advocate_url'], name='unique_beer_advocate_url',
+            ),
+            models.UniqueConstraint(
+                fields=['name', 'manufacturer'], name='unique_beer_per_manufacturer',
+            ),
+
+        ]
 
     def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
@@ -217,6 +263,7 @@ class Beer(models.Model):
         return self.name
 
     def render_srm(self):
+        """Convert beer color in SRM into an HTML hex color"""
         if self.color_html:
             return self.color_html
         return render_srm(self.color_srm)
@@ -270,11 +317,6 @@ class Beer(models.Model):
             other.delete()
             self.save()
 
-    class Meta:
-        unique_together = [
-            ('name', 'manufacturer'),
-        ]
-
 
 class BeerAlternateName(models.Model):
     beer = models.ForeignKey(Beer, models.CASCADE, related_name='alternate_names')
@@ -322,9 +364,11 @@ class BeerPrice(models.Model):
         return f'${self.price} for {self.beer_id} at {self.venue_id}'
 
     class Meta:
-        unique_together = (
-            ('beer', 'venue', 'serving_size'),
-        )
+        constraints = [
+            models.UniqueConstraint(
+                fields=['beer', 'venue', 'serving_size'], name='beer_venue_servingsize',
+            ),
+        ]
 
 
 class UntappdMetadata(models.Model):

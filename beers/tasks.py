@@ -2,16 +2,21 @@
 import os
 import logging
 import datetime
+import random
 from json import JSONDecodeError
 
+from dateutil.parser import parse
 import requests
 from requests.exceptions import RequestException
 from django.db.models import F
 from django.utils.timezone import now
+from django.db import transaction
+from django.db.utils import IntegrityError
 from celery import shared_task
 from celery.exceptions import MaxRetriesExceededError
 
 
+from tap_list_providers.models import APIRateLimitTimestamp
 from beers.models import (
     Beer, UntappdMetadata, BeerPrice, BeerAlternateName, ManufacturerAlternateName
 )
@@ -47,6 +52,20 @@ def look_up_beer(self, beer_pk):
         if now() - untappd_metadata.timestamp <= datetime.timedelta(minutes=360):
             LOG.debug('skipping recently updated data for %s', beer)
             return
+    try:
+        rate_limit_timestamp = APIRateLimitTimestamp.objects.get(api_type='untappd')
+    except APIRateLimitTimestamp.DoesNotExist:
+        rate_limit_timestamp = None
+    else:
+        if rate_limit_timestamp.rate_limit_expires_at >= now():
+            LOG.info(
+                'Currently rate-limited! Rate limit expires at %s',
+                rate_limit_timestamp.rate_limit_expires_at,
+            )
+            jitter = random.SystemRandom().randint(0, 30)
+            countdown = rate_limit_timestamp.rate_limit_expires_at - now()
+            raise self.retry(countdown=countdown.seconds + jitter)
+        rate_limit_timestamp.delete()
     LOG.debug('Looking up Untappd data for %s', beer)
     if not beer.untappd_url:
         LOG.error('Beer %s (PK %s) not linked to Untappd', beer, beer_pk)
@@ -66,13 +85,42 @@ def look_up_beer(self, beer_pk):
     untappd_url = f'https://api.untappd.com/v4/beer/info/{untappd_pk}'
     result = requests.get(untappd_url, params=untappd_args)
     if result.status_code == 429:
-        LOG.warning('Hit Untappd API rate limit! Headers %s', result.headers)
-        # retry in 1 hour
         try:
-            self.retry(countdown=3600)
+            expires = parse(result.headers['X-Ratelimit-Expired'])
+        except KeyError:
+            LOG.error(
+                'Got 429 from Untappd without expiration! headers %s',
+                result.headers,
+            )
+            return None
+        LOG.warning(
+            'Hit Untappd API rate limit! Limit opens up at %s', expires
+        )
+        # retry in 1 hour
+        if rate_limit_timestamp:
+            rate_limit_timestamp.rate_limit_expires_at = expires
+            rate_limit_timestamp.save()
+        else:
+            # do an update or create to attempt to minimize transaction
+            # issues
+            try:
+                with transaction.atomic():
+                    APIRateLimitTimestamp.objects.update_or_create(
+                        api_type='untappd',
+                        defaults={'rate_limit_expires_at': expires}
+                    )
+            except IntegrityError:
+                # well that didn't work. This must happen if we've got another
+                # rate limit situation going on, so assume that one passed
+                pass
+        jitter = random.SystemRandom().randint(0, 30)
+        countdown = expires - now()
+        try:
+            raise self.retry(countdown=countdown.seconds + jitter)
         except MaxRetriesExceededError:
             LOG.warning('Ran out of retries. We must be hurting.')
             return None
+
     # retry sooner for all other status codes
     result.raise_for_status()
     json_body = result.json()
