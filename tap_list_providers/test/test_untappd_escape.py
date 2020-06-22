@@ -8,7 +8,6 @@ from django.test import TestCase
 import responses
 
 from beers.models import Beer, Manufacturer
-from beers.test.factories import StyleFactory, StyleAlternateNameFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
