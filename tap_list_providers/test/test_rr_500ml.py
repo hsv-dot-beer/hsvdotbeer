@@ -14,7 +14,7 @@ from tap_list_providers.parsers.digitalpour import DigitalPourParser
 from hsv_dot_beer.config.local import BASE_DIR
 
 
-class RRHalLiterTestCase(TestCase):
+class RRHalfLiterTestCase(TestCase):
 
     @classmethod
     def setUpTestData(cls):
