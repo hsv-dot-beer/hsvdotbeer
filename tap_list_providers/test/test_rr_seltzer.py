@@ -1,12 +1,12 @@
 """Test the parsing of digitalpour data"""
-from decimal import Decimal
+
 import json
 import os
 from django.core.management import call_command
 from django.test import TestCase
 import responses
 
-from beers.models import Beer, Manufacturer, ServingSize
+from beers.models import Beer, Manufacturer
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
