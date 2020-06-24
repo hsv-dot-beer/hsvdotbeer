@@ -1,12 +1,12 @@
 """Test the parsing of digitalpour data"""
-from decimal import Decimal
+
 import json
 import os
 from django.core.management import call_command
 from django.test import TestCase
 import responses
 
-from beers.models import Beer, Manufacturer, ServingSize
+from beers.models import Beer, Manufacturer
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
@@ -14,7 +14,7 @@ from tap_list_providers.parsers.digitalpour import DigitalPourParser
 from hsv_dot_beer.config.local import BASE_DIR
 
 
-class RRHalfLiterTestCase(TestCase):
+class RRSeltzerTestCase(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -30,14 +30,13 @@ class RRHalfLiterTestCase(TestCase):
             os.path.dirname(BASE_DIR),
             'tap_list_providers',
             'example_data',
-            'rr_madison_500ml.json',
+            'rr-downtown.json',
         ), 'rb') as json_file:
             cls.json_data = json.loads(json_file.read())
-        ServingSize.objects.create(name='500 mL', volume_oz=Decimal('16.9'))
 
     @responses.activate
     def test_import_rr_data(self):
-        """Test floating point issues from RR Madison"""
+        """Test seltzer import from RR Downtown"""
         responses.add(
             responses.GET,
             DigitalPourParser.URL.format(
@@ -57,21 +56,18 @@ class RRHalfLiterTestCase(TestCase):
             args = []
             opts = {}
             call_command('parsedigitalpour', *args, **opts)
-            self.assertEqual(Beer.objects.count(), 1, list(Beer.objects.all()))
-            self.assertEqual(Manufacturer.objects.count(), 1)
-            self.assertEqual(Tap.objects.count(), 1)
+            self.assertEqual(Beer.objects.count(), 20, list(Beer.objects.all()))
+            # They also have Ace Pineapple Cider on tap, which is an interesting end run around
+            # the law
+            self.assertEqual(Manufacturer.objects.count(), 2, list(Manufacturer.objects.all()))
+            self.assertEqual(Tap.objects.count(), 20)
             taps = Tap.objects.filter(
-                venue=self.venue, tap_number=22,
+                venue=self.venue, tap_number=20,
             ).select_related(
                 'beer__style',
-            ).prefetch_related(
-                # if this were production code, I'd use a Prefetch object
-                'beer__prices__serving_size',
             ).order_by(
                 'tap_number',
             )
             tap = taps[0]
-            self.assertEqual(tap.beer.name, 'Recolté Wild Sour Ale')
-            self.assertEqual(tap.beer.prices.count(), 1)
-            price = tap.beer.prices.get()
-            self.assertEqual(price.serving_size.volume_oz, Decimal('16.9'))
+            self.assertEqual(tap.beer.name, 'Rotating Hard Seltzer (Ask your Beertender!)')
+            self.assertEqual(tap.beer.style.name, 'Hard Seltzer')
