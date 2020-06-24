@@ -1,11 +1,12 @@
-from unittest import TestCase
+from django.test import TestCase
+from unittest import TestCase as UnittestTestCase
 
 from tap_list_providers.base import fix_urls, BaseTapListProvider
 from beers.test.factories import ManufacturerFactory, StyleFactory
 from beers.models import Manufacturer, ManufacturerAlternateName
 
 
-class URLFixTestCase(TestCase):
+class URLFixTestCase(UnittestTestCase):
 
     def test_fix_urls(self):
         bad_data = {
@@ -45,6 +46,19 @@ class ManufacturerTestCase(TestCase):
         provider = BaseTapListProvider()
         looked_up = provider.get_manufacturer(name=mfg.name)
         self.assertEqual(looked_up, mfg)
+
+
+class TwitterHandleTestCase(TestCase):
+
+    def test_twitter_handle(self):
+        mfg = ManufacturerFactory(twitter_handle='abc123')
+        provider = BaseTapListProvider()
+        looked_up = provider.get_manufacturer(
+            name=mfg.name,
+            twitter_handle='https://twitter.com/foobar',
+        )
+        self.assertEqual(looked_up, mfg)
+        self.assertEqual(looked_up.twitter_handle, 'foobar')
 
 
 class StyleTestCase(TestCase):
