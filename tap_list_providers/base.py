@@ -169,7 +169,7 @@ class BaseTapListProvider():
             'get_beer(): name %s, mfg %s, defaults %s',
             name, manufacturer, defaults,
         )
-        mfg_name = manufacturer.name
+        mfg_name = manufacturer.name.replace('™', '').replace('®', '')
         for ending in COMMON_BREWERY_ENDINGS:
             if mfg_name.endswith(ending):
                 mfg_name = mfg_name.replace(ending, '').strip()
@@ -384,6 +384,8 @@ class BaseTapListProvider():
         return beer
 
     def get_manufacturer(self, name: str, **defaults) -> Manufacturer:
+        name = name.replace('™', '')
+        name = name.replace('®', '')
         name = ENDINGS_REGEX.sub('', name.strip()).strip()
         field_names = {i.name for i in Manufacturer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
