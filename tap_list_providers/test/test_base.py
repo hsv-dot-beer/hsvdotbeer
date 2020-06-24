@@ -83,3 +83,8 @@ class FixBeerNameTestCase(TestCase):
         provider = BaseTapListProvider()
         name = provider.reformat_beer_name('Hi-Wire / New Belgium Belgian Stout', 'Hi-Wire')
         self.assertEqual(name, 'Hi-Wire / New Belgium Belgian Stout')
+
+    def test_yazoo(self):
+        provider = BaseTapListProvider()
+        name = provider.reformat_beer_name('Yazoo Brewing Company Hefeweizen', 'Yazoo')
+        self.assertEqual(name, 'Hefeweizen')
