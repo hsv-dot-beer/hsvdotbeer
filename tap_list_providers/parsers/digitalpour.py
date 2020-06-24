@@ -173,6 +173,18 @@ class DigitalPourParser(BaseTapListProvider):
                 'rate_beer_url': b.get('RateBeerUrl'),
                 'manufacturer_url': b.get('BeerUrl'),
             }
+        elif 'CustomBeverage' in b['$type']:
+            beer = {
+                'name': b['BeverageName'],
+                'style': b['FullStyleName'],
+                'abv': b['Abv'],
+                'ibu': b.get('Ibu'),
+                'color': hex(b['StyleColor']),
+                'beer_advocate_url': b.get('BeerAdvocateUrl'),
+                'rate_beer_url': b.get('RateBeerUrl'),
+                'manufacturer_url': b.get('BeerUrl'),
+                'logo_url': b.get('LogoImageUrl') or b.get('ResolvedLogoImageUrl') or None,
+            }
         else:
             beer = {
                 'name': b['BeerName'],
@@ -193,6 +205,7 @@ class DigitalPourParser(BaseTapListProvider):
 
         styles = [
             'Cidery', 'Meadery', 'Winery', 'KombuchaMaker', 'Brewery', 'HardSeltzerMaker',
+            'Company',
         ]
         url = ''
         for style in styles:
