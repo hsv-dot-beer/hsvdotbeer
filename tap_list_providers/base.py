@@ -37,6 +37,9 @@ COMMON_BREWERY_ENDINGS = (
     'Beer',
     'Beer Co.',
     'Craft Brewery',
+    'Brewing Co',
+    'Beer Co',
+    'Brewing Company™',
 )
 
 REPLACE_TARGET = '\\.'
@@ -166,7 +169,7 @@ class BaseTapListProvider():
             'get_beer(): name %s, mfg %s, defaults %s',
             name, manufacturer, defaults,
         )
-        mfg_name = manufacturer.name
+        mfg_name = manufacturer.name.replace('™', '').replace('®', '')
         for ending in COMMON_BREWERY_ENDINGS:
             if mfg_name.endswith(ending):
                 mfg_name = mfg_name.replace(ending, '').strip()
@@ -380,7 +383,9 @@ class BaseTapListProvider():
                     raise
         return beer
 
-    def get_manufacturer(self, name, **defaults):
+    def get_manufacturer(self, name: str, **defaults) -> Manufacturer:
+        name = name.replace('™', '')
+        name = name.replace('®', '')
         name = ENDINGS_REGEX.sub('', name.strip()).strip()
         field_names = {i.name for i in Manufacturer._meta.fields}
         bogus_defaults = set(defaults).difference(field_names)
@@ -434,6 +439,12 @@ class BaseTapListProvider():
                     # don't touch name
                     continue
                 saved_value = getattr(manufacturer, field)
+                if field == 'twitter_handle':
+                    if value and '/' in value:
+                        if value.endswith('/'):
+                            value = value.split('/')[-2]
+                        else:
+                            value = value.split('/')[-1]
                 if saved_value != value:
                     setattr(manufacturer, field, value)
                     needs_update = True
