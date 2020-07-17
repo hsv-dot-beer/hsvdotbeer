@@ -5,11 +5,15 @@ ENV PYTHONUNBUFFERED 1
 RUN pip install pipenv
 
 # Adds our application code to the image
-COPY . code
-WORKDIR code
+COPY . /code
+WORKDIR /code
+
+RUN apt-get update && apt-get -y install memcached
 
 # install deps from Pipfile.lock
 RUN pipenv install
+
+RUN apt-get -y remove memcached
 
 EXPOSE 8000
 
