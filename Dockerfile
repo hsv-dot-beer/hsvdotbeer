@@ -8,12 +8,10 @@ RUN pip install pipenv
 COPY . /code
 WORKDIR /code
 
-RUN apt-get update && apt-get -y install memcached
+RUN apt-get update && apt-get -y install libmemcached
 
 # install deps from Pipfile.lock
 RUN pipenv install
-
-RUN apt-get -y remove memcached
 
 EXPOSE 8000
 
