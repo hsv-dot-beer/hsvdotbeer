@@ -123,6 +123,9 @@ class BaseTapListProvider():
         """Try to strip the manufacturer name if possible"""
         original_name = name.strip()
         name = name.replace(mfg_name, '').strip()
+        if name.startswith(COMMON_BREWERY_ENDINGS):
+            for ending in COMMON_BREWERY_ENDINGS:
+                name = name.replace(ending, '').strip()
         if name.startswith(tuple('/-_')):
             # it's likely a collaboration beer. Put the manufacturer back in there.
             name = original_name
