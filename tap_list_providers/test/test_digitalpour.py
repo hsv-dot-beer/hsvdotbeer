@@ -135,14 +135,16 @@ class CommandsTestCase(TestCase):
                 )
             self.assertEqual(
                 tap.beer.manufacturer.logo_url,
-                "https://s3.amazonaws.com/digitalpourproducerlogos/4f7de8502595f5153887e925.png",
+                "https://s3.amazonaws.com/digitalpourproducerlogos/"
+                "4f7de8502595f5153887e925.png",
             )
             tap = taps[1]
             # This one has a ResolvedLogoImageUrl but LogoImageUrl is null
             self.assertEqual(tap.beer.name, "POG Basement")
             self.assertEqual(
                 tap.beer.logo_url,
-                "https://s3.amazonaws.com/digitalpourproducerlogos/57ac9c3c5e002c172c8a6ede.jpg",
+                "https://s3.amazonaws.com/digitalpourproducerlogos/"
+                "57ac9c3c5e002c172c8a6ede.jpg",
             )
 
     def test_digital_pour_mead(self):

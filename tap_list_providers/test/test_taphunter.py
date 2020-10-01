@@ -78,7 +78,8 @@ class CommandsTestCase(TestCase):
             self.assertEqual(
                 tap.beer.logo_url,
                 "https://lh3.googleusercontent.com/Pd6YLv5-aHD6nkNnTZBA1VzjHgYkf"
-                "-Y7axHi0d6EvSOlV-0OEbI4FIn7CHssVtuFN4l7FzKZztU_X_c8rgAclWlEylvCvqs=s150",
+                "-Y7axHi0d6EvSOlV-0OEbI4FIn7CHssVtuFN4l7FzKZztU_X_c8rgAclWlEylvCvqs"
+                "=s150",
             )
             self.assertEqual(
                 tap.beer.taphunter_url,

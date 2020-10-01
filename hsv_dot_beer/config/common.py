@@ -111,7 +111,8 @@ class Common(Configuration):
     # https://docs.djangoproject.com/en/2.0/topics/auth/passwords/#module-django.contrib.auth.password_validation
     AUTH_PASSWORD_VALIDATORS = [
         {
-            "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+            "NAME": "django.contrib.auth.password_validation."
+            "UserAttributeSimilarityValidator",
         },
         {
             "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
@@ -134,7 +135,8 @@ class Common(Configuration):
                 "format": "[%(server_time)s] %(message)s",
             },
             "verbose": {
-                "format": "%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"
+                "format": "%(levelname)s %(asctime)s %(module)s "
+                "%(process)d %(thread)d %(message)s"
             },
             "simple": {"format": "%(levelname)s %(message)s"},
         },

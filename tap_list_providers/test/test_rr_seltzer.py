@@ -59,8 +59,8 @@ class RRSeltzerTestCase(TestCase):
             opts = {}
             call_command("parsedigitalpour", *args, **opts)
             self.assertEqual(Beer.objects.count(), 20, list(Beer.objects.all()))
-            # They also have Ace Pineapple Cider on tap, which is an interesting end run around
-            # the law
+            # They also have Ace Pineapple Cider on tap, which is an interesting
+            # end run around the law
             self.assertEqual(
                 Manufacturer.objects.count(), 2, list(Manufacturer.objects.all())
             )

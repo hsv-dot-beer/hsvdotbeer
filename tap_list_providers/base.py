@@ -328,8 +328,8 @@ class BaseTapListProvider:
                         for target, provider in PROVIDER_BREWERY_LOGO_STRINGS.items():
                             if target in value:
                                 LOG.info(
-                                    "Not overwriting logo for beer %s (%s) with brewery logo"
-                                    " from %s",
+                                    "Not overwriting logo for beer %s (%s)"
+                                    " with brewery logo from %s",
                                     beer,
                                     beer.logo_url,
                                     provider,
