@@ -5,33 +5,36 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    replaces = [('beers', '0025_auto_20190409_0145'), ('beers', '0026_auto_20190409_0146')]
+    replaces = [
+        ("beers", "0025_auto_20190409_0145"),
+        ("beers", "0026_auto_20190409_0146"),
+    ]
 
     dependencies = [
-        ('beers', '0024_populate_styles'),
+        ("beers", "0024_populate_styles"),
     ]
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='beerstylecategory',
+            name="beerstylecategory",
             unique_together=None,
         ),
         migrations.RemoveField(
-            model_name='beer',
-            name='style',
+            model_name="beer",
+            name="style",
         ),
         migrations.DeleteModel(
-            name='BeerStyle',
+            name="BeerStyle",
         ),
         migrations.DeleteModel(
-            name='BeerStyleCategory',
+            name="BeerStyleCategory",
         ),
         migrations.DeleteModel(
-            name='BeerStyleTag',
+            name="BeerStyleTag",
         ),
         migrations.RenameField(
-            model_name='beer',
-            old_name='new_style',
-            new_name='style',
+            model_name="beer",
+            old_name="new_style",
+            new_name="style",
         ),
     ]

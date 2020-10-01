@@ -14,23 +14,25 @@ from hsv_dot_beer.config.local import BASE_DIR
 
 
 class CommandsTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.venue = VenueFactory(
-            tap_list_provider=DigitalPourParser.provider_name)
+        cls.venue = VenueFactory(tap_list_provider=DigitalPourParser.provider_name)
         cls.venue_cfg = VenueAPIConfiguration.objects.create(
-            venue=cls.venue, url='https://localhost:8000',
+            venue=cls.venue,
+            url="https://localhost:8000",
             digital_pour_venue_id=12345,
             digital_pour_location_number=1,
         )
-        with open(os.path.join(
-            os.path.dirname(BASE_DIR),
-            'tap_list_providers',
-            'example_data',
-            'otbx_kombucha_wine.json',
-        ), 'rb') as json_file:
+        with open(
+            os.path.join(
+                os.path.dirname(BASE_DIR),
+                "tap_list_providers",
+                "example_data",
+                "otbx_kombucha_wine.json",
+            ),
+            "rb",
+        ) as json_file:
             cls.json_data = json.loads(json_file.read())
 
     @responses.activate
@@ -54,19 +56,24 @@ class CommandsTestCase(TestCase):
             # running twice to make sure we're not double-creating
             args = []
             opts = {}
-            call_command('parsedigitalpour', *args, **opts)
+            call_command("parsedigitalpour", *args, **opts)
             self.assertEqual(Beer.objects.count(), 2, list(Beer.objects.all()))
             self.assertEqual(Manufacturer.objects.count(), 2)
             self.assertEqual(Tap.objects.count(), 2)
-            taps = Tap.objects.filter(
-                venue=self.venue, tap_number__in=[3, 4],
-            ).select_related(
-                'beer__style',
-            ).order_by('tap_number')
+            taps = (
+                Tap.objects.filter(
+                    venue=self.venue,
+                    tap_number__in=[3, 4],
+                )
+                .select_related(
+                    "beer__style",
+                )
+                .order_by("tap_number")
+            )
             tap = taps[1]
-            self.assertEqual(tap.beer.name, 'Fig')
-            self.assertEqual('Kombucha w/ Figs', tap.beer.style.name)
+            self.assertEqual(tap.beer.name, "Fig")
+            self.assertEqual("Kombucha w/ Figs", tap.beer.style.name)
             self.assertEqual(tap.beer.manufacturer.url, "http://www.betterkombucha.com")
             tap = taps[0]
-            self.assertEqual(tap.beer.name, 'Rose')
+            self.assertEqual(tap.beer.name, "Rose")
             self.assertEqual(tap.beer.style.name, "Syrah, Grenache")

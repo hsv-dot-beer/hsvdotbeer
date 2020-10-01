@@ -7,18 +7,18 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('taps', '0002_tap_beer'),
+        ("taps", "0002_tap_beer"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='tap',
-            name='time_added',
+            model_name="tap",
+            name="time_added",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
         migrations.AddField(
-            model_name='tap',
-            name='time_updated',
+            model_name="tap",
+            name="time_updated",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
     ]

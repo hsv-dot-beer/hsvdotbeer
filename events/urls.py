@@ -6,9 +6,9 @@ from . import views
 
 router = DefaultRouter()
 
-router.register(r'', views.EventViewSet)
+router.register(r"", views.EventViewSet)
 
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path("", include(router.urls)),
 ]

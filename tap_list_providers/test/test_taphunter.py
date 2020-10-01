@@ -15,22 +15,24 @@ from hsv_dot_beer.config.local import BASE_DIR
 
 
 class CommandsTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.venue = VenueFactory(
-            tap_list_provider=TaphunterParser.provider_name)
+        cls.venue = VenueFactory(tap_list_provider=TaphunterParser.provider_name)
         cls.venue_cfg = VenueAPIConfiguration.objects.create(
-            venue=cls.venue, url='https://localhost:8000',
+            venue=cls.venue,
+            url="https://localhost:8000",
             taphunter_location=12345,
         )
-        with open(os.path.join(
-            os.path.dirname(BASE_DIR),
-            'tap_list_providers',
-            'example_data',
-            'liquor_express.json',
-        ), 'rb') as json_file:
+        with open(
+            os.path.join(
+                os.path.dirname(BASE_DIR),
+                "tap_list_providers",
+                "example_data",
+                "liquor_express.json",
+            ),
+            "rb",
+        ) as json_file:
             cls.json_data = json_file.read()
 
     @responses.activate
@@ -38,9 +40,7 @@ class CommandsTestCase(TestCase):
         """Test parsing the JSON data"""
         responses.add(
             responses.GET,
-            TaphunterParser.URL.format(
-                self.venue_cfg.taphunter_location
-            ),
+            TaphunterParser.URL.format(self.venue_cfg.taphunter_location),
             body=self.json_data,
             status=200,
         )
@@ -52,20 +52,28 @@ class CommandsTestCase(TestCase):
             # running twice to make sure we're not double-creating
             args = []
             opts = {}
-            call_command('parsetaphunter', *args, **opts)
+            call_command("parsetaphunter", *args, **opts)
 
             self.assertEqual(Beer.objects.count(), 93)
             self.assertEqual(Manufacturer.objects.count(), 52)
             self.assertEqual(Tap.objects.count(), 93)
-            taps = Tap.objects.filter(
-                venue=self.venue, tap_number__in=[6, 22],
-            ).select_related(
-                'beer__style', 'beer__manufacturer',
-            ).order_by('tap_number')
+            taps = (
+                Tap.objects.filter(
+                    venue=self.venue,
+                    tap_number__in=[6, 22],
+                )
+                .select_related(
+                    "beer__style",
+                    "beer__manufacturer",
+                )
+                .order_by("tap_number")
+            )
             tap = taps[0]
-            self.assertEqual(tap.beer.name, 'Crisp Apple Cider', tap.beer)
+            self.assertEqual(tap.beer.name, "Crisp Apple Cider", tap.beer)
             self.assertEqual(
-                tap.beer.manufacturer.name, 'Angry Orchard Cidery', tap.beer.manufacturer,
+                tap.beer.manufacturer.name,
+                "Angry Orchard Cidery",
+                tap.beer.manufacturer,
             )
             self.assertEqual(
                 tap.beer.logo_url,
@@ -84,13 +92,12 @@ class CommandsTestCase(TestCase):
             )
             self.assertEqual(
                 tap.beer.manufacturer.taphunter_url,
-                'https://www.taphunter.com/brewery/angry-orchard-cidery/'
-                '35527549',
+                "https://www.taphunter.com/brewery/angry-orchard-cidery/" "35527549",
             )
             tap = taps[1]
             self.assertEqual(tap.beer.name, "Bound By Time")
-            self.assertEqual(tap.beer.abv, Decimal('7.00'))
-            self.assertEqual(tap.gas_type, '')
+            self.assertEqual(tap.beer.abv, Decimal("7.00"))
+            self.assertEqual(tap.gas_type, "")
             self.assertEqual(
                 tap.beer.logo_url,
                 "https://lh3.googleusercontent.com/"
@@ -102,7 +109,9 @@ class CommandsTestCase(TestCase):
                 Decimal(16): Decimal(7.99),
                 Decimal(32): Decimal(9.59),
             }
-            price_instances = list(tap.beer.prices.select_related('serving_size', 'venue'))
+            price_instances = list(
+                tap.beer.prices.select_related("serving_size", "venue")
+            )
             self.assertEqual(
                 len(price_instances),
                 len(prices),
@@ -110,7 +119,9 @@ class CommandsTestCase(TestCase):
             )
             for price_instance in price_instances:
                 self.assertEqual(price_instance.venue, self.venue, price_instance)
-                self.assertIn(price_instance.serving_size.volume_oz, prices, price_instance)
+                self.assertIn(
+                    price_instance.serving_size.volume_oz, prices, price_instance
+                )
                 # because DigitalPour passes prices as floats, we will have
                 # floating-point errors in test. These won't show in production
                 # because the database rounds for us

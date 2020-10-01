@@ -6,12 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0033_auto_20200124_2044'),
+        ("beers", "0033_auto_20200124_2044"),
     ]
 
     operations = [
         migrations.AddConstraint(
-            model_name='beer',
-            constraint=models.CheckConstraint(check=models.Q(models.Q(('color_srm__gte', 1), ('color_srm__lte', 500)), ('color_srm__isnull', True), _connector='OR'), name='srm_not_unrealistic'),
+            model_name="beer",
+            constraint=models.CheckConstraint(
+                check=models.Q(
+                    models.Q(("color_srm__gte", 1), ("color_srm__lte", 500)),
+                    ("color_srm__isnull", True),
+                    _connector="OR",
+                ),
+                name="srm_not_unrealistic",
+            ),
         ),
     ]

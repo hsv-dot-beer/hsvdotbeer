@@ -6,17 +6,17 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('venues', '0009_venue_untappd_url'),
-        ('taps', '0005_move_taps_to_venue'),
+        ("venues", "0009_venue_untappd_url"),
+        ("taps", "0005_move_taps_to_venue"),
     ]
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='tap',
-            unique_together={('venue', 'tap_number')},
+            name="tap",
+            unique_together={("venue", "tap_number")},
         ),
         migrations.RemoveField(
-            model_name='tap',
-            name='room',
+            model_name="tap",
+            name="room",
         ),
     ]

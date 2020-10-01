@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0013_auto_20190217_2242'),
+        ("beers", "0013_auto_20190217_2242"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='beer',
-            name='taphunter_url',
+            model_name="beer",
+            name="taphunter_url",
             field=models.URLField(blank=True, null=True, unique=True),
         ),
         migrations.AddField(
-            model_name='manufacturer',
-            name='taphunter_url',
+            model_name="manufacturer",
+            name="taphunter_url",
             field=models.URLField(blank=True, null=True, unique=True),
         ),
     ]

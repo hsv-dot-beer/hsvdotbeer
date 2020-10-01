@@ -1,4 +1,3 @@
-
 import datetime
 
 import factory
@@ -12,7 +11,7 @@ from venues.test.factories import VenueFactory
 class EventFactory(factory.django.DjangoModelFactory):
 
     venue = factory.SubFactory(VenueFactory)
-    title = factory.Sequence(lambda n: f'event {n}')
+    title = factory.Sequence(lambda n: f"event {n}")
     description = FuzzyText(length=100)
     host = FuzzyText(length=20)
     # any time before now

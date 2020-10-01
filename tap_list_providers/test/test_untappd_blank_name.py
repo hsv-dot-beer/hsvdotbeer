@@ -9,7 +9,7 @@ from tap_list_providers.parsers.untappd import UntappdParser
 
 class UntappdBlankNameTestCase(TestCase):
     def setUp(self):
-        html = '''
+        html = """
             <div class="item-bg-color menu-item clearfix">
                   <div class="beer">
                    <div class="label-image-hideable beer-label pull-left">
@@ -90,11 +90,11 @@ class UntappdBlankNameTestCase(TestCase):
                    </div>
                   </div>
                  </div>
-        '''   # noqa
-        self.tap = BeautifulSoup(html, 'lxml')
+        """  # noqa
+        self.tap = BeautifulSoup(html, "lxml")
 
     def test_reissdorf_kolsch(self):
         parser = UntappdParser()
         result = parser.parse_tap(self.tap)
         self.assertIsInstance(result, dict)
-        self.assertEqual(result['beer']['name'], 'Reissdorf', result)
+        self.assertEqual(result["beer"]["name"], "Reissdorf", result)

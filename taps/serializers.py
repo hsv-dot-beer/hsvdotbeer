@@ -11,11 +11,16 @@ from . import models
 
 class TapSerializer(serializers.ModelSerializer):
     venue_id = serializers.PrimaryKeyRelatedField(
-        write_only=True, allow_null=False, required=True,
+        write_only=True,
+        allow_null=False,
+        required=True,
         queryset=Venue.objects.all(),
     )
     estimated_percent_remaining = serializers.FloatField(
-        min_value=0, max_value=100, allow_null=True, required=False,
+        min_value=0,
+        max_value=100,
+        allow_null=True,
+        required=False,
     )
     venue = VenueSerializer(read_only=True)
     time_added = serializers.DateTimeField(read_only=True)
@@ -27,17 +32,17 @@ class TapSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         try:
-            data['venue'] = data.pop('venue_id')
+            data["venue"] = data.pop("venue_id")
         except KeyError:
             pass
         return data
 
     class Meta:
-        fields = '__all__'
+        fields = "__all__"
         model = models.Tap
         validators = [
             UniqueTogetherValidator(
                 queryset=models.Tap.objects.all(),
-                fields=('tap_number', 'venue_id'),
+                fields=("tap_number", "venue_id"),
             ),
         ]
