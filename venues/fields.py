@@ -9,16 +9,15 @@ import pytz
 
 
 class TimeZoneField(CharField):
-
     def to_internal_value(self, value):
         if value:
             try:
                 return pytz.timezone(value)
             except pytz.UnknownTimeZoneError:
-                raise ValidationError(f'Unknown time zone {value}')
-        return ''
+                raise ValidationError(f"Unknown time zone {value}")
+        return ""
 
     def to_representation(self, value):
         if value:
             return value.zone
-        return ''
+        return ""

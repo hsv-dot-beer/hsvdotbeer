@@ -4,29 +4,29 @@ from django.db import migrations, models
 
 
 def set_beers_tweeted_about(apps, schema_editors):
-    beer_model = apps.get_model('beers.Beer')
+    beer_model = apps.get_model("beers.Beer")
     beer_model.objects.update(tweeted_about=True)
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0030_auto_20190807_2142'),
+        ("beers", "0030_auto_20190807_2142"),
     ]
 
     operations = [
         # create the field as nullable
         migrations.AddField(
-            model_name='beer',
-            name='tweeted_about',
+            model_name="beer",
+            name="tweeted_about",
             field=models.NullBooleanField(),
         ),
         # then mark all existing beers as having been tweeted_about
         migrations.RunPython(set_beers_tweeted_about, migrations.RunPython.noop),
         # then change the default to False for new beers and set not nullable
         migrations.AlterField(
-            model_name='beer',
-            name='tweeted_about',
+            model_name="beer",
+            name="tweeted_about",
             field=models.BooleanField(default=False, db_index=True),
         ),
     ]

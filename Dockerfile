@@ -1,12 +1,14 @@
-FROM python:3.7
+FROM python:3.8
 ENV PYTHONUNBUFFERED 1
 
 # Allows docker to cache installed dependencies between builds
 RUN pip install pipenv
 
 # Adds our application code to the image
-COPY . code
-WORKDIR code
+COPY . /code
+WORKDIR /code
+
+RUN apt-get update && apt-get -y install libmemcached-dev
 
 # install deps from Pipfile.lock
 RUN pipenv install

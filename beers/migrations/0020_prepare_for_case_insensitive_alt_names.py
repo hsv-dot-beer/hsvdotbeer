@@ -4,44 +4,47 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     def merge_case_matching_alt_beers(apps, schema_editor):
-        beer_alt_name_model = apps.get_model('beers.BeerAlternateName')
+        beer_alt_name_model = apps.get_model("beers.BeerAlternateName")
         names = set()
-        for alt_name in beer_alt_name_model.objects.select_related('beer'):
+        for alt_name in beer_alt_name_model.objects.select_related("beer"):
             lookup = alt_name.name.casefold()
             if lookup in names:
                 # just keep the first one we find
                 print(
-                    f'Dropping duplicate alternate beer name {alt_name.name}'
-                    f' for {alt_name.beer.name}')
+                    f"Dropping duplicate alternate beer name {alt_name.name}"
+                    f" for {alt_name.beer.name}"
+                )
                 alt_name.delete()
             else:
                 names.add(lookup)
 
     def merge_case_matching_alt_mfgs(apps, schema_editor):
-        mfg_alt_name_model = apps.get_model('beers.ManufacturerAlternateName')
+        mfg_alt_name_model = apps.get_model("beers.ManufacturerAlternateName")
         names = set()
-        for alt_name in mfg_alt_name_model.objects.select_related('manufacturer'):
+        for alt_name in mfg_alt_name_model.objects.select_related("manufacturer"):
             lookup = alt_name.name.casefold()
             if lookup in names:
                 # just keep the first one we find
                 print(
-                    f'Dropping duplicate alternate mfg name {alt_name.name}'
-                    f' for {alt_name.manufacturer.name}')
+                    f"Dropping duplicate alternate mfg name {alt_name.name}"
+                    f" for {alt_name.manufacturer.name}"
+                )
                 alt_name.delete()
             else:
                 names.add(lookup)
 
     dependencies = [
-        ('beers', '0019_auto_20190328_2028'),
+        ("beers", "0019_auto_20190328_2028"),
     ]
 
     operations = [
         migrations.RunPython(
-            merge_case_matching_alt_mfgs, migrations.RunPython.noop,
+            merge_case_matching_alt_mfgs,
+            migrations.RunPython.noop,
         ),
         migrations.RunPython(
-            merge_case_matching_alt_beers, migrations.RunPython.noop,
+            merge_case_matching_alt_beers,
+            migrations.RunPython.noop,
         ),
     ]

@@ -5,11 +5,11 @@ on:
 name: Dev Build
 jobs:
     lint-python:
-        name: flake8
+        name: Check code style
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
-            - name: Run flake8
+            - name: Run flake8 & black
               uses: ./.github/actions/lint
     test-www:
         name: Python tests

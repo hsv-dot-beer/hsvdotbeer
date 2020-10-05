@@ -7,18 +7,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('venues', '0007_venueapiconfiguration_taphunter_location'),
+        ("venues", "0007_venueapiconfiguration_taphunter_location"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='venueapiconfiguration',
-            name='untappd_categories',
-            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=50), blank=True, default=list, null=True, size=None),
+            model_name="venueapiconfiguration",
+            name="untappd_categories",
+            field=django.contrib.postgres.fields.ArrayField(
+                base_field=models.CharField(max_length=50),
+                blank=True,
+                default=list,
+                null=True,
+                size=None,
+            ),
         ),
         migrations.AlterField(
-            model_name='venueapiconfiguration',
-            name='url',
+            model_name="venueapiconfiguration",
+            name="url",
             field=models.URLField(blank=True, null=True),
         ),
     ]

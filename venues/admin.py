@@ -8,8 +8,8 @@ class VenueAdmin(admin.ModelAdmin):
 
 
 class VenueAPIConfigurationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'venue')
-    list_select_related = ('venue', )
+    list_display = ("id", "venue")
+    list_select_related = ("venue",)
 
 
 admin.site.register(models.Venue, VenueAdmin)

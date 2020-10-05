@@ -5,9 +5,9 @@ from . import views
 
 router = DefaultRouter()
 
-router.register(r'manufacturers', views.ManufacturerViewSet)
-router.register(r'', views.BeerViewSet)
+router.register(r"manufacturers", views.ManufacturerViewSet)
+router.register(r"", views.BeerViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path("", include(router.urls)),
 ]

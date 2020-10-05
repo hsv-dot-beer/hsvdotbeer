@@ -7,18 +7,22 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0027_add_alt_innerspace_names'),
+        ("beers", "0027_add_alt_innerspace_names"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='beer',
-            name='time_first_seen',
-            field=models.DateTimeField(blank=True, default=django.utils.timezone.now, null=True),
+            model_name="beer",
+            name="time_first_seen",
+            field=models.DateTimeField(
+                blank=True, default=django.utils.timezone.now, null=True
+            ),
         ),
         migrations.AddField(
-            model_name='manufacturer',
-            name='time_first_seen',
-            field=models.DateTimeField(blank=True, default=django.utils.timezone.now, null=True),
+            model_name="manufacturer",
+            name="time_first_seen",
+            field=models.DateTimeField(
+                blank=True, default=django.utils.timezone.now, null=True
+            ),
         ),
     ]

@@ -15,24 +15,32 @@ from hsv_dot_beer.config.local import BASE_DIR
 
 
 class CommandsTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.venue = VenueFactory(
-            tap_list_provider=UntappdParser.provider_name)
+        cls.venue = VenueFactory(tap_list_provider=UntappdParser.provider_name)
         cls.venue_cfg = VenueAPIConfiguration.objects.create(
-            venue=cls.venue, url='https://localhost:8000',
+            venue=cls.venue,
+            url="https://localhost:8000",
             untappd_location=12345,
             untappd_theme=55242,
-            untappd_categories=['Left Wall', 'Back Wall', 'Right Wall', 'Trailer', 'On Deck'],
+            untappd_categories=[
+                "Left Wall",
+                "Back Wall",
+                "Right Wall",
+                "Trailer",
+                "On Deck",
+            ],
         )
-        with open(os.path.join(
-            os.path.dirname(BASE_DIR),
-            'tap_list_providers',
-            'example_data',
-            'von_brewski.js',
-        ), 'rb') as js_file:
+        with open(
+            os.path.join(
+                os.path.dirname(BASE_DIR),
+                "tap_list_providers",
+                "example_data",
+                "von_brewski.js",
+            ),
+            "rb",
+        ) as js_file:
             cls.js_data = js_file.read()
 
     @responses.activate
@@ -55,24 +63,29 @@ class CommandsTestCase(TestCase):
             # running twice to make sure we're not double-creating
             args = []
             opts = {}
-            call_command('parseuntappd', *args, **opts)
+            call_command("parseuntappd", *args, **opts)
 
             self.assertEqual(Beer.objects.count(), 177)
             self.assertEqual(Manufacturer.objects.count(), 63)
             self.assertEqual(Tap.objects.count(), 177)
-            tap = Tap.objects.filter(
-                venue=self.venue, tap_number=21,
-            ).select_related(
-                'beer__style',
-            ).get()
+            tap = (
+                Tap.objects.filter(
+                    venue=self.venue,
+                    tap_number=21,
+                )
+                .select_related(
+                    "beer__style",
+                )
+                .get()
+            )
             self.assertEqual(tap.beer.name, "30A Beach Blonde Ale")
-            self.assertEqual(tap.beer.abv, Decimal('4.6'))
+            self.assertEqual(tap.beer.abv, Decimal("4.6"))
             self.assertEqual(tap.beer.ibu, 13)
-            self.assertEqual(tap.gas_type, '')
-            self.assertEqual(tap.beer.manufacturer.name, 'Grayton')
+            self.assertEqual(tap.gas_type, "")
+            self.assertEqual(tap.beer.manufacturer.name, "Grayton")
             # NOTE I can't test for an exact match due to a bug in responses.
             # The real style parsing works though.
-            self.assertIn('Blonde Ale', tap.beer.style.name)
+            self.assertIn("Blonde Ale", tap.beer.style.name)
             self.assertIsNone(tap.beer.untappd_url)
             self.assertIsNone(tap.beer.manufacturer.untappd_url)
             self.assertIsNone(tap.beer.logo_url)

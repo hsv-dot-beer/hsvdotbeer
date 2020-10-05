@@ -11,41 +11,40 @@ LOG = logging.getLogger(name=__name__)
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0017_untappdmetadata'),
+        ("beers", "0017_untappdmetadata"),
     ]
 
     def merge_case_matching_beers(apps, schema_editor):
-        beer_model = apps.get_model('beers.Beer')
-        beers = beer_model.objects.all().prefetch_related('taps').select_related(
-            'manufacturer'
+        beer_model = apps.get_model("beers.Beer")
+        beers = (
+            beer_model.objects.all()
+            .prefetch_related("taps")
+            .select_related("manufacturer")
         )
         if not beers.exists():
             return
         beer_dict = {}
         for beer in beers:
             try:
-                beer_dict[(beer.manufacturer_id, beer.name.casefold())].append(
-                    beer
-                )
+                beer_dict[(beer.manufacturer_id, beer.name.casefold())].append(beer)
             except KeyError:
-                beer_dict[(beer.manufacturer_id, beer.name.casefold())] = [
-                    beer
-                ]
+                beer_dict[(beer.manufacturer_id, beer.name.casefold())] = [beer]
         for (mfg_pk, ci_name), beer_list in beer_dict.items():
             if len(beer_list) == 1:
                 # no duplicate!
                 continue
             # sort the beer list by number of occupied taps for simplicity
             beer_list = sorted(
-                beer_list, key=lambda beer: len(beer.taps.all()), reverse=True)
+                beer_list, key=lambda beer: len(beer.taps.all()), reverse=True
+            )
             kept = beer_list[0]
             for beer in beer_list[1:]:
-                print('merging %s into %s' % (beer.name, kept.name))
+                print("merging %s into %s" % (beer.name, kept.name))
                 merge_beer(kept, beer)
 
     def merge_case_matching_mfgs(apps, schema_editor):
-        mfg_model = apps.get_model('beers.Manufacturer')
-        mfgs = mfg_model.objects.all().prefetch_related('beers')
+        mfg_model = apps.get_model("beers.Manufacturer")
+        mfgs = mfg_model.objects.all().prefetch_related("beers")
         if not mfgs.exists():
             return
         mfg_dict = {}
@@ -60,26 +59,29 @@ class Migration(migrations.Migration):
                 continue
             # sort the beer list by number of beers for simplicity
             mfg_list = sorted(
-                mfg_list, key=lambda mfg: len(mfg.beers.all()), reverse=True)
+                mfg_list, key=lambda mfg: len(mfg.beers.all()), reverse=True
+            )
             kept = mfg_list[0]
             for mfg in mfg_list[1:]:
-                print('merging mfg %s into %s' % (mfg.name, kept.name))
+                print("merging mfg %s into %s" % (mfg.name, kept.name))
                 merge_mfg(kept, mfg)
 
     operations = [
         # 1. enable case-insensitive extension
         CITextExtension(),
         migrations.RunPython(
-            merge_case_matching_beers, migrations.RunPython.noop,
+            merge_case_matching_beers,
+            migrations.RunPython.noop,
         ),
         migrations.RunPython(
-            merge_case_matching_mfgs, migrations.RunPython.noop,
+            merge_case_matching_mfgs,
+            migrations.RunPython.noop,
         ),
     ]
 
 
 def merge_beer(kept_beer, other):
-    LOG.info('merging %s into %s', other, kept_beer)
+    LOG.info("merging %s into %s", other, kept_beer)
     with transaction.atomic():
         for tap in other.taps.all():
             tap.beer = kept_beer
@@ -88,8 +90,10 @@ def merge_beer(kept_beer, other):
             alternate_name.beer = kept_beer
             alternate_name.save()
         excluded_fields = {
-            'name' 'in_production', 'automatic_updates_blocked',
-            'manufacturer', 'id',
+            "name" "in_production",
+            "automatic_updates_blocked",
+            "manufacturer",
+            "id",
         }
         for field in kept_beer._meta.fields:
             field_name = field.name
@@ -113,7 +117,7 @@ def merge_beer(kept_beer, other):
 
 
 def merge_mfg(kept, other):
-    LOG.info('merging %s into %s', other, kept)
+    LOG.info("merging %s into %s", other, kept)
     with transaction.atomic():
         other_beers = list(other.beers.all())
         my_beers = {i.name.casefold(): i for i in kept.beers.all()}
@@ -131,7 +135,9 @@ def merge_mfg(kept, other):
                 beer.save()
 
         excluded_fields = {
-            'name', 'automatic_updates_blocked', 'id',
+            "name",
+            "automatic_updates_blocked",
+            "id",
         }
         for field in kept._meta.fields:
             field_name = field.name

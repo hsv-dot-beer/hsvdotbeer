@@ -7,33 +7,35 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('venues', '0005_auto_20181206_0227'),
+        ("venues", "0005_auto_20181206_0227"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='venueapiconfiguration',
-            name='digital_pour_location_number',
+            model_name="venueapiconfiguration",
+            name="digital_pour_location_number",
             field=models.PositiveSmallIntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='venueapiconfiguration',
-            name='digital_pour_venue_id',
+            model_name="venueapiconfiguration",
+            name="digital_pour_venue_id",
             field=models.CharField(blank=True, max_length=50),
         ),
         migrations.AddField(
-            model_name='venueapiconfiguration',
-            name='untappd_categories',
-            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=50), default=list, size=None),
+            model_name="venueapiconfiguration",
+            name="untappd_categories",
+            field=django.contrib.postgres.fields.ArrayField(
+                base_field=models.CharField(max_length=50), default=list, size=None
+            ),
         ),
         migrations.AddField(
-            model_name='venueapiconfiguration',
-            name='untappd_location',
+            model_name="venueapiconfiguration",
+            name="untappd_location",
             field=models.PositiveIntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='venueapiconfiguration',
-            name='untappd_theme',
+            model_name="venueapiconfiguration",
+            name="untappd_theme",
             field=models.PositiveIntegerField(blank=True, null=True),
         ),
     ]

@@ -14,23 +14,25 @@ from hsv_dot_beer.config.local import BASE_DIR
 
 
 class CommandsTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.venue = VenueFactory(
-            tap_list_provider=TaphunterParser.provider_name)
+        cls.venue = VenueFactory(tap_list_provider=TaphunterParser.provider_name)
         cls.venue_cfg = VenueAPIConfiguration.objects.create(
-            venue=cls.venue, url='https://localhost:8000',
+            venue=cls.venue,
+            url="https://localhost:8000",
             taphunter_location=12345,
-            taphunter_excluded_lists=['Kegs to Go'],
+            taphunter_excluded_lists=["Kegs to Go"],
         )
-        with open(os.path.join(
-            os.path.dirname(BASE_DIR),
-            'tap_list_providers',
-            'example_data',
-            'wagon_wheel.json',
-        ), 'rb') as json_file:
+        with open(
+            os.path.join(
+                os.path.dirname(BASE_DIR),
+                "tap_list_providers",
+                "example_data",
+                "wagon_wheel.json",
+            ),
+            "rb",
+        ) as json_file:
             cls.json_data = json_file.read()
 
     @responses.activate
@@ -38,9 +40,7 @@ class CommandsTestCase(TestCase):
         """Test parsing the JSON data"""
         responses.add(
             responses.GET,
-            TaphunterParser.URL.format(
-                self.venue_cfg.taphunter_location
-            ),
+            TaphunterParser.URL.format(self.venue_cfg.taphunter_location),
             body=self.json_data,
             status=200,
         )
@@ -52,7 +52,7 @@ class CommandsTestCase(TestCase):
             # running twice to make sure we're not double-creating
             args = []
             opts = {}
-            call_command('parsetaphunter', *args, **opts)
+            call_command("parsetaphunter", *args, **opts)
             # there are 31 beers in the growler list and 8 in the keg list
             self.assertEqual(Beer.objects.count(), 31)
             # all the rest of the tests are handled by test_taphunter.py

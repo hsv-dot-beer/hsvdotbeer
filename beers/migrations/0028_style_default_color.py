@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0027_add_alt_innerspace_names'),
+        ("beers", "0027_add_alt_innerspace_names"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='style',
-            name='default_color',
-            field=models.CharField(blank=True, max_length=9, verbose_name='HTML color (in hex) to use if the beer has no known color'),
+            model_name="style",
+            name="default_color",
+            field=models.CharField(
+                blank=True,
+                max_length=9,
+                verbose_name="HTML color (in hex) to use if the beer has no known color",
+            ),
         ),
     ]

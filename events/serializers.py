@@ -8,29 +8,33 @@ from . import models
 class EventSerializer(serializers.ModelSerializer):
     venue = VenueSerializer(read_only=True)
     venue_id = serializers.PrimaryKeyRelatedField(
-        write_only=True, required=True, allow_null=False,
+        write_only=True,
+        required=True,
+        allow_null=False,
         queryset=Venue.objects.all(),
     )
 
     def validate(self, data):
         try:
-            start = data['start_time']
-            end = data['end_time']
+            start = data["start_time"]
+            end = data["end_time"]
         except KeyError:
             # must be in a patch; don't care
             pass
         else:
             if start >= end:
-                raise serializers.ValidationError({
-                    'start_time': [
-                        'This must be before end_time',
-                    ],
-                    'end_time': [
-                        'This must be after start_time',
-                    ]
-                })
+                raise serializers.ValidationError(
+                    {
+                        "start_time": [
+                            "This must be before end_time",
+                        ],
+                        "end_time": [
+                            "This must be after start_time",
+                        ],
+                    }
+                )
         try:
-            data['venue'] = data.pop('venue_id')
+            data["venue"] = data.pop("venue_id")
         except KeyError:
             # must be in a patch; don't care
             pass
@@ -38,4 +42,4 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Event
-        fields = '__all__'
+        fields = "__all__"

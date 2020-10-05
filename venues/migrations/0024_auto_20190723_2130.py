@@ -6,18 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('venues', '0023_auto_20190723_0226'),
+        ("venues", "0023_auto_20190723_0226"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='venue',
-            name='latitude',
-            field=models.DecimalField(blank=True, decimal_places=8, max_digits=10, null=True),
+            model_name="venue",
+            name="latitude",
+            field=models.DecimalField(
+                blank=True, decimal_places=8, max_digits=10, null=True
+            ),
         ),
         migrations.AddField(
-            model_name='venue',
-            name='longitude',
-            field=models.DecimalField(blank=True, decimal_places=8, max_digits=11, null=True),
+            model_name="venue",
+            name="longitude",
+            field=models.DecimalField(
+                blank=True, decimal_places=8, max_digits=11, null=True
+            ),
         ),
     ]
