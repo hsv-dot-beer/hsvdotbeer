@@ -6,21 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0001_initial'),
+        ("beers", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='beerstyletag',
-            name='tag',
+            model_name="beerstyletag",
+            name="tag",
             field=models.CharField(max_length=50, unique=True),
         ),
         migrations.AlterUniqueTogether(
-            name='beerstyle',
-            unique_together={('category', 'subcategory')},
+            name="beerstyle",
+            unique_together={("category", "subcategory")},
         ),
         migrations.AlterUniqueTogether(
-            name='beerstylecategory',
-            unique_together={('category_id', 'revision', 'bjcp_class')},
+            name="beerstylecategory",
+            unique_together={("category_id", "revision", "bjcp_class")},
         ),
     ]

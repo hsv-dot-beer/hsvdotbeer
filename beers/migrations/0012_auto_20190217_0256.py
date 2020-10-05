@@ -6,22 +6,27 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0011_auto_20190215_0212'),
+        ("beers", "0011_auto_20190215_0212"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='beer',
-            name='beer_advocate_id',
+            model_name="beer",
+            name="beer_advocate_id",
         ),
         migrations.AddField(
-            model_name='beer',
-            name='beer_advocate_url',
-            field=models.URLField(blank=True, null=True, unique=True, verbose_name='BeerAdvocate URL (if known)'),
+            model_name="beer",
+            name="beer_advocate_url",
+            field=models.URLField(
+                blank=True,
+                null=True,
+                unique=True,
+                verbose_name="BeerAdvocate URL (if known)",
+            ),
         ),
         migrations.AddField(
-            model_name='beer',
-            name='manufacturer_url',
+            model_name="beer",
+            name="manufacturer_url",
             field=models.URLField(blank=True, null=True, unique=True),
         ),
     ]

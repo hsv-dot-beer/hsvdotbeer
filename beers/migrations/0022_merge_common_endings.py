@@ -7,18 +7,18 @@ from django.db.utils import IntegrityError
 LOG = logging.getLogger(__name__)
 
 COMMON_BREWERY_ENDINGS = (
-    'Brewing Company',
-    'Brewery',
-    'Brewing',
-    'Brewing Co.',
-    'Brewing',
-    'Beer Company',
-    'Beer',
-    'Beer Co.',
-    'Craft Brewery',
+    "Brewing Company",
+    "Brewery",
+    "Brewing",
+    "Brewing Co.",
+    "Brewing",
+    "Beer Company",
+    "Beer",
+    "Beer Co.",
+    "Craft Brewery",
 )
 
-REPLACE_TARGET = '\\.'
+REPLACE_TARGET = "\\."
 ENDINGS_REGEX = re.compile(
     f'({"|".join(i.replace(".", REPLACE_TARGET) for i in COMMON_BREWERY_ENDINGS)})$',
     re.IGNORECASE,
@@ -27,13 +27,13 @@ ENDINGS_REGEX = re.compile(
 
 def merge_common_ending_breweries(apps, schema_editor):
     """Merge breweries whose names end in common endings"""
-    mfg_model = apps.get_model('beers.Manufacturer')
-    mfgs = mfg_model.objects.all().prefetch_related('beers').order_by('name')
+    mfg_model = apps.get_model("beers.Manufacturer")
+    mfgs = mfg_model.objects.all().prefetch_related("beers").order_by("name")
     if not mfgs.exists():
         return
     mfg_dict = {}
     for mfg in mfgs:
-        key = ENDINGS_REGEX.sub('', mfg.name.strip()).strip()
+        key = ENDINGS_REGEX.sub("", mfg.name.strip()).strip()
         try:
             mfg_dict[key].append(mfg)
         except KeyError:
@@ -42,13 +42,13 @@ def merge_common_ending_breweries(apps, schema_editor):
         if len(mfg_list) == 1:
             if mfg_list[0].name != short_name:
                 # we need to shorten the only match
-                print(f'Shortening {mfg_list[0].name} to {short_name}')
+                print(f"Shortening {mfg_list[0].name} to {short_name}")
                 mfg_list[0].name = short_name
                 try:
                     with transaction.atomic():
                         mfg_list[0].save()
                 except IntegrityError:
-                    print('Got an integrity error due to case; merging')
+                    print("Got an integrity error due to case; merging")
                     original = mfg_model.objects.get(name=short_name)
                     merge_mfg(original, mfg_list[0])
                     mfg_list[0] = original
@@ -59,35 +59,39 @@ def merge_common_ending_breweries(apps, schema_editor):
             kept = [i for i in mfg_list if i.name == short_name][0]
         except IndexError:
             mfg_list = sorted(
-                mfg_list, key=lambda mfg: len(mfg.beers.all()), reverse=True)
+                mfg_list, key=lambda mfg: len(mfg.beers.all()), reverse=True
+            )
             kept = mfg_list[0]
         else:
             mfg_list = sorted(
                 (i for i in mfg_list if i != kept),
-                key=lambda mfg: len(mfg.beers.all()), reverse=True,
+                key=lambda mfg: len(mfg.beers.all()),
+                reverse=True,
             )
         if kept.name != short_name:
             # we need to shorten the only match
-            print(f'Shortening {kept.name} to {short_name}')
+            print(f"Shortening {kept.name} to {short_name}")
             kept.name = short_name
             try:
                 with transaction.atomic():
                     kept.save()
             except IntegrityError:
                 other = mfg_model.objects.get(name=kept.name)
-                print(f'Oops, that already exists. Merging instead (keeping PK {other.id} instead of {kept.id})')
+                print(
+                    f"Oops, that already exists. Merging instead (keeping PK {other.id} instead of {kept.id})"
+                )
                 merge_mfg(other, kept)
                 kept = other
                 print(kept.id)
         for mfg in mfg_list[1:]:
-            print('merging mfg %s into %s' % (mfg.name, kept.name))
+            print("merging mfg %s into %s" % (mfg.name, kept.name))
             merge_mfg(kept, mfg)
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0021_auto_20190328_2039'),
+        ("beers", "0021_auto_20190328_2039"),
     ]
 
     operations = [
@@ -96,7 +100,7 @@ class Migration(migrations.Migration):
 
 
 def merge_beer(kept_beer, other):
-    LOG.info('merging %s into %s', other, kept_beer)
+    LOG.info("merging %s into %s", other, kept_beer)
     with transaction.atomic():
         for tap in other.taps.all():
             tap.beer = kept_beer
@@ -105,8 +109,10 @@ def merge_beer(kept_beer, other):
             alternate_name.beer = kept_beer
             alternate_name.save()
         excluded_fields = {
-            'name' 'in_production', 'automatic_updates_blocked',
-            'manufacturer', 'id',
+            "name" "in_production",
+            "automatic_updates_blocked",
+            "manufacturer",
+            "id",
         }
         for field in kept_beer._meta.fields:
             field_name = field.name
@@ -130,7 +136,7 @@ def merge_beer(kept_beer, other):
 
 
 def merge_mfg(kept, other):
-    LOG.info('merging %s into %s', other, kept)
+    LOG.info("merging %s into %s", other, kept)
     with transaction.atomic():
         other_beers = list(other.beers.all())
         my_beers = {i.name.casefold(): i for i in kept.beers.all()}
@@ -148,7 +154,9 @@ def merge_mfg(kept, other):
                 beer.save()
 
         excluded_fields = {
-            'name', 'automatic_updates_blocked', 'id',
+            "name",
+            "automatic_updates_blocked",
+            "id",
         }
         for field in kept._meta.fields:
             field_name = field.name

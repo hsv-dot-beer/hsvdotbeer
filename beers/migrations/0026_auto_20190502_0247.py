@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0025_auto_20190409_0145_squashed_0026_auto_20190409_0146'),
+        ("beers", "0025_auto_20190409_0145_squashed_0026_auto_20190409_0146"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='beer',
-            name='taplist_io_pk',
+            model_name="beer",
+            name="taplist_io_pk",
             field=models.PositiveIntegerField(blank=True, null=True, unique=True),
         ),
         migrations.AddField(
-            model_name='manufacturer',
-            name='taplist_io_pk',
+            model_name="manufacturer",
+            name="taplist_io_pk",
             field=models.PositiveIntegerField(blank=True, null=True, unique=True),
         ),
     ]

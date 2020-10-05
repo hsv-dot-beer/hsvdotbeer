@@ -5,11 +5,11 @@ from django.db.models import Q
 
 
 def populate_styles(apps, schema_editor):
-    beer_model = apps.get_model('beers.Beer')
-    style_model = apps.get_model('beers.Style')
+    beer_model = apps.get_model("beers.Beer")
+    style_model = apps.get_model("beers.Style")
     beers = beer_model.objects.filter(
-        Q(style__isnull=False) | ~Q(api_vendor_style='')
-    ).select_related('style')
+        Q(style__isnull=False) | ~Q(api_vendor_style="")
+    ).select_related("style")
     style_names = {}
     style_map = {}
     for beer in beers:
@@ -34,8 +34,8 @@ def populate_styles(apps, schema_editor):
 
 
 def reverse(apps, schema_editor):
-    beer_model = apps.get_model('beers.Beer')
-    for beer in beer_model.objects.select_related('new_style').filter(
+    beer_model = apps.get_model("beers.Beer")
+    for beer in beer_model.objects.select_related("new_style").filter(
         new_style__isnull=False,
     ):
         beer.api_vendor_style = beer.new_style.name
@@ -45,7 +45,7 @@ def reverse(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0023_auto_20190408_2248'),
+        ("beers", "0023_auto_20190408_2248"),
     ]
 
     operations = [

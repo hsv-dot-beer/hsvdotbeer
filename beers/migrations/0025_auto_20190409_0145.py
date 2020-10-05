@@ -6,25 +6,25 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0024_populate_styles'),
+        ("beers", "0024_populate_styles"),
     ]
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='beerstylecategory',
+            name="beerstylecategory",
             unique_together=None,
         ),
         migrations.RemoveField(
-            model_name='beer',
-            name='style',
+            model_name="beer",
+            name="style",
         ),
         migrations.DeleteModel(
-            name='BeerStyle',
+            name="BeerStyle",
         ),
         migrations.DeleteModel(
-            name='BeerStyleCategory',
+            name="BeerStyleCategory",
         ),
         migrations.DeleteModel(
-            name='BeerStyleTag',
+            name="BeerStyleTag",
         ),
     ]

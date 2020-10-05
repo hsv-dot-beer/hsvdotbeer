@@ -9,22 +9,47 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('venues', '0004_auto_20181106_0314'),
+        ("venues", "0004_auto_20181106_0314"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Tap',
+            name="Tap",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tap_number', models.PositiveSmallIntegerField()),
-                ('gas_type', models.CharField(choices=[('co2', 'CO₂'), ('nitro', 'Nitro'), ('', 'Unknown')], max_length=5, blank=True)),
-                ('estimated_percent_remaining', models.FloatField(blank=True, null=True)),
-                ('room', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='taps', to='venues.Room')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("tap_number", models.PositiveSmallIntegerField()),
+                (
+                    "gas_type",
+                    models.CharField(
+                        choices=[("co2", "CO₂"), ("nitro", "Nitro"), ("", "Unknown")],
+                        max_length=5,
+                        blank=True,
+                    ),
+                ),
+                (
+                    "estimated_percent_remaining",
+                    models.FloatField(blank=True, null=True),
+                ),
+                (
+                    "room",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="taps",
+                        to="venues.Room",
+                    ),
+                ),
             ],
         ),
         migrations.AlterUniqueTogether(
-            name='tap',
-            unique_together={('room', 'tap_number')},
+            name="tap",
+            unique_together={("room", "tap_number")},
         ),
     ]

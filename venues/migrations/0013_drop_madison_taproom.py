@@ -4,8 +4,8 @@ from django.db import migrations
 
 
 def drop_madison_taproom(apps, schema_editor):
-    venue = apps.get_model('venues.Venue')
-    beer_price = apps.get_model('beers.BeerPrice')
+    venue = apps.get_model("venues.Venue")
+    beer_price = apps.get_model("beers.BeerPrice")
     beer_price.objects.filter(venue__id=2).delete()
     venue.objects.filter(id=2).delete()
 
@@ -13,7 +13,7 @@ def drop_madison_taproom(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('venues', '0012_auto_20190328_1915'),
+        ("venues", "0012_auto_20190328_1915"),
     ]
 
     operations = [

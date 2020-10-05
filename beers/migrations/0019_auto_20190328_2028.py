@@ -7,18 +7,18 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0018_prepare_for_case_insensitive_beers'),
+        ("beers", "0018_prepare_for_case_insensitive_beers"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='beer',
-            name='name',
+            model_name="beer",
+            name="name",
             field=django.contrib.postgres.fields.citext.CITextField(),
         ),
         migrations.AlterField(
-            model_name='manufacturer',
-            name='name',
+            model_name="manufacturer",
+            name="name",
             field=django.contrib.postgres.fields.citext.CITextField(unique=True),
         ),
     ]

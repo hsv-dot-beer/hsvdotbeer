@@ -15,59 +15,56 @@ from tap_list_providers.parsers.beermenus import BeerMenusParser
 
 
 PATH = os.path.join(
-    'tap_list_providers',
-    'example_data',
-    'beermenus',
+    "tap_list_providers",
+    "example_data",
+    "beermenus",
 )
 
 
-BAD_DADDYS_SLUG = '64594-bad-daddy-s-burger-bar-huntsville'
+BAD_DADDYS_SLUG = "64594-bad-daddy-s-burger-bar-huntsville"
 
 
 class CommandsTestCase(TestCase):
 
-    fixtures = ['serving_sizes']
+    fixtures = ["serving_sizes"]
 
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.venue = VenueFactory(
-            tap_list_provider=BeerMenusParser.provider_name)
+        cls.venue = VenueFactory(tap_list_provider=BeerMenusParser.provider_name)
         cls.venue_cfg = VenueAPIConfiguration.objects.create(
             venue=cls.venue,
             beermenus_slug=BAD_DADDYS_SLUG,
-            beermenus_categories=['on_tap', 'featured'],
+            beermenus_categories=["on_tap", "featured"],
         )
         cls.locations = []
-        cls.main_menu = ''
-        cls.read_more = ''
+        cls.main_menu = ""
+        cls.read_more = ""
         for name in os.listdir(PATH):
             if name.startswith(BAD_DADDYS_SLUG):
                 url = (
-                    f'https://www.beermenus.com/places/'
+                    f"https://www.beermenus.com/places/"
                     f'{name.replace("__", "?").split(".")[0]}'
                 )
                 with open(os.path.join(PATH, name)) as infile:
                     html = infile.read()
-                if '?' in url:
+                if "?" in url:
                     cls.read_more = html
                 else:
                     cls.base_url = url
                     cls.main_menu = html
             else:
-                url = (
-                    'https://www.beermenus.com/beers/'
-                    f'{name.split(".")[0]}'
-                )
+                url = "https://www.beermenus.com/beers/" f'{name.split(".")[0]}'
                 with open(os.path.join(PATH, name)) as infile:
                     cls.locations.append((url, name, infile.read()))
-        rocket = ManufacturerFactory(name='Rocket Republic Brewing Company')
+        rocket = ManufacturerFactory(name="Rocket Republic Brewing Company")
         ManufacturerAlternateName.objects.create(
-            name='Rocket Republic', manufacturer=rocket,
+            name="Rocket Republic",
+            manufacturer=rocket,
         )
 
     def beer_menu_callback(self, request):
-        if request.url.endswith('?section_id=12'):
+        if request.url.endswith("?section_id=12"):
             return 200, {}, self.read_more
         return 200, {}, self.main_menu
 
@@ -80,7 +77,7 @@ class CommandsTestCase(TestCase):
                 url,
                 body=html,
                 status=200,
-                headers={'encoding': 'utf-8'},
+                headers={"encoding": "utf-8"},
             )
         responses.add_callback(
             responses.GET,
@@ -98,26 +95,32 @@ class CommandsTestCase(TestCase):
             # running twice to make sure we're not double-creating
             args = []
             opts = {}
-            call_command('parsebeermenus', *args, **opts)
+            call_command("parsebeermenus", *args, **opts)
 
             self.assertEqual(Beer.objects.count(), 24)
             # three beers from Breckenridge, so only 22 manufacturers
             self.assertEqual(Manufacturer.objects.count(), 22)
             self.assertEqual(Tap.objects.count(), 24)
-            taps = Tap.objects.filter(
-                venue=self.venue, tap_number__in=[1, 17, 2, 19],
-            ).select_related(
-                'beer__style', 'beer__manufacturer',
-            ).order_by('tap_number')
+            taps = (
+                Tap.objects.filter(
+                    venue=self.venue,
+                    tap_number__in=[1, 17, 2, 19],
+                )
+                .select_related(
+                    "beer__style",
+                    "beer__manufacturer",
+                )
+                .order_by("tap_number")
+            )
             tap = taps[0]
             self.assertEqual(
                 tap.beer.name.casefold(),
-                'bad daddys amber ale',
+                "bad daddys amber ale",
                 tap.beer.name,
             )
-            self.assertEqual(tap.beer.manufacturer.location, 'Littleton, CO')
-            self.assertEqual(tap.beer.abv, Decimal('5.0'))
-            self.assertEqual(tap.beer.style.name, 'Amber Ale')
+            self.assertEqual(tap.beer.manufacturer.location, "Littleton, CO")
+            self.assertEqual(tap.beer.abv, Decimal("5.0"))
+            self.assertEqual(tap.beer.style.name, "Amber Ale")
             prices = list(tap.beer.prices.all())
             self.assertEqual(len(prices), 1)
             price = prices[0]
@@ -125,13 +128,13 @@ class CommandsTestCase(TestCase):
             self.assertEqual(price.serving_size.volume_oz, 16)
 
             tap = taps[1]
-            self.assertEqual(tap.beer.name, 'Crisp Apple Cider')
-            self.assertEqual(tap.beer.manufacturer.name, 'Angry Orchard')
+            self.assertEqual(tap.beer.name, "Crisp Apple Cider")
+            self.assertEqual(tap.beer.manufacturer.name, "Angry Orchard")
 
             tap = taps[2]
             self.assertEqual(
                 tap.beer.name,
-                'Modelo Especial',
+                "Modelo Especial",
                 tap.beer.name,
             )
             # due to a bug in responses, we can't validate the location
@@ -144,7 +147,8 @@ class CommandsTestCase(TestCase):
             self.assertFalse(Tap.objects.filter(id=deleted_tap.id).exists())
 
             tap = taps[3]
-            self.assertEqual(tap.beer.name, 'Vapor Trail Cream Ale')
+            self.assertEqual(tap.beer.name, "Vapor Trail Cream Ale")
             self.assertEqual(
-                tap.beer.manufacturer.name, 'Rocket Republic Brewing Company',
+                tap.beer.manufacturer.name,
+                "Rocket Republic Brewing Company",
             )
