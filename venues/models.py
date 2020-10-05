@@ -11,15 +11,15 @@ class Venue(models.Model):
     """A location that serves alcohol"""
 
     TAP_LIST_PROVIDERS = (
-        ('untappd', 'Untappd'),
-        ('digitalpour', 'DigitalPour'),
-        ('taphunter', 'TapHunter'),
-        ('manual', 'Chalkboard/Whiteboard'),
-        ('', 'Unknown'),
-        ('test', 'TEST LOCAL PROVIDER'),
-        ('stemandstein', 'The Stem & Stein\'s HTML'),
-        ('taplist.io', 'taplist.io'),
-        ('beermenus', 'BeerMenus'),
+        ("untappd", "Untappd"),
+        ("digitalpour", "DigitalPour"),
+        ("taphunter", "TapHunter"),
+        ("manual", "Chalkboard/Whiteboard"),
+        ("", "Unknown"),
+        ("test", "TEST LOCAL PROVIDER"),
+        ("stemandstein", "The Stem & Stein's HTML"),
+        ("taplist.io", "taplist.io"),
+        ("beermenus", "BeerMenus"),
     )
 
     # NOTE if this ever grows beyond HSV, we'll have to revisit uniqueness
@@ -35,8 +35,10 @@ class Venue(models.Model):
     twitter_handle = models.CharField(blank=True, max_length=25)
     instagram_handle = models.CharField(blank=True, max_length=25)
     tap_list_provider = models.CharField(
-        'What service the venue uses for digital tap lists',
-        blank=True, max_length=30, choices=TAP_LIST_PROVIDERS,
+        "What service the venue uses for digital tap lists",
+        blank=True,
+        max_length=30,
+        choices=TAP_LIST_PROVIDERS,
     )
     untappd_url = models.URLField(blank=True, null=True)
     email = models.EmailField(blank=True)
@@ -46,15 +48,22 @@ class Venue(models.Model):
     on_downtown_craft_beer_trail = models.BooleanField(default=False)
     # -90 to +90
     latitude = models.DecimalField(
-        max_digits=10, decimal_places=8, blank=True, null=True,
+        max_digits=10,
+        decimal_places=8,
+        blank=True,
+        null=True,
     )
     # -180 to 180
     longitude = models.DecimalField(
-        max_digits=11, decimal_places=8, blank=True, null=True,
+        max_digits=11,
+        decimal_places=8,
+        blank=True,
+        null=True,
     )
     twitter_short_location_description = models.CharField(
-        'Short location description for this specific location for use on '
-        'Twitter', max_length=25, blank=True,
+        "Short location description for this specific location for use on " "Twitter",
+        max_length=25,
+        blank=True,
     )
 
     def __str__(self):
@@ -62,20 +71,25 @@ class Venue(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['name'], name='unique_venue_name'),
-            models.UniqueConstraint(fields=['untappd_url'], name='unique_venue_untappd_url'),
+            models.UniqueConstraint(fields=["name"], name="unique_venue_name"),
+            models.UniqueConstraint(
+                fields=["untappd_url"], name="unique_venue_untappd_url"
+            ),
         ]
 
 
 class VenueAPIConfiguration(models.Model):
     venue = models.OneToOneField(
-        Venue, models.CASCADE, related_name='api_configuration',
+        Venue,
+        models.CASCADE,
+        related_name="api_configuration",
     )
     url = models.URLField(blank=True, null=True)
     api_key = models.CharField(max_length=100, blank=True)
     digital_pour_venue_id = models.CharField(max_length=50, blank=True)
     digital_pour_location_number = models.PositiveSmallIntegerField(
-        blank=True, null=True,
+        blank=True,
+        null=True,
     )
     untappd_location = models.PositiveIntegerField(blank=True, null=True)
     untappd_theme = models.PositiveIntegerField(blank=True, null=True)

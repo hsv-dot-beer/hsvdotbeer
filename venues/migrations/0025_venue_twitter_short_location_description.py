@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('venues', '0024_auto_20190723_2130'),
+        ("venues", "0024_auto_20190723_2130"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='venue',
-            name='twitter_short_location_description',
-            field=models.CharField(blank=True, max_length=25, verbose_name='Short location description for this specific location for use on Twitter'),
+            model_name="venue",
+            name="twitter_short_location_description",
+            field=models.CharField(
+                blank=True,
+                max_length=25,
+                verbose_name="Short location description for this specific location for use on Twitter",
+            ),
         ),
     ]

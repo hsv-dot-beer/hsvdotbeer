@@ -12,7 +12,7 @@ from beers.test.factories import BeerFactory, ManufacturerFactory
 
 class PricePurgeTestCase(TestCase):
 
-    fixtures = ['serving_sizes']
+    fixtures = ["serving_sizes"]
 
     def setUp(self):
         manufacturer = ManufacturerFactory()
@@ -20,7 +20,8 @@ class PricePurgeTestCase(TestCase):
         self.beers = Beer.objects.bulk_create(
             BeerFactory.build(
                 manufacturer=manufacturer,
-            ) for dummy in range(20)
+            )
+            for dummy in range(20)
         )
         self.prices = BeerPrice.objects.bulk_create(
             BeerPrice(
@@ -29,7 +30,8 @@ class PricePurgeTestCase(TestCase):
                 price=index * 2.1,
                 beer=beer,
                 venue=venue,
-            ) for index, beer in enumerate(self.beers)
+            )
+            for index, beer in enumerate(self.beers)
         )
         self.taps = Tap.objects.bulk_create(
             # only for half of them
@@ -43,6 +45,8 @@ class PricePurgeTestCase(TestCase):
         # since I only created one price per tap, the number of taps will
         # equal the number of prices remaining
         self.assertEqual(BeerPrice.objects.count(), len(self.taps))
-        self.assertFalse(BeerPrice.objects.filter(
-            beer__taps__isnull=True,
-        ).exists())
+        self.assertFalse(
+            BeerPrice.objects.filter(
+                beer__taps__isnull=True,
+            ).exists()
+        )

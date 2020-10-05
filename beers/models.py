@@ -14,7 +14,7 @@ LOG = logging.getLogger(__name__)
 class Style(models.Model):
     name = CITextField(unique=True)
     default_color = models.CharField(
-        'HTML color (in hex) to use if the beer has no known color',
+        "HTML color (in hex) to use if the beer has no known color",
         max_length=9,  # #00112233 -> RGBA
         blank=True,
     )
@@ -35,22 +35,26 @@ class Style(models.Model):
                 # block, the outer transaction will still be aborted in case
                 # of failure.
                 with transaction.atomic():
-                    StyleAlternateName.objects.bulk_create([
-                        StyleAlternateName(
-                            name=name,
-                            style=self,
-                        ) for name in alt_names
-                    ])
+                    StyleAlternateName.objects.bulk_create(
+                        [
+                            StyleAlternateName(
+                                name=name,
+                                style=self,
+                            )
+                            for name in alt_names
+                        ]
+                    )
             except IntegrityError:
                 existing_names = [
-                    i.name for i in StyleAlternateName.objects.filter(
+                    i.name
+                    for i in StyleAlternateName.objects.filter(
                         name__in=alt_names,
                     ).exclude(
                         style=self,
                     )
                 ]
                 raise ValueError(
-                    'These alternate names already exist: '
+                    "These alternate names already exist: "
                     f'{", ".join(existing_names)}'
                 )
 
@@ -60,15 +64,14 @@ class Style(models.Model):
 
 class StyleAlternateName(models.Model):
     name = CITextField()
-    style = models.ForeignKey(
-        Style, models.CASCADE, related_name='alternate_names')
+    style = models.ForeignKey(Style, models.CASCADE, related_name="alternate_names")
 
     def __str__(self):
         return self.name
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['name'], name='unique_alt_name_name')
+            models.UniqueConstraint(fields=["name"], name="unique_alt_name_name")
         ]
 
 
@@ -89,11 +92,19 @@ class Manufacturer(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['name'], name='unique_mfg_name'),
-            models.UniqueConstraint(fields=['taplist_io_pk'], name='unique_mfg_taplist_io_pk'),
-            models.UniqueConstraint(fields=['taphunter_url'], name='unique_mfg_taphunter_url'),
-            models.UniqueConstraint(fields=['untappd_url'], name='unique_mfg_untappd_url'),
-            models.UniqueConstraint(fields=['beermenus_slug'], name='unique_mfg_beermenus_slug'),
+            models.UniqueConstraint(fields=["name"], name="unique_mfg_name"),
+            models.UniqueConstraint(
+                fields=["taplist_io_pk"], name="unique_mfg_taplist_io_pk"
+            ),
+            models.UniqueConstraint(
+                fields=["taphunter_url"], name="unique_mfg_taphunter_url"
+            ),
+            models.UniqueConstraint(
+                fields=["untappd_url"], name="unique_mfg_untappd_url"
+            ),
+            models.UniqueConstraint(
+                fields=["beermenus_slug"], name="unique_mfg_beermenus_slug"
+            ),
         ]
 
     def save(self, *args, **kwargs):
@@ -107,7 +118,7 @@ class Manufacturer(models.Model):
 
     def merge_from(self, other):
         """Merge the data from other into self"""
-        LOG.info('merging %s into %s', other, self)
+        LOG.info("merging %s into %s", other, self)
         with transaction.atomic():
             other_beers = list(other.beers.all())
             my_beers = {i.name.casefold(): i for i in self.beers.all()}
@@ -128,7 +139,10 @@ class Manufacturer(models.Model):
                 manufacturer=other,
             ).update(manufacturer=self)
             excluded_fields = {
-                'name', 'automatic_updates_blocked', 'id', 'time_first_seen',
+                "name",
+                "automatic_updates_blocked",
+                "id",
+                "time_first_seen",
             }
             for field in self._meta.fields:
                 field_name = field.name
@@ -147,8 +161,10 @@ class Manufacturer(models.Model):
             )
             other.delete()
             if other.time_first_seen:
-                if not self.time_first_seen or \
-                        self.time_first_seen > other.time_first_seen:
+                if (
+                    not self.time_first_seen
+                    or self.time_first_seen > other.time_first_seen
+                ):
                     self.time_first_seen = other.time_first_seen
             self.save()
 
@@ -159,32 +175,52 @@ class Manufacturer(models.Model):
 class Beer(models.Model):
     name = CITextField()
     style = models.ForeignKey(
-        Style, models.DO_NOTHING, related_name='beers', blank=True, null=True,
+        Style,
+        models.DO_NOTHING,
+        related_name="beers",
+        blank=True,
+        null=True,
     )
     manufacturer = models.ForeignKey(
-        Manufacturer, models.CASCADE, related_name='beers',
+        Manufacturer,
+        models.CASCADE,
+        related_name="beers",
     )
     in_production = models.BooleanField(default=True)
     abv = models.DecimalField(
-        'Alcohol content (% by volume)', max_digits=4, decimal_places=2, blank=True, null=True,
+        "Alcohol content (% by volume)",
+        max_digits=4,
+        decimal_places=2,
+        blank=True,
+        null=True,
     )
     ibu = models.PositiveSmallIntegerField(
-        'Bitterness (International Bitterness Units)',
-        blank=True, null=True,
+        "Bitterness (International Bitterness Units)",
+        blank=True,
+        null=True,
     )
     color_srm = models.DecimalField(
-        'Color (Standard Reference Method)',
-        max_digits=4, decimal_places=1, blank=True, null=True,
+        "Color (Standard Reference Method)",
+        max_digits=4,
+        decimal_places=1,
+        blank=True,
+        null=True,
     )
     untappd_url = models.URLField(blank=True, null=True)
-    beer_advocate_url = models.URLField('BeerAdvocate URL (if known)', null=True, blank=True)
+    beer_advocate_url = models.URLField(
+        "BeerAdvocate URL (if known)", null=True, blank=True
+    )
     rate_beer_url = models.URLField(blank=True, null=True)
     logo_url = models.URLField(blank=True, null=True)
     color_html = models.CharField(
-        'HTML Color (in hex)', max_length=9, blank=True,  # #00112233 -> RGBA
+        "HTML Color (in hex)",
+        max_length=9,
+        blank=True,  # #00112233 -> RGBA
     )
     api_vendor_style = models.CharField(
-        'API vendor-provided style (hidden from API)', max_length=100, blank=True,
+        "API vendor-provided style (hidden from API)",
+        max_length=100,
+        blank=True,
     )
     manufacturer_url = models.URLField(blank=True, null=True)
     automatic_updates_blocked = models.NullBooleanField(default=False)
@@ -197,49 +233,58 @@ class Beer(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['tweeted_about']),
+            models.Index(fields=["tweeted_about"]),
         ]
         constraints = [
             models.CheckConstraint(
                 check=models.Q(abv__gte=0, abv__lte=100) | models.Q(abv__isnull=True),
-                name='abv_positive',
+                name="abv_positive",
             ),
             models.CheckConstraint(
                 check=models.Q(ibu__lte=1000) | models.Q(ibu__isnull=True),
-                name='ibu_not_unreal'
+                name="ibu_not_unreal",
             ),
             models.CheckConstraint(
-                check=models.Q(color_srm__lte=500, color_srm__gte=1) | models.Q(color_srm__isnull=True),
-                name='srm_not_unrealistic',
+                check=models.Q(color_srm__lte=500, color_srm__gte=1)
+                | models.Q(color_srm__isnull=True),
+                name="srm_not_unrealistic",
             ),
             models.UniqueConstraint(
-                fields=['beermenus_slug'], name='unique_beermenus_slug',
+                fields=["beermenus_slug"],
+                name="unique_beermenus_slug",
             ),
             models.UniqueConstraint(
-                fields=['taplist_io_pk'], name='unique_taplist_io_pk',
+                fields=["taplist_io_pk"],
+                name="unique_taplist_io_pk",
             ),
             models.UniqueConstraint(
-                fields=['stem_and_stein_pk'], name='unique_stem_and_stein_pk',
+                fields=["stem_and_stein_pk"],
+                name="unique_stem_and_stein_pk",
             ),
             models.UniqueConstraint(
-                fields=['taphunter_url'], name='unique_taphunter_url',
+                fields=["taphunter_url"],
+                name="unique_taphunter_url",
             ),
             models.UniqueConstraint(
-                fields=['manufacturer_url'], name='unique_manufacturer_url',
+                fields=["manufacturer_url"],
+                name="unique_manufacturer_url",
             ),
             models.UniqueConstraint(
-                fields=['rate_beer_url'], name='unique_rate_beer_url',
+                fields=["rate_beer_url"],
+                name="unique_rate_beer_url",
             ),
             models.UniqueConstraint(
-                fields=['untappd_url'], name='unique_untappd_url',
+                fields=["untappd_url"],
+                name="unique_untappd_url",
             ),
             models.UniqueConstraint(
-                fields=['beer_advocate_url'], name='unique_beer_advocate_url',
+                fields=["beer_advocate_url"],
+                name="unique_beer_advocate_url",
             ),
             models.UniqueConstraint(
-                fields=['name', 'manufacturer'], name='unique_beer_per_manufacturer',
+                fields=["name", "manufacturer"],
+                name="unique_beer_per_manufacturer",
             ),
-
         ]
 
     def save(self, *args, **kwargs):
@@ -268,7 +313,7 @@ class Beer(models.Model):
         return render_srm(self.color_srm)
 
     def merge_from(self, other):
-        LOG.info('merging %s into %s', other, self)
+        LOG.info("merging %s into %s", other, self)
         with transaction.atomic():
             Tap.objects.filter(beer=other).update(beer=self)
             BeerAlternateName.objects.filter(beer=other).update(beer=self)
@@ -276,21 +321,28 @@ class Beer(models.Model):
                 with transaction.atomic():
                     BeerPrice.objects.filter(beer=other).update(beer=self)
             except IntegrityError:
-                LOG.warning('Duplicate prices detected for %s', self)
-                prices_updated = BeerPrice.objects.filter(beer=other).exclude(
-                    venue__in=models.Subquery(
-                        BeerPrice.objects.filter(beer=self).values('venue')
-                    ),
-                ).update(beer=self)
+                LOG.warning("Duplicate prices detected for %s", self)
+                prices_updated = (
+                    BeerPrice.objects.filter(beer=other)
+                    .exclude(
+                        venue__in=models.Subquery(
+                            BeerPrice.objects.filter(beer=self).values("venue")
+                        ),
+                    )
+                    .update(beer=self)
+                )
                 prices_deleted = BeerPrice.objects.filter(beer=other).delete()
                 LOG.info(
-                    'Updated %s prices and deleted %s prices',
+                    "Updated %s prices and deleted %s prices",
                     prices_updated,
                     prices_deleted,
                 )
             excluded_fields = {
-                'name' 'in_production', 'automatic_updates_blocked',
-                'manufacturer', 'id', 'time_first_seen',
+                "name" "in_production",
+                "automatic_updates_blocked",
+                "manufacturer",
+                "id",
+                "time_first_seen",
             }
             for field in self._meta.fields:
                 field_name = field.name
@@ -310,36 +362,42 @@ class Beer(models.Model):
                     beer=self,
                 )
             if other.time_first_seen:
-                if not self.time_first_seen or \
-                        self.time_first_seen > other.time_first_seen:
+                if (
+                    not self.time_first_seen
+                    or self.time_first_seen > other.time_first_seen
+                ):
                     self.time_first_seen = other.time_first_seen
             other.delete()
             self.save()
 
 
 class BeerAlternateName(models.Model):
-    beer = models.ForeignKey(Beer, models.CASCADE, related_name='alternate_names')
+    beer = models.ForeignKey(Beer, models.CASCADE, related_name="alternate_names")
     name = CITextField()
 
     def __str__(self):
-        return f'{self.name} for {self.beer_id}'
+        return f"{self.name} for {self.beer_id}"
 
 
 class ManufacturerAlternateName(models.Model):
     manufacturer = models.ForeignKey(
-        Manufacturer, models.CASCADE, related_name='alternate_names')
+        Manufacturer, models.CASCADE, related_name="alternate_names"
+    )
     name = CITextField()
 
     def __str__(self):
-        return f'{self.name} for {self.manufacturer_id}'
+        return f"{self.name} for {self.manufacturer_id}"
 
 
 class ServingSize(models.Model):
     name = models.CharField(max_length=50, unique=True)
     # max 9999.9 oz
     volume_oz = models.DecimalField(
-        unique=True, null=True, blank=True,
-        max_digits=5, decimal_places=1,
+        unique=True,
+        null=True,
+        blank=True,
+        max_digits=5,
+        decimal_places=1,
     )
 
     def __str__(self):
@@ -347,25 +405,31 @@ class ServingSize(models.Model):
 
 
 class BeerPrice(models.Model):
-    beer = models.ForeignKey(Beer, models.CASCADE, related_name='prices')
+    beer = models.ForeignKey(Beer, models.CASCADE, related_name="prices")
     venue = models.ForeignKey(
-        'venues.Venue', models.CASCADE, related_name='beer_prices',
+        "venues.Venue",
+        models.CASCADE,
+        related_name="beer_prices",
     )
     serving_size = models.ForeignKey(
-        ServingSize, models.DO_NOTHING, related_name='beer_prices',
+        ServingSize,
+        models.DO_NOTHING,
+        related_name="beer_prices",
     )
     # max $999.99
     price = models.DecimalField(
-        max_digits=5, decimal_places=2,
+        max_digits=5,
+        decimal_places=2,
     )
 
     def __str__(self):
-        return f'${self.price} for {self.beer_id} at {self.venue_id}'
+        return f"${self.price} for {self.beer_id} at {self.venue_id}"
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['beer', 'venue', 'serving_size'], name='beer_venue_servingsize',
+                fields=["beer", "venue", "serving_size"],
+                name="beer_venue_servingsize",
             ),
         ]
 
@@ -374,5 +438,7 @@ class UntappdMetadata(models.Model):
     json_data = JSONField()
     timestamp = models.DateTimeField(auto_now=True)
     beer = models.OneToOneField(
-        Beer, models.CASCADE, related_name='untappd_metadata',
+        Beer,
+        models.CASCADE,
+        related_name="untappd_metadata",
     )

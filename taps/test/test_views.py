@@ -16,10 +16,9 @@ class TestTapDetailTestCase(APITestCase):
         self.venue = VenueFactory()
         self.tap = TapFactory(venue=self.venue)
 
-        self.url = reverse('tap-detail', kwargs={'pk': self.tap.pk})
+        self.url = reverse("tap-detail", kwargs={"pk": self.tap.pk})
         self.user = UserFactory(is_staff=True)
-        self.client.credentials(
-            HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
 
     def test_get_request_returns_a_tap(self):
         response = self.client.get(self.url)
@@ -27,7 +26,7 @@ class TestTapDetailTestCase(APITestCase):
 
     def test_patch_rejects_default(self):
         other = TapFactory(venue=self.venue)
-        payload = {'tap_number': other.tap_number}
+        payload = {"tap_number": other.tap_number}
 
         response = self.client.patch(self.url, payload)
         eq_(response.status_code, status.HTTP_400_BAD_REQUEST, response.data)

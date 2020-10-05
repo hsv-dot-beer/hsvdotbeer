@@ -6,26 +6,30 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('venues', '0026_auto_20200112_2339'),
+        ("venues", "0026_auto_20200112_2339"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='venue',
-            name='name',
+            model_name="venue",
+            name="name",
             field=models.CharField(max_length=50),
         ),
         migrations.AlterField(
-            model_name='venue',
-            name='untappd_url',
+            model_name="venue",
+            name="untappd_url",
             field=models.URLField(blank=True, null=True),
         ),
         migrations.AddConstraint(
-            model_name='venue',
-            constraint=models.UniqueConstraint(fields=('name',), name='unique_venue_name'),
+            model_name="venue",
+            constraint=models.UniqueConstraint(
+                fields=("name",), name="unique_venue_name"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='venue',
-            constraint=models.UniqueConstraint(fields=('untappd_url',), name='unique_venue_untappd_url'),
+            model_name="venue",
+            constraint=models.UniqueConstraint(
+                fields=("untappd_url",), name="unique_venue_untappd_url"
+            ),
         ),
     ]

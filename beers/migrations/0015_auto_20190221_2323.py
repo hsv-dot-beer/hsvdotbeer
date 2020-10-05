@@ -7,39 +7,79 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('venues', '0010_auto_20190217_2129'),
-        ('beers', '0014_auto_20190218_2227'),
+        ("venues", "0010_auto_20190217_2129"),
+        ("beers", "0014_auto_20190218_2227"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='BeerPrice',
+            name="BeerPrice",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('price', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('beer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='prices', to='beers.Beer')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("price", models.DecimalField(decimal_places=2, max_digits=5)),
+                (
+                    "beer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="prices",
+                        to="beers.Beer",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ServingSize',
+            name="ServingSize",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, unique=True)),
-                ('volume_oz', models.DecimalField(blank=True, decimal_places=1, max_digits=5, null=True, unique=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, unique=True)),
+                (
+                    "volume_oz",
+                    models.DecimalField(
+                        blank=True,
+                        decimal_places=1,
+                        max_digits=5,
+                        null=True,
+                        unique=True,
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='beerprice',
-            name='serving_size',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='beer_prices', to='beers.ServingSize'),
+            model_name="beerprice",
+            name="serving_size",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                related_name="beer_prices",
+                to="beers.ServingSize",
+            ),
         ),
         migrations.AddField(
-            model_name='beerprice',
-            name='venue',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='beer_prices', to='venues.Venue'),
+            model_name="beerprice",
+            name="venue",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                related_name="beer_prices",
+                to="venues.Venue",
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='beerprice',
-            unique_together={('beer', 'venue', 'serving_size')},
+            name="beerprice",
+            unique_together={("beer", "venue", "serving_size")},
         ),
     ]

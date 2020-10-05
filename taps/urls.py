@@ -5,8 +5,8 @@ from . import views
 
 router = DefaultRouter()
 
-router.register(r'', views.TapViewSet)
+router.register(r"", views.TapViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path("", include(router.urls)),
 ]

@@ -9,21 +9,50 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('beers', '0007_auto_20181205_1716'),
+        ("beers", "0007_auto_20181205_1716"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='TapListProviderStyleMapping',
+            name="TapListProviderStyleMapping",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('provider', models.CharField(choices=[('untappd', 'Untappd'), ('digitalpour', 'DigitalPour'), ('taphunter', 'TapHunter'), ('nook_html', "The Nook's static HTML"), ('manual', 'Chalkboard/Whiteboard'), ('', 'Unknown'), ('test', 'TEST LOCAL PROVIDER')], max_length=20)),
-                ('provider_style_name', models.CharField(max_length=50)),
-                ('style', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tap_list_provider_mappings', to='beers.BeerStyle')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "provider",
+                    models.CharField(
+                        choices=[
+                            ("untappd", "Untappd"),
+                            ("digitalpour", "DigitalPour"),
+                            ("taphunter", "TapHunter"),
+                            ("nook_html", "The Nook's static HTML"),
+                            ("manual", "Chalkboard/Whiteboard"),
+                            ("", "Unknown"),
+                            ("test", "TEST LOCAL PROVIDER"),
+                        ],
+                        max_length=20,
+                    ),
+                ),
+                ("provider_style_name", models.CharField(max_length=50)),
+                (
+                    "style",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tap_list_provider_mappings",
+                        to="beers.BeerStyle",
+                    ),
+                ),
             ],
         ),
         migrations.AlterUniqueTogether(
-            name='taplistproviderstylemapping',
-            unique_together={('provider', 'provider_style_name')},
+            name="taplistproviderstylemapping",
+            unique_together={("provider", "provider_style_name")},
         ),
     ]

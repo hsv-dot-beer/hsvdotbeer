@@ -8,7 +8,6 @@ GAS_CHOICES = [x[0] for x in Tap.GAS_CHOICES]
 
 
 class TapFactory(factory.django.DjangoModelFactory):
-
     class Meta:
         model = Tap
 
