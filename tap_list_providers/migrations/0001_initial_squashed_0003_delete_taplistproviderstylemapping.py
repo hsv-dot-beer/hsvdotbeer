@@ -5,11 +5,14 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    replaces = [('tap_list_providers', '0001_initial'), ('tap_list_providers', '0002_auto_20190218_0235'), ('tap_list_providers', '0003_delete_taplistproviderstylemapping')]
+    replaces = [
+        ("tap_list_providers", "0001_initial"),
+        ("tap_list_providers", "0002_auto_20190218_0235"),
+        ("tap_list_providers", "0003_delete_taplistproviderstylemapping"),
+    ]
 
     dependencies = [
-        ('beers', '0007_auto_20181205_1716'),
+        ("beers", "0007_auto_20181205_1716"),
     ]
 
-    operations = [
-    ]
+    operations = []

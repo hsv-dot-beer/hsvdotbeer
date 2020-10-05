@@ -6,21 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tap_list_providers', '0001_initial'),
+        ("tap_list_providers", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='taplistproviderstylemapping',
+            name="taplistproviderstylemapping",
             unique_together=set(),
         ),
         migrations.RemoveField(
-            model_name='taplistproviderstylemapping',
-            name='provider',
+            model_name="taplistproviderstylemapping",
+            name="provider",
         ),
         migrations.AlterField(
-            model_name='taplistproviderstylemapping',
-            name='provider_style_name',
+            model_name="taplistproviderstylemapping",
+            name="provider_style_name",
             field=models.CharField(max_length=50, unique=True),
         ),
     ]

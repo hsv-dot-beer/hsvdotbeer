@@ -6,10 +6,10 @@ from . import views
 
 router = DefaultRouter()
 
-router.register(r'', views.VenueViewSet)
-router.register(r'apiconfiguration/', views.VenueAPIConfigurationViewSet)
-router.register(r'byslug', views.VenueBySlugViewSet, basename='venue_byslug')
+router.register(r"", views.VenueViewSet)
+router.register(r"apiconfiguration/", views.VenueAPIConfigurationViewSet)
+router.register(r"byslug", views.VenueBySlugViewSet, basename="venue_byslug")
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path("", include(router.urls)),
 ]

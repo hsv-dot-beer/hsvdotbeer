@@ -1,4 +1,3 @@
-
 from rest_framework import permissions
 
 
@@ -13,18 +12,18 @@ class UserPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.user.is_staff:
             return True
-        if request.method == 'POST' and 'subscribe' in request.path:
+        if request.method == "POST" and "subscribe" in request.path:
             return True
-        return request.method in permissions.SAFE_METHODS + ('PUT', 'PATCH')
+        return request.method in permissions.SAFE_METHODS + ("PUT", "PATCH")
 
     def has_object_permission(self, request, view, obj):
 
         if request.user == obj:
-            print('user matches')
+            print("user matches")
             return True
         if request.user.is_staff:
-            print('user is staff')
+            print("user is staff")
             return True
 
-        print('fall through')
+        print("fall through")
         return request.method in permissions.SAFE_METHODS

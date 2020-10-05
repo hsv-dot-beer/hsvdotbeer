@@ -22,34 +22,36 @@ class TestUserListTestCase(APITestCase):
     """
 
     def setUp(self):
-        self.url = reverse('user-list')
+        self.url = reverse("user-list")
         self.user_data = model_to_dict(UserFactory.build())
-        self.user_data['date_joined'] = self.user_data['date_joined'].isoformat()
+        self.user_data["date_joined"] = self.user_data["date_joined"].isoformat()
 
     def test_post_request_with_no_data_fails(self):
         user = UserFactory(is_staff=True)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {user.auth_token}')
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {user.auth_token}")
         response = self.client.post(self.url, {})
         eq_(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_request_with_valid_data_succeeds(self):
         user = UserFactory(is_staff=True)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {user.auth_token}')
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {user.auth_token}")
         response = self.client.post(
-            self.url, json.dumps(self.user_data),
-            content_type='application/json',
+            self.url,
+            json.dumps(self.user_data),
+            content_type="application/json",
         )
         eq_(response.status_code, status.HTTP_201_CREATED)
 
-        user = User.objects.get(pk=response.data.get('id'))
-        eq_(user.username, self.user_data.get('username'))
-        ok_(check_password(self.user_data.get('password'), user.password))
+        user = User.objects.get(pk=response.data.get("id"))
+        eq_(user.username, self.user_data.get("username"))
+        ok_(check_password(self.user_data.get("password"), user.password))
 
     def test_post_request_unauthorized(self):
-        self.client.credentials(HTTP_AUTHORIZATION='')
+        self.client.credentials(HTTP_AUTHORIZATION="")
         response = self.client.post(
-            self.url, json.dumps(self.user_data),
-            content_type='application/json',
+            self.url,
+            json.dumps(self.user_data),
+            content_type="application/json",
         )
         eq_(response.status_code, status.HTTP_403_FORBIDDEN)
 
@@ -61,8 +63,8 @@ class TestUserDetailTestCase(APITestCase):
 
     def setUp(self):
         self.user = UserFactory()
-        self.url = reverse('user-detail', kwargs={'pk': self.user.pk})
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
+        self.url = reverse("user-detail", kwargs={"pk": self.user.pk})
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
 
     def test_get_request_returns_a_given_user(self):
 
@@ -71,11 +73,11 @@ class TestUserDetailTestCase(APITestCase):
 
     def test_put_request_updates_a_user(self):
         self.client.credentials(
-            HTTP_AUTHORIZATION=f'Token {self.user.auth_token}',
+            HTTP_AUTHORIZATION=f"Token {self.user.auth_token}",
         )
 
         new_first_name = fake.first_name()
-        payload = {'first_name': new_first_name}
+        payload = {"first_name": new_first_name}
         response = self.client.put(self.url, payload)
         eq_(response.status_code, status.HTTP_200_OK)
 
@@ -84,14 +86,14 @@ class TestUserDetailTestCase(APITestCase):
 
     def test_subscribe_to_beer(self):
         beer = BeerFactory()
-        url = reverse('user-subscribetobeer', kwargs={'pk': self.user.pk})
+        url = reverse("user-subscribetobeer", kwargs={"pk": self.user.pk})
         print(url)
         payload = {
-            'beer': beer.id,
-            'notifications_enabled': True,
+            "beer": beer.id,
+            "notifications_enabled": True,
         }
         self.client.credentials(
-            HTTP_AUTHORIZATION=f'Token {self.user.auth_token}',
+            HTTP_AUTHORIZATION=f"Token {self.user.auth_token}",
         )
 
         response = self.client.post(url, payload)
@@ -101,16 +103,18 @@ class TestUserDetailTestCase(APITestCase):
     def test_update_subscription_to_beer(self):
         beer = BeerFactory()
         sub = UserFavoriteBeer.objects.create(
-            beer=beer, user=self.user, notifications_enabled=True,
+            beer=beer,
+            user=self.user,
+            notifications_enabled=True,
         )
-        url = reverse('user-subscribetobeer', kwargs={'pk': self.user.pk})
+        url = reverse("user-subscribetobeer", kwargs={"pk": self.user.pk})
 
         payload = {
-            'beer': beer.id,
-            'notifications_enabled': False,
+            "beer": beer.id,
+            "notifications_enabled": False,
         }
         self.client.credentials(
-            HTTP_AUTHORIZATION=f'Token {self.user.auth_token}',
+            HTTP_AUTHORIZATION=f"Token {self.user.auth_token}",
         )
 
         response = self.client.post(url, payload)
@@ -122,16 +126,18 @@ class TestUserDetailTestCase(APITestCase):
     def test_unsubscribe_from_beer(self):
         beer = BeerFactory()
         UserFavoriteBeer.objects.create(
-            beer=beer, user=self.user, notifications_enabled=True,
+            beer=beer,
+            user=self.user,
+            notifications_enabled=True,
         )
-        url = reverse('user-unsubscribefrombeer', kwargs={'pk': self.user.pk})
+        url = reverse("user-unsubscribefrombeer", kwargs={"pk": self.user.pk})
 
         payload = {
-            'beer': beer.id,
-            'notifications_enabled': False,
+            "beer": beer.id,
+            "notifications_enabled": False,
         }
         self.client.credentials(
-            HTTP_AUTHORIZATION=f'Token {self.user.auth_token}',
+            HTTP_AUTHORIZATION=f"Token {self.user.auth_token}",
         )
 
         response = self.client.post(url, payload)

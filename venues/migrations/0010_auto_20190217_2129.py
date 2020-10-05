@@ -6,20 +6,20 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('taps', '0006_auto_20190217_2129'),
-        ('venues', '0009_venue_untappd_url'),
+        ("taps", "0006_auto_20190217_2129"),
+        ("venues", "0009_venue_untappd_url"),
     ]
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='room',
+            name="room",
             unique_together=set(),
         ),
         migrations.RemoveField(
-            model_name='room',
-            name='venue',
+            model_name="room",
+            name="venue",
         ),
         migrations.DeleteModel(
-            name='Room',
+            name="Room",
         ),
     ]

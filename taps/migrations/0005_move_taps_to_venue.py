@@ -4,25 +4,20 @@ from django.db import migrations
 
 
 def forwards(apps, schema_editor):
-    tap_model = apps.get_model('taps.Tap')
-    for tap in tap_model.objects.select_related('room__venue'):
+    tap_model = apps.get_model("taps.Tap")
+    for tap in tap_model.objects.select_related("room__venue"):
         tap.venue = tap.room.venue
         tap.save()
 
 
 def reverse(apps, schema_editor):
-    tap_model = apps.get_model('taps.Tap')
-    room_model = apps.get_model('venues.Room')
-    venue_model = apps.get_model('venues.Venue')
-    taps = list(tap_model.objects.select_related('venue'))
+    tap_model = apps.get_model("taps.Tap")
+    room_model = apps.get_model("venues.Room")
+    venue_model = apps.get_model("venues.Venue")
+    taps = list(tap_model.objects.select_related("venue"))
     venues = list(venue_model.objects.all())
-    room_instances = [
-        room_model(name='Main Bar', venue=venue)
-        for venue in venues
-    ]
-    rooms = {
-        i.venue_id: i for i in room_model.objects.bulk_create(room_instances)
-    }
+    room_instances = [room_model(name="Main Bar", venue=venue) for venue in venues]
+    rooms = {i.venue_id: i for i in room_model.objects.bulk_create(room_instances)}
     for tap in taps:
         tap.room = rooms[tap.venue_id]
         tap.save()
@@ -31,7 +26,7 @@ def reverse(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('taps', '0004_tap_venue'),
+        ("taps", "0004_tap_venue"),
     ]
 
     operations = [
