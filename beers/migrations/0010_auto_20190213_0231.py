@@ -6,18 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0009_beer_logo_url'),
+        ("beers", "0009_beer_logo_url"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='beer',
-            name='api_vendor_style',
-            field=models.CharField(blank=True, max_length=100, verbose_name='API vendor-provided style (hidden from API)'),
+            model_name="beer",
+            name="api_vendor_style",
+            field=models.CharField(
+                blank=True,
+                max_length=100,
+                verbose_name="API vendor-provided style (hidden from API)",
+            ),
         ),
         migrations.AddField(
-            model_name='beer',
-            name='color_html',
-            field=models.CharField(blank=True, max_length=9, verbose_name='HTML Color (in hex)'),
+            model_name="beer",
+            name="color_html",
+            field=models.CharField(
+                blank=True, max_length=9, verbose_name="HTML Color (in hex)"
+            ),
         ),
     ]

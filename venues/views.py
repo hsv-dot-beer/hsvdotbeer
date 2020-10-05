@@ -15,31 +15,35 @@ from . import filters
 
 class VenueViewSet(CachedListMixin, ModelViewSet):
     serializer_class = serializers.VenueSerializer
-    queryset = models.Venue.objects.order_by('name')
+    queryset = models.Venue.objects.order_by("name")
     filterset_class = filters.VenueFilterSet
 
     @method_decorator(cache_page(60 * 5))
-    @action(detail=True, methods=['GET'])
+    @action(detail=True, methods=["GET"])
     def beers(self, request, pk=None, slug=None):
         filter_cond = {}
         if pk and slug:
-            raise serializers.serializers.ValidationError({
-                'non_field_errors': [
-                    "Somehow you managed to submit both a PK and a slug. "
-                    "This isn't possible.",
-                ]
-            })
+            raise serializers.serializers.ValidationError(
+                {
+                    "non_field_errors": [
+                        "Somehow you managed to submit both a PK and a slug. "
+                        "This isn't possible.",
+                    ]
+                }
+            )
         if pk:
-            filter_cond['taps__venue__id'] = pk
+            filter_cond["taps__venue__id"] = pk
         elif slug:
-            filter_cond['taps__venue__slug'] = slug
+            filter_cond["taps__venue__slug"] = slug
         else:
-            raise serializers.serializers.ValidationError({
-                'non_field_errors': [
-                    "Somehow you managed to submit neither a PK nor a slug. "
-                    "This isn't possible.",
-                ]
-            })
+            raise serializers.serializers.ValidationError(
+                {
+                    "non_field_errors": [
+                        "Somehow you managed to submit neither a PK nor a slug. "
+                        "This isn't possible.",
+                    ]
+                }
+            )
         queryset = BeerViewSet.queryset.filter(**filter_cond).distinct()
 
         # let the user use all the beer filters just for kicks
@@ -54,15 +58,14 @@ class VenueViewSet(CachedListMixin, ModelViewSet):
 
 
 class VenueBySlugViewSet(VenueViewSet):
-
     def list(self, request, *args, **kwargs):
         raise NotFound()
 
-    lookup_field = 'slug'
+    lookup_field = "slug"
     serializer_class = serializers.VenueBySlugSerializer
 
 
 class VenueAPIConfigurationViewSet(CachedListMixin, ModelViewSet):
     serializer_class = serializers.VenueAPIConfigurationSerializer
     queryset = models.VenueAPIConfiguration.objects.all()
-    permission_classes = (IsAdminUser, )
+    permission_classes = (IsAdminUser,)

@@ -7,7 +7,6 @@ from beers.test.factories import BeerFactory
 
 
 class BeerConstraintTestCase(TestCase):
-
     def test_negative_ibu(self):
         with self.assertRaises(IntegrityError):
             BeerFactory(ibu=-1)

@@ -8,28 +8,63 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('beers', '0022_merge_common_endings'),
+        ("beers", "0022_merge_common_endings"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Style',
+            name="Style",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', django.contrib.postgres.fields.citext.CITextField(unique=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    django.contrib.postgres.fields.citext.CITextField(unique=True),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='StyleAlternateName',
+            name="StyleAlternateName",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', django.contrib.postgres.fields.citext.CITextField(unique=True)),
-                ('style', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='alternate_names', to='beers.Style')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    django.contrib.postgres.fields.citext.CITextField(unique=True),
+                ),
+                (
+                    "style",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="alternate_names",
+                        to="beers.Style",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='beer',
-            name='new_style',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='beers', to='beers.Style'),
+            model_name="beer",
+            name="new_style",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                related_name="beers",
+                to="beers.Style",
+            ),
         ),
     ]
