@@ -9,20 +9,42 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('beers', '0029_merge_20190519_1259'),
+        ("beers", "0029_merge_20190519_1259"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='UserFavoriteBeer',
+            name="UserFavoriteBeer",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('notifications_enabled', models.BooleanField(default=False)),
-                ('beer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='favored_by_users', to='beers.Beer')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='favorite_beers', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("notifications_enabled", models.BooleanField(default=False)),
+                (
+                    "beer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="favored_by_users",
+                        to="beers.Beer",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="favorite_beers",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'unique_together': {('beer', 'user')},
+                "unique_together": {("beer", "user")},
             },
         ),
     ]

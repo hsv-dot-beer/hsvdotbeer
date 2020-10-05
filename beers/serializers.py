@@ -145,14 +145,13 @@ class OtherPKSerializer(serializers.Serializer):
 
 
 class UserFavoriteBeerSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.UserFavoriteBeer
-        fields = '__all__'
+        fields = "__all__"
         validators = [
             UniqueTogetherValidator(
-                fields=['user', 'beer'],
+                fields=["user", "beer"],
                 queryset=models.UserFavoriteBeer.objects.all(),
-                message='User is already subscribed to this beer',
+                message="User is already subscribed to this beer",
             ),
         ]

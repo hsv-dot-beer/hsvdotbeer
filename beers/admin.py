@@ -100,7 +100,8 @@ class ManufacturerAlternateNameInline(admin.TabularInline):
 class UserFavoriteBeerInline(admin.TabularInline):
     model = models.UserFavoriteBeer
     queryset = models.UserFavoriteBeer.objects.select_related(
-        'user', 'beer__manufacturer',
+        "user",
+        "beer__manufacturer",
     )
 
 

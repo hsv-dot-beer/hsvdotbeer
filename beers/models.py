@@ -447,15 +447,16 @@ class UntappdMetadata(models.Model):
 
 class UserFavoriteBeer(models.Model):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, models.CASCADE,
-        related_name='favorite_beers',
+        settings.AUTH_USER_MODEL,
+        models.CASCADE,
+        related_name="favorite_beers",
     )
     beer = models.ForeignKey(
-        Beer, models.CASCADE, related_name='favored_by_users',
+        Beer,
+        models.CASCADE,
+        related_name="favored_by_users",
     )
     notifications_enabled = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = (
-            ('beer', 'user'),
-        )
+        unique_together = (("beer", "user"),)
