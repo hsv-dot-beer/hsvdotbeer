@@ -338,7 +338,8 @@ class Beer(models.Model):
                     prices_deleted,
                 )
             excluded_fields = {
-                "name" "in_production",
+                "name",
+                "in_production",
                 "automatic_updates_blocked",
                 "manufacturer",
                 "id",
