@@ -9,10 +9,12 @@ import re
 from decimal import Decimal, InvalidOperation
 from urllib.parse import urlparse, unquote
 import logging
+import datetime
 
 from django.db.models import Prefetch, Q
 from django.db.models.functions import Length
 from django.db import transaction
+from django.utils.timezone import now
 from kombu.exceptions import OperationalError
 
 from venues.models import Venue
@@ -51,12 +53,13 @@ ENDINGS_REGEX = re.compile(
 
 class BaseTapListProvider:
     def __init__(self):
+        self.check_timestamp = now()
         self.styles = {}
         if not hasattr(self, "provider_name"):
             # Don't define this attribute if the child does for us
             self.provider_name = None
 
-    def handle_venue(self, venue):
+    def handle_venue(self, venue: Venue) -> datetime.datetime:
         raise NotImplementedError("You need to implement this yourself")
 
     @classmethod
@@ -92,7 +95,15 @@ class BaseTapListProvider:
     def handle_venues(self, venues):
         for venue in venues:
             LOG.debug("Fetching beers at %s", venue)
-            self.handle_venue(venue)
+            update_time = self.handle_venue(venue)
+            self.update_venue_timestamps(venue, update_time)
+
+    def update_venue_timestamps(self, venue: Venue, update_time: datetime.datetime = None) -> None:
+        """Update the venue last checked and last updated times"""
+        venue.tap_list_last_check_time = self.check_timestamp
+        if update_time:
+            venue.tap_list_last_update_time = update_time
+        venue.save()
 
     def get_style(self, name):
         name = name.strip()

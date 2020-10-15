@@ -1,7 +1,11 @@
+import datetime
+
 from django.test import TestCase
+from django.utils.timezone import now
 from unittest import TestCase as UnittestTestCase
 
 from tap_list_providers.base import fix_urls, BaseTapListProvider
+from venues.test.factories import VenueFactory
 from beers.test.factories import ManufacturerFactory, StyleFactory
 from beers.models import Manufacturer, ManufacturerAlternateName
 
@@ -91,3 +95,26 @@ class FixBeerNameTestCase(TestCase):
         provider = BaseTapListProvider()
         name = provider.reformat_beer_name("Yazoo Brewing Company Hefeweizen", "Yazoo")
         self.assertEqual(name, "Hefeweizen")
+
+
+class TimestampTestCase(TestCase):
+
+    def setUp(self):
+        self.venue = VenueFactory()
+        self.provider = BaseTapListProvider()
+        
+    def test_initial_conditions(self):
+        self.assertIsNone(self.venue.tap_list_last_check_time)
+        self.assertIsNone(self.venue.tap_list_last_update_time)
+        self.assertIsNotNone(self.provider.check_timestamp)
+
+    def test_timestamp_no_time(self):
+        self.provider.update_venue_timestamps(self.venue, None)
+        self.assertIsNone(self.venue.tap_list_last_update_time)
+        self.assertEqual(self.venue.tap_list_last_check_time, self.provider.check_timestamp)
+    
+    def test_with_time(self):
+        timestamp = now() - datetime.timedelta(days=1)
+        self.provider.update_venue_timestamps(self.venue, timestamp)
+        self.assertEqual(self.venue.tap_list_last_update_time, timestamp)
+        self.assertEqual(self.venue.tap_list_last_check_time, self.provider.check_timestamp)
