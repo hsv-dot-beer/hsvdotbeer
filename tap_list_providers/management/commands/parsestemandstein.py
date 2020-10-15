@@ -7,9 +7,7 @@ from tap_list_providers.parsers.stemandstein import StemAndSteinParser
 
 
 class Command(BaseCommand):
-    help = (
-        "Populates any venues using the Stem and Stein tap list provider with beers"
-    )
+    help = "Populates any venues using the Stem and Stein tap list provider with beers"
 
     def add_arguments(self, parser):
         # does not take any arguments

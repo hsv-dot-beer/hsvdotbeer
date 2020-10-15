@@ -19,8 +19,6 @@ class Command(BaseCommand):
             for venue in tap_list_provider.get_venues():
                 self.stdout.write("Processing %s" % venue.name)
                 timestamp = tap_list_provider.handle_venue(venue)
-                
-                print('timestamp', timestamp)
                 tap_list_provider.update_venue_timestamps(venue, timestamp)
 
         self.stdout.write(self.style.SUCCESS("Done!"))

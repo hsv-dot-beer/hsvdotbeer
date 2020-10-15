@@ -27,7 +27,7 @@ from beers.models import Manufacturer, Beer, ServingSize, BeerPrice
 from taps.models import Tap
 
 
-CENTRAL_TIME = pytz.timezone('America/Chicago')
+CENTRAL_TIME = pytz.timezone("America/Chicago")
 LOG = logging.getLogger(__name__)
 
 
@@ -137,8 +137,8 @@ class StemAndSteinParser(BaseTapListProvider):
         ).text
         beer_parser = BeautifulSoup(beer_html, "html.parser")
         jumbotron = beer_parser.find("div", {"class": "jumbotron"})
-        tap_table = beer_parser.find('table', {'id': 'tapList'})
-        tap_body = tap_table.find('tbody')
+        tap_table = beer_parser.find("table", {"id": "tapList"})
+        tap_body = tap_table.find("tbody")
         image_div = jumbotron.find(
             "div",
             {"style": "display:table-cell;vertical-align:top;width:17px;"},
@@ -197,9 +197,9 @@ class StemAndSteinParser(BaseTapListProvider):
             defaults={"price": price},
         )
         time_tapped = None
-        for row in tap_body.find_all('tr'):
-            cells = list(row.find_all('td'))
-            if cells[-1].text.endswith('(so far)'):
+        for row in tap_body.find_all("tr"):
+            cells = list(row.find_all("td"))
+            if cells[-1].text.endswith("(so far)"):
                 time_tapped = CENTRAL_TIME.localize(parse(cells[0].text))
         return time_tapped
 

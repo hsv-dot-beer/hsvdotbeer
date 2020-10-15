@@ -98,11 +98,10 @@ class FixBeerNameTestCase(TestCase):
 
 
 class TimestampTestCase(TestCase):
-
     def setUp(self):
         self.venue = VenueFactory()
         self.provider = BaseTapListProvider()
-        
+
     def test_initial_conditions(self):
         self.assertIsNone(self.venue.tap_list_last_check_time)
         self.assertIsNone(self.venue.tap_list_last_update_time)
@@ -111,10 +110,14 @@ class TimestampTestCase(TestCase):
     def test_timestamp_no_time(self):
         self.provider.update_venue_timestamps(self.venue, None)
         self.assertIsNone(self.venue.tap_list_last_update_time)
-        self.assertEqual(self.venue.tap_list_last_check_time, self.provider.check_timestamp)
-    
+        self.assertEqual(
+            self.venue.tap_list_last_check_time, self.provider.check_timestamp
+        )
+
     def test_with_time(self):
         timestamp = now() - datetime.timedelta(days=1)
         self.provider.update_venue_timestamps(self.venue, timestamp)
         self.assertEqual(self.venue.tap_list_last_update_time, timestamp)
-        self.assertEqual(self.venue.tap_list_last_check_time, self.provider.check_timestamp)
+        self.assertEqual(
+            self.venue.tap_list_last_check_time, self.provider.check_timestamp
+        )

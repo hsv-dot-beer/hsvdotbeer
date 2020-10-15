@@ -77,7 +77,7 @@ class TaphunterParser(BaseTapListProvider):
                 tap = Tap(venue=venue, tap_number=tap_number)
             tap.time_added = tap_info["added"]
             tap.time_updated = tap_info["updated"]
-            parsed_time = parse(tap_info['updated'])
+            parsed_time = parse(tap_info["updated"])
             if parsed_time > latest_timestamp:
                 latest_timestamp = parsed_time
             if "percent_full" in tap_info:
