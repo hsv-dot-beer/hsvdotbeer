@@ -1,8 +1,10 @@
+"""Beer views"""
+from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.db.utils import IntegrityError
 from django.db.models import Prefetch, Count, Max
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
@@ -20,6 +22,7 @@ from venues.filters import VenueFilterSet
 from . import serializers
 from . import models
 from . import filters
+from . import forms
 
 
 class CachedListMixin:
@@ -375,3 +378,23 @@ class ManufacturerMergeView(TemplateView):
         return redirect(reverse("admin:beers_manufacturer_changelist"))
 
     template_name = "beers/merge_manufacturers.html"
+
+
+@login_required
+def beer_form(request, beer_id=None):
+    """Simple form for creating beers"""
+    if request.method == "POST":
+        form = forms.BeerForm(request.POST)
+        if form.is_valid():
+            beer = form.save()
+            return redirect("edit_beer", beer_id=beer.id)
+        else:
+            beer = None
+    else:
+
+        beer = None
+        if beer_id:
+            beer = get_object_or_404(models.Beer, id=beer_id)
+        form = forms.BeerForm(instance=beer)
+
+    return render(request, "beers/beer_form.html", {"form": form, "beer": beer})
