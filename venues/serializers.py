@@ -39,7 +39,7 @@ class VenueSerializer(CountryFieldMixin, serializers.ModelSerializer):
 
     class Meta:
         model = models.Venue
-        exclude = ['managers']
+        exclude = ["managers"]
         # something is not interacting well between nullable urls and DRF's
         # validation. Marking this read-only for now.
 
