@@ -1,3 +1,4 @@
+from typing import Optional, Union, Sequence
 import logging
 
 from django.contrib.postgres.fields import JSONField, CITextField
@@ -44,7 +45,7 @@ class Style(models.Model):
                             for name in alt_names
                         ]
                     )
-            except IntegrityError:
+            except IntegrityError as exc:
                 existing_names = [
                     i.name
                     for i in StyleAlternateName.objects.filter(
@@ -56,7 +57,7 @@ class Style(models.Model):
                 raise ValueError(
                     "These alternate names already exist: "
                     f'{", ".join(existing_names)}'
-                )
+                ) from exc
 
     def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
@@ -107,14 +108,20 @@ class Manufacturer(models.Model):
             ),
         ]
 
-    def save(self, *args, **kwargs):
+    def save(
+        self,
+        force_insert: bool = False,
+        force_update: bool = False,
+        using: Optional[str] = None,
+        update_fields: Optional[Union[Sequence[str], str]] = None,
+    ) -> None:
         if not self.beermenus_slug:
             self.beermenus_slug = None
         if not self.taphunter_url:
             self.taphunter_url = None
         if not self.untappd_url:
             self.untappd_url = None
-        return super().save(*args, **kwargs)
+        return super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
     def merge_from(self, other):
         """Merge the data from other into self"""
@@ -289,7 +296,14 @@ class Beer(models.Model):
             ),
         ]
 
-    def save(self, *args, **kwargs):
+    def save(
+        self,
+        force_insert: bool = False,
+        force_update: bool = False,
+        using: Optional[str] = None,
+        update_fields: Optional[Union[Sequence[str], str]] = None,
+    ) -> None:
+        super().save()
         # force empty IDs to null to avoid running afoul of unique constraints
         if not self.untappd_url:
             self.untappd_url = None
@@ -303,7 +317,12 @@ class Beer(models.Model):
             self.taphunter_url = None
         if not self.beermenus_slug:
             self.beermenus_slug = None
-        return super().save(*args, **kwargs)
+        return super().save(
+            force_insert=force_insert,
+            force_update=force_update,
+            using=using,
+            update_fields=update_fields,
+        )
 
     def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
