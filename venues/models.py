@@ -65,6 +65,11 @@ class Venue(models.Model):
         max_length=25,
         blank=True,
     )
+    managers = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="venues_managed",
+        through="VenueTapManager",
+    )
 
     def __str__(self):
         return self.name
@@ -115,3 +120,26 @@ class VenueAPIConfiguration(models.Model):
         null=True,
     )
     beermenus_slug = models.CharField(max_length=250, blank=True)
+
+
+class VenueTapManager(models.Model):
+    """Users who maintain venues"""
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        models.CASCADE,
+        related_name="venue_tap_managers",
+    )
+    venue = models.ForeignKey(Venue, models.CASCADE, related_name="venue_tap_managers")
+    default_manufacturer = models.ForeignKey(
+        "beers.Manufacturer",
+        models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="default_managers",
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["user", "venue"], name="user-venue-unique"),
+        ]
