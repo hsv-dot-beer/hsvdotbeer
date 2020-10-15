@@ -8,7 +8,7 @@ from tap_list_providers.parsers.stemandstein import StemAndSteinParser
 
 class Command(BaseCommand):
     help = (
-        "Populates any venues using the Stem and Stein tap list provider with" " beers"
+        "Populates any venues using the Stem and Stein tap list provider with beers"
     )
 
     def add_arguments(self, parser):
@@ -20,5 +20,6 @@ class Command(BaseCommand):
         with transaction.atomic():
             for venue in tap_list_provider.get_venues():
                 self.stdout.write("Processing %s" % venue.name)
-                tap_list_provider.handle_venue(venue)
+                timestamp = tap_list_provider.handle_venue(venue)
+                tap_list_provider.update_venue_timestamps(venue, timestamp)
         self.stdout.write(self.style.SUCCESS("Done!"))
