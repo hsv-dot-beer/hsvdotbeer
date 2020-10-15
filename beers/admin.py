@@ -78,7 +78,6 @@ class BeerAdmin(admin.ModelAdmin):
             "manufacturer": models.Manufacturer.objects.order_by("name"),
         }
         order_qs = fields.get(db_field.name)
-        print(db_field.name, order_qs is not None)
         if order_qs:
             kwargs["queryset"] = order_qs
 
