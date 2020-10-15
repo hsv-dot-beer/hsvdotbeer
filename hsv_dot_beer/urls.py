@@ -15,7 +15,7 @@ router.register(r"users", UserViewSet)
 router.register(r"users", UserCreateViewSet)
 
 urlpatterns = [
-    path('accounts/', include('django.contrib.auth.urls')),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
     path("api/v1/", include(router.urls)),
     path("api/v1/venues/", include("venues.urls")),
@@ -26,8 +26,8 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("beers/mergestyles/", StyleMergeView.as_view()),
     path("beers/mergebeers/", BeerMergeView.as_view()),
-    path('beers/', beer_form, name='create_beer'),
-    path('beers/<int:beer_id>/', beer_form, name='edit_beer'),
+    path("beers/", beer_form, name="create_beer"),
+    path("beers/<int:beer_id>/", beer_form, name="edit_beer"),
     path("manufacturers/merge/", ManufacturerMergeView.as_view()),
     # the 'api-root' from django rest-frameworks default router
     # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter

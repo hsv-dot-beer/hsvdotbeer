@@ -43,8 +43,8 @@ class BeerForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['manufacturer'].queryset = Manufacturer.objects.order_by('name')
-        self.fields['style'].queryset = Style.objects.order_by('name')
+        self.fields["manufacturer"].queryset = Manufacturer.objects.order_by("name")
+        self.fields["style"].queryset = Style.objects.order_by("name")
 
     class Meta:
         model = Beer
@@ -72,6 +72,7 @@ class BeerForm(ModelForm):
 
 class StyleForm(ModelForm):
     """It's a form for creating and editing styles."""
+
     class Meta:
         model = Style
         fields = [
