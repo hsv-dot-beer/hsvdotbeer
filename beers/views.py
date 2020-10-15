@@ -4,7 +4,7 @@ from django.db import transaction
 from django.db.utils import IntegrityError
 from django.db.models import Prefetch, Count, Max
 from django.http import HttpResponse
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404 as dj_get_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
@@ -394,7 +394,7 @@ def beer_form(request, beer_id=None):
 
         beer = None
         if beer_id:
-            beer = get_object_or_404(models.Beer, id=beer_id)
+            beer = dj_get_or_404(models.Beer, id=beer_id)
         form = forms.BeerForm(instance=beer)
 
     return render(request, "beers/beer_form.html", {"form": form, "beer": beer})
