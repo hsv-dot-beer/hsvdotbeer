@@ -100,6 +100,7 @@ class BaseTapListProvider:
 
     def update_venue_timestamps(self, venue: Venue, update_time: datetime.datetime = None) -> None:
         """Update the venue last checked and last updated times"""
+        LOG.debug('Setting check time for %s to %s and update time for to %s', venue, self.check_timestamp, update_time)
         venue.tap_list_last_check_time = self.check_timestamp
         if update_time:
             venue.tap_list_last_update_time = update_time
@@ -421,7 +422,7 @@ class BaseTapListProvider:
                 if str(exc).casefold() == "max number of clients reached".casefold():
                     LOG.error("Reached redis limit!")
                     # fall back to doing it synchronously
-                    look_up_beer(beer.id)
+                    look_up_beer(beer.id)  # pylint: disable=no-value-for-parameter
                 else:
                     raise
         return beer
