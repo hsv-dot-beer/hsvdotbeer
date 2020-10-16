@@ -121,7 +121,12 @@ class Manufacturer(models.Model):
             self.taphunter_url = None
         if not self.untappd_url:
             self.untappd_url = None
-        return super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
+        return super().save(
+            force_insert=force_insert,
+            force_update=force_update,
+            using=using,
+            update_fields=update_fields,
+        )
 
     def merge_from(self, other):
         """Merge the data from other into self"""
