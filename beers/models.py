@@ -1,4 +1,3 @@
-from typing import Optional, Union, Sequence
 import logging
 
 from django.contrib.postgres.fields import JSONField, CITextField
@@ -108,25 +107,14 @@ class Manufacturer(models.Model):
             ),
         ]
 
-    def save(
-        self,
-        force_insert: bool = False,
-        force_update: bool = False,
-        using: Optional[str] = None,
-        update_fields: Optional[Union[Sequence[str], str]] = None,
-    ) -> None:
+    def save(self, *args, **kwargs):
         if not self.beermenus_slug:
             self.beermenus_slug = None
         if not self.taphunter_url:
             self.taphunter_url = None
         if not self.untappd_url:
             self.untappd_url = None
-        return super().save(
-            force_insert=force_insert,
-            force_update=force_update,
-            using=using,
-            update_fields=update_fields,
-        )
+        return super().save(*args, **kwargs)
 
     def merge_from(self, other):
         """Merge the data from other into self"""
@@ -301,14 +289,7 @@ class Beer(models.Model):
             ),
         ]
 
-    def save(
-        self,
-        force_insert: bool = False,
-        force_update: bool = False,
-        using: Optional[str] = None,
-        update_fields: Optional[Union[Sequence[str], str]] = None,
-    ) -> None:
-        super().save()
+    def save(self, *args, **kwargs):
         # force empty IDs to null to avoid running afoul of unique constraints
         if not self.untappd_url:
             self.untappd_url = None
@@ -322,12 +303,7 @@ class Beer(models.Model):
             self.taphunter_url = None
         if not self.beermenus_slug:
             self.beermenus_slug = None
-        return super().save(
-            force_insert=force_insert,
-            force_update=force_update,
-            using=using,
-            update_fields=update_fields,
-        )
+        return super().save(*args, **kwargs)
 
     def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
