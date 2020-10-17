@@ -398,3 +398,23 @@ def beer_form(request, beer_id=None):
         form = forms.BeerForm(instance=beer)
 
     return render(request, "beers/beer_form.html", {"form": form, "beer": beer})
+
+
+@login_required
+def style_form(request, style_id=None):
+    """Simple form for creating styles"""
+    if request.method == "POST":
+        form = forms.StyleForm(request.POST)
+        if form.is_valid():
+            style = form.save()
+            return redirect("edit_style", style_id=style.id)
+        else:
+            style = None
+    else:
+
+        style = None
+        if style_id:
+            style = dj_get_or_404(models.Style, id=style_id)
+        form = forms.StyleForm(instance=style)
+
+    return render(request, "beers/style_form.html", {"form": form, "style": style})
