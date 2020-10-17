@@ -6,7 +6,7 @@ from django.urls import path, re_path, include, reverse_lazy
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 
-from beers.views import StyleMergeView, BeerMergeView, ManufacturerMergeView, beer_form
+from beers.views import StyleMergeView, BeerMergeView, ManufacturerMergeView, beer_form, style_form
 from .users.views import UserViewSet, UserCreateViewSet
 
 
@@ -29,6 +29,8 @@ urlpatterns = [
     path("beers/", beer_form, name="create_beer"),
     path("beers/<int:beer_id>/", beer_form, name="edit_beer"),
     path("manufacturers/merge/", ManufacturerMergeView.as_view()),
+    path("styles/", style_form, name="create_style"),
+    path("styles/<int:style_id>/", style_form, name="edit_style"),
     # the 'api-root' from django rest-frameworks default router
     # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
     re_path(
