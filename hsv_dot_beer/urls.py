@@ -6,7 +6,13 @@ from django.urls import path, re_path, include, reverse_lazy
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 
-from beers.views import StyleMergeView, BeerMergeView, ManufacturerMergeView, beer_form, style_form
+from beers.views import (
+    StyleMergeView,
+    BeerMergeView,
+    ManufacturerMergeView,
+    beer_form,
+    style_form,
+)
 from .users.views import UserViewSet, UserCreateViewSet
 
 
