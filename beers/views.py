@@ -384,7 +384,13 @@ class ManufacturerMergeView(TemplateView):
 def beer_form(request, beer_id=None):
     """Simple form for creating beers"""
     if request.method == "POST":
-        form = forms.BeerForm(request.POST)
+        if beer_id:
+            form = forms.BeerForm(
+                request.POST,
+                instance=dj_get_or_404(models.Beer, id=beer_id),
+            )
+        else:
+            form = forms.BeerForm(request.POST)
         if form.is_valid():
             beer = form.save()
             return redirect("edit_beer", beer_id=beer.id)
@@ -404,7 +410,13 @@ def beer_form(request, beer_id=None):
 def style_form(request, style_id=None):
     """Simple form for creating styles"""
     if request.method == "POST":
-        form = forms.StyleForm(request.POST)
+        if style_id:
+            form = forms.StyleForm(
+                request.POST,
+                instance=dj_get_or_404(models.Style, id=style_id),
+            )
+        else:
+            form = forms.StyleForm(request.POST)
         if form.is_valid():
             style = form.save()
             return redirect("edit_style", style_id=style.id)
