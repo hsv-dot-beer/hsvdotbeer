@@ -1,0 +1,9 @@
+<h1>{% if style %}Edit{% else %}Create{% endif %} a style</h1>
+
+<form action="{% if style %}{% url 'edit_style' style.id %}{% else %}{% url 'create_style' %}{% endif %}"
+    method="post">
+    {% csrf_token %}
+    <table>{{ form.as_table }}</table>
+
+    <input type="submit" value="Save">
+</form>
