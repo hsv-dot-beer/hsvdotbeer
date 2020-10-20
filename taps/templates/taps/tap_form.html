@@ -1,0 +1,9 @@
+<h1>Set up tap number {{ tap.tap_number }} for {{ venue }}</h1>
+
+<form action="{% if tap.id %}{% url 'edit_tap' venue.id tap.id %}{% else %}{% url 'create_tap' venue.id %}{% endif %}"
+    method="post">
+    {% csrf_token %}
+    <table>{{ form.as_table }}</table>
+
+    <input type="submit" value="Save">
+</form>
