@@ -13,7 +13,7 @@ from beers.views import (
     beer_form,
     style_form,
 )
-from taps.views import tap_form
+from taps.views import tap_form, manufacturer_select_for_form, save_tap_form
 from .users.views import UserViewSet, UserCreateViewSet
 
 
@@ -38,8 +38,23 @@ urlpatterns = [
     path("manufacturers/merge/", ManufacturerMergeView.as_view()),
     path("styles/", style_form, name="create_style"),
     path("styles/<int:style_id>/", style_form, name="edit_style"),
-    path("venues/<int:venue_id>/taps/", tap_form, name="create_tap"),
+    path(
+        "venues/<int:venue_id>/taps/select-manufacturer/<int:tap_number>/",
+        manufacturer_select_for_form,
+        name="edit_tap_pick_mfg",
+    ),
+    path(
+        "venues/<int:venue_id>/taps/select-manufacturer/",
+        manufacturer_select_for_form,
+        name="create_tap_pick_mfg",
+    ),
     path("venues/<int:venue_id>/taps/<int:tap_number>/", tap_form, name="edit_tap"),
+    path("venues/<int:venue_id>/taps/", tap_form, name="create_tap"),
+    path(
+        "venues/<int:venue_id>/taps/<int:tap_number>/save/",
+        save_tap_form,
+        name="edit_tap_save",
+    ),
     # the 'api-root' from django rest-frameworks default router
     # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
     re_path(

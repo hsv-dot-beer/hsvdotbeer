@@ -1,6 +1,6 @@
 """Basic beer forms"""
 
-from django.forms import ModelForm, ValidationError
+from django.forms import ModelForm, ValidationError, Form, ModelChoiceField
 
 from .models import Beer, Style, Manufacturer
 
@@ -78,3 +78,13 @@ class StyleForm(ModelForm):
         fields = [
             "name",
         ]
+
+
+class ManufacturerSelectForm(Form):
+    """Pick a manufacturer, any manufacturer!"""
+
+    manufacturer = ModelChoiceField(
+        queryset=Manufacturer.objects.order_by("name"),
+        label="Manufacturer/Brewer",
+        required=True,
+    )
