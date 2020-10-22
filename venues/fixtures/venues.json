@@ -498,7 +498,7 @@
         "time_zone": "America/Chicago",
         "website": "https://fractalbrewing.com",
         "facebook_page": "https://www.facebook.com/FractalBrewing/",
-        "twitter_handle": null,
+        "twitter_handle": "",
         "instagram_handle": "fractalbrewing",
         "tap_list_provider": "untappd",
         "untappd_url": "https://untappd.com/FractalBrewingProject",
