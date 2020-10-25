@@ -486,6 +486,33 @@
     }
 },
 {
+    "model": "venues.venue",
+    "pk": 23,
+    "fields": {
+        "name": "Fractal Brewing Project",
+        "address": "3200 Leeman Ferry Road",
+        "city": "Huntsville",
+        "state": "AL",
+        "postal_code": "35802",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "https://fractalbrewing.com",
+        "facebook_page": "https://www.facebook.com/FractalBrewing/",
+        "twitter_handle": "",
+        "instagram_handle": "fractalbrewing",
+        "tap_list_provider": "untappd",
+        "untappd_url": "https://untappd.com/FractalBrewingProject",
+        "email": "info@fractalbrewing.com",
+        "phone_number": "2564895520",
+        "logo_url": "https://hsv-dot-beer.s3.amazonaws.com/venues/png/fractalbrewing.png",
+        "slug": "fractalbrewing",
+        "on_downtown_craft_beer_trail": true,
+        "latitude": "34.6948382",
+        "longitude": "-86.593758",
+        "twitter_short_location_description": ""
+    }
+},
+{
     "model": "venues.venueapiconfiguration",
     "pk": 1,
     "fields": {
@@ -843,6 +870,26 @@
         "taplist_io_access_code": "",
         "beermenus_categories": "[\"local\", \"craft_beer\", \"domestic_draft\"]",
         "beermenus_slug": "52478-beauregard-s"
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 23,
+    "fields": {
+        "venue": 23,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": 28327,
+        "untappd_theme": 108878,
+        "untappd_categories": "[\"Beer on Tap at Fractal Brewing Project\"]",
+        "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": "",
+        "beermenus_categories": "[]",
+        "beermenus_slug": ""
     }
 }
 ]

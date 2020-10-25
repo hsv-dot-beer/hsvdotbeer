@@ -23,7 +23,7 @@ class TaplistDotIOParser(BaseTapListProvider):
     """Class to represent a Taplist.io Display."""
 
     provider_name = "taplist.io"
-    URL = "https://taplist.io/api/v1/displays/{0}"
+    URL = "https://api.taplist.io/api/v1/displays/{0}"
 
     def __init__(self, display_id=None, taplist_access_code=None):
         super().__init__()
