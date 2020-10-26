@@ -45,7 +45,12 @@ class VenueSerializer(CountryFieldMixin, serializers.ModelSerializer):
 
         # also marking the on_downtown_craft_beer_trail field as read-only
         # to protect us from ourselves
-        read_only_fields = ["untappd_url", "on_downtown_craft_beer_trail"]
+        read_only_fields = [
+            "untappd_url",
+            "on_downtown_craft_beer_trail",
+            "tap_list_last_check_time",
+            "tap_list_last_update_time",
+        ]
 
 
 class VenueBySlugSerializer(VenueSerializer):
