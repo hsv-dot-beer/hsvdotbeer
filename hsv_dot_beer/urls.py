@@ -23,7 +23,7 @@ router.register(r"users", UserCreateViewSet)
 
 urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
-    path("admin/", admin.site.urls),
+    path("beeradmin/", admin.site.urls),
     path("api/v1/", include(router.urls)),
     path("api/v1/venues/", include("venues.urls")),
     path("api/v1/events/", include("events.urls")),

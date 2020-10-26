@@ -70,6 +70,12 @@ class Venue(models.Model):
         related_name="venues_managed",
         through="VenueTapManager",
     )
+    tap_list_last_check_time = models.DateTimeField(
+        "The last time the venue's tap list was refreshed", blank=True, null=True
+    )
+    tap_list_last_update_time = models.DateTimeField(
+        "The last time the venue's tap list was updated", blank=True, null=True
+    )
 
     def __str__(self):
         return self.name

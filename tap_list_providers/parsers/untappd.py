@@ -1,5 +1,6 @@
 """Parse data from untappd"""
 import argparse
+import datetime
 from decimal import Decimal
 from pprint import PrettyPrinter
 import logging
@@ -12,6 +13,7 @@ from bs4 import BeautifulSoup
 import configurations
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
 from django.db.models import Q
+from pytz import UTC
 
 # boilerplate code necessary for launching outside manage.py
 try:
@@ -69,6 +71,7 @@ class UntappdParser(BaseTapListProvider):
         use_sequential_taps = any(
             tap_info["tap_number"] is None for tap_info in tap_list
         )
+        latest_timestamp = UTC.localize(datetime.datetime(1970, 1, 1, 12))
         for index, tap_info in enumerate(tap_list):
             # 1. get the tap
             # if the venue doesn't give tap numbers, just use a 1-based
@@ -82,9 +85,13 @@ class UntappdParser(BaseTapListProvider):
             except KeyError:
                 tap = Tap(venue=venue, tap_number=tap_number)
             if tap_info["added"]:
-                tap.time_added = tap_info["added"]
+                tap.time_added = dateutil.parser.parse(tap_info["added"])
+                if tap.time_added > latest_timestamp:
+                    latest_timestamp = tap.time_added
             if tap_info["updated"]:
-                tap.time_updated = tap_info["updated"]
+                tap.time_updated = dateutil.parser.parse(tap_info["updated"])
+                if tap.time_updated > latest_timestamp:
+                    latest_timestamp = tap.time_updated
             # 2. parse the manufacturer
             try:
                 manufacturer = manufacturers[tap_info["manufacturer"]["name"]]
@@ -112,6 +119,7 @@ class UntappdParser(BaseTapListProvider):
             # 4. assign the beer to the tap
             tap.beer = beer
             tap.save()
+        return latest_timestamp
 
     def parse_html_and_js(self, data):
         # Pull the relevant HTML from the JS.

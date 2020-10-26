@@ -4,6 +4,7 @@ from decimal import Decimal
 
 from django.core.management import call_command
 from django.test import TestCase
+from django.utils.timezone import now
 import responses
 
 from beers.models import Beer, Manufacturer
@@ -38,6 +39,7 @@ class CommandsTestCase(TestCase):
     @responses.activate
     def test_import_taphunter_data(self):
         """Test parsing the JSON data"""
+        timestamp = now()
         responses.add(
             responses.GET,
             TaphunterParser.URL.format(self.venue_cfg.taphunter_location),
@@ -132,3 +134,7 @@ class CommandsTestCase(TestCase):
                     3,
                     price_instance,
                 )
+        self.venue.refresh_from_db()
+        self.assertIsNotNone(self.venue.tap_list_last_check_time)
+        self.assertGreater(self.venue.tap_list_last_check_time, timestamp)
+        self.assertIsNotNone(self.venue.tap_list_last_update_time)

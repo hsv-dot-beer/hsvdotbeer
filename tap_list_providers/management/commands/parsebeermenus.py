@@ -18,5 +18,7 @@ class Command(BaseCommand):
         with transaction.atomic():
             for venue in tap_list_provider.get_venues():
                 self.stdout.write("Processing %s" % venue.name)
-                tap_list_provider.handle_venue(venue)
+                timestamp = tap_list_provider.handle_venue(venue)
+                tap_list_provider.update_venue_timestamps(venue, timestamp)
+
         self.stdout.write(self.style.SUCCESS("Done!"))
