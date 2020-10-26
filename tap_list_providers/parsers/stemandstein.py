@@ -1,4 +1,5 @@
 """HTML scraper for The Stem & Stein"""
+import datetime
 from urllib.parse import parse_qsl
 from html.parser import HTMLParser
 from decimal import Decimal
@@ -8,6 +9,8 @@ import os
 from bs4 import BeautifulSoup
 import requests
 import configurations
+import pytz
+from dateutil.parser import parse
 from django.db.models import Q
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
 
@@ -24,6 +27,7 @@ from beers.models import Manufacturer, Beer, ServingSize, BeerPrice
 from taps.models import Tap
 
 
+CENTRAL_TIME = pytz.timezone("America/Chicago")
 LOG = logging.getLogger(__name__)
 
 
@@ -133,6 +137,8 @@ class StemAndSteinParser(BaseTapListProvider):
         ).text
         beer_parser = BeautifulSoup(beer_html, "html.parser")
         jumbotron = beer_parser.find("div", {"class": "jumbotron"})
+        tap_table = beer_parser.find("table", {"id": "tapList"})
+        tap_body = tap_table.find("tbody")
         image_div = jumbotron.find(
             "div",
             {"style": "display:table-cell;vertical-align:top;width:17px;"},
@@ -190,6 +196,12 @@ class StemAndSteinParser(BaseTapListProvider):
             beer=beer,
             defaults={"price": price},
         )
+        time_tapped = None
+        for row in tap_body.find_all("tr"):
+            cells = list(row.find_all("td"))
+            if cells[-1].text.endswith("(so far)"):
+                time_tapped = CENTRAL_TIME.localize(parse(cells[0].text))
+        return time_tapped
 
     def handle_venue(self, venue):
         self.venue = venue
@@ -199,8 +211,11 @@ class StemAndSteinParser(BaseTapListProvider):
         existing_taps = {i.tap_number: i for i in venue.taps.all()}
         LOG.debug("existing taps %s", existing_taps)
         taps_hit = []
+        latest_time = CENTRAL_TIME.localize(datetime.datetime(1970, 1, 1, 0))
         for tap_number, beer in taps.items():
-            self.fill_in_beer_details(beer)
+            time_tapped = self.fill_in_beer_details(beer)
+            if time_tapped > latest_time:
+                latest_time = time_tapped
             try:
                 tap = existing_taps[tap_number]
             except KeyError:
@@ -209,9 +224,11 @@ class StemAndSteinParser(BaseTapListProvider):
                     tap_number=tap_number,
                 )
             tap.beer = beer
+            tap.time_added = time_tapped
             tap.save()
             taps_hit.append(tap.tap_number)
         LOG.debug("Deleting all taps except %s", taps_hit)
         Tap.objects.filter(venue=venue,).exclude(
             tap_number__in=taps_hit,
         ).delete()
+        return latest_time

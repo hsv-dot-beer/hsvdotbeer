@@ -72,6 +72,7 @@ class TaplistDotIOParser(BaseTapListProvider):
             if current_tap.time_updated != timestamp:
                 current_tap.time_updated = timestamp
                 current_tap.save()
+        return timestamp
 
     def parse_tap(self, tap_dict):
         if tap_dict["current_keg"] is None:
