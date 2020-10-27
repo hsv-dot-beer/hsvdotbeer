@@ -121,7 +121,7 @@ class CommandsTestCase(TestCase):
         self.venue.refresh_from_db()
         self.assertIsNotNone(self.venue.tap_list_last_check_time)
         self.assertGreater(self.venue.tap_list_last_check_time, timestamp)
-        self.assertIsNotNone(self.venue.tap_list_last_update_time)
+        self.assertIsNone(self.venue.tap_list_last_update_time)
 
 
 class StyleParsingTestCase(TestCase):
