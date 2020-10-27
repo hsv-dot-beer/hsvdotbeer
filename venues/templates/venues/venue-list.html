@@ -1,0 +1,4 @@
+<h1>Pick a taproom</h1>
+<div class="venues">
+{% for venue in venues %}<div class="venue"><a href="{% url 'venue_table' venue.id %}">{{ venue.name }}</a></div>{% endfor %}
+</div>

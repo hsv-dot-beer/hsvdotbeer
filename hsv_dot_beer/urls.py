@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic.base import RedirectView
-from django.urls import path, re_path, include, reverse_lazy
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 
@@ -16,6 +15,7 @@ from beers.views import (
 from taps.views import tap_form, manufacturer_select_for_form, save_tap_form
 from venues.views import venue_table
 from .users.views import UserViewSet, UserCreateViewSet
+from .views import home
 
 
 router = DefaultRouter()
@@ -56,11 +56,6 @@ urlpatterns = [
         save_tap_form,
         name="edit_tap_save",
     ),
-    path('venues/<int:venue_id>/', venue_table, name='venue_table'),
-    # the 'api-root' from django rest-frameworks default router
-    # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
-    re_path(
-        r"^$",
-        RedirectView.as_view(url=reverse_lazy("api-root"), permanent=False),
-    ),
+    path("venues/<int:venue_id>/", venue_table, name="venue_table"),
+    path("", home),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
