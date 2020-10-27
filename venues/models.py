@@ -3,6 +3,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
+from django.shortcuts import reverse
 from timezone_field.fields import TimeZoneField
 from django_countries.fields import CountryField
 
@@ -76,6 +77,9 @@ class Venue(models.Model):
     tap_list_last_update_time = models.DateTimeField(
         "The last time the venue's tap list was updated", blank=True, null=True
     )
+
+    def get_absolute_url(self) -> str:
+        return reverse("venue_table", args=[self.id])
 
     def __str__(self):
         return self.name
