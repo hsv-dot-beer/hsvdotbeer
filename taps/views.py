@@ -62,7 +62,7 @@ def tap_form(request, venue_id: int, tap_number: int = None):
     else:
         venue = get_object_or_404(
             Venue.objects.prefetch_related("managers").filter(
-                managers__user=request.user,
+                managers=request.user,
             ),
             id=venue_id,
         )
@@ -115,7 +115,7 @@ def save_tap_form(request, venue_id: int, tap_number: int):
         else:
             venue = get_object_or_404(
                 Venue.objects.prefetch_related("managers").filter(
-                    managers__user=request.user,
+                    managers=request.user,
                 ),
                 id=venue_id,
             )
