@@ -1,11 +1,15 @@
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from django.db.models import Prefetch
+from django.shortcuts import render, get_object_or_404
 from rest_framework.exceptions import NotFound
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from taps.models import Tap
+from venues.models import Venue
 from beers.views import CachedListMixin, BeerViewSet
 from beers.filters import BeerFilterSet
 from . import serializers
@@ -69,3 +73,23 @@ class VenueAPIConfigurationViewSet(CachedListMixin, ModelViewSet):
     serializer_class = serializers.VenueAPIConfigurationSerializer
     queryset = models.VenueAPIConfiguration.objects.all()
     permission_classes = (IsAdminUser,)
+
+
+def venue_table(request, venue_id: int):
+    qs = Venue.objects.prefetch_related(
+        Prefetch(
+            "taps",
+            queryset=Tap.objects.select_related(
+                "beer__manufacturer",
+                "beer__style",
+            ).order_by("tap_number"),
+        )
+    )
+    if not request.user.is_superuser:
+        qs = qs.filter(managers=request.user)
+    venue = get_object_or_404(qs, id=venue_id)
+    return render(
+        request,
+        "venues/venue-main.html",
+        {"venue": venue},
+    )

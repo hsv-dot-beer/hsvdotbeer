@@ -14,6 +14,7 @@ from beers.views import (
     style_form,
 )
 from taps.views import tap_form, manufacturer_select_for_form, save_tap_form
+from venues.views import venue_table
 from .users.views import UserViewSet, UserCreateViewSet
 
 
@@ -55,6 +56,7 @@ urlpatterns = [
         save_tap_form,
         name="edit_tap_save",
     ),
+    path('venues/<int:venue_id>/', venue_table, name='venue_table'),
     # the 'api-root' from django rest-frameworks default router
     # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
     re_path(

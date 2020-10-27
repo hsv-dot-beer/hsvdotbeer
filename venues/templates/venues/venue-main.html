@@ -11,7 +11,7 @@
     <span class="tap-number-cell">{{ tap.tap_number }}</span>
     <span class="beer-cell">{{ tap.beer }}{% if tap.beer %}<span class="manufacturer">by {{ tap.beer.manufacturer }}{% endif %}</span>
     <span class="style-cell">{% if tap.beer %}{{ tap.beer.style }}{% else %}N/A{% endif %}</span>
-    <span class="timestamp-cell">{% if tap.beer %}{{ tap.beer.time_added }} ({{ tap.beer.time_added | timesince }}){% else %}N/A{% endif %}</span>
-    <span class="action-cell">{% comment %}TODO: add an icon here{% endcomment %}<a href="{% url 'edit_tap_pick_mfg' tap.venue.id tap.tap_number %}">Edit</a> {% comment %}TODO add clear link{% endcomment %}</span>
+    <span class="timestamp-cell">{% if tap.beer and tap.time_added %}{{ tap.time_added }} ({{ tap.time_added | timesince }} ago){% else %}N/A{% endif %}</span>
+    <span class="action-cell">{% comment %}TODO: add an icon here{% endcomment %}<a href="{% url 'edit_tap_pick_mfg' venue.id tap.tap_number %}">Edit</a> {% comment %}TODO add clear link{% endcomment %}</span>
 </div>{% endfor %}
 <div class='new-tap'><a href="{% url 'create_tap_pick_mfg' venue.id %}">Add another tap</a></div>

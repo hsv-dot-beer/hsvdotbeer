@@ -1,9 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.db.models import Max, Prefetch
 from django.db import transaction
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseNotAllowed, HttpResponse
+from django.http import HttpResponseNotAllowed
 from django.utils.timezone import now
 
 from beers.forms import ManufacturerSelectForm
@@ -123,9 +123,11 @@ def save_tap_form(request, venue_id: int, tap_number: int):
             tap = models.Tap.objects.get(venue=venue, tap_number=tap_number)
         except models.Tap.DoesNotExist:
             tap = models.Tap(venue=venue, tap_number=tap_number)
+        original_beer_id = tap.beer_id
         form = forms.TapForm(request.POST, instance=tap)
         if form.is_valid():
-            if tap.beer_id != form.cleaned_data['beer'].id:
+            if original_beer_id != form.cleaned_data["beer"].id:
+                print(f"changing timestamp from {tap.time_added} to {timestamp}")
                 tap.time_added = timestamp
             tap.time_updated = timestamp
             tap = form.save()
@@ -138,5 +140,4 @@ def save_tap_form(request, venue_id: int, tap_number: int):
                 "taps/tap_form.html",
                 {"form": form, "tap": tap, "venue": venue},
             )
-    # TODO return to the redirect page
-    return HttpResponse("Success! Will go to the venue page eventually")
+    return redirect(reverse("venue_table", args=[venue.id]))
