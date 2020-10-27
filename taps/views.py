@@ -4,6 +4,7 @@ from django.db.models import Max, Prefetch
 from django.db import transaction
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotAllowed, HttpResponse
+from django.utils.timezone import now
 
 from beers.forms import ManufacturerSelectForm
 from venues.models import Venue, VenueTapManager
@@ -105,7 +106,7 @@ def tap_form(request, venue_id: int, tap_number: int = None):
 
 @login_required
 def save_tap_form(request, venue_id: int, tap_number: int):
-    # TODO validate the tap form and return to the venue main screen
+    timestamp = now()
     if request.method != "POST":
         return HttpResponseNotAllowed("Only POSTs allowed here")
     with transaction.atomic():
@@ -124,6 +125,9 @@ def save_tap_form(request, venue_id: int, tap_number: int):
             tap = models.Tap(venue=venue, tap_number=tap_number)
         form = forms.TapForm(request.POST, instance=tap)
         if form.is_valid():
+            if tap.beer_id != form.cleaned_data['beer'].id:
+                tap.time_added = timestamp
+            tap.time_updated = timestamp
             tap = form.save()
         else:
             return render(
