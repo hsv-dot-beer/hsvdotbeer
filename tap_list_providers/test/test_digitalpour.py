@@ -5,6 +5,7 @@ from decimal import Decimal
 
 from django.core.management import call_command
 from django.test import TestCase
+from django.utils.timezone import now
 import responses
 
 from beers.models import Beer, Manufacturer
@@ -40,6 +41,7 @@ class CommandsTestCase(TestCase):
     @responses.activate
     def test_import_digitalpour_data(self):
         """Test parsing the JSON data"""
+        timestamp = now()
         responses.add(
             responses.GET,
             DigitalPourParser.URL.format(
@@ -146,6 +148,10 @@ class CommandsTestCase(TestCase):
                 "https://s3.amazonaws.com/digitalpourproducerlogos/"
                 "57ac9c3c5e002c172c8a6ede.jpg",
             )
+        self.venue.refresh_from_db()
+        self.assertIsNotNone(self.venue.tap_list_last_check_time)
+        self.assertGreater(self.venue.tap_list_last_check_time, timestamp)
+        self.assertIsNotNone(self.venue.tap_list_last_update_time)
 
     def test_digital_pour_mead(self):
         tap = {

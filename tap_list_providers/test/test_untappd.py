@@ -5,6 +5,7 @@ from unittest import mock
 
 from django.core.management import call_command
 from django.test import TestCase
+from django.utils.timezone import now
 import responses
 
 from beers.models import Beer, Manufacturer
@@ -42,7 +43,8 @@ class CommandsTestCase(TestCase):
     @responses.activate
     @mock.patch("tap_list_providers.base.look_up_beer")
     def test_import_untappd_data(self, mock_beer_lookup):
-        """Test parsing the JSON data"""
+        """Test parsing the HTML data"""
+        timestamp = now()
         responses.add(
             responses.GET,
             UntappdParser.URL.format(
@@ -116,6 +118,10 @@ class CommandsTestCase(TestCase):
                     price_instance,
                 )
             mock_beer_lookup.delay.assert_called_with(tap.beer.id)
+        self.venue.refresh_from_db()
+        self.assertIsNotNone(self.venue.tap_list_last_check_time)
+        self.assertGreater(self.venue.tap_list_last_check_time, timestamp)
+        self.assertIsNotNone(self.venue.tap_list_last_update_time)
 
 
 class StyleParsingTestCase(TestCase):

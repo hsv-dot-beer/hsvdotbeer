@@ -4,6 +4,7 @@ from decimal import Decimal
 
 from django.core.management import call_command
 from django.test import TestCase
+from django.utils.timezone import now
 import responses
 
 from beers.models import Beer, Manufacturer, ManufacturerAlternateName
@@ -71,6 +72,9 @@ class CommandsTestCase(TestCase):
     @responses.activate
     def test_import_beermenus_data(self):
         """Test parsing the HTML and JS data"""
+        timestamp = now()
+        self.assertIsNone(self.venue.tap_list_last_check_time)
+        self.assertIsNone(self.venue.tap_list_last_update_time)
         for url, name, html in self.locations:
             responses.add(
                 responses.GET,
@@ -152,3 +156,7 @@ class CommandsTestCase(TestCase):
                 tap.beer.manufacturer.name,
                 "Rocket Republic Brewing Company",
             )
+        self.venue.refresh_from_db()
+        self.assertIsNotNone(self.venue.tap_list_last_check_time)
+        self.assertGreater(self.venue.tap_list_last_check_time, timestamp)
+        self.assertIsNotNone(self.venue.tap_list_last_update_time)
