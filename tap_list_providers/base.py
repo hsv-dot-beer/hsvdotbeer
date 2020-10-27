@@ -103,7 +103,7 @@ class BaseTapListProvider:
     ) -> None:
         """Update the venue last checked and last updated times"""
         LOG.debug(
-            "Setting check time for %s to %s and update time for to %s",
+            "Setting check time for %s to %s and update time to %s",
             venue,
             self.check_timestamp,
             update_time,
