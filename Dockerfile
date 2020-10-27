@@ -8,7 +8,7 @@ RUN pip install pipenv
 COPY . /code
 WORKDIR /code
 
-RUN apt-get update && apt-get -y install libmemcached-dev
+RUN apt-get update && apt-get -y install libmemcached-dev npm
 
 # install deps from Pipfile.lock
 RUN pipenv install
