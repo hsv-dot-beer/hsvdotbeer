@@ -1,4 +1,4 @@
 <h1>Pick a taproom</h1>
 <div class="venues">
-{% for venue in venues %}<div class="venue"><a href="{% url 'venue_table' venue.id %}">{{ venue.name }}</a></div>{% endfor %}
+{% for venue in venues %}<div class="venue"><a href="{% url 'venue_table' venue.id %}">{{ venue.name }}</a>{% if venue.tap_list_last_update_time %} (Last updated {{ venue.tap_list_last_update_time | timesince }} ago){% endif %}</div>{% endfor %}
 </div>
