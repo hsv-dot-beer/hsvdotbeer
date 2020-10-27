@@ -23,6 +23,7 @@ class Common(Configuration):
         "django_filters",  # for filtering rest endpoints
         "django_countries",  # for ease of using countries
         "django_celery_beat",  # use django admin to set up scheduled tasks
+        "tailwind",  # make things less ugly
         # Your apps
         "hsv_dot_beer.users",
         "venues",
@@ -30,6 +31,7 @@ class Common(Configuration):
         "beers",
         "taps",
         "tap_list_providers",
+        "theme",
     )
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
@@ -82,6 +84,9 @@ class Common(Configuration):
         "django.contrib.staticfiles.finders.FileSystemFinder",
         "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     )
+
+    # Theming
+    TAILWIND_APP_NAME = "theme"
 
     # Media files
     MEDIA_ROOT = join(os.path.dirname(BASE_DIR), "media")
