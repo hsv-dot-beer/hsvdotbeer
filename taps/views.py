@@ -129,6 +129,9 @@ def save_tap_form(request, venue_id: int, tap_number: int):
                 tap.time_added = timestamp
             tap.time_updated = timestamp
             tap = form.save()
+            tap.venue.tap_list_last_update_time = timestamp
+            tap.venue.tap_list_last_check_time = timestamp
+            tap.venue.save()
         else:
             return render(
                 request,
