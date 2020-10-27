@@ -32,6 +32,7 @@ pylibmc = "*"
 django-bmemcached = "*"
 python-binary-memcached = "*"
 python-twitter = "*"
+django-tailwind = "*"
 
 [dev-packages]
 ipdb = "*"
