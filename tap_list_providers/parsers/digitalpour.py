@@ -65,6 +65,7 @@ class DigitalPourParser(BaseTapListProvider):
             tap.time_added = tap_info["added"]
             tap.time_updated = tap_info["updated"]
             if tap.time_updated and tap.time_updated > self.update_date:
+                LOG.debug("Updating venue timestamp to %s", tap.time_updated)
                 self.update_date = tap.time_updated
             tap.estimated_percent_remaining = tap_info["percent_full"]
             if tap_info["gas_type"] in [i[0] for i in Tap.GAS_CHOICES]:
@@ -283,6 +284,11 @@ class DigitalPourParser(BaseTapListProvider):
             "percent_full": tap["MenuItemProductDetail"]["PercentFull"],
             "gas_type": (tap["MenuItemProductDetail"]["KegType"] or "").lower(),
         }
+        if refresh_ts := tap.get("LastRefreshDateTime"):
+            ret["updated"] = dateutil.parser.parse(refresh_ts)
+            if not ret["updated"].tzinfo:
+                ret["updated"] = UTC.localize(ret["updated"])
+            LOG.debug("Tap time updated set to %s", ret["updated"])
         return ret
 
     def parse_pricing(self, tap):
