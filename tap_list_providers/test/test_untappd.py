@@ -1,5 +1,6 @@
 """Test the parsing of untappd data"""
 import os
+import datetime
 from decimal import Decimal
 from unittest import mock
 
@@ -7,6 +8,7 @@ from django.core.management import call_command
 from django.test import TestCase
 from django.utils.timezone import now
 import responses
+from pytz import timezone
 
 from beers.models import Beer, Manufacturer
 from beers.test.factories import StyleFactory, StyleAlternateNameFactory
@@ -121,7 +123,11 @@ class CommandsTestCase(TestCase):
         self.venue.refresh_from_db()
         self.assertIsNotNone(self.venue.tap_list_last_check_time)
         self.assertGreater(self.venue.tap_list_last_check_time, timestamp)
-        self.assertIsNone(self.venue.tap_list_last_update_time)
+        # Feb  5,  6:55 PM CST
+        self.assertEqual(
+            self.venue.tap_list_last_update_time,
+            timezone("America/Chicago").localize(datetime.datetime(2020, 2, 5, 18, 55)),
+        )
 
 
 class StyleParsingTestCase(TestCase):

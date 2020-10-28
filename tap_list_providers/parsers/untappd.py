@@ -8,9 +8,11 @@ import os
 import re
 
 import dateutil.parser
+from dateutil.relativedelta import relativedelta
 import requests
 from bs4 import BeautifulSoup
 import configurations
+from django.utils.timezone import now
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
 from django.db.models import Q
 from pytz import UTC
@@ -87,10 +89,18 @@ class UntappdParser(BaseTapListProvider):
             if tap_info["added"]:
                 tap.time_added = dateutil.parser.parse(tap_info["added"])
                 if tap.time_added > latest_timestamp:
+                    LOG.debug(
+                        "latest timestamp updated to %s (added)",
+                        tap.time_updated,
+                    )
                     latest_timestamp = tap.time_added
             if tap_info["updated"]:
                 tap.time_updated = dateutil.parser.parse(tap_info["updated"])
                 if tap.time_updated > latest_timestamp:
+                    LOG.debug(
+                        "latest timestamp updated to %s (updated)",
+                        tap.time_updated,
+                    )
                     latest_timestamp = tap.time_updated
             # 2. parse the manufacturer
             try:
@@ -419,8 +429,9 @@ class UntappdParser(BaseTapListProvider):
             updated = None
             menus = self.soup.find_all("div", {"class": "menu-info"})
             for menu in menus:
-                if "Tap List" in menu.text:
-                    updated_str = menu.find("time").text
+                if time_element := menu.find("time"):
+                    updated_str = time_element.text
+                    LOG.debug("updated time: %s", updated_str)
                     if updated_str.endswith("ST") or updated_str.endswith("DT"):
                         # it isn't in UTC. Grr.
                         # for now, just support CONUS time zones
@@ -434,14 +445,23 @@ class UntappdParser(BaseTapListProvider):
                             "PST": -8 * 3600,
                             "PDT": -7 * 3600,
                         }
-                        updated = dateutil.parser.parse(updated_str, tzinfos=tzinfos)
+                        list_updated = dateutil.parser.parse(
+                            updated_str,
+                            tzinfos=tzinfos,
+                        )
                     else:
-                        updated = dateutil.parser.parse(updated_str)
-                    updated = updated.isoformat()
+                        list_updated = dateutil.parser.parse(updated_str)
+                    # HACK: if the time is in the future, rewind by a year
+                    if list_updated > now():
+                        list_updated = list_updated - relativedelta(years=1)
+                    if updated is None or list_updated > updated:
+                        LOG.debug("setting tap list updated to %s", list_updated)
+                        updated = list_updated
 
             for entry in entries:
                 tap_info = self.parse_tap(entry)
-                tap_info["updated"] = updated
+                tap_info["updated"] = updated.isoformat()
+                LOG.debug("Set timestamp to %s", updated)
                 ret.append(tap_info)
         return ret
 

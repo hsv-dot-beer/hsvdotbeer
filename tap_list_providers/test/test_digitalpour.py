@@ -6,6 +6,7 @@ from decimal import Decimal
 from django.core.management import call_command
 from django.test import TestCase
 from django.utils.timezone import now
+from dateutil.parser import parse
 import responses
 
 from beers.models import Beer, Manufacturer
@@ -494,3 +495,51 @@ class CommandsTestCase(TestCase):
         self.assertEqual(producer["name"], "Redstone", producer)
         beer = parser.parse_beer(tap)
         self.assertEqual(beer["name"], "Passion Fruit Nectar", beer)
+
+
+class TimeUpdatedTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.venue = VenueFactory(tap_list_provider=DigitalPourParser.provider_name)
+        cls.venue_cfg = VenueAPIConfiguration.objects.create(
+            venue=cls.venue,
+            url="https://localhost:8000",
+            digital_pour_venue_id=12345,
+            digital_pour_location_number=1,
+        )
+        with open(
+            os.path.join(
+                os.path.dirname(BASE_DIR),
+                "tap_list_providers",
+                "example_data",
+                "rocket_city_craft_beer_2020.json",
+            ),
+            "rb",
+        ) as json_file:
+            cls.json_data = json.loads(json_file.read())
+
+    @responses.activate
+    def test_updated_time(self):
+        responses.add(
+            responses.GET,
+            DigitalPourParser.URL.format(
+                self.venue_cfg.digital_pour_venue_id,
+                self.venue_cfg.digital_pour_location_number,
+                DigitalPourParser.APIKEY,
+            ),
+            json=self.json_data,
+            status=200,
+        )
+        self.assertFalse(Tap.objects.exists())
+        self.assertEqual(Venue.objects.count(), 1)
+        self.assertFalse(Beer.objects.exists())
+        self.assertFalse(Manufacturer.objects.exists())
+        args = []
+        opts = {}
+        call_command("parsedigitalpour", *args, **opts)
+        self.venue.refresh_from_db()
+        self.assertEqual(
+            self.venue.tap_list_last_update_time,
+            parse("2020-10-28T19:28:32.747Z"),
+        )
