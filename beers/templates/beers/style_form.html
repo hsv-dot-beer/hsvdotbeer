@@ -1,3 +1,6 @@
+{% extends "theme/base.html" %}
+
+{% block content %}
 <h1>{% if style %}Edit{% else %}Create{% endif %} a style</h1>
 
 <form action="{% if style %}{% url 'edit_style' style.id %}{% else %}{% url 'create_style' %}{% endif %}"
@@ -7,3 +10,4 @@
 
     <input type="submit" value="Save">
 </form>
+{% endblock %}

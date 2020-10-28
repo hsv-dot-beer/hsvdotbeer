@@ -1,3 +1,6 @@
+{% extends "theme/base.html" %}
+
+{% block content %}
 <h1>Set up tap number {{ tap.tap_number }} for {{ venue }}</h1>
 
 <form action="{% url 'edit_tap_save' venue.id tap.tap_number %}" method="post">
@@ -6,3 +9,4 @@
 
     <input type="submit" value="Save">
 </form>
+{% endblock %}

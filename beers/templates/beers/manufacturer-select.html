@@ -1,3 +1,6 @@
+{% extends "theme/base.html" %}
+
+{% block content %}
 <h1>Choose a manufacturer</h1>
 
 <form action="{% if tap_number %}{% url 'edit_tap' venue.id tap_number %}{% else %}{% url 'create_tap' venue.id %}{% endif %}"
@@ -7,3 +10,4 @@
 
     <input type="submit" value="Save">
 </form>
+{% endblock %}

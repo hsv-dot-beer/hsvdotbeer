@@ -1,3 +1,6 @@
+{% extends "theme/base.html" %}
+
+{% block content %}
 <h1>{{ venue.name }}</h1>
 
 <div class='table-header'>
@@ -15,3 +18,4 @@
     <span class="action-cell">{% comment %}TODO: add an icon here{% endcomment %}<a href="{% url 'edit_tap_pick_mfg' venue.id tap.tap_number %}">Edit</a> {% comment %}TODO add clear link{% endcomment %}</span>
 </div>{% endfor %}
 <div class='new-tap'><a href="{% url 'create_tap_pick_mfg' venue.id %}">Add another tap</a></div>
+{% endblock %}

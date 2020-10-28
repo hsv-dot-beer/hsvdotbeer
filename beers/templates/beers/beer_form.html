@@ -1,9 +1,13 @@
+{% extends "theme/base.html" %}
+
+{% block content %}
 <h1>{% if beer %}Edit{% else %}Create{% endif %} a beer</h1>
 
 <form action="{% if beer %}{% url 'edit_beer' beer.id %}{% else %}{% url 'create_beer' %}{% endif %}"
     method="post">
     {% csrf_token %}
     <table>{{ form.as_table }}</table>
-    
+
     <input type="submit" value="Save">
 </form>
+{% endblock %}
