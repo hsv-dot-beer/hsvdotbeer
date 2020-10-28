@@ -115,3 +115,4 @@ venv.bak/
 
 # visual studio code
 .vscode
+theme/static/
