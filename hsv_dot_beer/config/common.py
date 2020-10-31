@@ -9,6 +9,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class Common(Configuration):
 
+    IS_ALABAMA_DOT_BEER = os.environ.get("environment", "").casefold() == "alabama.beer"
+
     INSTALLED_APPS = (
         "django.contrib.admin",
         "django.contrib.auth",
@@ -108,6 +110,7 @@ class Common(Configuration):
                     "django.template.context_processors.request",
                     "django.contrib.auth.context_processors.auth",
                     "django.contrib.messages.context_processors.messages",
+                    "hsv_dot_beer.context_processors.add_al_dot_beer_to_context",
                 ],
             },
         },
