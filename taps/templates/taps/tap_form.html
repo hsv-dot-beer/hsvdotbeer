@@ -1,6 +1,8 @@
 {% extends "theme/base.html" %}
 {% load tailwind_filters %}
 
+{% block title %}{{ block.super }}: Configure tap {{ tap.tap_number }} at {{ tap.venue }}{% endblock %}
+
 {% block content %}
 <h1 class="text-2xl">Set up tap number {{ tap.tap_number }} for {{ venue }}</h1>
 

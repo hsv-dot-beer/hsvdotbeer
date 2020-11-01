@@ -1,4 +1,7 @@
-{% extends "theme/base.html" %} {% block content %}
+{% extends "theme/base.html" %}
+{% block title %}{{ block.super }}: Select a taproom{% endblock %}
+
+{% block content %}
 <h1 class="text-3xl">Pick a taproom</h1>
 <div class="flex grid gap-4 grid-cols-1 md:grid-cols-2">
   <div class="h-12 flex items-center justify-items-start text-2xl">Name</div>

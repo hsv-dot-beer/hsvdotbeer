@@ -1,5 +1,8 @@
 {% extends "theme/base.html" %}
 
+{% block title %}{{ block.super }}: What's on tap at {{ venue.name }}{% endblock %}
+
+
 {% block content %}
 <h1 class="text-3xl">{{ venue.name }}</h1>
 
