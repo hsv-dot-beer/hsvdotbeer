@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class Common(Configuration):
 
-    IS_ALABAMA_DOT_BEER = os.environ.get("environment", "").casefold() == "alabama.beer"
+    IS_ALABAMA_DOT_BEER = os.environ.get("ENVIRONMENT", "").casefold() == "alabama.beer"
 
     INSTALLED_APPS = (
         "django.contrib.admin",
