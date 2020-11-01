@@ -34,6 +34,12 @@
           >
             Home
           </a>
+		  <a
+            href="{% url 'api-root' %}"
+            class="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-200 mr-4"
+          >
+            API Browser
+          </a>
 		  {% if user.is_staff %}
           <a
             href="{% url 'admin:index' %}"
