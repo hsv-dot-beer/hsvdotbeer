@@ -226,7 +226,7 @@ class Beer(models.Model):
         "Link to the beer on the manufacturer's website", blank=True, null=True
     )
     automatic_updates_blocked = models.NullBooleanField(default=False)
-    taphunter_url = models.URLField("TapHunter URL", blank=True, null=True)
+    taphunter_url = models.URLField("TapHunter URL (if known)", blank=True, null=True)
     stem_and_stein_pk = models.PositiveIntegerField(blank=True, null=True)
     taplist_io_pk = models.PositiveIntegerField(blank=True, null=True)
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
