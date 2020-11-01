@@ -2,7 +2,7 @@
 {% load tailwind_filters %}
 
 {% block content %}
-<h1>Set up tap number {{ tap.tap_number }} for {{ venue }}</h1>
+<h1 class="text-2xl">Set up tap number {{ tap.tap_number }} for {{ venue }}</h1>
 
 <form action="{% url 'edit_tap_save' venue.id tap.tap_number %}" method="post">
     {% csrf_token %}
@@ -12,6 +12,6 @@
 </form>
 
 <div class="text-large">
-    Don't see the beer you're looking for? <a class="text-blue-400" href="{% url 'create_beer' %}">Add it</a>
+    Don't see the beer you're looking for? <a class="text-blue-400" href="{% url 'create_beer' %}">Add it.</a>
 </div>
 {% endblock %}
