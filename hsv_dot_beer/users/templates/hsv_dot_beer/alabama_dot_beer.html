@@ -1,0 +1,18 @@
+{% extends 'theme/base.html' %}
+{% load static %}
+{% block content %}
+<h1 class="text-2xl">Welcome to the alabama.beer backend page!</h1>
+
+<div>If you're here to enter beers for your taproom, <a class="text-blue-400" href="{% url 'login' %}">log in</a> first.</div>
+<div>If you just want to play with the API, you can <a class="text-blue-400" href="{% url 'api-root' %}">browse the API<a> and look around.</div>
+<div>Otherwise, download the apps!</div>
+<div class="flex">
+    <div class="flex-1">
+        <a href="https://apps.apple.com/us/app/id1523704536"><img src="{% static 'hsv_dot_beer/png/apple_app_store.png' %}" title="Apple App Store" alt="Download on the Apple App Store"></a>
+    </div>
+    <div class="flex-1">
+        <a href="https://play.google.com/store/apps/details?id=org.alabamabrewers.albeertrail"><img src="{% static 'hsv_dot_beer/png/google_play.png' %}" title="Google Play" alt="Download the Android App on Google Play"></a>
+    </div>
+</div>
+
+{% endblock %}
