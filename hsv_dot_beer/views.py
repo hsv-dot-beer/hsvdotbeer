@@ -13,5 +13,5 @@ def home(request):
     else:
         venues_managed = list(request.user.venues_managed.order_by("name"))
         if len(venues_managed) == 1:
-            return redirect("venue_table", args=[venues_managed[0].id])
+            return redirect("venue_table", venue_id=venues_managed[0].id)
     return render(request, "venues/venue-list.html", {"venues": venues_managed})
