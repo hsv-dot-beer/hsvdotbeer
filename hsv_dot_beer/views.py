@@ -1,11 +1,13 @@
+from django.conf import settings
 from django.shortcuts import redirect, render
 from venues.models import Venue
 
 
 def home(request):
     if request.user.is_anonymous:
-        # redirect anonymous users to the browseable API
-        return redirect("api-root")
+        if settings.IS_ALABAMA_DOT_BEER:
+            return render(request, "hsv_dot_beer/alabama_dot_beer.html")
+        return render(request, "hsv_dot_beer/home.html")
     if request.user.is_superuser:
         venues_managed = Venue.objects.order_by("name")
     else:
