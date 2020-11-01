@@ -2,7 +2,7 @@
 {% load tailwind_filters %}
 
 {% block content %}
-<h1>{% if beer %}Edit{% else %}Create{% endif %} a beer</h1>
+<h1 class="text-2xl">{% if beer %}Edit{% else %}Create{% endif %} a beer</h1>
 
 <form action="{% if beer %}{% url 'edit_beer' beer.id %}{% else %}{% url 'create_beer' %}{% endif %}"
     method="post">
