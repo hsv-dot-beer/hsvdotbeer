@@ -7,7 +7,11 @@
 {% block content %}
 <h1 class="text-2xl">Welcome to the alabama.beer backend page!</h1>
 
+{% if user.is_anonymous %}
 <div>If you're here to enter beers for your taproom, <a class="text-blue-400" href="{% url 'login' %}">log in</a> first.</div>
+{% else %}
+<div class="text-red-600">Sorry, your user account is not configured to manage any taprooms. Please ask the alabama.beer admins for help</div>
+{% endif %}
 <div>If you just want to play with the API, you can <a class="text-blue-400" href="{% url 'api-root' %}">browse the API<a> and look around.</div>
 <div>Otherwise, download the apps!</div>
 <div class="flex">

@@ -49,6 +49,7 @@ class TestHome(TestCase):
                 response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed("hsv_dot_beer/home.html")
+        self.assertNotIn(b"Sorry, your user account is not", response.content)
 
     def test_anonymous_al(self):
         with self.settings(IS_ALABAMA_DOT_BEER=False):
@@ -56,3 +57,24 @@ class TestHome(TestCase):
                 response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed("hsv_dot_beer/alabama_dot_beer.html")
+        self.assertNotIn(b"Sorry, your user account is not", response.content)
+
+    def test_unassigned_hsv(self):
+        user = UserFactory(is_superuser=False)
+        self.client.force_login(user)
+        with self.settings(IS_ALABAMA_DOT_BEER=False):
+            with self.assertNumQueries(self.expected_queries):
+                response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed("hsv_dot_beer/home.html")
+        self.assertIn(b"Sorry, your user account is not", response.content)
+
+    def test_unassigned_al(self):
+        user = UserFactory(is_superuser=False)
+        self.client.force_login(user)
+        with self.settings(IS_ALABAMA_DOT_BEER=False):
+            with self.assertNumQueries(self.expected_queries):
+                response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed("hsv_dot_beer/alabama_dot_beer.html")
+        self.assertIn(b"Sorry, your user account is not", response.content)
