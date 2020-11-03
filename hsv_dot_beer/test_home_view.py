@@ -28,9 +28,7 @@ class TestHome(TestCase):
         with self.assertNumQueries(self.expected_queries):
             response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(
-            response["Location"], reverse("venue_table", args=[venue.id])
-        )
+        self.assertEqual(response["Location"], reverse("venue_table", args=[venue.id]))
 
     def test_multiple_venues(self):
         user = UserFactory(is_superuser=False)
