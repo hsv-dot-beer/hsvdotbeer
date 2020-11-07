@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.db.models import Prefetch
@@ -75,6 +76,7 @@ class VenueAPIConfigurationViewSet(CachedListMixin, ModelViewSet):
     permission_classes = (IsAdminUser,)
 
 
+@login_required
 def venue_table(request, venue_id: int):
     qs = Venue.objects.prefetch_related(
         Prefetch(
