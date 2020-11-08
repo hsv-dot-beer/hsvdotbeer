@@ -32,7 +32,7 @@ def manufacturer_select_for_form(request, venue_id: int, tap_number: int = None)
         venue = get_object_or_404(venue_qs, id=venue_id)
     else:
         venue = get_object_or_404(
-            venue_qs.filter(managers__user=request.user),
+            venue_qs.filter(venue_tap_managers__user=request.user),
             id=venue_id,
         )
 
