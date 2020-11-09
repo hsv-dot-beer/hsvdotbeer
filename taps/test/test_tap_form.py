@@ -1,20 +1,5 @@
 """ Test cases:
 
-- Tap form:
-  - auth
-    - unauth
-    - as super
-    - as normal
-  - venue
-    - not found
-    - access denied
-    - invalid mfg
-    - valid mfg
-  - tap:
-    - new tap
-    - invalid tap
-    - existing tap
-
 - Save tap form:
   - auth
     - (same)
@@ -47,7 +32,6 @@ from taps.test.factories import TapFactory
 
 
 class ManufacturerSelectFormTest(TestCase):
-
     @classmethod
     def setUpTestData(cls) -> None:
         cls.venue = VenueFactory()
@@ -210,3 +194,113 @@ class ManufacturerSelectFormTest(TestCase):
             body,
         )
         self.assertNotIn("selected", body)
+
+
+class TapFormTestCase(TestCase):
+    """
+    - Tap form:
+        - auth
+            - as super
+    """
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.normal_user = UserFactory()
+        cls.venue = VenueFactory()
+        cls.existing_tap = TapFactory(venue=cls.venue)
+        cls.manufacturers = Manufacturer.objects.bulk_create(
+            ManufacturerFactory.build_batch(2)
+        )
+
+    def setUp(self):
+        self.create_url = reverse("create_tap", args=[self.venue.id])
+        self.edit_url = reverse(
+            "edit_tap", args=[self.venue.id, self.existing_tap.tap_number]
+        )
+
+    def test_not_post(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(venue=self.venue, user=self.normal_user)
+        for url in [self.create_url, self.edit_url]:
+            with self.assertNumQueries(4):
+                response = self.client.get(url)
+            self.assertEqual(response.status_code, 405, url)
+
+    def test_venue_not_found(self):
+        self.client.force_login(self.normal_user)
+        with self.assertNumQueries(3):
+            response = self.client.get(reverse("create_tap", args=[self.venue.id - 1]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_venue_not_owned(self):
+        self.client.force_login(self.normal_user)
+        with self.assertNumQueries(3):
+            response = self.client.get(self.create_url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_valid_manufacturer_new_tap(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(user=self.normal_user, venue=self.venue)
+        with self.assertNumQueries(8):
+            response = self.client.post(
+                self.create_url, data={"manufacturer": self.manufacturers[0].id}
+            )
+        self.assertEqual(response.status_code, 200, response.content)
+        self.assertTemplateUsed(response, "taps/tap_form.html")
+
+    def test_valid_manufacturer_existing_tap(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(user=self.normal_user, venue=self.venue)
+        with self.assertNumQueries(9):
+            response = self.client.post(
+                self.edit_url, data={"manufacturer": self.manufacturers[0].id}
+            )
+        self.assertEqual(response.status_code, 200, response.content)
+        self.assertTemplateUsed(response, "taps/tap_form.html")
+
+    def test_valid_manufacturer_invalid_tap(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(user=self.normal_user, venue=self.venue)
+        response = self.client.post(
+            reverse("edit_tap", args=[self.venue.id, self.existing_tap.tap_number - 1]),
+            data={"manufacturer": self.manufacturers[0].id},
+        )
+        self.assertEqual(response.status_code, 404, response.content)
+
+    def test_invalid_manufacturer_new_tap(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(user=self.normal_user, venue=self.venue)
+        with self.assertNumQueries(7):
+            response = self.client.post(
+                self.create_url, data={"manufacturer": 0}
+            )
+        self.assertEqual(response.status_code, 400, response.content)
+        self.assertTemplateUsed(response, "beers/manufacturer-select.html")
+
+    def test_invalid_manufacturer_existing_tap(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(user=self.normal_user, venue=self.venue)
+        with self.assertNumQueries(7):
+            response = self.client.post(
+                self.edit_url, data={"manufacturer": 0}
+            )
+        self.assertEqual(response.status_code, 400, response.content)
+        self.assertTemplateUsed(response, "beers/manufacturer-select.html")
+
+    def test_superuser_valid_manufacturer_new_tap(self):
+        self.client.force_login(UserFactory(is_superuser=True))
+        with self.assertNumQueries(7):
+            response = self.client.post(
+                self.create_url, data={"manufacturer": self.manufacturers[0].id}
+            )
+        self.assertEqual(response.status_code, 200, response.content)
+        self.assertTemplateUsed(response, "taps/tap_form.html")
+
+    def test_superuser_valid_manufacturer_existing_tap(self):
+        self.client.force_login(UserFactory(is_superuser=True))
+        with self.assertNumQueries(8):
+            response = self.client.post(
+                self.edit_url, data={"manufacturer": self.manufacturers[0].id}
+            )
+        self.assertEqual(response.status_code, 200, response.content)
+        self.assertTemplateUsed(response, "taps/tap_form.html")

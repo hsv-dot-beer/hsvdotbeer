@@ -66,7 +66,6 @@ def tap_form(request, venue_id: int, tap_number: int = None):
             ),
             id=venue_id,
         )
-
     if request.method != "POST":
         return HttpResponseNotAllowed("You have to POST here")
     form = ManufacturerSelectForm(request.POST)
@@ -75,6 +74,7 @@ def tap_form(request, venue_id: int, tap_number: int = None):
             request,
             "beers/manufacturer-select.html",
             context={"form": form, "venue": venue, "tap_number": tap_number},
+            status=400,
         )
     manufacturer = form.cleaned_data["manufacturer"]
 
@@ -92,7 +92,7 @@ def tap_form(request, venue_id: int, tap_number: int = None):
                 )["max_tap"]
                 + 1
             )
-        except KeyError:
+        except TypeError:
             new_tap_number = 1
         tap = models.Tap(venue=venue, tap_number=new_tap_number)
         form = forms.TapForm(instance=tap, manufacturer=manufacturer)
