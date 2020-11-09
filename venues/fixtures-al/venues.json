@@ -189,6 +189,33 @@
     }
 },
 {
+    "model": "venues.venue",
+    "pk": 24,
+    "fields": {
+        "name": "Goat Island Brewing",
+        "address": "1646 John H Cooper Dr SE",
+        "city": "Cullman",
+        "state": "AL",
+        "postal_code": "35055",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "https://www.goatislandbrewing.com/",
+        "facebook_page": "https://www.facebook.com/goatislandbrewing",
+        "twitter_handle": "goatislandbrew",
+        "instagram_handle": "goatislandbrewing",
+        "tap_list_provider": "untappd",
+        "untappd_url": "https://untappd.com/GoatIsland44",
+        "email": "",
+        "phone_number": "2564895520",
+        "logo_url": "https://alabamabrewers.org/wp-content/uploads/2020/11/goatisland-logo.png",
+        "slug": "goatisland",
+        "on_downtown_craft_beer_trail": false,
+        "latitude": "34.1411847",
+        "longitude": "-86.8207469",
+        "twitter_short_location_description": ""
+    }
+},
+{
     "model": "venues.venueapiconfiguration",
     "pk": 1,
     "fields": {
@@ -320,6 +347,26 @@
         "untappd_location": 28327,
         "untappd_theme": 108878,
         "untappd_categories": "[\"Beer on Tap at Fractal Brewing Project\"]",
+        "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": "",
+        "beermenus_categories": "[]",
+        "beermenus_slug": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 24,
+    "fields": {
+        "venue": 24,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": 4632,
+        "untappd_theme": 14806,
+        "untappd_categories": "[\"Goat Island Brewing\"]",
         "taphunter_location": "",
         "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
