@@ -126,8 +126,10 @@ def save_tap_form(request, venue_id: int, tap_number: int):
         original_beer_id = tap.beer_id
         form = forms.TapForm(request.POST, instance=tap)
         if form.is_valid():
-            if original_beer_id != form.cleaned_data["beer"].id:
-                print(f"changing timestamp from {tap.time_added} to {timestamp}")
+            if (
+                form.cleaned_data.get("beer")
+                and original_beer_id != form.cleaned_data["beer"].id
+            ):
                 tap.time_added = timestamp
             tap.time_updated = timestamp
             tap = form.save()
@@ -139,5 +141,6 @@ def save_tap_form(request, venue_id: int, tap_number: int):
                 request,
                 "taps/tap_form.html",
                 {"form": form, "tap": tap, "venue": venue},
+                status=400,
             )
     return redirect(reverse("venue_table", args=[venue.id]))

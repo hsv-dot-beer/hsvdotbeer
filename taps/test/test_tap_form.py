@@ -2,11 +2,12 @@ from django.test import TestCase
 from django.urls import reverse
 
 from hsv_dot_beer.users.test.factories import UserFactory
-from beers.models import Manufacturer
-from beers.test.factories import ManufacturerFactory
+from beers.models import Manufacturer, Beer
+from beers.test.factories import ManufacturerFactory, BeerFactory
 from venues.test.factories import VenueFactory
 from venues.models import VenueTapManager
 from taps.test.factories import TapFactory
+from taps.models import Tap
 
 
 class ManufacturerSelectFormTest(TestCase):
@@ -175,12 +176,6 @@ class ManufacturerSelectFormTest(TestCase):
 
 
 class TapFormTestCase(TestCase):
-    """
-    - Tap form:
-        - auth
-            - as super
-    """
-
     @classmethod
     def setUpTestData(cls) -> None:
         cls.normal_user = UserFactory()
@@ -281,23 +276,221 @@ class TapFormTestCase(TestCase):
 
 
 class SaveTapFormTestCase(TestCase):
-    """
-    - Save tap form:
-        - auth
-            - (same)
-        - venue
-            - not found
-            - access denied
-            - valid
-        - tap
-            - new tap
-            - existing tap
-            - invalid tap
-        - form
-        - valid
-        - invalid
-            - gas type
-            - venue
-            - beer
-            - est pct remaining
-    """
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.normal_user = UserFactory()
+        cls.venue = VenueFactory()
+        cls.existing_tap = TapFactory(venue=cls.venue)
+        cls.manufacturers = Manufacturer.objects.bulk_create(
+            ManufacturerFactory.build_batch(2)
+        )
+
+    def setUp(self):
+        self.edit_url = reverse(
+            "edit_tap_save", args=[self.venue.id, self.existing_tap.tap_number]
+        )
+        self.create_url = reverse(
+            "edit_tap_save", args=[self.venue.id, self.existing_tap.tap_number + 1]
+        )
+        self.existing_tap.refresh_from_db()
+
+    def test_venue_not_found(self):
+        self.client.force_login(self.normal_user)
+        response = self.client.post(
+            reverse("edit_tap_save", args=[self.venue.id - 1, 1]),
+            {},
+        )
+        self.assertEqual(response.status_code, 404)
+
+    def test_access_denied(self):
+        self.client.force_login(self.normal_user)
+        response = self.client.post(self.edit_url, {})
+        self.assertEqual(response.status_code, 404)
+
+    def test_unauthorized(self):
+        response = self.client.post(self.edit_url, follow=False, data={})
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(response["Location"], reverse("login"))
+
+    def test_not_post(self):
+        self.client.force_login(self.normal_user)
+        response = self.client.get(self.edit_url)
+        self.assertEqual(response.status_code, 405)
+
+    def test_valid_form_existing_tap(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(venue=self.venue, user=self.normal_user)
+        form_data = {
+            "beer": BeerFactory(manufacturer=ManufacturerFactory()).id,
+            "estimated_percent_remaining": 90,
+            "gas_type": "co2",
+        }
+        with self.assertNumQueries(12):
+            response = self.client.post(self.edit_url, data=form_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response["Location"],
+            reverse("venue_table", args=[self.venue.id]),
+        )
+        self.existing_tap.refresh_from_db()
+        self.assertEqual(self.existing_tap.beer_id, form_data["beer"])
+        self.assertEqual(self.existing_tap.estimated_percent_remaining, 90)
+        self.assertEqual(self.existing_tap.gas_type, "co2")
+        self.assertEqual(Tap.objects.count(), 1)
+
+    def test_valid_form_new_tap(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(venue=self.venue, user=self.normal_user)
+        form_data = {
+            "beer": BeerFactory(manufacturer=ManufacturerFactory()).id,
+            "estimated_percent_remaining": 90,
+            "gas_type": "co2",
+        }
+        with self.assertNumQueries(11):
+            response = self.client.post(self.create_url, data=form_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response["Location"],
+            reverse("venue_table", args=[self.venue.id]),
+        )
+        tap = Tap.objects.exclude(id=self.existing_tap.id).get()
+        self.assertEqual(tap.beer_id, form_data["beer"])
+        self.assertEqual(tap.estimated_percent_remaining, 90)
+        self.assertEqual(tap.gas_type, "co2")
+        self.assertEqual(Tap.objects.count(), 2)
+
+    def test_valid_form_decimal_percent_remaining(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(venue=self.venue, user=self.normal_user)
+        form_data = {
+            "beer": BeerFactory(manufacturer=ManufacturerFactory()).id,
+            "estimated_percent_remaining": 0.9,
+            "gas_type": "co2",
+        }
+        with self.assertNumQueries(11):
+            response = self.client.post(self.create_url, data=form_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response["Location"],
+            reverse("venue_table", args=[self.venue.id]),
+        )
+        tap = Tap.objects.exclude(id=self.existing_tap.id).get()
+        self.assertEqual(tap.beer_id, form_data["beer"])
+        self.assertEqual(tap.estimated_percent_remaining, 90)
+        self.assertEqual(tap.gas_type, "co2")
+        self.assertEqual(Tap.objects.count(), 2)
+
+    def test_valid_form_remove_beer(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(venue=self.venue, user=self.normal_user)
+        self.existing_tap.beer = BeerFactory(manufacturer=ManufacturerFactory())
+        self.existing_tap.save()
+        form_data = {
+            "beer": "",
+            "estimated_percent_remaining": 0.9,
+            "gas_type": "co2",
+        }
+        with self.assertNumQueries(10):
+            response = self.client.post(self.edit_url, data=form_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response["Location"],
+            reverse("venue_table", args=[self.venue.id]),
+        )
+        tap = Tap.objects.get()
+        self.assertIsNone(tap.beer)
+        self.assertIsNone(tap.estimated_percent_remaining)
+        self.assertEqual(tap.gas_type, "")
+
+    def test_superuser_valid_form_existing_tap(self):
+        self.client.force_login(UserFactory(is_superuser=True))
+        form_data = {
+            "beer": BeerFactory(manufacturer=ManufacturerFactory()).id,
+            "estimated_percent_remaining": 90,
+            "gas_type": "co2",
+        }
+        with self.assertNumQueries(11):
+            response = self.client.post(self.edit_url, data=form_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response["Location"],
+            reverse("venue_table", args=[self.venue.id]),
+        )
+        self.existing_tap.refresh_from_db()
+        self.assertEqual(self.existing_tap.beer_id, form_data["beer"])
+        self.assertEqual(self.existing_tap.estimated_percent_remaining, 90)
+        self.assertEqual(self.existing_tap.gas_type, "co2")
+        self.assertEqual(Tap.objects.count(), 1)
+
+    def test_superuser_valid_form_new_tap(self):
+        self.client.force_login(UserFactory(is_superuser=True))
+        form_data = {
+            "beer": BeerFactory(manufacturer=ManufacturerFactory()).id,
+            "estimated_percent_remaining": 90,
+            "gas_type": "co2",
+        }
+        with self.assertNumQueries(10):
+            response = self.client.post(self.create_url, data=form_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response["Location"],
+            reverse("venue_table", args=[self.venue.id]),
+        )
+        tap = Tap.objects.exclude(id=self.existing_tap.id).get()
+        self.assertEqual(tap.beer_id, form_data["beer"])
+        self.assertEqual(tap.estimated_percent_remaining, 90)
+        self.assertEqual(tap.gas_type, "co2")
+        self.assertEqual(Tap.objects.count(), 2)
+
+    def test_invalid_beer(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(venue=self.venue, user=self.normal_user)
+        self.assertFalse(Beer.objects.exists())
+        form_data = {
+            "beer": 1,
+            "estimated_percent_remaining": 90,
+            "gas_type": "co2",
+        }
+        with self.assertNumQueries(11):
+            response = self.client.post(self.edit_url, data=form_data)
+        self.assertEqual(response.status_code, 400)
+        self.assertTemplateUsed(response, "taps/tap_form.html")
+        self.assertIn(
+            "Select a valid choice. That choice is not one of the available choices.",
+            response.content.decode("utf-8"),
+        )
+
+    def test_invalid_gas(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(venue=self.venue, user=self.normal_user)
+        form_data = {
+            "beer": BeerFactory(manufacturer=ManufacturerFactory()).id,
+            "estimated_percent_remaining": 90,
+            "gas_type": "xenon",
+        }
+        with self.assertNumQueries(12):
+            response = self.client.post(self.edit_url, data=form_data)
+        self.assertEqual(response.status_code, 400)
+        self.assertTemplateUsed(response, "taps/tap_form.html")
+        self.assertIn(
+            "Select a valid choice. xenon is not one of the available choices.",
+            response.content.decode("utf-8"),
+        )
+
+    def test_invalid_percent_remaining(self):
+        self.client.force_login(self.normal_user)
+        VenueTapManager.objects.create(venue=self.venue, user=self.normal_user)
+        self.assertFalse(Beer.objects.exists())
+        form_data = {
+            "beer": BeerFactory(manufacturer=ManufacturerFactory()).id,
+            "estimated_percent_remaining": 101,
+            "gas_type": "co2",
+        }
+        with self.assertNumQueries(12):
+            response = self.client.post(self.edit_url, data=form_data)
+        self.assertEqual(response.status_code, 400)
+        self.assertTemplateUsed(response, "taps/tap_form.html")
+        self.assertIn(
+            "A keg cannot be more than 100% full.",
+            response.content.decode("utf-8"),
+        )
