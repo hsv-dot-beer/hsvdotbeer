@@ -1,25 +1,3 @@
-""" Test cases:
-
-- Save tap form:
-  - auth
-    - (same)
-  - venue
-    - not found
-    - access denied
-    - valid
-  - tap
-    - new tap
-    - existing tap
-    - invalid tap
-  - form
-    - valid
-    - invalid
-      - gas type
-      - venue
-      - beer
-      - est pct remaining
-"""
-
 from django.test import TestCase
 from django.urls import reverse
 
@@ -271,9 +249,7 @@ class TapFormTestCase(TestCase):
         self.client.force_login(self.normal_user)
         VenueTapManager.objects.create(user=self.normal_user, venue=self.venue)
         with self.assertNumQueries(7):
-            response = self.client.post(
-                self.create_url, data={"manufacturer": 0}
-            )
+            response = self.client.post(self.create_url, data={"manufacturer": 0})
         self.assertEqual(response.status_code, 400, response.content)
         self.assertTemplateUsed(response, "beers/manufacturer-select.html")
 
@@ -281,9 +257,7 @@ class TapFormTestCase(TestCase):
         self.client.force_login(self.normal_user)
         VenueTapManager.objects.create(user=self.normal_user, venue=self.venue)
         with self.assertNumQueries(7):
-            response = self.client.post(
-                self.edit_url, data={"manufacturer": 0}
-            )
+            response = self.client.post(self.edit_url, data={"manufacturer": 0})
         self.assertEqual(response.status_code, 400, response.content)
         self.assertTemplateUsed(response, "beers/manufacturer-select.html")
 
@@ -304,3 +278,26 @@ class TapFormTestCase(TestCase):
             )
         self.assertEqual(response.status_code, 200, response.content)
         self.assertTemplateUsed(response, "taps/tap_form.html")
+
+
+class SaveTapFormTestCase(TestCase):
+    """
+    - Save tap form:
+        - auth
+            - (same)
+        - venue
+            - not found
+            - access denied
+            - valid
+        - tap
+            - new tap
+            - existing tap
+            - invalid tap
+        - form
+        - valid
+        - invalid
+            - gas type
+            - venue
+            - beer
+            - est pct remaining
+    """
