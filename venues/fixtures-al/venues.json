@@ -216,6 +216,60 @@
         }
     },
     {
+        "model": "venues.venue",
+        "pk": 25,
+        "fields": {
+            "name": "Birmingham District Brewing Co",
+            "address": "2201 2nd Ave S Ste 102",
+            "city": "Birmingham",
+            "state": "AL",
+            "postal_code": "35233",
+            "country": "US",
+            "time_zone": "America/Chicago",
+            "website": "https://www.birminghamdistrictbrewing.com/",
+            "facebook_page": "https://www.facebook.com/districtbrews/",
+            "twitter_handle": "districtbrews",
+            "instagram_handle": "districtbrews",
+            "tap_list_provider": "untappd",
+            "untappd_url": "https://untappd.com/BhamDistrictBrewing",
+            "email": "",
+            "phone_number": "2052025779",
+            "logo_url": "https://images.squarespace-cdn.com/content/589dd87117bffc8381e15013/1515119190353-P77KQCOY8Z4O8J4F6SO2/Picture1.png",
+            "slug": "birmingham-district",
+            "on_downtown_craft_beer_trail": false,
+            "latitude": "33.5121964",
+            "longitude": "-86.7999718",
+            "twitter_short_location_description": ""
+        }
+    },
+    {
+        "model": "venues.venue",
+        "pk": 26,
+        "fields": {
+            "name": "Serda Brewing Co",
+            "address": "600 Government St",
+            "city": "Mobile",
+            "state": "AL",
+            "postal_code": "36602",
+            "country": "US",
+            "time_zone": "America/Chicago",
+            "website": "https://serdabrewing.com/",
+            "facebook_page": "https://www.facebook.com/goatislandbrewing",
+            "twitter_handle": "serdabrewing",
+            "instagram_handle": "serdabrewing",
+            "tap_list_provider": "untappd",
+            "untappd_url": "https://untappd.com/SerdaBrewing",
+            "email": "",
+            "phone_number": "2519299349",
+            "logo_url": "https://serdabrewing.com/wp-content/uploads/2017/02/Serda_brewing_logo.png",
+            "slug": "serda",
+            "on_downtown_craft_beer_trail": false,
+            "latitude": "30.6880515",
+            "longitude": "-88.0495238",
+            "twitter_short_location_description": ""
+        }
+    },
+    {
         "model": "venues.venueapiconfiguration",
         "pk": 1,
         "fields": {
@@ -374,6 +428,46 @@
             "beermenus_categories": "[]",
             "beermenus_slug": ""
         }
+    },
+    {
+        "model": "venues.venueapiconfiguration",
+        "pk": 25,
+        "fields": {
+            "venue": 25,
+            "url": null,
+            "api_key": "",
+            "digital_pour_venue_id": "",
+            "digital_pour_location_number": null,
+            "untappd_location": 26977,
+            "untappd_theme": 103534,
+            "untappd_categories": "[]",
+            "taphunter_location": "",
+            "taphunter_excluded_lists": "[]",
+            "taplist_io_display_id": "",
+            "taplist_io_access_code": "",
+            "beermenus_categories": "[]",
+            "beermenus_slug": ""
+        }
+    },
+    {
+        "model": "venues.venueapiconfiguration",
+        "pk": 26,
+        "fields": {
+            "venue": 26,
+            "url": null,
+            "api_key": "",
+            "digital_pour_venue_id": "",
+            "digital_pour_location_number": null,
+            "untappd_location": 29716,
+            "untappd_theme": 114398,
+            "untappd_categories": "[\"Saison\",\"Pale Ale\",\"British\",\"Hazy IPA\",\"Fruit Beer\",\"Belgian\",\"Pale Ale\",\"Seltzer\",\"Porter\",\"Stouts\",\"Lagers\",\"Sours\",\"India Pale Ales\",\"Wheat\"]",
+            "taphunter_location": "",
+            "taphunter_excluded_lists": "[]",
+            "taplist_io_display_id": "",
+            "taplist_io_access_code": "",
+            "beermenus_categories": "[]",
+            "beermenus_slug": ""
+        }
     }
-    ]
+]
     
