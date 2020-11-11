@@ -20,13 +20,11 @@ ENV NPM_BIN_PATH /usr/local/bin/npm
 # install deps from Pipfile.lock
 RUN pipenv install
 
-# install tailwind deps
-RUN pipenv run ./manage.py tailwind install
-
 EXPOSE 8000
 
 # Migrates the database, builds CSS, uploads staticfiles, and runs the production server
 CMD pipenv run ./manage.py migrate && \
+    pipenv run ./manage.py tailwind install && \
     pipenv run ./manage.py tailwind build && \
     pipenv run ./manage.py collectstatic --noinput && \
     pipenv run newrelic-admin run-program gunicorn --bind 0.0.0.0:$PORT --access-logfile - hsv_dot_beer.wsgi:application
