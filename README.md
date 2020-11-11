@@ -69,6 +69,25 @@ pipenv install
 
 ## Local Development
 
+### Build the environment
+
+You need to run two commands. First, build the docker images:
+
+```bash
+docker-compose build
+```
+
+Then, install the node.js dependencies for CSS building:
+
+```bash
+docker-compose run --rm web pipenv run ./manage.py tailwind install
+```
+
+**NOTE** On the first run of `tailwind install`, it might fail. I have no idea why,
+but running it again works.
+
+### Run the app
+
 Start the dev server for local use:
 
 ```bash
