@@ -59,7 +59,7 @@ class Style(models.Model):
                     f'{", ".join(existing_names)}'
                 )
 
-    def __str__(self):
+    def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
 
 
@@ -67,7 +67,7 @@ class StyleAlternateName(models.Model):
     name = CITextField()
     style = models.ForeignKey(Style, models.CASCADE, related_name="alternate_names")
 
-    def __str__(self):
+    def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
 
     class Meta:
@@ -169,7 +169,7 @@ class Manufacturer(models.Model):
                     self.time_first_seen = other.time_first_seen
             self.save()
 
-    def __str__(self):
+    def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
 
 
@@ -304,7 +304,7 @@ class Beer(models.Model):
             self.beermenus_slug = None
         return super().save(*args, **kwargs)
 
-    def __str__(self):
+    def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
 
     def render_srm(self):
