@@ -83,7 +83,7 @@ def look_up_beer(self, beer_pk):
     try:
         untappd_args["client_id"] = os.environ["UNTAPPD_CLIENT_ID"]
         untappd_args["client_secret"] = os.environ["UNTAPPD_CLIENT_SECRET"]
-    except KeyError:
+    except KeyError as exc:
         try:
             untappd_args["access_token"] = os.environ["UNTAPPD_ACCESS_TOKEN"]
         except KeyError:
@@ -92,7 +92,7 @@ def look_up_beer(self, beer_pk):
                 return
             raise ValueError(
                 "You must specify environment variables for Untappd API Access!"
-            )
+            ) from exc
     untappd_pk = beer.untappd_url.rsplit("/", 1)[-1]
     untappd_url = f"https://api.untappd.com/v4/beer/info/{untappd_pk}"
     result = requests.get(untappd_url, params=untappd_args)
@@ -140,10 +140,10 @@ def look_up_beer(self, beer_pk):
                 f"Received unexpected body from Untappd: {json_body}",
             )
         beer_data = json_body["response"]["beer"]
-    except KeyError:
+    except KeyError as exc:
         raise UnexpectedResponseError(
             f"Received unexpected body from Untappd: {json_body}",
-        )
+        ) from exc
     for key in ["checkins", "media"]:
         # scrap some big objects
         try:
