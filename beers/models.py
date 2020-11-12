@@ -1,12 +1,13 @@
 import logging
 
-from django.contrib.postgres.fields import JSONField, CITextField
+from django.contrib.postgres.fields import CITextField
 from django.db import models, transaction
 from django.db.utils import IntegrityError
 from django.utils.timezone import now
 
 from taps.models import Tap
 from .utils import render_srm
+from django.db.models import JSONField
 
 LOG = logging.getLogger(__name__)
 
