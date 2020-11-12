@@ -85,7 +85,7 @@ class Manufacturer(models.Model):
     twitter_handle = models.CharField(max_length=50, blank=True)
     instagram_handle = models.CharField(max_length=50, blank=True)
     untappd_url = models.URLField(blank=True, null=True)
-    automatic_updates_blocked = models.NullBooleanField(default=False)
+    automatic_updates_blocked = models.BooleanField(null=True, default=False)
     taphunter_url = models.URLField(blank=True, null=True)
     taplist_io_pk = models.PositiveIntegerField(blank=True, null=True)
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
@@ -224,7 +224,7 @@ class Beer(models.Model):
         blank=True,
     )
     manufacturer_url = models.URLField(blank=True, null=True)
-    automatic_updates_blocked = models.NullBooleanField(default=False)
+    automatic_updates_blocked = models.BooleanField(null=True, default=False)
     taphunter_url = models.URLField(blank=True, null=True)
     stem_and_stein_pk = models.PositiveIntegerField(blank=True, null=True)
     taplist_io_pk = models.PositiveIntegerField(blank=True, null=True)
