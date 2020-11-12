@@ -45,7 +45,7 @@ class Style(models.Model):
                             for name in alt_names
                         ]
                     )
-            except IntegrityError:
+            except IntegrityError as exc:
                 existing_names = [
                     i.name
                     for i in StyleAlternateName.objects.filter(
@@ -57,7 +57,7 @@ class Style(models.Model):
                 raise ValueError(
                     "These alternate names already exist: "
                     f'{", ".join(existing_names)}'
-                )
+                ) from exc
 
     def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
