@@ -26,6 +26,7 @@ from beers.models import (
 )
 
 
+IS_LOCAL = os.environ.get('DJANGO_CONFIGURATION', '') == 'Local'
 LOG = logging.getLogger(__name__)
 
 
@@ -86,6 +87,9 @@ def look_up_beer(self, beer_pk):
         try:
             untappd_args["access_token"] = os.environ["UNTAPPD_ACCESS_TOKEN"]
         except KeyError:
+            if IS_LOCAL:
+                LOG.warning('Untappd API credentials not specified. Quitting.')
+                return
             raise ValueError(
                 "You must specify environment variables for Untappd API Access!"
             )
