@@ -16,17 +16,17 @@
     }
   </script>
   <script type="text/javascript">
-    (window.NREUM || (NREUM = {})).loader_config = {
+      (window.NREUM || (NREUM = {})).loader_config = {
       licenseKey: "5dd8520f86",
       applicationID: "313557"
     };
-    window.NREUM || (NREUM = {}), __nr_require = function(n, e, t) {
+    window.NREUM || (NREUM = {}), __nr_require = function (n, e, t) {
       function r(t) {
         if (!e[t]) {
           var i = e[t] = {
             exports: {}
           };
-          n[t][0].call(i.exports, function(e) {
+          n[t][0].call(i.exports, function (e) {
             var i = n[t][1][e];
             return r(i || e)
           }, i, i.exports)
@@ -37,11 +37,11 @@
       for (var i = 0; i < t.length; i++) r(t[i]);
       return r
     }({
-      1: [function(n, e, t) {
-        function r() {}
+      1: [function (n, e, t) {
+        function r() { }
 
         function i(n, e, t) {
-          return function() {
+          return function () {
             return o(n, [u.now()].concat(f(arguments)), e ? null : this, t), e ? void 0 : this
           }
         }
@@ -55,38 +55,38 @@
         var p = ["setPageViewName", "setCustomAttribute", "setErrorHandler", "finished", "addToTrace", "inlineHit", "addRelease"],
           d = "api-",
           l = d + "ixn-";
-        a(p, function(n, e) {
+        a(p, function (n, e) {
           s[e] = i(d + e, !0, "api")
-        }), s.addPageAction = i(d + "addPageAction", !0), s.setCurrentRouteName = i(d + "routeName", !0), e.exports = newrelic, s.interaction = function() {
+        }), s.addPageAction = i(d + "addPageAction", !0), s.setCurrentRouteName = i(d + "routeName", !0), e.exports = newrelic, s.interaction = function () {
           return (new r).get()
         };
         var m = r.prototype = {
-          createTracer: function(n, e) {
+          createTracer: function (n, e) {
             var t = {},
               r = this,
               i = "function" == typeof e;
             return o(l + "tracer", [u.now(), n, t], r),
-              function() {
+              function () {
                 if (c.emit((i ? "" : "no-") + "fn-start", [u.now(), r, i], t), i) try {
                   return e.apply(this, arguments)
                 } catch (n) {
                   throw c.emit("fn-err", [arguments, this, n], t), n
                 } finally {
-                  c.emit("fn-end", [u.now()], t)
-                }
+                    c.emit("fn-end", [u.now()], t)
+                  }
               }
           }
         };
-        a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","), function(n, e) {
+        a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","), function (n, e) {
           m[e] = i(l + e)
-        }), newrelic.noticeError = function(n, e) {
+        }), newrelic.noticeError = function (n, e) {
           "string" == typeof n && (n = new Error(n)), o("err", [n, u.now(), !1, e])
         }
       }, {}],
-      2: [function(n, e, t) {
+      2: [function (n, e, t) {
         function r(n, e) {
           var t = n.getEntries();
-          t.forEach(function(n) {
+          t.forEach(function (n) {
             "first-paint" === n.name ? a("timing", ["fp", Math.floor(n.startTime)]) : "first-contentful-paint" === n.name && a("timing", ["fcp", Math.floor(n.startTime)])
           })
         }
@@ -110,18 +110,18 @@
               o.observe({
                 entryTypes: ["paint"]
               })
-            } catch (u) {}
+            } catch (u) { }
           }
           if ("addEventListener" in document) {
             var s = !1,
               p = ["click", "keydown", "mousedown", "pointerdown", "touchstart"];
-            p.forEach(function(n) {
+            p.forEach(function (n) {
               document.addEventListener(n, i, !1)
             })
           }
         }
       }, {}],
-      3: [function(n, e, t) {
+      3: [function (n, e, t) {
         function r(n, e) {
           if (!i) return !1;
           if (n !== i) return !1;
@@ -145,7 +145,7 @@
           match: r
         }
       }, {}],
-      4: [function(n, e, t) {
+      4: [function (n, e, t) {
         function r(n, e) {
           var t = [],
             r = "",
@@ -156,7 +156,7 @@
         var i = Object.prototype.hasOwnProperty;
         e.exports = r
       }, {}],
-      5: [function(n, e, t) {
+      5: [function (n, e, t) {
         function r(n, e, t) {
           e || (e = 0), "undefined" == typeof t && (t = n ? n.length : 0);
           for (var r = -1, i = t - e || 0, o = Array(i < 0 ? 0 : i); ++r < i;) o[r] = n[e + r];
@@ -164,13 +164,13 @@
         }
         e.exports = r
       }, {}],
-      6: [function(n, e, t) {
+      6: [function (n, e, t) {
         e.exports = {
           exists: "undefined" != typeof window.performance && window.performance.timing && "undefined" != typeof window.performance.timing.navigationStart
         }
       }, {}],
-      ee: [function(n, e, t) {
-        function r() {}
+      ee: [function (n, e, t) {
+        function r() { }
 
         function i(n) {
           function e(n) {
@@ -205,7 +205,7 @@
           }
 
           function w(n, e) {
-            u(n, function(n, t) {
+            u(n, function (n, t) {
               e = e || "feature", y[t] = e, e in s || (s[e] = [])
             })
           }
@@ -241,7 +241,7 @@
           d = e.exports = i();
         d.backlog = s
       }, {}],
-      gos: [function(n, e, t) {
+      gos: [function (n, e, t) {
         function r(n, e, t) {
           if (i.call(n, e)) return n[e];
           var r = t();
@@ -251,23 +251,23 @@
               writable: !0,
               enumerable: !1
             }), r
-          } catch (o) {}
+          } catch (o) { }
           return n[e] = r, r
         }
         var i = Object.prototype.hasOwnProperty;
         e.exports = r
       }, {}],
-      handle: [function(n, e, t) {
+      handle: [function (n, e, t) {
         function r(n, e, t, r) {
           i.buffer([n], r), i.emit(n, e, t)
         }
         var i = n("ee").get("handle");
         e.exports = r, r.ee = i
       }, {}],
-      id: [function(n, e, t) {
+      id: [function (n, e, t) {
         function r(n) {
           var e = typeof n;
-          return !n || "object" !== e && "function" !== e ? -1 : n === window ? 0 : a(n, o, function() {
+          return !n || "object" !== e && "function" !== e ? -1 : n === window ? 0 : a(n, o, function () {
             return i++
           })
         }
@@ -276,13 +276,13 @@
           a = n("gos");
         e.exports = r
       }, {}],
-      loader: [function(n, e, t) {
+      loader: [function (n, e, t) {
         function r() {
           if (!x++) {
             var n = E.info = NREUM.info,
               e = l.getElementsByTagName("script")[0];
             if (setTimeout(s.abort, 3e4), !(n && n.licenseKey && n.applicationID && e)) return s.abort();
-            u(y, function(e, t) {
+            u(y, function (e, t) {
               n[e] || (n[e] = t)
             }), c("mark", ["onload", a() + E.offset], null, "api");
             var t = l.createElement("script");
@@ -341,7 +341,7 @@
         var x = 0,
           O = n(6)
       }, {}],
-      "wrap-function": [function(n, e, t) {
+      "wrap-function": [function (n, e, t) {
         function r(n) {
           return !(n && n instanceof Function && n.apply && !n[a])
         }
@@ -350,7 +350,7 @@
           a = "nr@original",
           f = Object.prototype.hasOwnProperty,
           c = !1;
-        e.exports = function(n, e) {
+        e.exports = function (n, e) {
           function t(n, e, t, i) {
             function nrWrapper() {
               var r, a, f, c;
@@ -393,12 +393,12 @@
           function p(n, e) {
             if (Object.defineProperty && Object.keys) try {
               var t = Object.keys(n);
-              return t.forEach(function(t) {
+              return t.forEach(function (t) {
                 Object.defineProperty(e, t, {
-                  get: function() {
+                  get: function () {
                     return n[t]
                   },
-                  set: function(e) {
+                  set: function (e) {
                     return n[t] = e, e
                   }
                 })
@@ -413,7 +413,7 @@
           function d(e) {
             try {
               n.emit("internal-error", e)
-            } catch (t) {}
+            } catch (t) { }
           }
           return n || (n = i), t.inPlace = u, t.flag = a, t
         }
@@ -422,7 +422,8 @@
   </script>
 
   <title>Bad Daddy's Burger Bar - Huntsville - Beer Menu - Huntsville, AL</title>
-  <meta name="description" content="View full beer menu with prices for Bad Daddy's Burger Bar - Huntsville , including on tap, cask, bottles, and cans." />
+  <meta name="description"
+    content="View full beer menu with prices for Bad Daddy's Burger Bar - Huntsville , including on tap, cask, bottles, and cans." />
   <link rel="canonical" href="https://www.beermenus.com/places/64594-bad-daddy-s-burger-bar-huntsville" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@BeerMenus" />
@@ -442,29 +443,36 @@
   <meta property="og:image" content="https://www.beermenus.com/assets/sprites/logo.png" />
   <meta property="fb:app_id" content="102382313187511" />
 
-  <link rel="shortcut icon" href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/favicon-af1a8d564621e02dc8e29aa32fc5f45edbeb492f8b1b9cc707f0dd88cad2cd64.ico">
-  <link rel="icon" type="image/png" href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/android-chrome-192x192-e044eea727d615fae8147e2a5e6a9575fe40c727ec9e3d96cc195c5550fab130.png" sizes="192x192">
-  <link rel="icon" type="image/png" href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/favicon-194x194-bc9abda30115c79ebc2152aedf60449de7b36cc97f32e5ac534c87f9e5e9e811.png" sizes="194x194">
+  <link rel="shortcut icon"
+    href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/favicon-af1a8d564621e02dc8e29aa32fc5f45edbeb492f8b1b9cc707f0dd88cad2cd64.ico">
+  <link rel="icon" type="image/png"
+    href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/android-chrome-192x192-e044eea727d615fae8147e2a5e6a9575fe40c727ec9e3d96cc195c5550fab130.png"
+    sizes="192x192">
+  <link rel="icon" type="image/png"
+    href="https://d301kf52wiw73w.cloudfront.net/assets/favicons/favicon-194x194-bc9abda30115c79ebc2152aedf60449de7b36cc97f32e5ac534c87f9e5e9e811.png"
+    sizes="194x194">
 
-  <link rel="stylesheet" media="screen" href="https://d301kf52wiw73w.cloudfront.net/assets/desktop-c4519de544e7e2118e9a125af83a76285fde20be222c684f4e7248343dbd002a.css" />
+  <link rel="stylesheet" media="screen"
+    href="https://d301kf52wiw73w.cloudfront.net/assets/desktop-c4519de544e7e2118e9a125af83a76285fde20be222c684f4e7248343dbd002a.css" />
   <script src="https://d301kf52wiw73w.cloudfront.net/packs/js/desktop-954edf86c16941164e82.js" defer="defer"></script>
   <meta name="action-cable-url" content="wss://beermenus.com" />
   <meta name="csrf-param" content="authenticity_token" />
-  <meta name="csrf-token" content="J4gqIZourcXTnpGchWavoX4gymK90RmxeR80HAJqdU65HzLQhum20qzoN1cjsWPRe3WowR4qcqUS/cDqCeCt8Q==" />
+  <meta name="csrf-token"
+    content="J4gqIZourcXTnpGchWavoX4gymK90RmxeR80HAJqdU65HzLQhum20qzoN1cjsWPRe3WowR4qcqUS/cDqCeCt8Q==" />
 
   <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-1198075-3"></script>
 
   <script>
     //<![CDATA[
 
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag("js", new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag("js", new Date());
 
     gtag("config", "UA-1198075-3");
 
 //]]>
-</script>
+  </script>
 
 
 </head>
@@ -484,7 +492,8 @@
           <div class="pure-u-1-3 header-search">
             <form action="/search" method="get" class="pure-form search-form">
               <label class="pure-icon pure-icon-search" for="search-input"></label>
-              <input type="text" name="q" id="search-input" class="pure-input search-input" placeholder="Search for beers or places..." value="">
+              <input type="text" name="q" id="search-input" class="pure-input search-input"
+                placeholder="Search for beers or places..." value="">
               <button type="submit" class="pure-button pure-button-primary" id="search-button">Search</button>
             </form>
           </div>
@@ -526,7 +535,8 @@
   </div>
 
 
-  <div data-controller="structured-data" data-structured-data-path="/api/internal/structured_data/64594?resource=place"></div>
+  <div data-controller="structured-data" data-structured-data-path="/api/internal/structured_data/64594?resource=place">
+  </div>
 
 
   <div class="content">
@@ -557,10 +567,13 @@
 
               <div class="follow-place-64594">
 
-                <form class="x-follow" id="new_place_relationship" action="/place_relationships" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+                <form class="x-follow" id="new_place_relationship" action="/place_relationships" accept-charset="UTF-8"
+                  data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
                   <input value="64594" type="hidden" name="place_relationship[bar_id]" id="place_relationship_bar_id" />
                   <input type="hidden" name="list" id="list" value="false" />
-                  <button name="button" type="submit" class="pure-button pure-button-primary pure-button-round pure-button-1" data-disable-with="Following...">
+                  <button name="button" type="submit"
+                    class="pure-button pure-button-primary pure-button-round pure-button-1"
+                    data-disable-with="Following...">
                     Follow this Place
                   </button></form>
               </div>
@@ -571,19 +584,22 @@
             <div class="pure-msg" id="social-buttons">
               <p class="caption-small mb-small">Share this beer menu with your friends!</p>
 
-              <a data-source="twitter" data-event-type="MenuSharesViaTwitter" data-bar-id="64594" class="trackable" href="https://twitter.com/intent/tweet?text=Check+out+Bad+Daddy%27s+Burger+Bar+-+Huntsville%27s+awesome+beer+list%21+&amp;original_referer=https%3A%2F%2Fwww.beermenus.com%2Fplaces%2F64594-bad-daddy-s-burger-bar-huntsville&amp;url=https%3A%2F%2Fwww.beermenus.com%2Fplaces%2F64594-bad-daddy-s-burger-bar-huntsville%3Futm_medium%3Dmenu-share%26utm_source%3Dtwitter&amp;via=BeerMenus">
+              <a data-source="twitter" data-event-type="MenuSharesViaTwitter" data-bar-id="64594" class="trackable"
+                href="https://twitter.com/intent/tweet?text=Check+out+Bad+Daddy%27s+Burger+Bar+-+Huntsville%27s+awesome+beer+list%21+&amp;original_referer=https%3A%2F%2Fwww.beermenus.com%2Fplaces%2F64594-bad-daddy-s-burger-bar-huntsville&amp;url=https%3A%2F%2Fwww.beermenus.com%2Fplaces%2F64594-bad-daddy-s-burger-bar-huntsville%3Futm_medium%3Dmenu-share%26utm_source%3Dtwitter&amp;via=BeerMenus">
                 <button class="pure-button pure-button-1 pure-button-twitter mb-small">
                   <span class="pure-icon button-icon button-icon-left pure-icon-twitter"></span>
                   Tweet
                 </button>
               </a>
-              <a data-source="facebook" data-event-type="MenuSharesViaFacebook" data-bar-id="64594" class="trackable" href="https://www.facebook.com/sharer/sharer.php?quote=Check+out+Bad+Daddy%27s+Burger+Bar+-+Huntsville%27s+awesome+beer+list%21+&amp;u=https%3A%2F%2Fwww.beermenus.com%2Fplaces%2F64594-bad-daddy-s-burger-bar-huntsville%3Futm_medium%3Dmenu-share%26utm_source%3Dfacebook&amp;redirect_uri=https%3A%2F%2Fwww.beermenus.com%2Fplaces%2F64594-bad-daddy-s-burger-bar-huntsville&amp;app_id=102382313187511">
+              <a data-source="facebook" data-event-type="MenuSharesViaFacebook" data-bar-id="64594" class="trackable"
+                href="https://www.facebook.com/sharer/sharer.php?quote=Check+out+Bad+Daddy%27s+Burger+Bar+-+Huntsville%27s+awesome+beer+list%21+&amp;u=https%3A%2F%2Fwww.beermenus.com%2Fplaces%2F64594-bad-daddy-s-burger-bar-huntsville%3Futm_medium%3Dmenu-share%26utm_source%3Dfacebook&amp;redirect_uri=https%3A%2F%2Fwww.beermenus.com%2Fplaces%2F64594-bad-daddy-s-burger-bar-huntsville&amp;app_id=102382313187511">
                 <button class="pure-button pure-button-1 pure-button-facebook mb-small">
                   <span class="pure-icon button-icon button-icon-left pure-icon-facebook"></span>
                   Share
                 </button>
               </a>
-              <a data-source="email" data-event-type="MenuSharesViaEmail" data-bar-id="64594" class="trackable" href="mailto:?subject=Check out Bad Daddy&#39;s Burger Bar - Huntsville&#39;s beer list! &amp;body=I just saw Bad Daddy&#39;s Burger Bar - Huntsville&#39;s beer list on BeerMenus. It looks awesome!%0A%0A%0Ahttps://www.beermenus.com/places/64594-bad-daddy-s-burger-bar-huntsville?utm_campaign=social_buttons.email">
+              <a data-source="email" data-event-type="MenuSharesViaEmail" data-bar-id="64594" class="trackable"
+                href="mailto:?subject=Check out Bad Daddy&#39;s Burger Bar - Huntsville&#39;s beer list! &amp;body=I just saw Bad Daddy&#39;s Burger Bar - Huntsville&#39;s beer list on BeerMenus. It looks awesome!%0A%0A%0Ahttps://www.beermenus.com/places/64594-bad-daddy-s-burger-bar-huntsville?utm_campaign=social_buttons.email">
                 <button class="pure-button pure-button-1 pure-button-email mb-small">
                   <span class="pure-icon button-icon button-icon-left pure-icon-email"></span>
                   Email
@@ -593,28 +609,28 @@
 
             <script>
               //<![CDATA[
-function execute_bwkqmilr() {
-  var eventName = "Clicked Share Place";
-  var platform = 'Desktop';
-  var cookieName = 'clicked_social_button';
+              function execute_bwkqmilr() {
+                var eventName = "Clicked Share Place";
+                var platform = 'Desktop';
+                var cookieName = 'clicked_social_button';
 
-  $("#social-buttons a").on('click', function() {
-    // show the promo again if no clicks within 60 days
-    var now = new Date();
-    var time = now.getTime();
-    var expireTime = time + 5184000000; // ms in 2 months
-    now.setTime(expireTime);
-    document.cookie = cookieName + '=true;expires=' + now.toGMTString();
+                $("#social-buttons a").on('click', function () {
+                  // show the promo again if no clicks within 60 days
+                  var now = new Date();
+                  var time = now.getTime();
+                  var expireTime = time + 5184000000; // ms in 2 months
+                  now.setTime(expireTime);
+                  document.cookie = cookieName + '=true;expires=' + now.toGMTString();
 
-    var source = $(this).data("source");
-    BeerMenus.Analytics.track(eventName, {
-      source: source,
-      platform: platform
-    });
-  });
-}if (document.readyState == 'loading') {document.addEventListener('DOMContentLoaded', execute_bwkqmilr)} else {execute_bwkqmilr()}
+                  var source = $(this).data("source");
+                  BeerMenus.Analytics.track(eventName, {
+                    source: source,
+                    platform: platform
+                  });
+                });
+              } if (document.readyState == 'loading') { document.addEventListener('DOMContentLoaded', execute_bwkqmilr) } else { execute_bwkqmilr() }
 //]]>
-</script>
+            </script>
 
           </div>
 
@@ -622,16 +638,20 @@ function execute_bwkqmilr() {
 
           <div class="mb-big place-info">
             <h4 class="small-caps mb-small">Place Info</h4>
-            <iframe width="226" height="190" frameborder="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA9XrASM_tPt9ELCVoZ33ZfS5lpM2Nmlew&amp;q=place_id:ChIJd884D7BsYogRCYrCttYlUOI"></iframe>
+            <iframe width="226" height="190" frameborder="0"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA9XrASM_tPt9ELCVoZ33ZfS5lpM2Nmlew&amp;q=place_id:ChIJd884D7BsYogRCYrCttYlUOI"></iframe>
 
             <ul class="pure-list pure-list-short">
               <li class="pure-list-item lead-by-icon">
                 <span class="pure-icon pure-icon-map"></span>
-                <a class="trackable" data-event-type="MapClicks" data-bar-id="64594" href="https://maps.google.com/maps?q=2317 Memorial Parkway Southwest, Huntsville, AL 35801">2317 Memorial Parkway Southwest, Huntsville, AL 35801</a>
+                <a class="trackable" data-event-type="MapClicks" data-bar-id="64594"
+                  href="https://maps.google.com/maps?q=2317 Memorial Parkway Southwest, Huntsville, AL 35801">2317
+                  Memorial Parkway Southwest, Huntsville, AL 35801</a>
               </li>
               <li class="pure-list-item lead-by-icon">
                 <span class="pure-icon pure-icon-link"></span>
-                <span><a class="trackable" data-event-type="WebsiteClicks" data-bar-id="64594" href="https://baddaddysburgerbar.com/store/al/huntsville-al">baddaddysburgerba...</a></span>
+                <span><a class="trackable" data-event-type="WebsiteClicks" data-bar-id="64594"
+                    href="https://baddaddysburgerbar.com/store/al/huntsville-al">baddaddysburgerba...</a></span>
               </li>
               <li class='pure-list-item lead-by-icon'><span class='pure-icon-time'></span>
                 <div class='pure-g pure-g-small-gutter'>
@@ -653,7 +673,8 @@ function execute_bwkqmilr() {
 
 
           <ul class="pure-tabs mb-big">
-            <li class="pure-tabs-item" data-target="tabs.tab" data-action="click-&gt;tabs#change" data-hash="menu"><a href="#">Beer Menu</a></li>
+            <li class="pure-tabs-item" data-target="tabs.tab" data-action="click-&gt;tabs#change" data-hash="menu"><a
+                href="#">Beer Menu</a></li>
             <li class="pure-tabs-item" data-target="tabs.tab" data-action="click-&gt;tabs#change" data-hash="logged">
               <a href="">
                 Logged <span class="pure-tabs-count">0</span>
@@ -676,9 +697,12 @@ function execute_bwkqmilr() {
             </div>
 
 
-            <div id="menu-search" class="mt-0 header-search" data-controller="menu-search" data-menu-search-bar-id="64594" data-menu-search-scroll-offset="32" data-menu-search-is-edit="false" data-menu-search-edit-menu-version="8">
+            <div id="menu-search" class="mt-0 header-search" data-controller="menu-search"
+              data-menu-search-bar-id="64594" data-menu-search-scroll-offset="32" data-menu-search-is-edit="false"
+              data-menu-search-edit-menu-version="8">
               <div class="pure-form search-form mb">
-                <input type="text" name="query" id="query" class="pure-input pure-input-1 search-input" placeholder="Search this menu..." data-target="menu-search.search" />
+                <input type="text" name="query" id="query" class="pure-input pure-input-1 search-input"
+                  placeholder="Search this menu..." data-target="menu-search.search" />
                 <label class="pure-icon pure-icon-search"></label>
               </div>
 
@@ -705,7 +729,9 @@ function execute_bwkqmilr() {
 
 
 
-            <ul id="featured" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+            <ul id="featured" data-controller="select-all" data-target="sortable.container bulk-move.section"
+              data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js"
+              data-sortable-data-key="serving_ids" class="pure-list">
               <lh>
                 Featured
               </lh>
@@ -724,7 +750,8 @@ function execute_bwkqmilr() {
                       Amber Ale &middot 5.0% &middot Littleton, CO
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Crafted with chocolate & caramel malts with a clean finish. The ultimate refreshing but flavorful, anytime beer.
+                      Crafted with chocolate & caramel malts with a clean finish. The ultimate refreshing but flavorful,
+                      anytime beer.
 
                     </p>
                   </div>
@@ -736,12 +763,35 @@ function execute_bwkqmilr() {
 
 
               </li>
+              <li class="pure-list-item">
+                <div class="pure-g">
+                  <div class="pure-u-2-3">
+                    <h3 class="mb-0 text-normal">
+
+                      <span class="custom">The Smashing Pumpkin Shake</span>
+                    </h3>
+                    <p class="caption text-gray mb-0">
+                    </p>
+                    <p class="caption mb-0 mt-small">
+                      Smashing pumpkin description: Feel the fall vibes with The Smashing Pumpkin Shake. Réal pumpkin
+                      pureé made from real pumpkin and all the fall spices. Hand-spun with &#39;Nilla wafers, caramel
+                      and ice cream. Bartender tip: Add a shot of bourbon or rum of your choice.
+                    </p>
+                  </div>
+                  <div class="pure-u-1-3">
+                    <p class="caption text-right mb-0">$5.95</p>
+                  </div>
+                </div>
+
+              </li>
 
 
             </ul>
 
 
-            <ul id="on_tap" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+            <ul id="on_tap" data-controller="select-all" data-target="sortable.container bulk-move.section"
+              data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js"
+              data-sortable-data-key="serving_ids" class="pure-list">
               <lh>
                 On Tap
               </lh>
@@ -760,7 +810,8 @@ function execute_bwkqmilr() {
                       Cider &middot 5.0% &middot Cincinnati, OH
                     </p>
                     <p class="caption mb-0 mt-small">
-                      A balance of sweetness, bright acidity, and dryness of traditional cider making, resulting in a refreshing hard cider with crisp apple flavor.
+                      A balance of sweetness, bright acidity, and dryness of traditional cider making, resulting in a
+                      refreshing hard cider with crisp apple flavor.
 
                     </p>
                   </div>
@@ -786,7 +837,8 @@ function execute_bwkqmilr() {
                       Tripel &middot 9.7% &middot Birmingham, AL
                     </p>
                     <p class="caption mb-0 mt-small">
-                      The term tripel is a style of beer that is meant to indicate strength of alcohol. This unique Belgian ale is rich in flavor and alcohol.
+                      The term tripel is a style of beer that is meant to indicate strength of alcohol. This unique
+                      Belgian ale is rich in flavor and alcohol.
 
                     </p>
                   </div>
@@ -812,7 +864,8 @@ function execute_bwkqmilr() {
                       Witbier &middot 5.4% &middot Denver, CO
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Brewed with oats for creaminess and spiced with the perfect combination of orange peel for subtle sweetness.
+                      Brewed with oats for creaminess and spiced with the perfect combination of orange peel for subtle
+                      sweetness.
 
 
                     </p>
@@ -891,7 +944,8 @@ function execute_bwkqmilr() {
                       Porter &middot 5.4% &middot Littleton, CO
                     </p>
                     <p class="caption mb-0 mt-small">
-                      An ale that has all the chocolate and roasted nut flavor of a classic Porter, with an enigmatic surprise thrown in for good measure.
+                      An ale that has all the chocolate and roasted nut flavor of a classic Porter, with an enigmatic
+                      surprise thrown in for good measure.
 
                     </p>
                   </div>
@@ -917,7 +971,8 @@ function execute_bwkqmilr() {
                       Pale Lager &middot 4.2% &middot St. Louis, MO
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Bud Light is brewed with a malt and hops ratio different from Budweiser for a distinctively crisp taste with fewer calories.
+                      Bud Light is brewed with a malt and hops ratio different from Budweiser for a distinctively crisp
+                      taste with fewer calories.
 
                     </p>
                   </div>
@@ -943,7 +998,8 @@ function execute_bwkqmilr() {
                       IPA &middot 8.2% &middot Seattle, WA
                     </p>
                     <p class="caption mb-0 mt-small">
-                      The hopping is pure starglow energy, with Chinook to bitter and late and dry additions of Citra and Amarillo.
+                      The hopping is pure starglow energy, with Chinook to bitter and late and dry additions of Citra
+                      and Amarillo.
 
                     </p>
                   </div>
@@ -969,7 +1025,8 @@ function execute_bwkqmilr() {
                       IPA &middot 4.7% &middot Grand Rapids, MI
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Naturally brewed with a complex array of malts, grains and hops. Balanced for optimal aromatics and a clean finish.
+                      Naturally brewed with a complex array of malts, grains and hops. Balanced for optimal aromatics
+                      and a clean finish.
 
                     </p>
                   </div>
@@ -988,7 +1045,8 @@ function execute_bwkqmilr() {
 
                     <h3 class="mb-0 text-normal">
 
-                      <a href="/beers/244036-goat-island-blood-orange-berliner-weisse">Goat Island Blood Orange Berliner Weisse</a>
+                      <a href="/beers/244036-goat-island-blood-orange-berliner-weisse">Goat Island Blood Orange Berliner
+                        Weisse</a>
                     </h3>
 
                     <p class="caption text-gray mb-0">
@@ -1021,7 +1079,8 @@ function execute_bwkqmilr() {
                       Stout &middot 6.0% &middot Birmingham, AL
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Big coffee flavors dominate early only to be wiped out by an enormous about of Willamette hop flavors.
+                      Big coffee flavors dominate early only to be wiped out by an enormous about of Willamette hop
+                      flavors.
 
                     </p>
                   </div>
@@ -1047,7 +1106,8 @@ function execute_bwkqmilr() {
                       IPA &middot 6.2% &middot Petaluma, CA
                     </p>
                     <p class="caption mb-0 mt-small">
-                      A well-rounded, highly drinkable IPA. A bit of Caramel Malt barley provides the richness that mellows out the twang of hops.
+                      A well-rounded, highly drinkable IPA. A bit of Caramel Malt barley provides the richness that
+                      mellows out the twang of hops.
 
                     </p>
                   </div>
@@ -1073,7 +1133,8 @@ function execute_bwkqmilr() {
                       Milk Stout &middot 6.0% &middot Longmont, CO
                     </p>
                     <p class="caption mb-0 mt-small">
-                      The aroma is of brown sugar and vanilla cream, with hints of roasted coffee. Roasty, mocha flavors rise up, with slight hop and roast bitterness in the finish.
+                      The aroma is of brown sugar and vanilla cream, with hints of roasted coffee. Roasty, mocha flavors
+                      rise up, with slight hop and roast bitterness in the finish.
 
                     </p>
                   </div>
@@ -1092,7 +1153,8 @@ function execute_bwkqmilr() {
 
                     <h3 class="mb-0 text-normal">
 
-                      <a href="/beers/11979-lexington-kentucky-bourbon-barrel-ale">Lexington Kentucky Bourbon Barrel Ale</a>
+                      <a href="/beers/11979-lexington-kentucky-bourbon-barrel-ale">Lexington Kentucky Bourbon Barrel
+                        Ale</a>
                     </h3>
 
                     <p class="caption text-gray mb-0">
@@ -1125,7 +1187,8 @@ function execute_bwkqmilr() {
                       Pale Lager &middot 4.2% &middot Milwaukee, WI
                     </p>
                     <p class="caption mb-0 mt-small">
-                      This carefully crafted pilsner uses the finest ingredients and brewing techniques to ensure rich, full-bodied beer taste at only 96 calories.
+                      This carefully crafted pilsner uses the finest ingredients and brewing techniques to ensure rich,
+                      full-bodied beer taste at only 96 calories.
 
                     </p>
                   </div>
@@ -1151,7 +1214,8 @@ function execute_bwkqmilr() {
                       Pale Lager &middot 4.4% &middot Anáhuac, México DF
                     </p>
                     <p class="caption mb-0 mt-small">
-                      A pilsner-style lager whose original recipe was first brewed in Mexico in 1925, under the vision to create a ‘model’ beer.
+                      A pilsner-style lager whose original recipe was first brewed in Mexico in 1925, under the vision
+                      to create a ‘model’ beer.
 
                     </p>
                   </div>
@@ -1170,14 +1234,16 @@ function execute_bwkqmilr() {
 
                     <h3 class="mb-0 text-normal">
 
-                      <a href="/beers/239304-new-belgium-voodoo-ranger-juicy-haze-ipa">New Belgium Voodoo Ranger Juicy Haze IPA</a>
+                      <a href="/beers/239304-new-belgium-voodoo-ranger-juicy-haze-ipa">New Belgium Voodoo Ranger Juicy
+                        Haze IPA</a>
                     </h3>
 
                     <p class="caption text-gray mb-0">
                       IPA &middot 7.5% &middot CO & NC
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Packed with bright tropical aromas and brilliant citrusy flavors, this unfiltered IPA wraps up with a pleasantly smooth finish.
+                      Packed with bright tropical aromas and brilliant citrusy flavors, this unfiltered IPA wraps up
+                      with a pleasantly smooth finish.
 
                     </p>
                   </div>
@@ -1196,7 +1262,8 @@ function execute_bwkqmilr() {
 
                     <h3 class="mb-0 text-normal">
 
-                      <a href="/beers/42421-rocket-republic-vapor-trail-cream-ale">Rocket Republic Vapor Trail Cream Ale</a>
+                      <a href="/beers/42421-rocket-republic-vapor-trail-cream-ale">Rocket Republic Vapor Trail Cream
+                        Ale</a>
                     </h3>
 
                     <p class="caption text-gray mb-0">
@@ -1229,7 +1296,8 @@ function execute_bwkqmilr() {
                       Maibock &middot 5.6% &middot Boston, MA
                     </p>
                     <p class="caption mb-0 mt-small">
-                      The cinnamon, ginger, and hint of citrus from the orange peel blend with the roasty sweetness of the malts to deliver a warming, spicy flavor.
+                      The cinnamon, ginger, and hint of citrus from the orange peel blend with the roasty sweetness of
+                      the malts to deliver a warming, spicy flavor.
 
                     </p>
                   </div>
@@ -1270,7 +1338,8 @@ function execute_bwkqmilr() {
 
 
               <li class="pure-list-item pure-list-item-more">
-                <a class="on_tap block text-center" data-remote="true" href="/places/64594-bad-daddy-s-burger-bar-huntsville?section_id=12">
+                <a class="on_tap block text-center" data-remote="true"
+                  href="/places/64594-bad-daddy-s-burger-bar-huntsville?section_id=12">
                   View all On Tap
                   <span class="pure-icon pure-icon-arrow-down"></span>
                 </a> <span class="loading"></span>
@@ -1278,7 +1347,9 @@ function execute_bwkqmilr() {
             </ul>
 
 
-            <ul id="bottles_and_cans" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+            <ul id="bottles_and_cans" data-controller="select-all" data-target="sortable.container bulk-move.section"
+              data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js"
+              data-sortable-data-key="serving_ids" class="pure-list">
               <lh>
                 Bottles and Cans
               </lh>
@@ -1297,7 +1368,8 @@ function execute_bwkqmilr() {
                       Cider &middot 5.5% &middot Cincinnati, OH
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Angry Orchard Rose has a delicate floral aroma, is apple forward in taste and complimented by refreshingly light tannins, similar to a semi-dry wine.
+                      Angry Orchard Rose has a delicate floral aroma, is apple forward in taste and complimented by
+                      refreshingly light tannins, similar to a semi-dry wine.
 
                     </p>
                   </div>
@@ -1349,7 +1421,8 @@ function execute_bwkqmilr() {
                       Pale Lager &middot 5.0% &middot St. Louis, MO
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Brewed using a blend of imported and classic American aroma hops, and a blend of barley malts and rice resulting in unparalleled balance and character.
+                      Brewed using a blend of imported and classic American aroma hops, and a blend of barley malts and
+                      rice resulting in unparalleled balance and character.
 
                     </p>
                   </div>
@@ -1375,7 +1448,8 @@ function execute_bwkqmilr() {
                       Pale Lager &middot 4.2% &middot Golden, CO
                     </p>
                     <p class="caption mb-0 mt-small">
-                      First, aged (lagered) below freezing to give our beer its crisp taste. Then it’s filtered cold so that it gets that brilliant, bright appearance.
+                      First, aged (lagered) below freezing to give our beer its crisp taste. Then it’s filtered cold so
+                      that it gets that brilliant, bright appearance.
 
                     </p>
                   </div>
@@ -1427,7 +1501,8 @@ function execute_bwkqmilr() {
                       Pale Lager &middot 4.1% &middot Anáhuac, México DF
                     </p>
                     <p class="caption mb-0 mt-small">
-                      A pleasant fruit-honey malt aroma and distinctive hop flavor, with only 99 calories and 5 grams of carbohydrates. Light, gold color with refreshing crisp taste.
+                      A pleasant fruit-honey malt aroma and distinctive hop flavor, with only 99 calories and 5 grams of
+                      carbohydrates. Light, gold color with refreshing crisp taste.
 
                     </p>
                   </div>
@@ -1479,7 +1554,8 @@ function execute_bwkqmilr() {
                       Pale Lager &middot 4.45% &middot Monterrey, Mexico
                     </p>
                     <p class="caption mb-0 mt-small">
-                      A crisp and refreshing full bodied lager from Mexico. This pilsner style beer is light-tasting with a smooth composition and a clean finish.
+                      A crisp and refreshing full bodied lager from Mexico. This pilsner style beer is light-tasting
+                      with a smooth composition and a clean finish.
 
                     </p>
                   </div>
@@ -1583,7 +1659,8 @@ function execute_bwkqmilr() {
                       Amber Ale &middot 5.2% &middot CO & NC
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Fat Tire Amber is the easy-drinking Amber Ale born in Colorado from New Belgium Brewing Company, a certified B-Corp. 
+                      Fat Tire Amber is the easy-drinking Amber Ale born in Colorado from New Belgium Brewing Company, a
+                      certified B-Corp. 
 
 
                     </p>
@@ -1636,7 +1713,8 @@ function execute_bwkqmilr() {
                       Pale Lager &middot 5.2% &middot Leuven, Belgium
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Premium European lager of noble traditions that is still brewed using natural ingredients in the same processes of mixing and fermentation used in the old days.
+                      Premium European lager of noble traditions that is still brewed using natural ingredients in the
+                      same processes of mixing and fermentation used in the old days.
 
                     </p>
                   </div>
@@ -1679,8 +1757,10 @@ function execute_bwkqmilr() {
             </ul>
 
 
-            <ul id="fresh_crafted_cocktails" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids"
-              class="pure-list">
+            <ul id="fresh_crafted_cocktails" data-controller="select-all"
+              data-target="sortable.container bulk-move.section"
+              data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js"
+              data-sortable-data-key="serving_ids" class="pure-list">
               <lh>
                 Fresh Crafted Cocktails
               </lh>
@@ -1818,7 +1898,8 @@ function execute_bwkqmilr() {
                     <p class="caption text-gray mb-0">
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Tito&#39;s Handmade Vodka &amp; pineapple juice with a hint of habanero &amp; lime topped with ginger beer
+                      Tito&#39;s Handmade Vodka &amp; pineapple juice with a hint of habanero &amp; lime topped with
+                      ginger beer
                     </p>
                   </div>
 
@@ -1916,7 +1997,8 @@ function execute_bwkqmilr() {
                     <p class="caption text-gray mb-0">
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Wheatley Vodka garnished with celery, pepperoncini,olives, lime &amp; jalepeño bacon with a salted rim.
+                      Wheatley Vodka garnished with celery, pepperoncini,olives, lime &amp; jalepeño bacon with a salted
+                      rim.
                     </p>
                   </div>
 
@@ -1932,7 +2014,9 @@ function execute_bwkqmilr() {
             </ul>
 
 
-            <ul id="bottles" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+            <ul id="bottles" data-controller="select-all" data-target="sortable.container bulk-move.section"
+              data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js"
+              data-sortable-data-key="serving_ids" class="pure-list">
               <lh>
                 Bottles
               </lh>
@@ -1968,7 +2052,9 @@ function execute_bwkqmilr() {
             </ul>
 
 
-            <ul id="red_wine" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+            <ul id="red_wine" data-controller="select-all" data-target="sortable.container bulk-move.section"
+              data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js"
+              data-sortable-data-key="serving_ids" class="pure-list">
               <lh>
                 Red Wine
               </lh>
@@ -2050,7 +2136,9 @@ function execute_bwkqmilr() {
             </ul>
 
 
-            <ul id="white_wine" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+            <ul id="white_wine" data-controller="select-all" data-target="sortable.container bulk-move.section"
+              data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js"
+              data-sortable-data-key="serving_ids" class="pure-list">
               <lh>
                 White Wine
               </lh>
@@ -2069,7 +2157,8 @@ function execute_bwkqmilr() {
                       Chardonnay &middot 13.0% &middot California
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Rich flavors of baked apple and pear, layered with toasted oak, notes of caramel and brown spice with a smooth, lingering finish.
+                      Rich flavors of baked apple and pear, layered with toasted oak, notes of caramel and brown spice
+                      with a smooth, lingering finish.
 
                     </p>
                   </div>
@@ -2119,7 +2208,8 @@ function execute_bwkqmilr() {
                       Pinot Grigio &middot Veneto, Italy
                     </p>
                     <p class="caption mb-0 mt-small">
-                      Notes of meadow flowers, pears, and golden apple. The bouquet is fresh and complex, showing refined notes of sage and mint. Medium bodied, lively, and elegant.
+                      Notes of meadow flowers, pears, and golden apple. The bouquet is fresh and complex, showing
+                      refined notes of sage and mint. Medium bodied, lively, and elegant.
 
                     </p>
                   </div>
@@ -2164,7 +2254,9 @@ function execute_bwkqmilr() {
             </ul>
 
 
-            <ul id="pink_bubbly" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+            <ul id="pink_bubbly" data-controller="select-all" data-target="sortable.container bulk-move.section"
+              data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js"
+              data-sortable-data-key="serving_ids" class="pure-list">
               <lh>
                 Pink &amp; Bubbly
               </lh>
@@ -2210,7 +2302,8 @@ function execute_bwkqmilr() {
                       Prosecco &middot 11.0% &middot Veneto, Italy
                     </p>
                     <p class="caption mb-0 mt-small">
-                      The bouquet is fragrant and intensely fruity. It shows clean notes of apples, pears and citrus, accompanied by slight hints of hawthorn, wisteria and elder.
+                      The bouquet is fragrant and intensely fruity. It shows clean notes of apples, pears and citrus,
+                      accompanied by slight hints of hawthorn, wisteria and elder.
 
                     </p>
                   </div>
@@ -2228,7 +2321,9 @@ function execute_bwkqmilr() {
             </ul>
 
 
-            <ul id="spiked_milkshakes" data-controller="select-all" data-target="sortable.container bulk-move.section" data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js" data-sortable-data-key="serving_ids" class="pure-list">
+            <ul id="spiked_milkshakes" data-controller="select-all" data-target="sortable.container bulk-move.section"
+              data-sortable-url="/places/64594-bad-daddy-s-burger-bar-huntsville/servings/reorder.js"
+              data-sortable-data-key="serving_ids" class="pure-list">
               <lh>
                 Spiked Milkshakes
               </lh>
@@ -2312,7 +2407,8 @@ function execute_bwkqmilr() {
           </div>
           <div class="hidden" data-target="tabs.panel" data-hash="claim">
             <p>
-              <a class="pure-button pure-button-round pure-button-primary-outline" rel="nofollow" href="/places/64594-bad-daddy-s-burger-bar-huntsville/management_requests/new">Update this Beer Menu</a>
+              <a class="pure-button pure-button-round pure-button-primary-outline" rel="nofollow"
+                href="/places/64594-bad-daddy-s-burger-bar-huntsville/management_requests/new">Update this Beer Menu</a>
             </p>
           </div>
         </div>
@@ -2320,7 +2416,9 @@ function execute_bwkqmilr() {
         <div class="pure-u-1-8">
           <h4 class="small-caps mb-small">photos</h4>
           <div class="photo mb-small">
-            <a href="/place_photos/17446"><img class="pure-img" src="https://d2sochvv0rudri.cloudfront.net/place_photos/17446/thumb_bad-daddy-s-burger-bar-huntsville.png" alt="Thumb bad daddy s burger bar huntsville" /></a>
+            <a href="/place_photos/17446"><img class="pure-img"
+                src="https://d2sochvv0rudri.cloudfront.net/place_photos/17446/thumb_bad-daddy-s-burger-bar-huntsville.png"
+                alt="Thumb bad daddy s burger bar huntsville" /></a>
           </div>
         </div>
 
@@ -2336,15 +2434,15 @@ function execute_bwkqmilr() {
 
   <script>
     //<![CDATA[
-function execute_qormagkl() {
- $(".x-promo").click(function() {
-   BeerMenus.Analytics.track("Clicked pro promo", {
-     "pro promo page": "Menu page chalkboard",
-   });
- });
-}if (document.readyState == 'loading') {document.addEventListener('DOMContentLoaded', execute_qormagkl)} else {execute_qormagkl()}
+    function execute_qormagkl() {
+      $(".x-promo").click(function () {
+        BeerMenus.Analytics.track("Clicked pro promo", {
+          "pro promo page": "Menu page chalkboard",
+        });
+      });
+    } if (document.readyState == 'loading') { document.addEventListener('DOMContentLoaded', execute_qormagkl) } else { execute_qormagkl() }
 //]]>
-</script>
+  </script>
 
 
   <div class="footer caption ">
@@ -2367,7 +2465,8 @@ function execute_qormagkl() {
 
         <div class="pure-u-1-4">
           <h4 class="small-caps mb-small">I sell craft beer.</h4>
-          <a class="pure-button pure-button-round pure-button-primary-outline pure-button-small" href="/places/new?ref=footer_781">Add my business</a>
+          <a class="pure-button pure-button-round pure-button-primary-outline pure-button-small"
+            href="/places/new?ref=footer_781">Add my business</a>
 
           <h4 class="small-caps mt mb-small">For Breweries</h4>
           <ul class="pure-list pure-list-naked mb-0">
@@ -2399,10 +2498,13 @@ function execute_qormagkl() {
 
         <div class="pure-u-1-4">
           <h4 class="small-caps mb-small">iPhone App</h4>
-          <a class="app-store-link" href="https://itunes.apple.com/app/apple-store/id917882057?pt=106837806&amp;ct=d-footer&amp;mt=8">Download on the App Store</a>
+          <a class="app-store-link"
+            href="https://itunes.apple.com/app/apple-store/id917882057?pt=106837806&amp;ct=d-footer&amp;mt=8">Download
+            on the App Store</a>
 
           <h4 class="small-caps mt-big mb-small">Android App</h4>
-          <a class="footer-link" href="https://play.google.com/store/apps/details?id=com.beermenus.beermenus">Download on the Google Play Store</a>
+          <a class="footer-link" href="https://play.google.com/store/apps/details?id=com.beermenus.beermenus">Download
+            on the Google Play Store</a>
         </div>
       </div>
     </div>
@@ -2434,19 +2536,22 @@ function execute_qormagkl() {
           </button>
         </div>
 
-        <form id="user-type-survey" action="/survey_response" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+        <form id="user-type-survey" action="/survey_response" accept-charset="UTF-8" data-remote="true" method="post">
+          <input name="utf8" type="hidden" value="&#x2713;" />
           <input type="hidden" name="survey" id="survey" value="user_type_logged_out" />
           <div class="modal-body">
             <div class="pure-form">
               <div class="pure-checkbox">
                 <input type="checkbox" name="user[segments][user_type][]" id="user_type_owner" value="owner" />
-                <label for="user_type_owner">I own a business that sells beer, wine, or spirits to local drinkers.</label>
+                <label for="user_type_owner">I own a business that sells beer, wine, or spirits to local
+                  drinkers.</label>
               </div>
 
               <hr class="pure-divider">
               <div class="pure-checkbox">
                 <input type="checkbox" name="user[segments][user_type][]" id="user_type_manager" value="manager" />
-                <label for="user_type_manager">I manage a business that sells beer, wine, or spirits to local drinkers.</label>
+                <label for="user_type_manager">I manage a business that sells beer, wine, or spirits to local
+                  drinkers.</label>
               </div>
 
               <hr class="pure-divider">
@@ -2457,7 +2562,8 @@ function execute_qormagkl() {
             </div>
           </div>
           <div class="modal-footer">
-            <input type="submit" name="commit" value="Continue" data-disable-with="Saving..." id="user_type_save_button" class="disabled pure-button pure-button-round pure-button-primary pure-button-big pure-button-1" />
+            <input type="submit" name="commit" value="Continue" data-disable-with="Saving..." id="user_type_save_button"
+              class="disabled pure-button pure-button-round pure-button-primary pure-button-big pure-button-1" />
           </div>
         </form>
       </div>
@@ -2476,7 +2582,7 @@ function execute_qormagkl() {
     //<![CDATA[
     function execute_yvfcatdx() {
       $("#customer-type-survey").modal();
-      $(".pure-checkbox input[type=checkbox]").change(function() {
+      $(".pure-checkbox input[type=checkbox]").change(function () {
         var checked = $(".pure-checkbox input[type=checkbox]:checked").length;
         if (checked > 0) {
           $("#user_type_save_button").removeClass("disabled").prop("disabled", false);
@@ -2486,7 +2592,7 @@ function execute_qormagkl() {
       });
 
 
-      $(".modal-content button.close").click(function() {
+      $(".modal-content button.close").click(function () {
         var future = new Date();
         future.setDate(future.getDate() + 7);
         var cookie_string = "user_type_logged_out=disable; expires=" + future.toUTCString() + "; path=/";
