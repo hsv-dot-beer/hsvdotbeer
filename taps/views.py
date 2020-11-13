@@ -121,7 +121,9 @@ def save_tap_form(request, venue_id: int, tap_number: int):
                 id=venue_id,
             )
         try:
-            tap = models.Tap.objects.select_related('beer').get(venue=venue, tap_number=tap_number)
+            tap = models.Tap.objects.select_related("beer").get(
+                venue=venue, tap_number=tap_number
+            )
         except models.Tap.DoesNotExist:
             tap = models.Tap(venue=venue, tap_number=tap_number)
         original_beer_id = tap.beer_id
