@@ -177,8 +177,9 @@ class BeerMenusParser(BaseTapListProvider):
                         parse_beer_tag(extra_tag) for extra_tag in parser.find_all("li")
                     ]
                     continue
-
-                beers.append(parse_beer_tag(li))
+                beer = parse_beer_tag(li)
+                if beer:
+                    beers.append(beer)
         LOG.debug("Found %s beers", len(beers))
         return beers
 
@@ -278,8 +279,20 @@ def parse_beer_tag(tag: Tag) -> BeerData:
         serving_size = None
     else:
         price = Decimal(price)
-        serving_size = int("".join(i for i in capacity if i.isdigit()))
-    beer_a = tag.find_all("a")[0]
+        try:
+            serving_size = int("".join(i for i in capacity if i.isdigit()))
+        except ValueError:
+            LOG.warning(
+                "Ignoring invalid serving size %r for %s",
+                capacity,
+                tag.find("h3").text.strip(),
+            )
+            serving_size = None
+    try:
+        beer_a = tag.find_all("a")[0]
+    except IndexError:
+        LOG.warning("No beer links found for %s", tag.find("h3").text.strip())
+        return None
     beer_url = f"https://www.beermenus.com{beer_a.attrs['href']}"
     return BeerData(
         url=beer_url,
