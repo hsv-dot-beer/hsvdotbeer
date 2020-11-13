@@ -2,6 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.db.models import Max, Prefetch
 from django.db import transaction
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotAllowed
 from django.utils.timezone import now
@@ -120,10 +121,11 @@ def save_tap_form(request, venue_id: int, tap_number: int):
                 id=venue_id,
             )
         try:
-            tap = models.Tap.objects.get(venue=venue, tap_number=tap_number)
+            tap = models.Tap.objects.select_related('beer').get(venue=venue, tap_number=tap_number)
         except models.Tap.DoesNotExist:
             tap = models.Tap(venue=venue, tap_number=tap_number)
         original_beer_id = tap.beer_id
+        original_beer = tap.beer
         form = forms.TapForm(request.POST, instance=tap)
         if form.is_valid():
             if (
@@ -143,4 +145,22 @@ def save_tap_form(request, venue_id: int, tap_number: int):
                 {"form": form, "tap": tap, "venue": venue},
                 status=400,
             )
+    if tap.beer:
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            f"Successfully saved {tap.beer} on tap {tap.tap_number}",
+        )
+    elif original_beer:
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            f"Successfully removed {original_beer} from tap {tap.tap_number}",
+        )
+    else:
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            f"Successfully did... nothing on tap {tap.tap_number}",
+        )
     return redirect(reverse("venue_table", args=[venue.id]))

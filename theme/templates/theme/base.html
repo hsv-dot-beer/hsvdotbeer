@@ -61,6 +61,15 @@
     </nav>
 
     <div class="container mx-auto">
+      {% block messages %}
+        {% if messages %}
+          <ul class="list-none">
+              {% for message in messages %}
+              <li{% if message.tags %} class="{% if 'success' in message.tags %}bg-green-400 text-white font-medium py-2 px-4 rounded{% else %}{{ message.tags }}{% endif %}"{% endif %}>{{ message }}</li>
+              {% endfor %}
+          </ul>
+        {% endif %}
+      {% endblock %}
       {% block content %}
       <section class="flex items-center justify-center h-screen">
         <h1 class="text-5xl">Django + Tailwind = ❤️</h1>
