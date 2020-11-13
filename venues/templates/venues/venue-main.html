@@ -19,7 +19,7 @@
     <div class="timestamp-cell">{% if tap.beer and tap.time_added %}{{ tap.time_added }} ({{ tap.time_added | timesince }} ago){% else %}N/A{% endif %}</div>
     <div class="action-cell">
         {% comment %}TODO: add an icon here{% endcomment %}
-        <a class="text-blue-600" href="{% url 'edit_tap_pick_mfg' venue.id tap.tap_number %}">Edit</a>
+        <a class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-blue-600 bg-blue-600 hover:border-blue-600 hover:text-black hover:bg-white mt-4 lg:mt-0" href="{% url 'edit_tap_pick_mfg' venue.id tap.tap_number %}">Edit</a>
         {% comment %}TODO add clear link{% endcomment %}
     </div>
     {% endfor %}
