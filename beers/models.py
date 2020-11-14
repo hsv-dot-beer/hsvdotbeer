@@ -1,12 +1,13 @@
 import logging
 
-from django.contrib.postgres.fields import JSONField, CITextField
+from django.contrib.postgres.fields import CITextField
 from django.db import models, transaction
 from django.db.utils import IntegrityError
 from django.utils.timezone import now
 
 from taps.models import Tap
 from .utils import render_srm
+from django.db.models import JSONField
 
 LOG = logging.getLogger(__name__)
 
@@ -84,7 +85,7 @@ class Manufacturer(models.Model):
     twitter_handle = models.CharField(max_length=50, blank=True)
     instagram_handle = models.CharField(max_length=50, blank=True)
     untappd_url = models.URLField(blank=True, null=True)
-    automatic_updates_blocked = models.NullBooleanField(default=False)
+    automatic_updates_blocked = models.BooleanField(null=True, default=False)
     taphunter_url = models.URLField(blank=True, null=True)
     taplist_io_pk = models.PositiveIntegerField(blank=True, null=True)
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
@@ -223,9 +224,11 @@ class Beer(models.Model):
         blank=True,
     )
     manufacturer_url = models.URLField(
-        "Link to the beer on the manufacturer's website", blank=True, null=True
+        "Link to the beer on the manufacturer's website",
+        blank=True,
+        null=True,
     )
-    automatic_updates_blocked = models.NullBooleanField(default=False)
+    automatic_updates_blocked = models.BooleanField(null=True, default=False)
     taphunter_url = models.URLField("TapHunter URL (if known)", blank=True, null=True)
     stem_and_stein_pk = models.PositiveIntegerField(blank=True, null=True)
     taplist_io_pk = models.PositiveIntegerField(blank=True, null=True)
