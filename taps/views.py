@@ -210,8 +210,8 @@ def clear_tap(request, tap_id: int):
             request,
             messages.SUCCESS,
             format_html(
-                'Successfully removed {old_beer} from tap {tap_number}. <a href="{url}" '
-                'class="text-bold text-underline">Undo</a>',
+                'Successfully removed {old_beer} from tap {tap_number}. <a href="{url}"'
+                ' class="text-bold text-underline">Undo</a>',
                 old_beer=old_beer,
                 tap_number=tap.tap_number,
                 url=undo_url,
