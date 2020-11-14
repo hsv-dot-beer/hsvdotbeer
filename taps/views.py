@@ -1,3 +1,6 @@
+"""Tap views"""
+import datetime
+
 from rest_framework.viewsets import ModelViewSet
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.db.models import Max, Prefetch
@@ -5,6 +8,8 @@ from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotAllowed
+from django.utils.html import format_html
+from django.utils.http import urlencode
 from django.utils.timezone import now
 
 from beers.forms import ManufacturerSelectForm
@@ -166,3 +171,75 @@ def save_tap_form(request, venue_id: int, tap_number: int):
             f"Successfully did... nothing on tap {tap.tap_number}",
         )
     return redirect(reverse("venue_table", args=[venue.id]))
+
+
+@login_required
+def clear_tap(request, tap_id: int):
+    """Clear the beer assigned to a tap"""
+    queryset = models.Tap.objects.select_related("beer")
+    if not request.user.is_superuser:
+        queryset = queryset.filter(venue__managers=request.user)
+    tap = get_object_or_404(queryset, id=tap_id)
+    if not tap.beer:
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            f"There was no beer assigned to tap {tap.tap_number}. Carry on.",
+        )
+    else:
+        old_beer = tap.beer
+        undo_url = reverse("undo_clear", args=[tap.id, old_beer.id])
+        query_args = {}
+        if tap.estimated_percent_remaining:
+            query_args["percent_remaining"] = tap.estimated_percent_remaining
+        tap.estimated_percent_remaining = None
+        if tap.gas_type:
+            query_args["gas_type"] = tap.gas_type
+        tap.gas_type = ""
+        if tap.time_added:
+            query_args["time_added"] = tap.time_added.isoformat()
+        tap.time_added = now()
+        if tap.time_updated:
+            query_args["time_updated"] = tap.time_updated.isoformat()
+        if query_args:
+            undo_url = f"{undo_url}?{urlencode(query_args)}"
+        tap.beer = None
+        tap.save()
+
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            format_html(
+                'Successfully removed {old_beer} from tap {tap_number}. <a href="{url}" '
+                'class="text-bold text-underline">Undo</a>',
+                old_beer=old_beer,
+                tap_number=tap.tap_number,
+                url=undo_url,
+            ),
+        )
+    return redirect(reverse("venue_table", args=[tap.venue_id]))
+
+
+@login_required
+def undo_clear(request, tap_id: int, beer_id: int):
+    """Quickly undo clearing a beer"""
+    queryset = models.Tap.objects.select_related("beer").filter(beer=None)
+    if not request.user.is_superuser:
+        queryset = queryset.filter(venue__managers=request.user)
+    tap = get_object_or_404(queryset, id=tap_id)
+    tap.beer_id = beer_id
+    if percent_remaining := request.GET.get("percent_remaining"):
+        tap.estimated_percent_remaining = percent_remaining
+    if gas_type := request.GET.get("gas_type"):
+        tap.gas_type = gas_type
+    if time_added := request.GET.get("time_added"):
+        tap.time_added = datetime.datetime.fromisoformat(time_added)
+    if time_updated := request.GET.get("time_updated"):
+        tap.time_updated = datetime.datetime.fromisoformat(time_updated)
+    tap.save()
+    messages.add_message(
+        request,
+        messages.SUCCESS,
+        f"Successfully reattached {tap.beer} to tap {tap.tap_number}.",
+    )
+    return redirect(reverse("venue_table", args=[tap.venue_id]))

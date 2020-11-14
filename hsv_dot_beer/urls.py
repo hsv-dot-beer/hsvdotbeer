@@ -12,7 +12,13 @@ from beers.views import (
     beer_form,
     style_form,
 )
-from taps.views import tap_form, manufacturer_select_for_form, save_tap_form
+from taps.views import (
+    tap_form,
+    manufacturer_select_for_form,
+    save_tap_form,
+    clear_tap,
+    undo_clear,
+)
 from venues.views import venue_table
 from .users.views import UserViewSet, UserCreateViewSet
 from .views import home
@@ -57,5 +63,7 @@ urlpatterns = [
         name="edit_tap_save",
     ),
     path("venues/<int:venue_id>/", venue_table, name="venue_table"),
+    path("taps/<int:tap_id>/clear/", clear_tap, name="clear_tap"),
+    path("taps/<int:tap_id>/clear/undo/<int:beer_id>/", undo_clear, name="undo_clear"),
     path("", home),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
