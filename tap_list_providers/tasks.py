@@ -39,7 +39,6 @@ RETRYABLE_ERRORS = {
     "Exceeded connection limit for user",
 }
 
-
 LOG = logging.getLogger(__name__)
 
 
@@ -112,7 +111,7 @@ def format_beer(beer, beer_str):
         sorted(
             set(i.venue for i in taps),
             # sort by display order
-            key=lambda k: format_venue(k),
+            key=format_venue,
         )
     )
     venue_str = format_venues(venues)
