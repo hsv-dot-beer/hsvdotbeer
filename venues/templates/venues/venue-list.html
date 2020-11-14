@@ -11,7 +11,7 @@
     <a href="{% url 'venue_table' venue.id %}" class="text-blue-600">{{ venue.name }}</a>
   </div>
   <div class="h-12 flex items-center justify-items-start">
-    {% if venue.tap_list_last_update_time %}{{ venue.tap_list_last_update_time | timesince }}{% else %}{% endif %}
+    {% if venue.tap_list_last_update_time %}<span title="{{ venue.tap_list_last_update_time }} UTC">{{ venue.tap_list_last_update_time | timesince }} ago</span>{% else %}{% endif %}
   </div>
   {% endfor %}
 </div>
