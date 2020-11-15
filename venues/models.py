@@ -2,7 +2,7 @@
 
 from django.db import models
 from django.conf import settings
-from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import ArrayField, CITextField
 from timezone_field.fields import TimeZoneField
 from django_countries.fields import CountryField
 
@@ -20,6 +20,7 @@ class Venue(models.Model):
         ("stemandstein", "The Stem & Stein's HTML"),
         ("taplist.io", "taplist.io"),
         ("beermenus", "BeerMenus"),
+        ("arryved_embedded_menu", "Arryved Embedded Menu"),
     )
 
     # NOTE if this ever grows beyond HSV, we'll have to revisit uniqueness
@@ -121,3 +122,6 @@ class VenueAPIConfiguration(models.Model):
         null=True,
     )
     beermenus_slug = models.CharField(max_length=250, blank=True)
+    arryved_location_id = models.CharField(max_length=50, blank=True)
+    arryved_menu_id = models.CharField(max_length=50, blank=True)
+    arryved_manufacturer_name = CITextField(blank=True)
