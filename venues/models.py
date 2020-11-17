@@ -3,6 +3,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField, CITextField
+from django.utils.text import gettext_lazy as _
 from timezone_field.fields import TimeZoneField
 from django_countries.fields import CountryField
 
@@ -125,3 +126,10 @@ class VenueAPIConfiguration(models.Model):
     arryved_location_id = models.CharField(max_length=50, blank=True)
     arryved_menu_id = models.CharField(max_length=50, blank=True)
     arryved_manufacturer_name = CITextField(blank=True)
+    arryved_serving_sizes = ArrayField(
+        models.TextField(),
+        default=list,
+        blank=True,
+        null=True,
+        help_text=_("Short codes for serving sizes of draft pours"),
+    )
