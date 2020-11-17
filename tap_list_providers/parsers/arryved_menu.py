@@ -97,7 +97,7 @@ class ArryvedMenuParser(BaseTapListProvider):
                 tap.beer, venue, beer["serving_sizes"], serving_sizes
             )
             if not tap_prices:
-                LOG.debug('Skipping beer %s because it is not on tap', tap.beer)
+                LOG.debug("Skipping beer %s because it is not on tap", tap.beer)
                 if beer_created:
                     tap.beer.delete()
                 continue

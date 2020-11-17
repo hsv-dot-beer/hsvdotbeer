@@ -72,16 +72,13 @@ class CommandsTestCase(TestCase):
             for tap in Tap.objects.all():
                 self.assertEqual(tap.time_updated.year, 2020)
             tap = Tap.objects.select_related("beer").get(tap_number=2)
-            self.assertEqual(
-                tap.beer.name, "Charmer Tropical IPA"
-            )
+            self.assertEqual(tap.beer.name, "Charmer Tropical IPA")
             expected_prices = {
                 Decimal(6): Decimal(3),
                 Decimal(16): Decimal(6),
             }
-            prices = tap.beer.prices.select_related('serving_size')
+            prices = tap.beer.prices.select_related("serving_size")
             actual_prices = {
-                price.serving_size.volume_oz: price.price
-                for price in prices
+                price.serving_size.volume_oz: price.price for price in prices
             }
             self.assertEqual(expected_prices, actual_prices)
