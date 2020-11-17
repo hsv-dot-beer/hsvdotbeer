@@ -5,14 +5,13 @@ from decimal import Decimal
 
 from django.core.management import call_command
 from django.test import TestCase
-from django.utils.timezone import now
 import responses
 
 from hsv_dot_beer.config.local import BASE_DIR
-from beers.models import Beer, Manufacturer, ManufacturerAlternateName
+from beers.models import Beer, Manufacturer
 from beers.test.factories import ManufacturerFactory
 from venues.test.factories import VenueFactory
-from venues.models import Venue, VenueAPIConfiguration
+from venues.models import VenueAPIConfiguration
 from taps.models import Tap
 from tap_list_providers.parsers.arryved_menu import ArryvedMenuParser
 
