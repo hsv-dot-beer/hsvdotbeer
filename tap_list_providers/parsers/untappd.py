@@ -225,7 +225,7 @@ class UntappdParser(BaseTapListProvider):
             "1/6 barrel": 660,
             "1/4 barrel": 996,
             "1/2 barrel": 1980,
-            "flight": 5,
+            "flight": 6,  # Chattahoochee uses 6 oz tasters; we can revisit if needed later
             "half pint": 8,
             "pint": 16,
             "half liter": 16.9,
