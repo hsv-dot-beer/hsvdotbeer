@@ -270,6 +270,33 @@
         }
     },
     {
+        "model": "venues.venue",
+        "pk": 27,
+        "fields": {
+            "name": "Chattahoochee Brewing Co",
+            "address": "505 13th St",
+            "city": "Phenix City",
+            "state": "AL",
+            "postal_code": "36867",
+            "country": "US",
+            "time_zone": "America/Chicago",
+            "website": "https://www.beerontheriver.com/",
+            "facebook_page": "https://www.facebook.com/ChattahoocheeBrewing",
+            "twitter_handle": "chattahoocheebc",
+            "instagram_handle": "",
+            "tap_list_provider": "untappd",
+            "untappd_url": "https://untappd.com/chattahoocheebc",
+            "email": "",
+            "phone_number": "3345590663",
+            "logo_url": "https://alabamabrewers.org/wp-content/uploads/2020/11/chatt-logo.png",
+            "slug": "chattahoochee",
+            "on_downtown_craft_beer_trail": false,
+            "latitude": "32.470712",
+            "longitude": "-84.999353",
+            "twitter_short_location_description": ""
+        }
+    },
+    {
         "model": "venues.venueapiconfiguration",
         "pk": 1,
         "fields": {
@@ -461,6 +488,26 @@
             "untappd_location": 29716,
             "untappd_theme": 114398,
             "untappd_categories": "[\"Saison\",\"Pale Ale\",\"British\",\"Hazy IPA\",\"Fruit Beer\",\"Belgian\",\"Pale Ale\",\"Seltzer\",\"Porter\",\"Stouts\",\"Lagers\",\"Sours\",\"India Pale Ales\",\"Wheat\"]",
+            "taphunter_location": "",
+            "taphunter_excluded_lists": "[]",
+            "taplist_io_display_id": "",
+            "taplist_io_access_code": "",
+            "beermenus_categories": "[]",
+            "beermenus_slug": ""
+        }
+    },
+    {
+        "model": "venues.venueapiconfiguration",
+        "pk": 27,
+        "fields": {
+            "venue": 27,
+            "url": null,
+            "api_key": "",
+            "digital_pour_venue_id": "",
+            "digital_pour_location_number": null,
+            "untappd_location": 1827,
+            "untappd_theme": 3788,
+            "untappd_categories": "[\"Draft\"]",
             "taphunter_location": "",
             "taphunter_excluded_lists": "[]",
             "taplist_io_display_id": "",
