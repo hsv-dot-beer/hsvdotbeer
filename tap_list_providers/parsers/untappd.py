@@ -240,6 +240,8 @@ class UntappdParser(BaseTapListProvider):
                 return int(size.casefold().split("oz")[0].strip())
             if "liter" in size.casefold():
                 return Decimal(
+                    # yes, I know this conversion factor is over-precise since we're
+                    # rounding to the nearest 0.1 oz anyway.
                     float(size.casefold().split("liter")[0].strip()) * 33.8140226
                 )
             raise ValueError(f"Unknown serving size {size!r}") from exc
