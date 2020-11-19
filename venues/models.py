@@ -133,3 +133,10 @@ class VenueAPIConfiguration(models.Model):
         null=True,
         help_text=_("Short codes for serving sizes of draft pours"),
     )
+    arryved_pos_menu_names = ArrayField(
+        models.TextField(),
+        default=list,
+        blank=True,
+        null=True,
+        help_text=_("Individual menus to process from the Arryved POS"),
+    )
