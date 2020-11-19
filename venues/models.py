@@ -22,6 +22,7 @@ class Venue(models.Model):
         ("taplist.io", "taplist.io"),
         ("beermenus", "BeerMenus"),
         ("arryved_embedded_menu", "Arryved Embedded Menu"),
+        ("arryved_pos_menu", "Arryved Point of Sale Menu"),
     )
 
     # NOTE if this ever grows beyond HSV, we'll have to revisit uniqueness
