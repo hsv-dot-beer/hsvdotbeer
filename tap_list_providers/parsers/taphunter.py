@@ -1,5 +1,6 @@
 """Parse beers from TapHunter"""
 import argparse
+import datetime
 import decimal
 import logging
 import os
@@ -7,7 +8,9 @@ import json
 
 import configurations
 import requests
+from dateutil.parser import parse
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
+from pytz import UTC
 
 # boilerplate code necessary for launching outside manage.py
 try:
@@ -49,6 +52,7 @@ class TaphunterParser(BaseTapListProvider):
         use_sequential_taps = any(
             (tap_info["serving_info"]["tap_number"] == "" for tap_info in data["taps"])
         )
+        latest_timestamp = UTC.localize(datetime.datetime(1970, 1, 1, 12))
         for index, entry in enumerate(data["taps"]):
             # 1. parse the tap
             tap_info = self.parse_tap(entry)
@@ -72,6 +76,9 @@ class TaphunterParser(BaseTapListProvider):
             except KeyError:
                 tap = Tap(venue=venue, tap_number=tap_number)
             tap.time_updated = tap_info["updated"]
+            parsed_time = parse(tap_info["updated"])
+            if parsed_time > latest_timestamp:
+                latest_timestamp = parsed_time
             if "percent_full" in tap_info:
                 tap.estimated_percent_remaining = tap_info["percent_full"]
             else:
@@ -125,6 +132,7 @@ class TaphunterParser(BaseTapListProvider):
             # 4. assign the beer to the tap
             tap.beer = beer
             tap.save()
+        return latest_timestamp
 
     def parse_beer(self, tap):
         beer = {

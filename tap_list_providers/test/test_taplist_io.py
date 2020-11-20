@@ -5,6 +5,7 @@ import os
 from dateutil.parser import parse
 from django.core.management import call_command
 from django.test import TestCase
+from django.utils.timezone import now
 import responses
 
 from beers.models import Beer, Manufacturer, ManufacturerAlternateName
@@ -42,6 +43,7 @@ class TaplistCommandsTestCase(TestCase):
     @responses.activate
     def test_import_taplist_io_data(self):
         """Test parsing the JSON data"""
+        timestamp = now()
         responses.add(
             responses.GET,
             TaplistDotIOParser.URL.format(
@@ -103,3 +105,7 @@ class TaplistCommandsTestCase(TestCase):
             # NOTE: Yes, really.
             self.assertEqual(tap.beer.style.name, "An elusive IPA")
             self.assertEqual(tap.time_updated, self.timestamp)
+        self.venue.refresh_from_db()
+        self.assertIsNotNone(self.venue.tap_list_last_check_time)
+        self.assertGreater(self.venue.tap_list_last_check_time, timestamp)
+        self.assertIsNotNone(self.venue.tap_list_last_update_time)

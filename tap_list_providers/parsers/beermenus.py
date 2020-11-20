@@ -1,4 +1,7 @@
+"""Parser for beermenus dot com"""
+
 from decimal import Decimal
+import datetime
 from dataclasses import dataclass
 import logging
 import os
@@ -71,6 +74,7 @@ class BeerMenusParser(BaseTapListProvider):
         self.categories = categories
         self.soup = None
         self.save_fetched_data = save_fetched_data
+        self.updated_date = None
         super().__init__()
 
     def fetch_data(self) -> str:
@@ -100,14 +104,14 @@ class BeerMenusParser(BaseTapListProvider):
         )[0]
         # they just give us a date. I'm going to arbitrarily declare that to be
         # midnight UTC because who cares if we're off by a day
-        updated_date = UTC.localize(
+        self.updated_date = UTC.localize(
             parse(
                 updated_span.text.split()[1],
                 dayfirst=False,
             )
         )
         # TODO save this to the venue
-        LOG.debug("Last updated: %s", updated_date)
+        LOG.debug("Last updated: %s", self.updated_date)
 
         # the beer lists are in <ul>s
         beers = []
@@ -173,8 +177,9 @@ class BeerMenusParser(BaseTapListProvider):
                         parse_beer_tag(extra_tag) for extra_tag in parser.find_all("li")
                     ]
                     continue
-
-                beers.append(parse_beer_tag(li))
+                beer = parse_beer_tag(li)
+                if beer:
+                    beers.append(beer)
         LOG.debug("Found %s beers", len(beers))
         return beers
 
@@ -218,7 +223,7 @@ class BeerMenusParser(BaseTapListProvider):
             beer.brewery_name = brewery_a.text
             beer.brewery_location = brewery_p.text.split(MIDDOT)[1].strip()
 
-    def handle_venue(self, venue: Venue) -> None:
+    def handle_venue(self, venue: Venue) -> datetime.datetime:
         self.categories = venue.api_configuration.beermenus_categories
         self.location_url = self.URL.format(venue.api_configuration.beermenus_slug)
         data = self.fetch_data()
@@ -261,6 +266,7 @@ class BeerMenusParser(BaseTapListProvider):
                     tap_number,
                     beer,
                 )
+        return self.updated_date
 
 
 def parse_beer_tag(tag: Tag) -> BeerData:
@@ -273,8 +279,20 @@ def parse_beer_tag(tag: Tag) -> BeerData:
         serving_size = None
     else:
         price = Decimal(price)
-        serving_size = int("".join(i for i in capacity if i.isdigit()))
-    beer_a = tag.find_all("a")[0]
+        try:
+            serving_size = int("".join(i for i in capacity if i.isdigit()))
+        except ValueError:
+            LOG.warning(
+                "Ignoring invalid serving size %r for %s",
+                capacity,
+                tag.find("h3").text.strip(),
+            )
+            serving_size = None
+    try:
+        beer_a = tag.find_all("a")[0]
+    except IndexError:
+        LOG.warning("No beer links found for %s", tag.find("h3").text.strip())
+        return None
     beer_url = f"https://www.beermenus.com{beer_a.attrs['href']}"
     return BeerData(
         url=beer_url,
@@ -289,7 +307,7 @@ def parse_beer_tag(tag: Tag) -> BeerData:
     )
 
 
-if __name__ == "__main__":
+def main():
     import argparse
 
     LOCATIONS = {
@@ -319,3 +337,7 @@ if __name__ == "__main__":
 
     for beer in beers:
         print(f"{beer.name} by {beer.brewery_name} ({beer.abv}%, {beer.style})")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,5 +1,6 @@
 """Parse data from untappd"""
 import argparse
+import datetime
 from decimal import Decimal
 from pprint import PrettyPrinter
 import logging
@@ -7,11 +8,14 @@ import os
 import re
 
 import dateutil.parser
+from dateutil.relativedelta import relativedelta
 import requests
 from bs4 import BeautifulSoup
 import configurations
+from django.utils.timezone import now
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
 from django.db.models import Q
+from pytz import UTC
 
 # boilerplate code necessary for launching outside manage.py
 try:
@@ -69,6 +73,7 @@ class UntappdParser(BaseTapListProvider):
         use_sequential_taps = any(
             tap_info["tap_number"] is None for tap_info in tap_list
         )
+        latest_timestamp = UTC.localize(datetime.datetime(1970, 1, 1, 12))
         for index, tap_info in enumerate(tap_list):
             # 1. get the tap
             # if the venue doesn't give tap numbers, just use a 1-based
@@ -81,8 +86,22 @@ class UntappdParser(BaseTapListProvider):
                 tap = taps[tap_number]
             except KeyError:
                 tap = Tap(venue=venue, tap_number=tap_number)
+            if tap_info["added"]:
+                tap.time_added = dateutil.parser.parse(tap_info["added"])
+                if tap.time_added > latest_timestamp:
+                    LOG.debug(
+                        "latest timestamp updated to %s (added)",
+                        tap.time_updated,
+                    )
+                    latest_timestamp = tap.time_added
             if tap_info["updated"]:
-                tap.time_updated = tap_info["updated"]
+                tap.time_updated = dateutil.parser.parse(tap_info["updated"])
+                if tap.time_updated > latest_timestamp:
+                    LOG.debug(
+                        "latest timestamp updated to %s (updated)",
+                        tap.time_updated,
+                    )
+                    latest_timestamp = tap.time_updated
             # 2. parse the manufacturer
             try:
                 manufacturer = manufacturers[tap_info["manufacturer"]["name"]]
@@ -113,6 +132,7 @@ class UntappdParser(BaseTapListProvider):
             # 4. assign the beer to the tap
             tap.beer = beer
             tap.save()
+        return latest_timestamp
 
     def parse_html_and_js(self, data):
         # Pull the relevant HTML from the JS.
@@ -203,15 +223,33 @@ class UntappdParser(BaseTapListProvider):
         name = style.strip()
         return Style.objects.get_or_create(name=style)[0]
 
-    def parse_size(self, size):
-        if size == "1/6 Barrel":
-            return 660
-        elif size == "1/4 Barrel":
-            return 996
-        elif size == "1/2 Barrel":
-            return 1980
-        else:
-            return int(size.split("oz")[0])
+    def parse_size(self, size: str) -> int:
+        custom_sizes = {
+            "1/6 barrel": 660,
+            "1/4 barrel": 996,
+            "1/2 barrel": 1980,
+            # Chattahoochee uses 6 oz tasters; we can revisit if needed later
+            "flight": 6,
+            "half pint": 8,
+            "pint": 16,
+            "half liter": 16.9,
+            ".5 liter": 16.9,
+        }
+        try:
+            return custom_sizes[size.strip().casefold()]
+        except KeyError as exc:
+            # must use EAFP because Python will try to evaluate this in the case of
+            # one of the custom sizes above
+            if "oz" in size.casefold():
+                return int(size.casefold().split("oz")[0].strip())
+            if "liter" in size.casefold():
+                return Decimal(
+                    # yes, I know this conversion factor is over-precise since we're
+                    # rounding to the nearest 0.1 oz anyway.
+                    float(size.casefold().split("liter")[0].strip())
+                    * 33.8140226
+                )
+            raise ValueError(f"Unknown serving size {size!r}") from exc
 
     def parse_price(self, price: str) -> float:
         price = price.replace("$", "").strip().replace("\\", "")
@@ -410,8 +448,9 @@ class UntappdParser(BaseTapListProvider):
             updated = None
             menus = self.soup.find_all("div", {"class": "menu-info"})
             for menu in menus:
-                if "Tap List" in menu.text:
-                    updated_str = menu.find("time").text
+                if time_element := menu.find("time"):
+                    updated_str = time_element.text
+                    LOG.debug("updated time: %s", updated_str)
                     if updated_str.endswith("ST") or updated_str.endswith("DT"):
                         # it isn't in UTC. Grr.
                         # for now, just support CONUS time zones
@@ -425,14 +464,23 @@ class UntappdParser(BaseTapListProvider):
                             "PST": -8 * 3600,
                             "PDT": -7 * 3600,
                         }
-                        updated = dateutil.parser.parse(updated_str, tzinfos=tzinfos)
+                        list_updated = dateutil.parser.parse(
+                            updated_str,
+                            tzinfos=tzinfos,
+                        )
                     else:
-                        updated = dateutil.parser.parse(updated_str)
-                    updated = updated.isoformat()
+                        list_updated = dateutil.parser.parse(updated_str)
+                    # HACK: if the time is in the future, rewind by a year
+                    if list_updated > now():
+                        list_updated = list_updated - relativedelta(years=1)
+                    if updated is None or list_updated > updated:
+                        LOG.debug("setting tap list updated to %s", list_updated)
+                        updated = list_updated
 
             for entry in entries:
                 tap_info = self.parse_tap(entry)
-                tap_info["updated"] = updated
+                tap_info["updated"] = updated.isoformat()
+                LOG.debug("Set timestamp to %s", updated)
                 ret.append(tap_info)
         return ret
 
