@@ -51,6 +51,24 @@ class CommandsTestCase(TestCase):
             json=self.json_data,
             status=200,
         )
+        responses.add(
+            responses.POST,
+            ArryvedPOSParser.PREAUTH_URL,
+            json={
+                "preauth": {
+                    "token": "abc123",
+                },
+            },
+        )
+        responses.add(
+            responses.POST,
+            ArryvedPOSParser.AUTH_URL,
+            json={
+                "anonymous": {
+                    "token": "def456",
+                },
+            },
+        )
         for dummy in range(2):
             # running twice to make sure we're not double-creating
             args = []

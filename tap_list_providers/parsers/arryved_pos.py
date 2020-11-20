@@ -4,6 +4,7 @@ import datetime
 from decimal import Decimal
 import logging
 import os
+from uuid import uuid4
 from typing import Dict, Union, Any, List
 
 import requests
@@ -32,7 +33,9 @@ class ArryvedPOSParser(BaseTapListProvider):
     """Parser for Arrvyed embedded menus"""
 
     provider_name = "arryved_pos_menu"
-    URL = "https://shop.arryved.com/preauthAction/getMenuOrderingData"
+    PREAUTH_URL = "https://customer.arryved.com/api/v1/authentication/preauth"
+    AUTH_URL = "https://customer.arryved.com/api/v1/authentication/anonymous"
+    URL = "https://customer.arryved.com/api/v1/webstore/getmenus"
 
     def __init__(
         self,
@@ -150,22 +153,68 @@ class ArryvedPOSParser(BaseTapListProvider):
             )
         return result
 
+    def generate_request_id(self):
+        return str(uuid4()).replace("-", "")
+
     def fetch(self):
-        response = requests.post(
+        # first, we have to auth
+        session = requests.session()
+        network_id = str(uuid4())
+        response = session.post(
+            self.PREAUTH_URL,
+            json={
+                "requestInfo": {
+                    "requestId": self.generate_request_id(),
+                    "clientApiVersion": "1.1.0",
+                    "clientName": "Online Ordering",
+                    "clientVersion": "1.1.0",
+                },
+                "preauth": {
+                    "networkId": network_id,
+                },
+            },
+        )
+        response.raise_for_status()
+        preauth_api_key = response.json()["preauth"]["token"]
+        # next real auth
+        response = session.post(
+            self.AUTH_URL,
+            json={
+                "requestInfo": {
+                    "requestId": self.generate_request_id(),
+                    "clientApiVersion": "1.1.0",
+                    "clientName": "Online Ordering",
+                    "clientVersion": "1.1.0",
+                },
+                "anonymous": {"networkId": network_id},
+            },
+            headers={"x-api-key": preauth_api_key},
+        )
+        response.raise_for_status()
+        # NOW we have our api key
+        api_key = response.json()["anonymous"]["token"]
+        # so let's try to get data now
+        response = session.post(
             self.URL,
             json={
-                "locationId": self.location_id,
-                "versionInfo": {"clientVersion": "6.4", "requestApi": 6},
-                "orderModality": "pickup",
-                "requestId": "n8qZDyArL03LjVfP",
+                "requestInfo": {
+                    "requestId": self.generate_request_id(),
+                    "clientApiVersion": "1.1.0",
+                    "clientName": "Online Ordering",
+                    "clientVersion": "1.1.0",
+                },
+                "menuSelector": {
+                    "locationId": self.location_id,
+                    "orderModality": "PICKUP",
+                },
             },
+            headers={"x-api-key": api_key},
         )
         response.raise_for_status()
         return response.json()
 
     def parse_json(self, json_data: Dict[str, Any]):
-        payload = json_data["payload"]
-        beers = self.parse_items(payload)
+        beers = self.parse_items(json_data["menus"])
         return {
             "beers": beers,
         }
@@ -175,14 +224,14 @@ class ArryvedPOSParser(BaseTapListProvider):
         payload: Dict[str, Dict],
     ) -> List[Dict[str, Union[str, int, float]]]:
         result = []
-        for menu in payload["menus"]:
-            if menu["displayName"] not in self.menu_names:
+        for menu in payload["menuList"]:
+            if menu["name"] not in self.menu_names:
                 continue
             for item in menu["availableItems"]:
                 result.append(
                     {
-                        "pk": item["itemId"],
-                        "name": item["displayName"],
+                        "pk": item["id"],
+                        "name": item["name"],
                         "serving_sizes": [
                             {
                                 "size": self.parse_size(size),
@@ -192,8 +241,8 @@ class ArryvedPOSParser(BaseTapListProvider):
                             for size in item["sizes"]
                             if size["sizeCode"] in self.serving_sizes
                         ],
-                        "abv": Decimal(item["abv"]) if item["abv"] else None,
-                        "ibu": int(item["ibu"]) if item["ibu"] else None,
+                        "abv": Decimal(item["abv"]) if item.get("abv") else None,
+                        "ibu": int(item["ibu"]) if item.get("ibu") else None,
                     }
                 )
         return result
@@ -201,7 +250,7 @@ class ArryvedPOSParser(BaseTapListProvider):
     def parse_size(
         self, serving_size: Dict[str, Union[int, str, List]]
     ) -> Union[int, float]:
-        raw_size = serving_size["sizeDisplayName"].split("oz")[0]
+        raw_size = serving_size["displayName"].split("oz")[0]
         try:
             return int(raw_size)
         except ValueError:
