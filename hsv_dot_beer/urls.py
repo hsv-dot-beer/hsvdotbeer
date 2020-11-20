@@ -14,7 +14,7 @@ router = DefaultRouter()
 router.register(r"users", UserViewSet)
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("beeradmin/", admin.site.urls),
     path("api/v1/", include(router.urls)),
     path("api/v1/venues/", include("venues.urls")),
     path("api/v1/events/", include("events.urls")),

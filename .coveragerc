@@ -1,9 +1,9 @@
 [run]
 branch = True
-omit = *migrations*,
-       *urls*,
-       *test*,
-       *admin*,
+omit = **/migrations/**,
+       **/urls.py,
+       **/test/**,
+       **/admin.py,
        ./manage.py,
        ./hsv_dot_beer/config/*,
        ./hsv_dot_beer/wsgi.py,

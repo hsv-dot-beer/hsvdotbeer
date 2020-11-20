@@ -8,6 +8,7 @@ from django.utils.timezone import now
 
 from taps.models import Tap
 from .utils import render_srm
+from django.db.models import JSONField
 
 LOG = logging.getLogger(__name__)
 
@@ -45,7 +46,7 @@ class Style(models.Model):
                             for name in alt_names
                         ]
                     )
-            except IntegrityError:
+            except IntegrityError as exc:
                 existing_names = [
                     i.name
                     for i in StyleAlternateName.objects.filter(
@@ -57,9 +58,9 @@ class Style(models.Model):
                 raise ValueError(
                     "These alternate names already exist: "
                     f'{", ".join(existing_names)}'
-                )
+                ) from exc
 
-    def __str__(self):
+    def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
 
 
@@ -67,7 +68,7 @@ class StyleAlternateName(models.Model):
     name = CITextField()
     style = models.ForeignKey(Style, models.CASCADE, related_name="alternate_names")
 
-    def __str__(self):
+    def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
 
     class Meta:
@@ -85,7 +86,7 @@ class Manufacturer(models.Model):
     twitter_handle = models.CharField(max_length=50, blank=True)
     instagram_handle = models.CharField(max_length=50, blank=True)
     untappd_url = models.URLField(blank=True, null=True)
-    automatic_updates_blocked = models.NullBooleanField(default=False)
+    automatic_updates_blocked = models.BooleanField(null=True, default=False)
     taphunter_url = models.URLField(blank=True, null=True)
     taplist_io_pk = models.PositiveIntegerField(blank=True, null=True)
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
@@ -169,7 +170,7 @@ class Manufacturer(models.Model):
                     self.time_first_seen = other.time_first_seen
             self.save()
 
-    def __str__(self):
+    def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
 
 
@@ -224,7 +225,7 @@ class Beer(models.Model):
         blank=True,
     )
     manufacturer_url = models.URLField(blank=True, null=True)
-    automatic_updates_blocked = models.NullBooleanField(default=False)
+    automatic_updates_blocked = models.BooleanField(null=True, default=False)
     taphunter_url = models.URLField(blank=True, null=True)
     stem_and_stein_pk = models.PositiveIntegerField(blank=True, null=True)
     taplist_io_pk = models.PositiveIntegerField(blank=True, null=True)
@@ -304,7 +305,7 @@ class Beer(models.Model):
             self.beermenus_slug = None
         return super().save(*args, **kwargs)
 
-    def __str__(self):
+    def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
 
     def render_srm(self):
@@ -339,7 +340,8 @@ class Beer(models.Model):
                     prices_deleted,
                 )
             excluded_fields = {
-                "name" "in_production",
+                "name",
+                "in_production",
                 "automatic_updates_blocked",
                 "manufacturer",
                 "id",

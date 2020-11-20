@@ -4,6 +4,7 @@ from decimal import Decimal
 
 from django.core.management import call_command
 from django.test import TestCase
+from django.utils.timezone import now
 import responses
 
 from beers.models import (
@@ -80,6 +81,7 @@ class CommandsTestCase(TestCase):
     @responses.activate
     def test_import_stemandstein_data(self):
         """Test parsing the JSON data"""
+        timestamp = now()
         for pk, html_data in self.html_data.items():
             if pk == "root":
                 url = "https://thestemandstein.com/"
@@ -159,6 +161,10 @@ class CommandsTestCase(TestCase):
             # style is set to Fruit Ale but the beer name is preserved
             self.assertEqual(tap.beer.style_id, style.id)
             self.assertTrue(tap.beer.name.endswith("Fruit Ale"))
+        self.venue.refresh_from_db()
+        self.assertIsNotNone(self.venue.tap_list_last_check_time)
+        self.assertGreater(self.venue.tap_list_last_check_time, timestamp)
+        self.assertIsNotNone(self.venue.tap_list_last_update_time)
 
     def test_guess_manufacturer_good_people(self):
         mfg_names = [

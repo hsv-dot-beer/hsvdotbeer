@@ -1,3 +1,6 @@
+"""Parser for DigitalPour"""
+
+import datetime
 from decimal import Decimal
 import logging
 import os
@@ -8,6 +11,7 @@ import requests
 import configurations
 from django.utils.timezone import now
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
+from pytz import UTC
 
 # boilerplate code necessary for launching outside manage.py
 try:
@@ -19,6 +23,7 @@ except (ImproperlyConfigured, AppRegistryNotReady):
     from ..base import BaseTapListProvider
 
 from taps.models import Tap
+from venues.models import Venue
 
 
 LOG = logging.getLogger(__name__)
@@ -34,16 +39,18 @@ class DigitalPourParser(BaseTapListProvider):
     def __init__(self, location=None):
         """Constructor."""
         self.url = None
+        self.update_date = None
         if location:
             self.url = self.URL.format(location[0], location[1], self.APIKEY)
         super().__init__()
 
-    def handle_venue(self, venue):
+    def handle_venue(self, venue: Venue) -> datetime.datetime:
         venue_id = venue.api_configuration.digital_pour_venue_id
         location_number = venue.api_configuration.digital_pour_location_number
         self.url = self.URL.format(venue_id, location_number, self.APIKEY)
         data = self.fetch()
         taps = {tap.tap_number: tap for tap in venue.taps.all()}
+        self.update_date = UTC.localize(datetime.datetime(1970, 1, 1, 0, 0, 0))
         manufacturers = {}
         for entry in data:
             if not entry["Active"]:
@@ -57,6 +64,9 @@ class DigitalPourParser(BaseTapListProvider):
                 tap = Tap(venue=venue, tap_number=tap_info["tap_number"])
             tap.time_added = tap_info["added"]
             tap.time_updated = tap_info["updated"]
+            if tap.time_updated and tap.time_updated > self.update_date:
+                LOG.debug("Updating venue timestamp to %s", tap.time_updated)
+                self.update_date = tap.time_updated
             tap.estimated_percent_remaining = tap_info["percent_full"]
             if tap_info["gas_type"] in [i[0] for i in Tap.GAS_CHOICES]:
                 tap.gas_type = tap_info["gas_type"]
@@ -116,6 +126,7 @@ class DigitalPourParser(BaseTapListProvider):
             # 4. assign the beer to the tap
             tap.beer = beer
             tap.save()
+        return self.update_date
 
     def parse_beer(self, entry):
         """Parse beer info from JSON entry."""
@@ -273,6 +284,11 @@ class DigitalPourParser(BaseTapListProvider):
             "percent_full": tap["MenuItemProductDetail"]["PercentFull"],
             "gas_type": (tap["MenuItemProductDetail"]["KegType"] or "").lower(),
         }
+        if refresh_ts := tap.get("LastRefreshDateTime"):
+            ret["updated"] = dateutil.parser.parse(refresh_ts)
+            if not ret["updated"].tzinfo:
+                ret["updated"] = UTC.localize(ret["updated"])
+            LOG.debug("Tap time updated set to %s", ret["updated"])
         return ret
 
     def parse_pricing(self, tap):
