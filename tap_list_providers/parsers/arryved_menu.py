@@ -32,6 +32,7 @@ class ArryvedMenuParser(BaseTapListProvider):
     """Parser for Arrvyed embedded menus"""
 
     provider_name = "arryved_embedded_menu"
+    BASE_URL = "https://menu.arryved.com/arryvedView?locationId={}&menuId={}"
     URL = "https://menu.arryved.com/preauthAction/getMenu"
 
     def __init__(
@@ -168,6 +169,10 @@ class ArryvedMenuParser(BaseTapListProvider):
                 "itemTypes": [],
                 "publicConfigType": "WEBSITE_EMBED",
                 "menuId": self.menu_id,
+            },
+            headers={
+                "X-Requested-With": "XMLHttpRequest",
+                "referer": self.BASE_URL.format(self.location_id, self.menu_id),
             },
         )
         response.raise_for_status()
