@@ -25,6 +25,7 @@ from tap_list_providers.parsers import (  # noqa
     stemandstein,
     taplist_io,
     beermenus,
+    arryved_menu,
 )
 from tap_list_providers.twitter_api import ThreadedApi
 
