@@ -2,8 +2,9 @@
 
 from django.db import models
 from django.conf import settings
-from django.contrib.postgres.fields import ArrayField
 from django.shortcuts import reverse
+from django.contrib.postgres.fields import ArrayField, CITextField
+from django.utils.text import gettext_lazy as _
 from timezone_field.fields import TimeZoneField
 from django_countries.fields import CountryField
 
@@ -21,6 +22,8 @@ class Venue(models.Model):
         ("stemandstein", "The Stem & Stein's HTML"),
         ("taplist.io", "taplist.io"),
         ("beermenus", "BeerMenus"),
+        ("arryved_embedded_menu", "Arryved Embedded Menu"),
+        ("arryved_pos_menu", "Arryved Point of Sale Menu"),
     )
 
     # NOTE if this ever grows beyond HSV, we'll have to revisit uniqueness
@@ -130,6 +133,23 @@ class VenueAPIConfiguration(models.Model):
         null=True,
     )
     beermenus_slug = models.CharField(max_length=250, blank=True)
+    arryved_location_id = models.CharField(max_length=50, blank=True)
+    arryved_menu_id = models.CharField(max_length=50, blank=True)
+    arryved_manufacturer_name = CITextField(blank=True)
+    arryved_serving_sizes = ArrayField(
+        models.TextField(),
+        default=list,
+        blank=True,
+        null=True,
+        help_text=_("Short codes for serving sizes of draft pours"),
+    )
+    arryved_pos_menu_names = ArrayField(
+        models.TextField(),
+        default=list,
+        blank=True,
+        null=True,
+        help_text=_("Individual menus to process from the Arryved POS"),
+    )
 
 
 class VenueTapManager(models.Model):
