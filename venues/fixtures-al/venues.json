@@ -23,7 +23,9 @@
             "on_downtown_craft_beer_trail": true,
             "latitude": "34.72094800",
             "longitude": "-86.60709000",
-            "twitter_short_location_description": ""
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": "2020-11-20T13:33:25.282Z",
+            "tap_list_last_update_time": "2020-11-19T16:46:40.194Z"
         }
     },
     {
@@ -50,7 +52,9 @@
             "on_downtown_craft_beer_trail": true,
             "latitude": "34.72168500",
             "longitude": "-86.60553600",
-            "twitter_short_location_description": ""
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": "2020-11-20T13:33:23.727Z",
+            "tap_list_last_update_time": "2020-11-19T23:33:00Z"
         }
     },
     {
@@ -77,7 +81,9 @@
             "on_downtown_craft_beer_trail": true,
             "latitude": "34.74636400",
             "longitude": "-86.58528300",
-            "twitter_short_location_description": ""
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": "2020-11-20T13:33:23.727Z",
+            "tap_list_last_update_time": "2020-05-13T21:25:00Z"
         }
     },
     {
@@ -104,7 +110,9 @@
             "on_downtown_craft_beer_trail": true,
             "latitude": "34.72248000",
             "longitude": "-86.60418700",
-            "twitter_short_location_description": ""
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": "2020-11-20T13:33:23.731Z",
+            "tap_list_last_update_time": "2020-11-15T20:05:00.730Z"
         }
     },
     {
@@ -131,7 +139,9 @@
             "on_downtown_craft_beer_trail": false,
             "latitude": null,
             "longitude": null,
-            "twitter_short_location_description": ""
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": "2020-11-20T13:33:25.282Z",
+            "tap_list_last_update_time": "2020-07-24T13:02:16.196Z"
         }
     },
     {
@@ -158,7 +168,9 @@
             "on_downtown_craft_beer_trail": true,
             "latitude": null,
             "longitude": null,
-            "twitter_short_location_description": ""
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": "2020-11-20T13:33:25.282Z",
+            "tap_list_last_update_time": "2020-10-08T20:39:36.006Z"
         }
     },
     {
@@ -183,9 +195,11 @@
             "logo_url": "https://hsv-dot-beer.s3.amazonaws.com/venues/png/fractalbrewing.png",
             "slug": "fractalbrewing",
             "on_downtown_craft_beer_trail": true,
-            "latitude": "34.6948382",
-            "longitude": "-86.593758",
-            "twitter_short_location_description": ""
+            "latitude": "34.69483820",
+            "longitude": "-86.59375800",
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": null,
+            "tap_list_last_update_time": null
         }
     },
     {
@@ -210,9 +224,11 @@
             "logo_url": "https://alabamabrewers.org/wp-content/uploads/2020/11/goatisland-logo.png",
             "slug": "goatisland",
             "on_downtown_craft_beer_trail": false,
-            "latitude": "34.1411847",
-            "longitude": "-86.8207469",
-            "twitter_short_location_description": ""
+            "latitude": "34.14118470",
+            "longitude": "-86.82074690",
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": "2020-11-20T13:33:23.727Z",
+            "tap_list_last_update_time": "2020-09-14T21:20:00Z"
         }
     },
     {
@@ -237,9 +253,11 @@
             "logo_url": "https://images.squarespace-cdn.com/content/589dd87117bffc8381e15013/1515119190353-P77KQCOY8Z4O8J4F6SO2/Picture1.png",
             "slug": "birmingham-district",
             "on_downtown_craft_beer_trail": false,
-            "latitude": "33.5121964",
-            "longitude": "-86.7999718",
-            "twitter_short_location_description": ""
+            "latitude": "33.51219640",
+            "longitude": "-86.79997180",
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": "2020-11-20T13:33:23.727Z",
+            "tap_list_last_update_time": "2020-11-17T17:42:00Z"
         }
     },
     {
@@ -264,9 +282,11 @@
             "logo_url": "https://serdabrewing.com/wp-content/uploads/2017/02/Serda_brewing_logo.png",
             "slug": "serda",
             "on_downtown_craft_beer_trail": false,
-            "latitude": "30.6880515",
-            "longitude": "-88.0495238",
-            "twitter_short_location_description": ""
+            "latitude": "30.68805150",
+            "longitude": "-88.04952380",
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": "2020-11-20T13:33:23.727Z",
+            "tap_list_last_update_time": "2020-11-12T02:21:00Z"
         }
     },
     {
@@ -291,9 +311,69 @@
             "logo_url": "https://alabamabrewers.org/wp-content/uploads/2020/11/chatt-logo.png",
             "slug": "chattahoochee",
             "on_downtown_craft_beer_trail": false,
-            "latitude": "32.470712",
-            "longitude": "-84.999353",
-            "twitter_short_location_description": ""
+            "latitude": "32.47071200",
+            "longitude": "-84.99935300",
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": null,
+            "tap_list_last_update_time": null
+        }
+    },
+    {
+        "model": "venues.venue",
+        "pk": 28,
+        "fields": {
+            "name": "Tallulah Brewing Co",
+            "address": "1804 4th Ave S",
+            "city": "Jasper",
+            "state": "AL",
+            "postal_code": "35501",
+            "country": "US",
+            "time_zone": "America/Chicago",
+            "website": "https://www.tallulahbrewing.com/",
+            "facebook_page": "https://facebook.com/TallulahBrewing/",
+            "twitter_handle": "TallulahBrewing",
+            "instagram_handle": "tallulahbrewing",
+            "tap_list_provider": "arryved_embedded_menu",
+            "untappd_url": "https://untappd.com/v/tallulah-brewing-company/6917335",
+            "email": "info@tallulahbrewing.com",
+            "phone_number": "2055308555",
+            "logo_url": "https://static.wixstatic.com/media/b0b056_d87202734f06406c9d38b129f190e377~mv2_d_3501_2405_s_4_2.png/v1/fill/w_982,h_670,al_c,q_90,usm_0.66_1.00_0.01/TBCLogos_Sign_Full.webp",
+            "slug": "tallulah-brewing-company",
+            "on_downtown_craft_beer_trail": false,
+            "latitude": null,
+            "longitude": null,
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": "2020-11-16T22:07:45.160Z",
+            "tap_list_last_update_time": "2020-11-16T22:07:45.160Z"
+        }
+    },
+    {
+        "model": "venues.venue",
+        "pk": 29,
+        "fields": {
+            "name": "Cahaba Brewing Co",
+            "address": "4500 5th Ave South Building C",
+            "city": "Birmingham",
+            "state": "AL",
+            "postal_code": "35222",
+            "country": "US",
+            "time_zone": "America/Chicago",
+            "website": "https://www.cahababrewing.com",
+            "facebook_page": "https://facebook.com/cahababrewingco/",
+            "twitter_handle": "cahababrewing",
+            "instagram_handle": "cahababrewing",
+            "tap_list_provider": "arryved_pos_menu",
+            "untappd_url": "https://untappd.com/v/cahaba-brewing-company/4230018",
+            "email": "",
+            "phone_number": "2055782616",
+            "logo_url": "https://cahababrewing.com/wp-content/themes/cahababrewingco-2/images/cahaba_mark.svg",
+            "slug": "cahaba-brewing-co",
+            "on_downtown_craft_beer_trail": false,
+            "latitude": null,
+            "longitude": null,
+            "twitter_short_location_description": "",
+            "tap_list_last_check_time": null,
+            "tap_list_last_update_time": null
         }
     },
     {
@@ -313,7 +393,12 @@
             "taplist_io_display_id": "",
             "taplist_io_access_code": "",
             "beermenus_categories": "[]",
-            "beermenus_slug": ""
+            "beermenus_slug": "",
+            "arryved_location_id": "",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "",
+            "arryved_serving_sizes": "[]",
+            "arryved_pos_menu_names": "[]"
         }
     },
     {
@@ -333,7 +418,12 @@
             "taplist_io_display_id": "",
             "taplist_io_access_code": "",
             "beermenus_categories": "[]",
-            "beermenus_slug": ""
+            "beermenus_slug": "",
+            "arryved_location_id": "",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "",
+            "arryved_serving_sizes": "[]",
+            "arryved_pos_menu_names": "[]"
         }
     },
     {
@@ -353,7 +443,12 @@
             "taplist_io_display_id": "",
             "taplist_io_access_code": "",
             "beermenus_categories": "[]",
-            "beermenus_slug": ""
+            "beermenus_slug": "",
+            "arryved_location_id": "",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "",
+            "arryved_serving_sizes": "[]",
+            "arryved_pos_menu_names": "[]"
         }
     },
     {
@@ -373,7 +468,12 @@
             "taplist_io_display_id": "4434",
             "taplist_io_access_code": "5e5b8565-27b7-4cfd-8e52-b7d2b2ca5c63",
             "beermenus_categories": "[]",
-            "beermenus_slug": ""
+            "beermenus_slug": "",
+            "arryved_location_id": "",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "",
+            "arryved_serving_sizes": "[]",
+            "arryved_pos_menu_names": "[]"
         }
     },
     {
@@ -393,7 +493,12 @@
             "taplist_io_display_id": "",
             "taplist_io_access_code": "",
             "beermenus_categories": "[]",
-            "beermenus_slug": ""
+            "beermenus_slug": "",
+            "arryved_location_id": "",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "",
+            "arryved_serving_sizes": "[]",
+            "arryved_pos_menu_names": "[]"
         }
     },
     {
@@ -413,7 +518,12 @@
             "taplist_io_display_id": "",
             "taplist_io_access_code": "",
             "beermenus_categories": "[]",
-            "beermenus_slug": ""
+            "beermenus_slug": "",
+            "arryved_location_id": "",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "",
+            "arryved_serving_sizes": "[]",
+            "arryved_pos_menu_names": "[]"
         }
     },
     {
@@ -433,7 +543,12 @@
             "taplist_io_display_id": "",
             "taplist_io_access_code": "",
             "beermenus_categories": "[]",
-            "beermenus_slug": ""
+            "beermenus_slug": "",
+            "arryved_location_id": "",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "",
+            "arryved_serving_sizes": "[]",
+            "arryved_pos_menu_names": "[]"
         }
     },
     {
@@ -453,7 +568,12 @@
             "taplist_io_display_id": "",
             "taplist_io_access_code": "",
             "beermenus_categories": "[]",
-            "beermenus_slug": ""
+            "beermenus_slug": "",
+            "arryved_location_id": "",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "",
+            "arryved_serving_sizes": "[]",
+            "arryved_pos_menu_names": "[]"
         }
     },
     {
@@ -473,7 +593,12 @@
             "taplist_io_display_id": "",
             "taplist_io_access_code": "",
             "beermenus_categories": "[]",
-            "beermenus_slug": ""
+            "beermenus_slug": "",
+            "arryved_location_id": "",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "",
+            "arryved_serving_sizes": "[]",
+            "arryved_pos_menu_names": "[]"
         }
     },
     {
@@ -487,13 +612,18 @@
             "digital_pour_location_number": null,
             "untappd_location": 29716,
             "untappd_theme": 114398,
-            "untappd_categories": "[\"Saison\",\"Pale Ale\",\"British\",\"Hazy IPA\",\"Fruit Beer\",\"Belgian\",\"Pale Ale\",\"Seltzer\",\"Porter\",\"Stouts\",\"Lagers\",\"Sours\",\"India Pale Ales\",\"Wheat\"]",
+            "untappd_categories": "[\"Saison\", \"Pale Ale\", \"British\", \"Hazy IPA\", \"Fruit Beer\", \"Belgian\", \"Pale Ale\", \"Seltzer\", \"Porter\", \"Stouts\", \"Lagers\", \"Sours\", \"India Pale Ales\", \"Wheat\"]",
             "taphunter_location": "",
             "taphunter_excluded_lists": "[]",
             "taplist_io_display_id": "",
             "taplist_io_access_code": "",
             "beermenus_categories": "[]",
-            "beermenus_slug": ""
+            "beermenus_slug": "",
+            "arryved_location_id": "",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "",
+            "arryved_serving_sizes": "[]",
+            "arryved_pos_menu_names": "[]"
         }
     },
     {
@@ -513,8 +643,62 @@
             "taplist_io_display_id": "",
             "taplist_io_access_code": "",
             "beermenus_categories": "[]",
-            "beermenus_slug": ""
+            "beermenus_slug": "",
+            "arryved_location_id": "",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "",
+            "arryved_serving_sizes": "[]",
+            "arryved_pos_menu_names": "[]"
+        }
+    },
+    {
+        "model": "venues.venueapiconfiguration",
+        "pk": 28,
+        "fields": {
+            "venue": 28,
+            "url": null,
+            "api_key": "",
+            "digital_pour_venue_id": "",
+            "digital_pour_location_number": null,
+            "untappd_location": null,
+            "untappd_theme": null,
+            "untappd_categories": "[]",
+            "taphunter_location": "",
+            "taphunter_excluded_lists": "[]",
+            "taplist_io_display_id": "",
+            "taplist_io_access_code": "",
+            "beermenus_categories": "[]",
+            "beermenus_slug": "",
+            "arryved_location_id": "BUUoDf5m",
+            "arryved_menu_id": "BawA45BHSgQgzmo2",
+            "arryved_manufacturer_name": "Tallulah",
+            "arryved_serving_sizes": "[\"TAS\", \"32O\", \"64O\", \"win\", \"13O\", \"PIN\", \"POU\", \"WIN\"]",
+            "arryved_pos_menu_names": "[]"
+        }
+    },
+    {
+        "model": "venues.venueapiconfiguration",
+        "pk": 29,
+        "fields": {
+            "venue": 29,
+            "url": null,
+            "api_key": "",
+            "digital_pour_venue_id": "",
+            "digital_pour_location_number": null,
+            "untappd_location": null,
+            "untappd_theme": null,
+            "untappd_categories": "[]",
+            "taphunter_location": "",
+            "taphunter_excluded_lists": "[]",
+            "taplist_io_display_id": "",
+            "taplist_io_access_code": "",
+            "beermenus_categories": "[]",
+            "beermenus_slug": "",
+            "arryved_location_id": "BDE68ygq",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "Cahaba",
+            "arryved_serving_sizes": "[\"32O\", \"64o\"]",
+            "arryved_pos_menu_names": "[\"Growlers and Crowlers\"]"
         }
     }
 ]
-    
