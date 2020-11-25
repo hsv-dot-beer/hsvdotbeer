@@ -3,7 +3,6 @@ from django.core.management import call_command
 
 
 class TestMissingMigrations(TestCase):
-
     def test_for_missing_migrations(self):
         """Check to see if we're missing migrations in the committed code.
 
