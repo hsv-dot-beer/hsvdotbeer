@@ -312,7 +312,9 @@ class DigitalPourParser(BaseTapListProvider):
 
     def fetch(self):
         """Fetch the most recent taplist"""
-        data = requests.get(self.url).json()
+        response = requests.get(self.url)
+        response.raise_for_status()
+        data = response.json()
         return data
 
     def taps(self):
