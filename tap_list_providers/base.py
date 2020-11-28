@@ -69,7 +69,7 @@ class BaseTapListProvider:
         try:
             return subclasses[provider_name]
         except KeyError:
-            raise ValueError(f"Unknown prover name {provider_name}")
+            raise ValueError(f"Unknown provider name {provider_name}")
 
     def get_venues(self):
         if not self.provider_name:
@@ -103,7 +103,7 @@ class BaseTapListProvider:
     ) -> None:
         """Update the venue last checked and last updated times"""
         LOG.debug(
-            "Setting check time for %s to %s and update time for to %s",
+            "Setting check time for %s to %s and update time to %s",
             venue,
             self.check_timestamp,
             update_time,

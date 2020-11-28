@@ -220,15 +220,33 @@ class UntappdParser(BaseTapListProvider):
         name = style.strip()
         return Style.objects.get_or_create(name=style)[0]
 
-    def parse_size(self, size):
-        if size == "1/6 Barrel":
-            return 660
-        elif size == "1/4 Barrel":
-            return 996
-        elif size == "1/2 Barrel":
-            return 1980
-        else:
-            return int(size.split("oz")[0])
+    def parse_size(self, size: str) -> int:
+        custom_sizes = {
+            "1/6 barrel": 660,
+            "1/4 barrel": 996,
+            "1/2 barrel": 1980,
+            # Chattahoochee uses 6 oz tasters; we can revisit if needed later
+            "flight": 6,
+            "half pint": 8,
+            "pint": 16,
+            "half liter": 16.9,
+            ".5 liter": 16.9,
+        }
+        try:
+            return custom_sizes[size.strip().casefold()]
+        except KeyError as exc:
+            # must use EAFP because Python will try to evaluate this in the case of
+            # one of the custom sizes above
+            if "oz" in size.casefold():
+                return int(size.casefold().split("oz")[0].strip())
+            if "liter" in size.casefold():
+                return Decimal(
+                    # yes, I know this conversion factor is over-precise since we're
+                    # rounding to the nearest 0.1 oz anyway.
+                    float(size.casefold().split("liter")[0].strip())
+                    * 33.8140226
+                )
+            raise ValueError(f"Unknown serving size {size!r}") from exc
 
     def parse_price(self, price: str) -> float:
         price = price.replace("$", "").strip().replace("\\", "")

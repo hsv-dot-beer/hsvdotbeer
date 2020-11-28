@@ -102,5 +102,13 @@
     "name": "1/4 Barrel",
     "volume_oz": "996.0"
   }
+},
+{
+  "model": "beers.servingsize",
+  "pk": 17,
+  "fields": {
+    "name": "Half Liter",
+    "volume_oz": "16.9"
+  }
 }
 ]
