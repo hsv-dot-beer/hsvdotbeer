@@ -69,7 +69,7 @@ class BaseTapListProvider:
         try:
             return subclasses[provider_name]
         except KeyError:
-            raise ValueError(f"Unknown prover name {provider_name}")
+            raise ValueError(f"Unknown provider name {provider_name}")
 
     def get_venues(self):
         if not self.provider_name:
