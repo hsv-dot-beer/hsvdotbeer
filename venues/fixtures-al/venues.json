@@ -432,7 +432,7 @@
     },
     {
         "model": "venues.venue",
-        "pk": 33,
+        "pk": 32,
         "fields": {
             "name": "Resting Pulse Brewing Co",
             "address": "714 N Railroad Ave",
@@ -459,7 +459,7 @@
     },
     {
         "model": "venues.venue",
-        "pk": 34,
+        "pk": 33,
         "fields": {
             "name": "Red Clay Brewing Co",
             "address": "704 N Railroad Ave",
@@ -861,9 +861,9 @@
     },
     {
         "model": "venues.venueapiconfiguration",
-        "pk": 33,
+        "pk": 32,
         "fields": {
-            "venue": 33,
+            "venue": 32,
             "url": null,
             "api_key": "",
             "digital_pour_venue_id": "",
@@ -886,9 +886,9 @@
     },
     {
         "model": "venues.venueapiconfiguration",
-        "pk": 34,
+        "pk": 33,
         "fields": {
-            "venue": 34,
+            "venue": 33,
             "url": null,
             "api_key": "",
             "digital_pour_venue_id": "",
