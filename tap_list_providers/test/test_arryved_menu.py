@@ -34,11 +34,8 @@ class CommandsTestCase(TestCase):
                 "TAS",
                 "32O",
                 "64O",
-                "win",
                 "13O",
                 "PIN",
-                "POU",
-                "WIN",
             ],
         )
         with open(
@@ -66,8 +63,8 @@ class CommandsTestCase(TestCase):
             opts = {}
             call_command("parsearryvedmenu", *args, **opts)
             self.assertEqual(Manufacturer.objects.count(), 1)
-            self.assertEqual(Tap.objects.count(), 22)
-            self.assertEqual(Beer.objects.count(), 22)
+            self.assertEqual(Tap.objects.count(), 16)
+            self.assertEqual(Beer.objects.count(), 16)
             for tap in Tap.objects.all():
                 self.assertEqual(tap.time_updated.year, 2020)
             tap = Tap.objects.select_related("beer").get(tap_number=2)
