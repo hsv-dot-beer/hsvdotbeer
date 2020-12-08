@@ -115,6 +115,11 @@ class ArryvedMenuParser(BaseTapListProvider):
             if beer["last_updated"] > last_updated:
                 last_updated = beer["last_updated"]
             tap_number += 1
+        delete_result = Tap.objects.filter(
+            venue=venue,
+            tap_number__gte=tap_number,
+        ).delete()
+        LOG.debug("Deleted %s extra taps", delete_result[0])
         BeerPrice.objects.bulk_create(prices)
         self.check_timestamp = last_updated
         return last_updated

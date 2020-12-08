@@ -231,6 +231,9 @@ class UntappdParser(BaseTapListProvider):
             "pint": 16,
             "half liter": 16.9,
             ".5 liter": 16.9,
+            # going to round these to pints (both at Common Bond)
+            "draft": 16,
+            "nitro": 16,
         }
         try:
             return custom_sizes[size.strip().casefold()]
