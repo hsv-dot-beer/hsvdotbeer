@@ -485,6 +485,33 @@
         }
     },
     {
+        "model": "venues.venue",
+        "pk": 34,
+        "fields": {
+            "name": "Folklore Brewing & Meadery",
+            "address": "153 Mary Lou Ln",
+            "city": "Dothan",
+            "state": "AL",
+            "postal_code": "36301",
+            "country": "US",
+            "time_zone": "America/Chicago",
+            "website": "https://www.folklorebrewingandmeadery.com/",
+            "facebook_page": "https://www.facebook.com/FolkloreBrewing/",
+            "twitter_handle": "folklorebrewing",
+            "instagram_handle": "folklorebrewing",
+            "tap_list_provider": "untappd",
+            "untappd_url": "https://untappd.com/FolkloreBrewingMeadery",
+            "email": "",
+            "phone_number": "3347022337",
+            "logo_url": "https://www.folklorebrewingandmeadery.com/wp-content/uploads/2019/06/FL-LOGO_2019_Red-191x181.png",
+            "slug": "folklore",
+            "on_downtown_craft_beer_trail": false,
+            "latitude": "31.1481384",
+            "longitude": "-85.3950867",
+            "twitter_short_location_description": ""
+        }
+    },
+    {
         "model": "venues.venueapiconfiguration",
         "pk": 1,
         "fields": {
@@ -896,6 +923,31 @@
             "untappd_location": 14100,
             "untappd_theme": 52522,
             "untappd_categories": "[\"Beer\"]",
+            "taphunter_location": "",
+            "taphunter_excluded_lists": "[]",
+            "taplist_io_display_id": "",
+            "taplist_io_access_code": "",
+            "beermenus_categories": "[]",
+            "beermenus_slug": "",
+            "arryved_location_id": "",
+            "arryved_menu_id": "",
+            "arryved_manufacturer_name": "",
+            "arryved_serving_sizes": "[]",
+            "arryved_pos_menu_names": "[]"
+        }
+    },
+    {
+        "model": "venues.venueapiconfiguration",
+        "pk": 34,
+        "fields": {
+            "venue": 34,
+            "url": null,
+            "api_key": "",
+            "digital_pour_venue_id": "",
+            "digital_pour_location_number": null,
+            "untappd_location": 30316,
+            "untappd_theme": 116794,
+            "untappd_categories": "[\"Seasonal Brews\", \"Limited Small Batch\", \"Core Brews\", \"Cider\", \"Traditional Mead\", \"Cysers\", \"Pyment\", \"Melomel\"]",
             "taphunter_location": "",
             "taphunter_excluded_lists": "[]",
             "taplist_io_display_id": "",
