@@ -515,7 +515,7 @@
         "model": "venues.venue",
         "pk": 35,
         "fields": {
-            "name": "Chandler's Ford Brewing",
+            "name": "Chandlers Ford Brewing",
             "address": "109 North Side Square",
             "city": "Huntsville",
             "state": "AL",
