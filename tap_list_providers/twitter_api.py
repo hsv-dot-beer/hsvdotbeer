@@ -59,7 +59,7 @@ class ThreadedApi(Api):
 
     def split_tweet_by_lines(self, tweet: str, character_limit: int) -> List[str]:
         """Break the thread up by lines if possible"""
-        lines = tweet.split("\r\n")
+        lines = tweet.splitlines()
         tweets = []
         current_tweet = ""
 
@@ -78,17 +78,15 @@ class ThreadedApi(Api):
                 # keep the last line as the start of our next tweet
                 current_tweet = split[-1]
                 continue
-            if len(line) + len(current_tweet) >= character_limit:
+            potential_next_msg = f"{current_tweet}\r\n{line}" if current_tweet else line
+            if len(potential_next_msg) >= character_limit:
                 # next tweet!
                 if current_tweet:
                     tweets.append(current_tweet)
                 current_tweet = line
                 continue
             # add the next line to the currently being built tweet
-            if current_tweet:
-                current_tweet = f"{current_tweet}\r\n{line}"
-            else:
-                current_tweet = line
+            current_tweet = potential_next_msg
         if current_tweet:
             # if we have anything left over, tack it on!
             tweets.append(current_tweet)
