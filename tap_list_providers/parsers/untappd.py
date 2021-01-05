@@ -266,7 +266,7 @@ class UntappdParser(BaseTapListProvider):
                     size = row.find("span", {"class": "type"}).text
                     price = row.find("span", {"class": "price"}).text
                 except AttributeError:
-                    LOG.debug('No price entry found for row %s', row)
+                    LOG.debug("No price entry found for row %s", row)
                     continue
                 price = {
                     "volume_oz": Decimal(self.parse_size(size)),
