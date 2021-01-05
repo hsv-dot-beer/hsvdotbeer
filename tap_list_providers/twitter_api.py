@@ -1,8 +1,13 @@
+from typing import List
+
 from twitter.api import Api, CHARACTER_LIMIT
+from twitter.models import Status
 
 
 class ThreadedApi(Api):
-    def PostUpdates(self, status, continuation=None, threaded=False, **kwargs):
+    def PostUpdates(
+        self, status: str, continuation: str = "", threaded: bool = False, **kwargs
+    ) -> List[Status]:
         """Post one or more twitter status messages from the authenticated user.
         Unlike api.PostUpdate, this method will post multiple status updates
         if the message is longer than CHARACTER_LIMIT characters.
@@ -25,8 +30,6 @@ class ThreadedApi(Api):
         """
         results = list()
 
-        if continuation is None:
-            continuation = ""
         char_limit = CHARACTER_LIMIT - len(continuation)
 
         tweets = self.split_tweet_by_lines(
@@ -54,7 +57,7 @@ class ThreadedApi(Api):
 
         return results
 
-    def split_tweet_by_lines(self, tweet, character_limit):
+    def split_tweet_by_lines(self, tweet: str, character_limit: int) -> List[str]:
         """Break the thread up by lines if possible"""
         lines = tweet.split("\r\n")
         tweets = []
