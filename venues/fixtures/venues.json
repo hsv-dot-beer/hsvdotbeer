@@ -486,6 +486,33 @@
     }
 },
 {
+    "model": "venues.venue",
+    "pk": 35,
+    "fields": {
+        "name": "Chandlers Ford Brewing",
+        "address": "109 North Side Square",
+        "city": "Huntsville",
+        "state": "AL",
+        "postal_code": "35801",
+        "country": "US",
+        "time_zone": "America/Chicago",
+        "website": "",
+        "facebook_page": "https://www.facebook.com/Chandlersfordbrewing",
+        "twitter_handle": "",
+        "instagram_handle": "chandlers_ford_brewing",
+        "tap_list_provider": "untappd",
+        "untappd_url": "https://untappd.com/ChandlersFordBrewing",
+        "email": "",
+        "phone_number": "2564272500",
+        "logo_url": "https://cdn.membershipworks.com/u/5d7a6bdaf033bf1e6d7b23d4_lgl.jpg",
+        "slug": "chandlers-ford",
+        "on_downtown_craft_beer_trail": true,
+        "latitude": "34.730566",
+        "longitude": "-86.585553",
+        "twitter_short_location_description": ""
+    }
+},
+{
     "model": "venues.venueapiconfiguration",
     "pk": 1,
     "fields": {
@@ -843,6 +870,31 @@
         "taplist_io_access_code": "",
         "beermenus_categories": "[]",
         "beermenus_slug": ""
+    }
+},
+{
+    "model": "venues.venueapiconfiguration",
+    "pk": 35,
+    "fields": {
+        "venue": 35,
+        "url": null,
+        "api_key": "",
+        "digital_pour_venue_id": "",
+        "digital_pour_location_number": null,
+        "untappd_location": 33722,
+        "untappd_theme": 130417,
+        "untappd_categories": "[\"Tank Conditioned Beers\", \"High Gravity\", \"High Gravity Specialty and Barrel Aged\", \"Small Batch\", \"Brettanomyces Fermentations\"]",
+        "taphunter_location": "",
+        "taphunter_excluded_lists": "[]",
+        "taplist_io_display_id": "",
+        "taplist_io_access_code": "",
+        "beermenus_categories": "[]",
+        "beermenus_slug": "",
+        "arryved_location_id": "",
+        "arryved_menu_id": "",
+        "arryved_manufacturer_name": "",
+        "arryved_serving_sizes": "[]",
+        "arryved_pos_menu_names": "[]"
     }
 }
 ]
