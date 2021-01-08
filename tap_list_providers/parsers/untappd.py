@@ -73,6 +73,7 @@ class UntappdParser(BaseTapListProvider):
         use_sequential_taps = any(
             tap_info["tap_number"] is None for tap_info in tap_list
         )
+        # pylint: disable=no-value-for-parameter
         latest_timestamp = UTC.localize(datetime.datetime(1970, 1, 1, 12))
         for index, tap_info in enumerate(tap_list):
             # 1. get the tap
@@ -263,8 +264,12 @@ class UntappdParser(BaseTapListProvider):
         price_div = entry.find("div", {"class": "with-price"})
         if price_div:
             for row in price_div.find_all("div", {"class": "container-row"}):
-                size = row.find("span", {"class": "type"}).text
-                price = row.find("span", {"class": "price"}).text
+                try:
+                    size = row.find("span", {"class": "type"}).text
+                    price = row.find("span", {"class": "price"}).text
+                except AttributeError:
+                    LOG.debug("No price entry found for row %s", row)
+                    continue
                 price = {
                     "volume_oz": Decimal(self.parse_size(size)),
                     "name": size,
