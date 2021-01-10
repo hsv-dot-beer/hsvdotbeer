@@ -205,16 +205,21 @@ def clear_tap(request, tap_id: int):
             undo_url = f"{undo_url}?{urlencode(query_args)}"
         tap.beer = None
         tap.save()
-
+        button_css = (
+            "inline-block text-sm px-4 py-2 leading-none border rounded text-white"
+            "border-blue-600 bg-blue-600 hover:border-blue-600 hover:text-black "
+            "hover:bg-white mt-4 lg:mt-0"
+        )
         messages.add_message(
             request,
             messages.SUCCESS,
             format_html(
                 'Successfully removed {old_beer} from tap {tap_number}. <a href="{url}"'
-                ' class="text-bold text-underline">Undo</a>',
+                ' class="{button_css}">Undo</a>',
                 old_beer=old_beer,
                 tap_number=tap.tap_number,
                 url=undo_url,
+                button_css=button_css,
             ),
         )
     return redirect(reverse("venue_table", args=[tap.venue_id]))
