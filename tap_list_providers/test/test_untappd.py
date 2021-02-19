@@ -125,10 +125,10 @@ class CommandsTestCase(TestCase):
         self.assertGreater(self.venue.tap_list_last_check_time, timestamp)
         # Feb  5,  6:55 PM CST
         possible_timestamps = [
-            # HACK: if we run this in January, it'll say the last updated time is nearly a year
-            # ago because Untappd doesn't give us a year in the timestamp
-            # (instead just "Feb 5, 6:55 PM CST") and we rewind by a year to avoid
-            # showing a last updated time in the future
+            # HACK: if we run this in January, it'll say the last updated time
+            # is nearly a year ago because Untappd doesn't give us a year in
+            # the timestamp (instead just "Feb 5, 6:55 PM CST") and we rewind
+            # by a year to avoid showing a last updated time in the future
             timezone("America/Chicago").localize(datetime.datetime(year, 2, 5, 18, 55))
             for year in [now().year, now().year - 1]
         ]
