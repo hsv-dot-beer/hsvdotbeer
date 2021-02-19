@@ -124,10 +124,15 @@ class CommandsTestCase(TestCase):
         self.assertIsNotNone(self.venue.tap_list_last_check_time)
         self.assertGreater(self.venue.tap_list_last_check_time, timestamp)
         # Feb  5,  6:55 PM CST
-        self.assertEqual(
-            self.venue.tap_list_last_update_time,
-            timezone("America/Chicago").localize(datetime.datetime(2020, 2, 5, 18, 55)),
-        )
+        possible_timestamps = [
+            # HACK: if we run this in January, it'll say the last updated time is nearly a year
+            # ago because Untappd doesn't give us a year in the timestamp
+            # (instead just "Feb 5, 6:55 PM CST") and we rewind by a year to avoid
+            # showing a last updated time in the future
+            timezone("America/Chicago").localize(datetime.datetime(year, 2, 5, 18, 55))
+            for year in [now().year, now().year - 1]
+        ]
+        self.assertIn(self.venue.tap_list_last_update_time, possible_timestamps)
 
 
 class StyleParsingTestCase(TestCase):
