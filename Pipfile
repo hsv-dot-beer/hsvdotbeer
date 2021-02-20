@@ -32,7 +32,6 @@ pylibmc = "*"
 django-bmemcached = "*"
 python-binary-memcached = "*"
 python-twitter = "*"
-django-tailwind = "*"
 crispy-tailwind = "*"
 django-crispy-forms = "*"
 
