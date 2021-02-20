@@ -9,6 +9,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class Common(Configuration):
 
+    IS_ALABAMA_DOT_BEER = os.environ.get("ENVIRONMENT", "").casefold() == "alabama.beer"
+
     INSTALLED_APPS = (
         "django.contrib.admin",
         "django.contrib.auth",
@@ -23,6 +25,8 @@ class Common(Configuration):
         "django_filters",  # for filtering rest endpoints
         "django_countries",  # for ease of using countries
         "django_celery_beat",  # use django admin to set up scheduled tasks
+        "crispy_forms",
+        "crispy_tailwind",
         # Your apps
         "hsv_dot_beer.users",
         "venues",
@@ -30,6 +34,7 @@ class Common(Configuration):
         "beers",
         "taps",
         "tap_list_providers",
+        "theme",
     )
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
@@ -83,6 +88,12 @@ class Common(Configuration):
         "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     )
 
+    # Theming
+    TAILWIND_APP_NAME = "theme"
+    CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+
+    CRISPY_TEMPLATE_PACK = "tailwind"
+
     # Media files
     MEDIA_ROOT = join(os.path.dirname(BASE_DIR), "media")
     MEDIA_URL = "/media/"
@@ -98,6 +109,7 @@ class Common(Configuration):
                     "django.template.context_processors.request",
                     "django.contrib.auth.context_processors.auth",
                     "django.contrib.messages.context_processors.messages",
+                    "hsv_dot_beer.context_processors.add_al_dot_beer_to_context",
                 ],
             },
         },

@@ -11,7 +11,8 @@ services:
     image: web
     build: ./
     command: >
-      bash -c "pipenv run python wait_for_postgres.py &&
+      bash -c "npm install && npm run build &&
+               pipenv run python wait_for_postgres.py &&
                pipenv run ./manage.py migrate &&
                pipenv run ./manage.py runserver 0.0.0.0:8000"
     volumes:

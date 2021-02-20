@@ -1,0 +1,18 @@
+{% extends "theme/base.html" %}
+{% block title %}{{ block.super }}: Select a taproom{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl">Pick a taproom</h1>
+<div class="flex grid gap-4 grid-cols-1 md:grid-cols-2">
+  <div class="h-12 flex items-center justify-items-start text-2xl">Name</div>
+  <div class="h-12 flex items-center justify-items-start text-2xl">Last updated</div>
+  {% for venue in venues %}
+  <div class="h-12 flex items-center justify-items-start">
+    <a href="{% url 'venue_table' venue.id %}" class="text-blue-600">{{ venue.name }}</a>
+  </div>
+  <div class="h-12 flex items-center justify-items-start">
+    {% if venue.tap_list_last_update_time %}<span title="{{ venue.tap_list_last_update_time }} UTC">{{ venue.tap_list_last_update_time | timesince }} ago</span>{% else %}{% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

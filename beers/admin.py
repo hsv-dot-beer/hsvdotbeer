@@ -66,7 +66,7 @@ class BeerAdmin(admin.ModelAdmin):
             )
         return response
 
-    def merge_beers(self, request, queryset):
+    def merge_beers(self, request, queryset):  # pylint: disable=unused-argument
         selected = request.POST.getlist(ACTION_CHECKBOX_NAME)
         return HttpResponseRedirect(
             f"/beers/mergebeers/?ids={','.join(selected)}",
@@ -102,7 +102,7 @@ class ManufacturerAdmin(admin.ModelAdmin):
         fields = [i.name for i in manufacturer._meta.fields if i.name.endswith("_url")]
         return sum(bool(getattr(manufacturer, field)) for field in fields)
 
-    def merge_manufacturers(self, request, queryset):
+    def merge_manufacturers(self, request, queryset):  # pylint: disable=unused-argument
         selected = request.POST.getlist(ACTION_CHECKBOX_NAME)
         return HttpResponseRedirect(
             f"/manufacturers/merge/?ids={','.join(selected)}",
@@ -148,7 +148,7 @@ class StyleAdmin(admin.ModelAdmin):
     search_fields = ("name", "alternate_names__name")
     list_display = ("name", "id")
 
-    def merge_styles(self, request, queryset):
+    def merge_styles(self, request, queryset):  # pylint: disable=unused-argument
         selected = request.POST.getlist(ACTION_CHECKBOX_NAME)
         return HttpResponseRedirect(
             f"/beers/mergestyles/?ids={','.join(selected)}",

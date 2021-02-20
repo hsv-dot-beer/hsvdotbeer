@@ -130,6 +130,8 @@ class UntappdParser(BaseTapListProvider):
             # 4. assign the beer to the tap
             tap.beer = beer
             tap.save()
+        if latest_timestamp == UTC.localize(datetime.datetime(1970, 1, 1, 12)):
+            return None
         return latest_timestamp
 
     def parse_html_and_js(self, data):

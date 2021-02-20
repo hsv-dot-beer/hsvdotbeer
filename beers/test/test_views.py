@@ -25,6 +25,7 @@ class ManufacturerListTestCase(APITestCase):
 
         self.url = reverse("manufacturer-list")
         self.user = UserFactory(is_staff=True)
+        # pylint: disable=no-member
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
 
     def test_list(self):
@@ -47,6 +48,7 @@ class ManufacturerListTestCase(APITestCase):
 
 class ManufacturerDetailTestCase(APITestCase):
     def setUp(self):
+        super().setUp()
         self.manufacturer = ManufacturerFactory()
 
         self.url = reverse(
@@ -54,6 +56,7 @@ class ManufacturerDetailTestCase(APITestCase):
             kwargs={"pk": self.manufacturer.pk},
         )
         self.user = UserFactory(is_staff=True)
+        # pylint: disable=no-member
         self.client.credentials(
             HTTP_AUTHORIZATION=f"Token {self.user.auth_token}",
         )
@@ -77,6 +80,7 @@ class BeerDetailTestCase(APITestCase):
             kwargs={"pk": self.beer.pk},
         )
         self.user = UserFactory(is_staff=True)
+        # pylint: disable=no-member
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
 
     def test_style_embedded(self):

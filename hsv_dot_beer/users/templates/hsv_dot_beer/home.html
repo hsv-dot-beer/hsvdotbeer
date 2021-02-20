@@ -1,0 +1,16 @@
+{% extends 'theme/base.html' %}
+
+{% block title %}{{ block.super }}: Welcome{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl">Welcome to the hsv.beer backend page!</h1>
+
+{% if user.is_anonymous %}
+<div>If you're here to enter beers for your taproom, <a class="text-blue-400" href="{% url 'login' %}">log in</a> first.</div>
+{% else %}
+<div class="text-red-600">Sorry, your user account is not configured to manage any taprooms. Please ask the HSV.beer admins for help</div>
+{% endif %}
+<div>If you just want to play with the API, you can <a class="text-blue-400" href="{% url 'api-root' %}">browse the API<a> and look around.</div>
+<div>If you're looking to see what's on tap, you want to go to <a href="https://hsv.beer/" class="text-blue-400">HSV.beer</a>.</div>
+<div>Also don't forget to check us out on <a class="text-blue-400" href="https://twitter.com/hsvdotbeer/">Twitter</a>.</div>
+{% endblock %}
