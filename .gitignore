@@ -119,5 +119,9 @@ venv.bak/
 # JS
 node_modules/
 
+# compiled css
+theme/static/theme/css/style.css
+theme/static/theme/css/style.min.css
+
 # macos
 .DS_Store
