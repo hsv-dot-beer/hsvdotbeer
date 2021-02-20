@@ -115,4 +115,9 @@ venv.bak/
 
 # visual studio code
 .vscode
-theme/static/
+
+# JS
+node_modules/
+
+# macos
+.DS_Store
