@@ -379,60 +379,6 @@
 },
 {
     "model": "venues.venue",
-    "pk": 19,
-    "fields": {
-        "name": "Rocket Republic Madison",
-        "address": "289 Production Ave",
-        "city": "Madison",
-        "state": "AL",
-        "postal_code": "35758",
-        "country": "US",
-        "time_zone": "America/Chicago",
-        "website": "https://www.rocketrepublicbrewing.com/",
-        "facebook_page": "https://www.facebook.com/RocketRepublicBrewing/",
-        "twitter_handle": "RRBeer",
-        "instagram_handle": "rocketrepubicbrewing",
-        "tap_list_provider": "digitalpour",
-        "untappd_url": "https://untappd.com/RocketRepublic",
-        "email": "info@rocketrepublicbrewing.com",
-        "phone_number": "2563254677",
-        "logo_url": "https://rocketrepublicbrewing.com/wp-content/uploads/2020/01/rr-logo-white.png",
-        "slug": "rocket-republic-madison",
-        "on_downtown_craft_beer_trail": false,
-        "latitude": null,
-        "longitude": null,
-        "twitter_short_location_description": ""
-    }
-},
-{
-    "model": "venues.venue",
-    "pk": 20,
-    "fields": {
-        "name": "Rocket Republic Downtown Huntsville",
-        "address": "617 Meridian St N",
-        "city": "Huntsville",
-        "state": "AL",
-        "postal_code": "35801",
-        "country": "US",
-        "time_zone": "America/Chicago",
-        "website": "https://www.rocketrepublicbrewing.com/",
-        "facebook_page": "https://www.facebook.com/RocketRepublicBrewing/",
-        "twitter_handle": "RR_Downtown",
-        "instagram_handle": "rocketrepubicbrewing",
-        "tap_list_provider": "digitalpour",
-        "untappd_url": null,
-        "email": "info@rocketrepublicbrewing.com",
-        "phone_number": "",
-        "logo_url": "https://rocketrepublicbrewing.com/wp-content/uploads/2020/01/rr-logo-white.png",
-        "slug": "rocket-republic-downtown-huntsville",
-        "on_downtown_craft_beer_trail": true,
-        "latitude": null,
-        "longitude": null,
-        "twitter_short_location_description": ""
-    }
-},
-{
-    "model": "venues.venue",
     "pk": 21,
     "fields": {
         "name": "Bad Daddy's Burger Bar Huntsville",
@@ -788,46 +734,6 @@
         "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "4434",
         "taplist_io_access_code": "5e5b8565-27b7-4cfd-8e52-b7d2b2ca5c63",
-        "beermenus_categories": "[]",
-        "beermenus_slug": ""
-    }
-},
-{
-    "model": "venues.venueapiconfiguration",
-    "pk": 19,
-    "fields": {
-        "venue": 19,
-        "url": null,
-        "api_key": "",
-        "digital_pour_venue_id": "5d657d943527260064257abf",
-        "digital_pour_location_number": 1,
-        "untappd_location": null,
-        "untappd_theme": null,
-        "untappd_categories": "[]",
-        "taphunter_location": "",
-        "taphunter_excluded_lists": "[]",
-        "taplist_io_display_id": "",
-        "taplist_io_access_code": "",
-        "beermenus_categories": "[]",
-        "beermenus_slug": ""
-    }
-},
-{
-    "model": "venues.venueapiconfiguration",
-    "pk": 20,
-    "fields": {
-        "venue": 20,
-        "url": null,
-        "api_key": "",
-        "digital_pour_venue_id": "5d657d943527260064257abf",
-        "digital_pour_location_number": 2,
-        "untappd_location": null,
-        "untappd_theme": null,
-        "untappd_categories": "[]",
-        "taphunter_location": "",
-        "taphunter_excluded_lists": "[]",
-        "taplist_io_display_id": "",
-        "taplist_io_access_code": "",
         "beermenus_categories": "[]",
         "beermenus_slug": ""
     }
