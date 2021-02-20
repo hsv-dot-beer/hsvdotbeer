@@ -11,7 +11,8 @@ services:
     image: web
     build: ./
     command: >
-      bash -c "pipenv run python wait_for_postgres.py &&
+      bash -c "npm install && npm run build &&
+               pipenv run python wait_for_postgres.py &&
                pipenv run ./manage.py migrate &&
                pipenv run ./manage.py runserver 0.0.0.0:8000"
     volumes:
@@ -38,18 +39,3 @@ services:
       bash -c "pipenv run python wait_for_postgres.py &&
                pipenv run ./manage.py migrate &&
                pipenv run celery -A hsv_dot_beer worker -l info --beat --scheduler django_celery_beat.schedulers:DatabaseScheduler -O fair"
-  tailwind:
-    restart: always
-    image: web
-    environment:
-      - DJANGO_SECRET_KEY=local
-      - REDIS_URL=redis://redis:6379/
-    depends_on:
-      - postgres
-      - redis
-    build: ./
-    volumes:
-      - ./:/code
-    command: >
-      bash -c "pipenv run python wait_for_postgres.py &&
-               pipenv run ./manage.py tailwind start"
