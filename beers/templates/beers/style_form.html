@@ -1,0 +1,16 @@
+{% extends "theme/base.html" %}
+{% load tailwind_filters %}
+
+{% block title %}{{ block.super }}: {% if style %}Edit {{ style }}{% else %}Create a style {% endif %}{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl">{% if style %}Edit{% else %}Create{% endif %} a style</h1>
+
+<form action="{% if style %}{% url 'edit_style' style.id %}{% else %}{% url 'create_style' %}{% endif %}"
+    method="post">
+    {% csrf_token %}
+    <table>{{ form | crispy }}</table>
+
+    <input class="bg-blue-500 text-white font-bold py-2 px-4 rounded" type="submit" value="Save">
+</form>
+{% endblock %}

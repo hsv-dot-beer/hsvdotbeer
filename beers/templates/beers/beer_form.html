@@ -1,0 +1,20 @@
+{% extends "theme/base.html" %}
+{% load tailwind_filters %}
+
+{% block title %}{{ block.super }}: {% if beer %}Edit {{ beer }}{% else %}Create a beer {% endif %}{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl">{% if beer %}Edit{% else %}Create{% endif %} a beer</h1>
+
+<form action="{% if beer %}{% url 'edit_beer' beer.id %}{% else %}{% url 'create_beer' %}{% endif %}"
+    method="post">
+    {% csrf_token %}
+    <table>{{ form | crispy }}</table>
+
+    <input class="bg-blue-500 text-white font-bold py-2 px-4 rounded" type="submit" value="Save">
+</form>
+
+<div class="text-large">
+    Don't see the style you're looking for? <a class="text-blue-400" href="{% url 'create_style' %}">Add it</a>.
+</div>
+{% endblock %}

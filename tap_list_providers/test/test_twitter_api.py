@@ -10,6 +10,16 @@ from tap_list_providers.twitter_api import ThreadedApi
 
 FAKE_ID = count(1)
 
+REAL_BREAKAGE = """We found 8 new beers!
+- Cucumber Lime Seltzer from Chandlers Ford (style: Hard Seltzer) on tap at Chandlers Ford Brewing
+- Cranberry Lemonade Seltzer from Chandlers Ford (style: Hard Seltzer) on tap at Chandlers Ford Brewing
+- Island Thai’mmm from Chandlers Ford (style: Japanese Rice Lager) on tap at Chandlers Ford Brewing
+- Nitro Stock Ale from Chandlers Ford (style: Old Ale) on tap at Chandlers Ford Brewing
+- Chai Milk Stout from Chandlers Ford (style: Milk Stout) on tap at Chandlers Ford Brewing
+- Pumpkin Pie Stout (Nitro) from Chandlers Ford (style: Other Stout) on tap at Chandlers Ford Brewing
+- Big Beach Gose from Chandlers Ford (style: Fruited Gose) on tap at Chandlers Ford Brewing
+- Brett Hazy Pale Ale from Chandlers Ford (style: Brett Beer) on tap at Chandlers Ford Brewing"""  # noqa
+
 
 class FakeStatus:
     def __init__(self):
@@ -30,6 +40,13 @@ class TestThreadedApi(TestCase):
         with patch.object(self.api, "PostUpdate") as mock_post_update:
             self.api.PostUpdates(msg)
             mock_post_update.assert_called_once_with(status=msg)
+
+    def test_chandlers_ford(self):
+        """Test that the Chandlers Ford beers don't cause breakage"""
+        split_tweets = self.api.split_tweet_by_lines(REAL_BREAKAGE, CHARACTER_LIMIT - 1)
+        self.assertEqual(len(split_tweets), 4)
+        for tweet in split_tweets:
+            self.assertLess(len(tweet), CHARACTER_LIMIT, tweet)
 
     def test_long_tweet(self):
 

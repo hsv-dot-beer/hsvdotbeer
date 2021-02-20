@@ -18,3 +18,5 @@ jobs:
             - uses: actions/checkout@master
             - name: Run Python tests
               run: docker-compose run --rm web bash -c 'export PIPENV_COLORBLIND=1; export PIPENV_NOSPIN=1; pipenv install --dev && pipenv run ./manage.py test'
+            - name: Validate CSS build
+              run: docker-compose run --rm web bash -c 'npm install && npm run build'

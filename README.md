@@ -69,6 +69,16 @@ pipenv install
 
 ## Local Development
 
+### Build the environment
+
+Build the docker images:
+
+```bash
+docker-compose build
+```
+
+### Run the app
+
 Start the dev server for local use:
 
 ```bash

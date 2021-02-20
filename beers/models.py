@@ -208,12 +208,12 @@ class Beer(models.Model):
         blank=True,
         null=True,
     )
-    untappd_url = models.URLField(blank=True, null=True)
+    untappd_url = models.URLField("Untappd URL (if known)", blank=True, null=True)
     beer_advocate_url = models.URLField(
         "BeerAdvocate URL (if known)", null=True, blank=True
     )
-    rate_beer_url = models.URLField(blank=True, null=True)
-    logo_url = models.URLField(blank=True, null=True)
+    rate_beer_url = models.URLField("RateBeer URL (if known)", blank=True, null=True)
+    logo_url = models.URLField("Beer logo URL (if known)", blank=True, null=True)
     color_html = models.CharField(
         "HTML Color (in hex)",
         max_length=9,
@@ -224,9 +224,13 @@ class Beer(models.Model):
         max_length=100,
         blank=True,
     )
-    manufacturer_url = models.URLField(blank=True, null=True)
+    manufacturer_url = models.URLField(
+        "Link to the beer on the manufacturer's website",
+        blank=True,
+        null=True,
+    )
     automatic_updates_blocked = models.BooleanField(null=True, default=False)
-    taphunter_url = models.URLField(blank=True, null=True)
+    taphunter_url = models.URLField("TapHunter URL (if known)", blank=True, null=True)
     stem_and_stein_pk = models.PositiveIntegerField(blank=True, null=True)
     taplist_io_pk = models.PositiveIntegerField(blank=True, null=True)
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
