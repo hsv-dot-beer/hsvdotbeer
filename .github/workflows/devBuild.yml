@@ -17,4 +17,4 @@ jobs:
         steps:
             - uses: actions/checkout@master
             - name: Run Python tests
-              run: docker-compose run --rm web bash -c 'export PIPENV_COLORBLIND=1; export PIPENV_NOSPIN=1; pipenv install --dev && pipenv run ./manage.py tailwind install && pipenv run ./manage.py tailwind build && pipenv run ./manage.py test'
+              run: docker-compose run --rm web bash -c 'export PIPENV_COLORBLIND=1; export PIPENV_NOSPIN=1; pipenv install --dev && npm run build && pipenv run ./manage.py test'
