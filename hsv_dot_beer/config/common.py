@@ -25,7 +25,6 @@ class Common(Configuration):
         "django_filters",  # for filtering rest endpoints
         "django_countries",  # for ease of using countries
         "django_celery_beat",  # use django admin to set up scheduled tasks
-        "tailwind",  # make things less ugly
         "crispy_forms",
         "crispy_tailwind",
         # Your apps
