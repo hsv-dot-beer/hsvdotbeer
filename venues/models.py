@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.conf import settings
+from django.shortcuts import reverse
 from django.contrib.postgres.fields import ArrayField, CITextField
 from django.utils.text import gettext_lazy as _
 from timezone_field.fields import TimeZoneField
@@ -68,12 +69,20 @@ class Venue(models.Model):
         max_length=25,
         blank=True,
     )
+    managers = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="venues_managed",
+        through="VenueTapManager",
+    )
     tap_list_last_check_time = models.DateTimeField(
         "The last time the venue's tap list was refreshed", blank=True, null=True
     )
     tap_list_last_update_time = models.DateTimeField(
         "The last time the venue's tap list was updated", blank=True, null=True
     )
+
+    def get_absolute_url(self) -> str:
+        return reverse("venue_table", args=[self.id])
 
     def __str__(self):
         return self.name
@@ -141,3 +150,26 @@ class VenueAPIConfiguration(models.Model):
         null=True,
         help_text=_("Individual menus to process from the Arryved POS"),
     )
+
+
+class VenueTapManager(models.Model):
+    """Users who maintain venues"""
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        models.CASCADE,
+        related_name="venue_tap_managers",
+    )
+    venue = models.ForeignKey(Venue, models.CASCADE, related_name="venue_tap_managers")
+    default_manufacturer = models.ForeignKey(
+        "beers.Manufacturer",
+        models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="default_managers",
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["user", "venue"], name="user-venue-unique"),
+        ]

@@ -32,6 +32,8 @@ pylibmc = "*"
 django-bmemcached = "*"
 python-binary-memcached = "*"
 python-twitter = "*"
+crispy-tailwind = "*"
+django-crispy-forms = "*"
 
 [dev-packages]
 ipdb = "*"

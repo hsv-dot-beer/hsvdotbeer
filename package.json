@@ -1,0 +1,29 @@
+{
+  "name": "hsvdotbeer",
+  "version": "1.0.0",
+  "description": "[![Built with](https://img.shields.io/badge/Built_with-Cookiecutter_Django_Rest-F7B633.svg)](https://github.com/agconti/cookiecutter-django-rest)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tailwind build theme/static/theme/css/tailwind.css -o theme/static/theme/css/style.css && cleancss -o theme/static/theme/css/style.min.css theme/static/theme/css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hsv-dot-beer/hsvdotbeer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/hsv-dot-beer/hsvdotbeer/issues"
+  },
+  "homepage": "https://github.com/hsv-dot-beer/hsvdotbeer#readme",
+  "dependencies": {
+    "autoprefixer": "^10.2.4",
+    "clean-css-cli": "^5.2.0",
+    "tailwindcss": "^2.0.3"
+  },
+  "engines": {
+    "node": "15.x"
+  }
+}

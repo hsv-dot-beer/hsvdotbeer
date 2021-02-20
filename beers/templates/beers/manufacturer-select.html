@@ -1,0 +1,21 @@
+{% extends "theme/base.html" %}
+{% load tailwind_filters %}
+
+{% block title %}{{ block.super }}: Select a Manufacturer{% endblock %}
+
+
+{% block content %}
+<h1 class="text-2xl">Choose a manufacturer</h1>
+
+<form action="{% if tap_number %}{% url 'edit_tap' venue.id tap_number %}{% else %}{% url 'create_tap' venue.id %}{% endif %}"
+    method="post">
+    {% csrf_token %}
+    <table>{{ form | crispy }}</table>
+
+    <input class="bg-blue-500 text-white font-bold py-2 px-4 rounded" type="submit" value="Save">
+</form>
+
+<div class="text-large">
+    Don't see the manufacturer you're looking for? <a class="text-blue-400" href="mailto:hsvdotbeer@gmail.com">Email the admins</a>.
+</div>
+{% endblock %}
