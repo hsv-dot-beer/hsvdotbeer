@@ -20,7 +20,7 @@ from taps.views import (
     undo_clear,
 )
 from venues.views import venue_table
-from .users.views import UserViewSet, UserCreateViewSet
+from .users.views import UserViewSet
 from .views import home
 
 
