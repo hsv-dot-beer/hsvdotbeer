@@ -3,6 +3,7 @@ ENV PYTHONUNBUFFERED 1
 
 # Allows docker to cache installed dependencies between builds
 RUN pip install pipenv
+RUN pip install --upgrade pip setuptools wheel
 
 # Adds our application code to the image
 COPY . /code
