@@ -1,4 +1,6 @@
-"""Base configuration data. Environment-specific stuff should go in local.py or production.py"""
+"""
+Base configuration data. Environment-specific stuff should go in local or production.py
+"""
 
 import os
 from os.path import join
@@ -9,8 +11,30 @@ from configurations import Configuration
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+def get_redis_url() -> str:
+    """Get the redis URL based on whatever environment we're in.
+
+    In March 2021, Heroku deprecated redis 4.x and 5.x, and the easy way to
+    upgrade is to attach a new instance, switch over our config, and talk to it.
+
+    However, because the web UI has no way to control what name the new redis instance
+    attaches as, we have to deal with different names per env.
+    """
+    for env_str in [
+        "HEROKU_REDIS_OLIVE_TLS_URL",  # hsv.beer
+        "HEROKU_REDIS_BLACK_TLS_URL",  # alabama.beer
+        "REDIS_URL",  # legacy (5.x)
+    ]:
+        try:
+            return os.environ[env_str]
+        except KeyError:
+            pass
+    return "redis://redis:6379/"
+
+
 class Common(Configuration):  # pylint: disable=no-init
     """Base configuration data"""
+
     IS_ALABAMA_DOT_BEER = os.environ.get("ENVIRONMENT", "").casefold() == "alabama.beer"
 
     INSTALLED_APPS = (
@@ -65,7 +89,7 @@ class Common(Configuration):  # pylint: disable=no-init
     DATABASES = {
         "default": dj_database_url.config(
             default="postgres://postgres:@postgres:5432/postgres",
-            conn_max_age=int(os.getenv("POSTGRES_CONN_MAX_AGE", '600')),
+            conn_max_age=int(os.getenv("POSTGRES_CONN_MAX_AGE", "600")),
         )
     }
 
@@ -200,7 +224,7 @@ class Common(Configuration):  # pylint: disable=no-init
     # Django Rest Framework
     REST_FRAMEWORK = {
         "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-        "PAGE_SIZE": int(os.getenv("DJANGO_PAGINATION_LIMIT", '10')),
+        "PAGE_SIZE": int(os.getenv("DJANGO_PAGINATION_LIMIT", "10")),
         "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
         "DEFAULT_RENDERER_CLASSES": (
             "rest_framework.renderers.JSONRenderer",
@@ -233,24 +257,3 @@ class Common(Configuration):  # pylint: disable=no-init
     TWITTER_CONSUMER_SECRET = os.environ.get("TWITTER_CONSUMER_SECRET")
     TWITTER_ACCESS_TOKEN_KEY = os.environ.get("TWITTER_ACCESS_TOKEN_KEY")
     TWITTER_ACCESS_TOKEN_SECRET = os.environ.get("TWITTER_ACCESS_TOKEN_SECRET")
-
-
-def get_redis_url() -> str:
-    """Get the redis URL based on whatever environment we're in.
-
-    In March 2021, Heroku deprecated redis 4.x and 5.x, and the easy way to
-    upgrade is to attach a new instance, switch over our config, and talk to it.
-
-    However, because the web UI has no way to control what name the new redis instance
-    attaches as, we have to deal with different names per env.
-    """
-    for env_str in [
-        'HEROKU_REDIS_OLIVE_TLS_URL',  # hsv.beer
-        'HEROKU_REDIS_BLACK_TLS_URL',  # alabama.beer
-        'REDIS_URL',  # legacy (5.x)
-    ]:
-        try:
-            return os.environ[env_str]
-        except KeyError:
-            pass
-    return 'redis://redis:6379/'
