@@ -204,8 +204,9 @@ class BeerListTestCase(APITestCase):
         wanted_venue = VenueFactory(slug="slug-1")
         other_venue = VenueFactory(slug="not-this")
         mfg = ManufacturerFactory()
+        style = StyleFactory()
         beers = Beer.objects.bulk_create(
-            BeerFactory.build(manufacturer=mfg) for dummy in range(3)
+            BeerFactory.build(style=style, manufacturer=mfg) for _ in range(3)
         )
         # set up 3 beers on tap, two at the one we want to look for, one at
         # the other
@@ -229,10 +230,11 @@ class BeerListTestCase(APITestCase):
     def test_sort_abv_ascending(self):
         venue = VenueFactory()
         mfg = ManufacturerFactory()
+        style = StyleFactory()
         beers = Beer.objects.bulk_create(
             [
-                BeerFactory.build(manufacturer=mfg, abv=None),
-                BeerFactory.build(manufacturer=mfg, abv=Decimal("3.2")),
+                BeerFactory.build(manufacturer=mfg, abv=None, style=style),
+                BeerFactory.build(manufacturer=mfg, abv=Decimal("3.2"), style=style),
             ]
         )
         Tap.objects.bulk_create(
@@ -248,10 +250,11 @@ class BeerListTestCase(APITestCase):
     def test_sort_abv_descending(self):
         venue = VenueFactory()
         mfg = ManufacturerFactory()
+        style = StyleFactory()
         beers = Beer.objects.bulk_create(
             [
-                BeerFactory.build(manufacturer=mfg, abv=None),
-                BeerFactory.build(manufacturer=mfg, abv=Decimal("3.2")),
+                BeerFactory.build(manufacturer=mfg, abv=None, style=style),
+                BeerFactory.build(manufacturer=mfg, abv=Decimal("3.2"), style=style),
             ]
         )
         Tap.objects.bulk_create(
