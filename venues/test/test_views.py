@@ -9,7 +9,7 @@ from faker import Faker
 from hsv_dot_beer.users.test.factories import UserFactory
 from beers.models import Beer
 from venues.models import Venue, VenueAPIConfiguration
-from beers.test.factories import BeerFactory, ManufacturerFactory
+from beers.test.factories import BeerFactory, ManufacturerFactory, StyleFactory
 from taps.models import Tap
 from taps.test.factories import TapFactory
 from .factories import VenueFactory
@@ -104,8 +104,9 @@ class TestVenueBySlug(APITestCase):
 
     def test_beers(self):
         mfg = ManufacturerFactory()
+        style = StyleFactory()
         beers = Beer.objects.bulk_create(
-            BeerFactory.build(manufacturer=mfg) for dummy in range(10)
+            BeerFactory.build(manufacturer=mfg, style=style) for _ in range(10)
         )
         taps = Tap.objects.bulk_create(
             Tap(
