@@ -218,7 +218,12 @@ class BeerListTestCase(APITestCase):
             )
         )
         url = f"{self.url}?taps__venue__slug__icontains=SLUG&on_tap=True"
-        with self.assertNumQueries(4):
+        with self.assertNumQueries(5):
+            # 1. count
+            # 2. beer + style
+            # 3. style alt names
+            # 4. prices
+            # 5. taps
             response = self.client.get(url)
         eq_(response.status_code, 200, response.data)
         eq_(len(response.data["results"]), 2, json.dumps(response.data, indent=2))
@@ -241,7 +246,12 @@ class BeerListTestCase(APITestCase):
             TapFactory.build(beer=beer, venue=venue) for beer in beers
         )
         url = f"{self.url}?o=abv&on_tap=True"
-        with self.assertNumQueries(4):
+        with self.assertNumQueries(5):
+            # 1. count
+            # 2. beer + style
+            # 3. style alt names
+            # 4. prices
+            # 5. taps
             response = self.client.get(url)
         eq_(response.status_code, 200, response.data)
         eq_(len(response.data["results"]), 2, json.dumps(response.data, indent=2))
@@ -261,7 +271,12 @@ class BeerListTestCase(APITestCase):
             TapFactory.build(beer=beer, venue=venue) for beer in beers
         )
         url = f"{self.url}?o=-abv&on_tap=True"
-        with self.assertNumQueries(4):
+        with self.assertNumQueries(5):
+            # 1. count
+            # 2. beer + style
+            # 3. style alt names
+            # 4. prices
+            # 5. taps
             response = self.client.get(url)
         eq_(response.status_code, 200, response.data)
         eq_(len(response.data["results"]), 2, json.dumps(response.data, indent=2))
