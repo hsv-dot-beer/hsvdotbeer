@@ -21,8 +21,8 @@ def get_redis_url() -> str:
     attaches as, we have to deal with different names per env.
     """
     for env_str in [
-        "HEROKU_REDIS_OLIVE_TLS_URL",  # hsv.beer
-        "HEROKU_REDIS_BLACK_TLS_URL",  # alabama.beer
+        "HEROKU_REDIS_OLIVE_URL",  # hsv.beer
+        "HEROKU_REDIS_BLACK_URL",  # alabama.beer
         "REDIS_URL",  # legacy (5.x)
     ]:
         try:
