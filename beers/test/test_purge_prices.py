@@ -7,7 +7,7 @@ from venues.test.factories import VenueFactory
 from taps.test.factories import TapFactory
 from beers.models import BeerPrice, Beer
 from beers.tasks import purge_unused_prices
-from beers.test.factories import BeerFactory, ManufacturerFactory
+from beers.test.factories import BeerFactory, ManufacturerFactory, StyleFactory
 
 
 class PricePurgeTestCase(TestCase):
@@ -17,11 +17,13 @@ class PricePurgeTestCase(TestCase):
     def setUp(self):
         manufacturer = ManufacturerFactory()
         venue = VenueFactory()
+        style = StyleFactory()
         self.beers = Beer.objects.bulk_create(
             BeerFactory.build(
                 manufacturer=manufacturer,
+                style=style,
             )
-            for dummy in range(20)
+            for _ in range(20)
         )
         self.prices = BeerPrice.objects.bulk_create(
             BeerPrice(
