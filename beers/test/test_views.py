@@ -204,8 +204,9 @@ class BeerListTestCase(APITestCase):
         wanted_venue = VenueFactory(slug="slug-1")
         other_venue = VenueFactory(slug="not-this")
         mfg = ManufacturerFactory()
+        style = StyleFactory()
         beers = Beer.objects.bulk_create(
-            BeerFactory.build(manufacturer=mfg) for dummy in range(3)
+            BeerFactory.build(style=style, manufacturer=mfg) for _ in range(3)
         )
         # set up 3 beers on tap, two at the one we want to look for, one at
         # the other
@@ -217,7 +218,12 @@ class BeerListTestCase(APITestCase):
             )
         )
         url = f"{self.url}?taps__venue__slug__icontains=SLUG&on_tap=True"
-        with self.assertNumQueries(4):
+        with self.assertNumQueries(5):
+            # 1. count
+            # 2. beer + style
+            # 3. style alt names
+            # 4. prices
+            # 5. taps
             response = self.client.get(url)
         eq_(response.status_code, 200, response.data)
         eq_(len(response.data["results"]), 2, json.dumps(response.data, indent=2))
@@ -229,17 +235,23 @@ class BeerListTestCase(APITestCase):
     def test_sort_abv_ascending(self):
         venue = VenueFactory()
         mfg = ManufacturerFactory()
+        style = StyleFactory()
         beers = Beer.objects.bulk_create(
             [
-                BeerFactory.build(manufacturer=mfg, abv=None),
-                BeerFactory.build(manufacturer=mfg, abv=Decimal("3.2")),
+                BeerFactory.build(manufacturer=mfg, abv=None, style=style),
+                BeerFactory.build(manufacturer=mfg, abv=Decimal("3.2"), style=style),
             ]
         )
         Tap.objects.bulk_create(
             TapFactory.build(beer=beer, venue=venue) for beer in beers
         )
         url = f"{self.url}?o=abv&on_tap=True"
-        with self.assertNumQueries(4):
+        with self.assertNumQueries(5):
+            # 1. count
+            # 2. beer + style
+            # 3. style alt names
+            # 4. prices
+            # 5. taps
             response = self.client.get(url)
         eq_(response.status_code, 200, response.data)
         eq_(len(response.data["results"]), 2, json.dumps(response.data, indent=2))
@@ -248,17 +260,23 @@ class BeerListTestCase(APITestCase):
     def test_sort_abv_descending(self):
         venue = VenueFactory()
         mfg = ManufacturerFactory()
+        style = StyleFactory()
         beers = Beer.objects.bulk_create(
             [
-                BeerFactory.build(manufacturer=mfg, abv=None),
-                BeerFactory.build(manufacturer=mfg, abv=Decimal("3.2")),
+                BeerFactory.build(manufacturer=mfg, abv=None, style=style),
+                BeerFactory.build(manufacturer=mfg, abv=Decimal("3.2"), style=style),
             ]
         )
         Tap.objects.bulk_create(
             TapFactory.build(beer=beer, venue=venue) for beer in beers
         )
         url = f"{self.url}?o=-abv&on_tap=True"
-        with self.assertNumQueries(4):
+        with self.assertNumQueries(5):
+            # 1. count
+            # 2. beer + style
+            # 3. style alt names
+            # 4. prices
+            # 5. taps
             response = self.client.get(url)
         eq_(response.status_code, 200, response.data)
         eq_(len(response.data["results"]), 2, json.dumps(response.data, indent=2))

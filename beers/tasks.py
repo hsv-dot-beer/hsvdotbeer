@@ -175,8 +175,8 @@ def prune_stale_data():
 def purge_unused_prices():
     queryset = BeerPrice.objects.filter(
         beer__taps__isnull=True,
-    ).distinct()
-    LOG.info("Purging %s prices of unused beers", queryset.count())
+    )
+    LOG.info("Purging %s prices of unused beers", queryset.distinct().count())
     queryset.delete()
     LOG.info("Done. %s prices remain", BeerPrice.objects.count())
 
