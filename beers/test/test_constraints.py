@@ -1,7 +1,6 @@
-from decimal import InvalidOperation
-
+"""Test DB constraints on beer model"""
 from django.test import TestCase
-from django.db.utils import IntegrityError
+from django.db.utils import IntegrityError, DataError
 
 from beers.test.factories import BeerFactory
 
@@ -20,7 +19,7 @@ class BeerConstraintTestCase(TestCase):
             BeerFactory(abv=-1)
 
     def test_high_abv(self):
-        with self.assertRaises(InvalidOperation):
+        with self.assertRaises(DataError):
             BeerFactory(abv=100.1)
 
     def test_srm_high(self):
