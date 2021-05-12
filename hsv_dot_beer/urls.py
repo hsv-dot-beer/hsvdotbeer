@@ -20,13 +20,12 @@ from taps.views import (
     undo_clear,
 )
 from venues.views import venue_table
-from .users.views import UserViewSet, UserCreateViewSet
+from .users.views import UserViewSet
 from .views import home
 
 
 router = DefaultRouter()
 router.register(r"users", UserViewSet)
-router.register(r"users", UserCreateViewSet)
 
 urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),

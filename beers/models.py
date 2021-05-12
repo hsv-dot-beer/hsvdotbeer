@@ -1,13 +1,14 @@
 import logging
 
+from django.conf import settings
 from django.contrib.postgres.fields import CITextField
 from django.db import models, transaction
+from django.db.models import JSONField
 from django.db.utils import IntegrityError
 from django.utils.timezone import now
 
 from taps.models import Tap
 from .utils import render_srm
-from django.db.models import JSONField
 
 LOG = logging.getLogger(__name__)
 
@@ -448,3 +449,20 @@ class UntappdMetadata(models.Model):
         models.CASCADE,
         related_name="untappd_metadata",
     )
+
+
+class UserFavoriteBeer(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        models.CASCADE,
+        related_name="favorite_beers",
+    )
+    beer = models.ForeignKey(
+        Beer,
+        models.CASCADE,
+        related_name="favored_by_users",
+    )
+    notifications_enabled = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = (("beer", "user"),)

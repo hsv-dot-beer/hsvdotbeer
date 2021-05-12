@@ -142,3 +142,16 @@ class OtherPKSerializer(serializers.Serializer):
 
     # we'll take care of validating during the view
     id = serializers.IntegerField(min_value=0)
+
+
+class UserFavoriteBeerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserFavoriteBeer
+        fields = "__all__"
+        validators = [
+            UniqueTogetherValidator(
+                fields=["user", "beer"],
+                queryset=models.UserFavoriteBeer.objects.all(),
+                message="User is already subscribed to this beer",
+            ),
+        ]
