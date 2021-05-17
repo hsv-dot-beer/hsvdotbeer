@@ -22,6 +22,7 @@ class TestUserListTestCase(APITestCase):
         self.url = reverse("user-list")
         self.user_data = model_to_dict(UserFactory.build())
         self.user_data["date_joined"] = self.user_data["date_joined"].isoformat()
+        super().setUp()
 
     def test_post_request_with_no_data_fails(self):
         user = UserFactory(is_staff=True)

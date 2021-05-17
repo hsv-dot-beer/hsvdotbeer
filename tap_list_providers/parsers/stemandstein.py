@@ -1,7 +1,7 @@
 """HTML scraper for The Stem & Stein"""
 import datetime
 from urllib.parse import parse_qsl
-from html.parser import HTMLParser
+from html import unescape
 from decimal import Decimal
 import logging
 import os
@@ -40,7 +40,6 @@ class StemAndSteinParser(BaseTapListProvider):
     BEER_URL = "https://thestemandstein.com/Home/BeerDetails/{}"
 
     def __init__(self):
-        self.html_parser = HTMLParser()
         self.parser = None
         self.serving_sizes = {
             i.volume_oz: i for i in ServingSize.objects.filter(volume_oz__in=[10, 16])
@@ -62,7 +61,7 @@ class StemAndSteinParser(BaseTapListProvider):
         beer_list = self.parser.find("ul", {"class": "beerlist"})
         beers = [
             {
-                "name": self.html_parser.unescape(tag.text),
+                "name": unescape(tag.text),
                 "url": tag.attrs["href"],
             }
             for tag in beer_list.find_all("a")
@@ -179,7 +178,7 @@ class StemAndSteinParser(BaseTapListProvider):
             )
             beer.manufacturer.save()
         try:
-            color = self.html_parser.unescape(image_params["color"])
+            color = unescape(image_params["color"])
         except KeyError:
             LOG.warning("Missing S&S color for beer %s", beer)
             color = None
