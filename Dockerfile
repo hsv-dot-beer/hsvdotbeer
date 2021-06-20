@@ -9,7 +9,7 @@ RUN pip install --upgrade pip setuptools wheel
 COPY . /code
 WORKDIR /code
 
-RUN bash /code/setup_node_15.sh
+RUN bash /code/setup_node_16.sh
 RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install libmemcached-dev nodejs
 
 # the version of node-sass that tailwind uses doesn't work with npm 5.x under node 10.x, which the debian docker image gives us

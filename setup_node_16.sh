@@ -3,14 +3,14 @@
 # Discussion, issues and change requests at:
 #   https://github.com/nodesource/distributions
 #
-# Script to install the NodeSource Node.js 15.x repo onto a
+# Script to install the NodeSource Node.js 16.x repo onto a
 # Debian or Ubuntu system.
 #
 # Run as root or insert `sudo -E` before `bash`:
 #
-# curl -sL https://deb.nodesource.com/setup_15.x | bash -
+# curl -sL https://deb.nodesource.com/setup_16.x | bash -
 #   or
-# wget -qO- https://deb.nodesource.com/setup_15.x | bash -
+# wget -qO- https://deb.nodesource.com/setup_16.x | bash -
 #
 # CONTRIBUTIONS TO THIS SCRIPT
 #
@@ -21,9 +21,9 @@
 
 
 export DEBIAN_FRONTEND=noninteractive
-SCRSUFFIX="_15.x"
-NODENAME="Node.js 15.x"
-NODEREPO="node_15.x"
+SCRSUFFIX="_16.x"
+NODENAME="Node.js 16.x"
+NODEREPO="node_16.x"
 NODEPKG="nodejs"
 
 print_status() {
@@ -93,8 +93,10 @@ node_deprecation_warning() {
           "X${NODENAME}" == "XNode.js 7.x" ||
           "X${NODENAME}" == "XNode.js 8.x LTS Carbon" ||
           "X${NODENAME}" == "XNode.js 9.x" ||
+          "X${NODENAME}" == "XNode.js 10.x" ||
           "X${NODENAME}" == "XNode.js 11.x" ||
-          "X${NODENAME}" == "XNode.js 13.x" ]]; then
+          "X${NODENAME}" == "XNode.js 13.x" ||
+          "X${NODENAME}" == "XNode.js 15.x" ]]; then
 
         print_bold \
 "                            DEPRECATION WARNING                            " "\
@@ -106,10 +108,10 @@ ${bold}${NODENAME} is no longer actively supported!${normal}
   Use the installation script that corresponds to the version of Node.js you
   wish to install. e.g.
 
-   * ${green}https://deb.nodesource.com/setup_10.x — Node.js 10 LTS \"Dubnium\"${normal}
-   * ${green}https://deb.nodesource.com/setup_12.x — Node.js 12 LTS \"Erbium\"${normal} (recommended)
-   * ${green}https://deb.nodesource.com/setup_14.x — Node.js 14 LTS \"Fermium\"${normal}
-   * ${green}https://deb.nodesource.com/setup_15.x — Node.js 15 \"Fifteen\"${normal}
+   * ${green}https://deb.nodesource.com/setup_12.x — Node.js 12 LTS \"Erbium\"${normal}
+   * ${green}https://deb.nodesource.com/setup_14.x — Node.js 14 LTS \"Fermium\"${normal} (recommended)
+   * ${green}https://deb.nodesource.com/setup_16.x — Node.js 16 \"Gallium\"${normal}
+
 
   Please see ${bold}https://github.com/nodejs/Release${normal} for details about which
   version may be appropriate for you.
@@ -136,10 +138,10 @@ This script, located at ${bold}https://deb.nodesource.com/setup${normal}, used t
   You should use the script that corresponds to the version of Node.js you
   wish to install. e.g.
 
-   * ${green}https://deb.nodesource.com/setup_10.x — Node.js 10 LTS \"Dubnium\"${normal}
-   * ${green}https://deb.nodesource.com/setup_12.x — Node.js 12 LTS \"Erbium\"${normal} (recommended)
-   * ${green}https://deb.nodesource.com/setup_14.x — Node.js 14 LTS \"Fermium\"${normal}
-   * ${green}https://deb.nodesource.com/setup_15.x — Node.js 15 \"Fifteen\"${normal}
+   * ${green}https://deb.nodesource.com/setup_12.x — Node.js 12 LTS \"Erbium\"${normal}
+   * ${green}https://deb.nodesource.com/setup_14.x — Node.js 14 LTS \"Fermium\"${normal} (recommended)
+   * ${green}https://deb.nodesource.com/setup_16.x — Node.js 16 \"Gallium\"${normal}
+
   Please see ${bold}https://github.com/nodejs/Release${normal} for details about which
   version may be appropriate for you.
 
@@ -312,28 +314,35 @@ if [ -f "/etc/apt/sources.list.d/chris-lea-node_js-$DISTRO.list" ]; then
 fi
 
 print_status 'Adding the NodeSource signing key to your keyring...'
+keyring='/usr/share/keyrings'
+node_key_url="https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+local_node_key="$keyring/nodesource.gpg"
 
 if [ -x /usr/bin/curl ]; then
-    exec_cmd 'curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -'
+    exec_cmd "curl -s $node_key_url | gpg --dearmor | tee $local_node_key >/dev/null"
 else
-    exec_cmd 'wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -'
+    exec_cmd "wget -q -O - $node_key_url | gpg --dearmor | tee $local_node_key >/dev/null"
 fi
 
 print_status "Creating apt sources list file for the NodeSource ${NODENAME} repo..."
 
-exec_cmd "echo 'deb https://deb.nodesource.com/${NODEREPO} ${DISTRO} main' > /etc/apt/sources.list.d/nodesource.list"
-exec_cmd "echo 'deb-src https://deb.nodesource.com/${NODEREPO} ${DISTRO} main' >> /etc/apt/sources.list.d/nodesource.list"
+exec_cmd "echo 'deb [signed-by=$local_node_key] https://deb.nodesource.com/${NODEREPO} ${DISTRO} main' > /etc/apt/sources.list.d/nodesource.list"
+exec_cmd "echo 'deb-src [signed-by=$local_node_key] https://deb.nodesource.com/${NODEREPO} ${DISTRO} main' >> /etc/apt/sources.list.d/nodesource.list"
 
 print_status 'Running `apt-get update` for you...'
 
 exec_cmd 'apt-get update'
 
+yarn_site='https://dl.yarnpkg.com/debian'
+yarn_key_url="$yarn_site/pubkey.gpg"
+local_yarn_key="$keyring/yarnkey.gpg"
+
 print_status """Run \`${bold}sudo apt-get install -y ${NODEPKG}${normal}\` to install ${NODENAME} and npm
 ## You may also need development tools to build native addons:
      sudo apt-get install gcc g++ make
 ## To install the Yarn package manager, run:
-     curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-     echo \"deb https://dl.yarnpkg.com/debian/ stable main\" | sudo tee /etc/apt/sources.list.d/yarn.list
+     curl -sL $yarn_key_url | gpg --dearmor | sudo tee $local_yarn_key >/dev/null
+     echo \"deb [signed-by=$local_yarn_key] $yarn_site stable main\" | sudo tee /etc/apt/sources.list.d/yarn.list
      sudo apt-get update && sudo apt-get install yarn
 """
 
