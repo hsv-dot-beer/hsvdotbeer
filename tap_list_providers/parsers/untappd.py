@@ -502,7 +502,7 @@ class UntappdParser(BaseTapListProvider):
                 ret.append(tap_info)
             if pricing_found:
                 LOG.debug("Skipping beers that are missing pricing info")
-                ret = [i for i in ret if i['pricing']]
+                ret = [i for i in ret if i["pricing"]]
         return ret
 
 
