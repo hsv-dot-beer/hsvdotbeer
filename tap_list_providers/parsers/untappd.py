@@ -494,6 +494,12 @@ class UntappdParser(BaseTapListProvider):
 
             for entry in entries:
                 tap_info = self.parse_tap(entry)
+                if not tap_info["pricing"]:
+                    LOG.info(
+                        "Skipping tap for %s because it has no pricing info",
+                        tap_info["beer"]["name"],
+                    )
+                    continue
                 tap_info["updated"] = updated.isoformat()
                 LOG.debug("Set timestamp to %s", updated)
                 ret.append(tap_info)
