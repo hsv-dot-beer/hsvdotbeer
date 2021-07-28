@@ -521,6 +521,7 @@ def main():
             ["Left Wall", "Right Wall", "Trailer", "Back Wall", "On Deck"],
         ),
         "goat": ("4632", "14806", ["Goat Island Brewing"]),
+        "chatt": ("1827", "3788", ["Menu"]),
     }
 
     parser = argparse.ArgumentParser()
