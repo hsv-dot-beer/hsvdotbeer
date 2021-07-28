@@ -244,7 +244,7 @@ class UntappdParser(BaseTapListProvider):
             # must use EAFP because Python will try to evaluate this in the case of
             # one of the custom sizes above
             if "oz" in size.casefold():
-                return int(size.casefold().split("oz")[0].strip())
+                return Decimal(size.casefold().split("oz")[0].strip())
             if "liter" in size.casefold():
                 return Decimal(
                     # yes, I know this conversion factor is over-precise since we're
