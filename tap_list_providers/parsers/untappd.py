@@ -75,6 +75,31 @@ class UntappdParser(BaseTapListProvider):
         use_sequential_taps = any(
             tap_info["tap_number"] is None for tap_info in tap_list
         )
+        LOG.debug("use sequential taps? %s", use_sequential_taps)
+        if not use_sequential_taps:
+            populated_taps: list[int] = [
+                tap_info["tap_number"] for tap_info in tap_list
+            ]
+        else:
+            populated_taps = list(range(1, len(tap_list) + 1))
+
+        LOG.debug("populated taps: %s", populated_taps)
+        cleared = (
+            Tap.objects.filter(
+                venue=venue,
+            )
+            .exclude(
+                tap_number__in=populated_taps,
+            )
+            .delete()[1]
+            .get("taps.Tap", 0)
+        )
+        if cleared:
+            LOG.info(
+                "Cleared %s now unused taps (not in %s)",
+                cleared,
+                sorted(populated_taps),
+            )
         # pylint: disable=no-value-for-parameter
         latest_timestamp = UTC.localize(datetime.datetime(1970, 1, 1, 12))
         for index, tap_info in enumerate(tap_list):

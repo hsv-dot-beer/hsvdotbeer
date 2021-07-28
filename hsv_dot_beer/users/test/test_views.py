@@ -6,6 +6,7 @@ from django.contrib.auth.hashers import check_password
 from nose.tools import ok_, eq_
 from rest_framework.test import APITestCase
 from rest_framework import status
+from rest_framework.response import Response
 from faker import Faker
 from ..models import User
 from .factories import UserFactory
@@ -33,7 +34,7 @@ class TestUserListTestCase(APITestCase):
     def test_post_request_with_valid_data_succeeds(self):
         user = UserFactory(is_staff=True)
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {user.auth_token}")
-        response = self.client.post(
+        response: Response = self.client.post(
             self.url,
             json.dumps(self.user_data),
             content_type="application/json",

@@ -1,4 +1,4 @@
-"""Test the parsing of untappd data"""
+"""Test the parsing of untappd data from Chattahoochee Brewing"""
 import os
 from unittest import mock
 
@@ -22,49 +22,20 @@ class CommandsTestCase(TestCase):
         cls.venue_cfg = VenueAPIConfiguration.objects.create(
             venue=cls.venue,
             url="https://localhost:8000",
-            untappd_location=4632,
-            untappd_theme=14806,
-            untappd_categories=["Goat Island Brewing"],
+            untappd_location=1827,
+            untappd_theme=3788,
+            untappd_categories=["Menu"],
         )
         with open(
             os.path.join(
                 os.path.dirname(BASE_DIR),
                 "tap_list_providers",
                 "example_data",
-                "goat.html",
+                "chattahoochee.html",
             ),
             "rb",
         ) as js_file:
             cls.js_data = js_file.read()
-
-    @responses.activate
-    @mock.patch("tap_list_providers.base.look_up_beer")
-    def test_import_untappd_data(self, _):
-        """Test parsing the HTML data"""
-        responses.add(
-            responses.GET,
-            UntappdParser.URL.format(
-                self.venue_cfg.untappd_location,
-                self.venue_cfg.untappd_theme,
-            ),
-            body=self.js_data,
-            status=200,
-        )
-        self.assertFalse(Tap.objects.exists())
-        self.assertEqual(Venue.objects.count(), 1)
-        self.assertFalse(Beer.objects.exists())
-        self.assertFalse(Manufacturer.objects.exists())
-        for _ in range(2):
-            # running twice to make sure we're not double-creating
-            args = []
-            opts = {}
-            call_command("parseuntappd", *args, **opts)
-
-            self.assertTrue(Beer.objects.exists())
-            self.assertEqual(Manufacturer.objects.count(), 1)
-            self.assertEqual(Beer.objects.count(), 10)
-            beer: Beer = Beer.objects.filter(name__icontains="Giggling Goat").get()
-            self.assertFalse(beer.prices.exists())
 
     @responses.activate
     @mock.patch("tap_list_providers.base.look_up_beer")
