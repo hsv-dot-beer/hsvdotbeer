@@ -1,17 +1,12 @@
 """Test the parsing of untappd data"""
 import os
-import datetime
-from decimal import Decimal
 from unittest import mock
 
 from django.core.management import call_command
 from django.test import TestCase
-from django.utils.timezone import now
 import responses
-from pytz import timezone
 
 from beers.models import Beer, Manufacturer
-from beers.test.factories import StyleFactory, StyleAlternateNameFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
@@ -44,9 +39,8 @@ class CommandsTestCase(TestCase):
 
     @responses.activate
     @mock.patch("tap_list_providers.base.look_up_beer")
-    def test_import_untappd_data(self, mock_beer_lookup):
+    def test_import_untappd_data(self, _):
         """Test parsing the HTML data"""
-        timestamp = now()
         responses.add(
             responses.GET,
             UntappdParser.URL.format(
