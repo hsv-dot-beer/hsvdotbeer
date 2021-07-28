@@ -1,7 +1,7 @@
 """Parse data from untappd"""
 import argparse
 import datetime
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from pprint import PrettyPrinter
 import logging
 import os
@@ -270,11 +270,15 @@ class UntappdParser(BaseTapListProvider):
                 except AttributeError:
                     LOG.debug("No price entry found for row %s", row)
                     continue
-                price = {
-                    "volume_oz": Decimal(self.parse_size(size)),
-                    "name": size,
-                    "price": self.parse_price(price),
-                }
+                try:
+                    price = {
+                        "volume_oz": Decimal(self.parse_size(size)),
+                        "name": size,
+                        "price": self.parse_price(price),
+                    }
+                except InvalidOperation:
+                    LOG.warning("skipping invalid size %s", size)
+                    continue
                 price["per_ounce"] = Decimal(price["price"]) / price["volume_oz"]
                 pricing.append(price)
         return pricing
