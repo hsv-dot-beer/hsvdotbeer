@@ -32,6 +32,8 @@ from taps.models import Tap
 LOG = logging.getLogger(__name__)
 ABV_REGEX = re.compile(r"\d{1,2}(\.\d{1,3})?")
 IBU_REGEX = re.compile(r"\d{1,3}(\.\d{1,3})?")
+# we want to match 6 pack, 12-pack, 24-Pack, 6 Pack, etc
+X_PACK_REGEX = re.compile(r"\d*(\s|-)*(P|p)ack")
 
 
 class UntappdParser(BaseTapListProvider):
@@ -238,6 +240,8 @@ class UntappdParser(BaseTapListProvider):
             "draft": 16,
             "nitro": 16,
         }
+        if X_PACK_REGEX.search(size.strip()):
+            raise InvalidSize(size.strip())
         try:
             return custom_sizes[size.strip().casefold()]
         except KeyError as exc:
@@ -276,7 +280,7 @@ class UntappdParser(BaseTapListProvider):
                         "name": size,
                         "price": self.parse_price(price),
                     }
-                except InvalidOperation:
+                except (InvalidOperation, InvalidSize):
                     LOG.warning("skipping invalid size %s", size)
                     continue
                 price["per_ounce"] = Decimal(price["price"]) / price["volume_oz"]
@@ -510,6 +514,7 @@ def main():
             "73621",
             ["Left Wall", "Right Wall", "Trailer", "Back Wall", "On Deck"],
         ),
+        "goat": ("4632", "14806", ["Goat Island Brewing"]),
     }
 
     parser = argparse.ArgumentParser()
@@ -527,6 +532,10 @@ def main():
 
     for tap in untappd_parser.taps():
         PrettyPrinter(indent=4).pprint(tap)
+
+
+class InvalidSize(Exception):
+    pass
 
 
 if __name__ == "__main__":
