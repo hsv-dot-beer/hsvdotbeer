@@ -65,3 +65,29 @@ class CommandsTestCase(TestCase):
             self.assertEqual(Beer.objects.count(), 10)
             beer: Beer = Beer.objects.filter(name__icontains="Giggling Goat").get()
             self.assertFalse(beer.prices.exists())
+
+    @responses.activate
+    @mock.patch("tap_list_providers.base.look_up_beer")
+    def test_clearing_unpopulated_taps(self, _):
+        """Test that we wipe out unpopulated taps"""
+        responses.add(
+            responses.GET,
+            UntappdParser.URL.format(
+                self.venue_cfg.untappd_location,
+                self.venue_cfg.untappd_theme,
+            ),
+            body=self.js_data,
+            status=200,
+        )
+        self.assertFalse(Tap.objects.exists())
+        self.assertEqual(Venue.objects.count(), 1)
+        self.assertFalse(Beer.objects.exists())
+        self.assertFalse(Manufacturer.objects.exists())
+        # create a really large tap number
+        Tap.objects.create(venue=self.venue, tap_number=97)
+        args = []
+        opts = {}
+        call_command("parseuntappd", *args, **opts)
+        self.assertTrue(Beer.objects.exists())
+        # and assert that it's BALEETED
+        self.assertFalse(Tap.objects.filter(venue=self.venue, tap_number=97).exists())
