@@ -62,6 +62,6 @@ class CommandsTestCase(TestCase):
 
             self.assertTrue(Beer.objects.exists())
             self.assertEqual(Manufacturer.objects.count(), 1)
-            self.assertFalse(
-                Beer.objects.filter(name__icontains="Giggling Goat").exists()
-            )
+            self.assertEqual(Beer.objects.count(), 10)
+            beer: Beer = Beer.objects.filter(name__icontains="Giggling Goat").get()
+            self.assertFalse(beer.prices.exists())

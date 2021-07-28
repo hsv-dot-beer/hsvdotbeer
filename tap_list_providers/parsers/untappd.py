@@ -281,7 +281,7 @@ class UntappdParser(BaseTapListProvider):
                         "price": self.parse_price(price),
                     }
                 except (InvalidOperation, InvalidSize):
-                    LOG.warning("skipping invalid size %s", size)
+                    LOG.warning("skipping invalid size %s", size.strip())
                     continue
                 price["per_ounce"] = Decimal(price["price"]) / price["volume_oz"]
                 pricing.append(price)
@@ -492,17 +492,11 @@ class UntappdParser(BaseTapListProvider):
                         LOG.debug("setting tap list updated to %s", list_updated)
                         updated = list_updated
 
-            pricing_found = False
             for entry in entries:
                 tap_info = self.parse_tap(entry)
-                if tap_info["pricing"]:
-                    pricing_found = True
                 tap_info["updated"] = updated.isoformat()
                 LOG.debug("Set timestamp to %s", updated)
                 ret.append(tap_info)
-            if pricing_found:
-                LOG.debug("Skipping beers that are missing pricing info")
-                ret = [i for i in ret if i["pricing"]]
         return ret
 
 
@@ -542,7 +536,7 @@ def main():
 
 
 class InvalidSize(Exception):
-    pass
+    """The tap list contains a portion size that we can't parse"""
 
 
 if __name__ == "__main__":
