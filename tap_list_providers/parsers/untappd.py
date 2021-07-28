@@ -464,7 +464,7 @@ class UntappdParser(BaseTapListProvider):
             menus = self.soup.find_all("div", {"class": "menu-info"})
             for menu in menus:
                 if time_element := menu.find("time"):
-                    updated_str = time_element.text
+                    updated_str: str = time_element.text.strip()
                     LOG.debug("updated time: %s", updated_str)
                     if updated_str.endswith("ST") or updated_str.endswith("DT"):
                         # it isn't in UTC. Grr.
