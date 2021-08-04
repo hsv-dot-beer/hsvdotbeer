@@ -242,7 +242,7 @@ class ArryvedPOSParser(BaseTapListProvider):
                             if size["sizeCode"] in self.serving_sizes
                         ],
                         "abv": Decimal(item["abv"]) if item.get("abv") else None,
-                        "ibu": int(item["ibu"]) if item.get("ibu") else None,
+                        "ibu": round(float(item["ibu"])) if item.get("ibu") else None,
                     }
                 )
         return result

@@ -88,3 +88,67 @@ class CommandsTestCase(TestCase):
                 price.serving_size.volume_oz: price.price for price in prices
             }
             self.assertEqual(expected_prices, actual_prices)
+
+
+class FractionalIBUTestCase(TestCase):
+
+    fixtures = ["serving_sizes"]
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.manufacturer = ManufacturerFactory(name="Cahaba")
+        cls.venue = VenueFactory(tap_list_provider=ArryvedPOSParser.provider_name)
+        cls.venue_cfg = VenueAPIConfiguration.objects.create(
+            venue=cls.venue,
+            arryved_location_id="abc123",
+            arryved_pos_menu_names=["Growlers and Crowlers"],
+            arryved_manufacturer_name=cls.manufacturer.name,
+            arryved_serving_sizes=["32O", "64o"],
+        )
+        with open(
+            os.path.join(
+                os.path.dirname(BASE_DIR),
+                "tap_list_providers",
+                "example_data",
+                "cahaba.json",
+            ),
+            "rb",
+        ) as json_file:
+            cls.json_data = json.loads(json_file.read())
+
+    @responses.activate
+    def test_parsing(self):
+        responses.add(
+            responses.POST,
+            ArryvedPOSParser.URL,
+            json=self.json_data,
+            status=200,
+        )
+        responses.add(
+            responses.POST,
+            ArryvedPOSParser.PREAUTH_URL,
+            json={
+                "preauth": {
+                    "token": "abc123",
+                },
+            },
+        )
+        responses.add(
+            responses.POST,
+            ArryvedPOSParser.AUTH_URL,
+            json={
+                "anonymous": {
+                    "token": "def456",
+                },
+            },
+        )
+        args = []
+        opts = {}
+        call_command("parsearryvedpos", *args, **opts)
+        self.assertEqual(Tap.objects.count(), 11)
+        self.assertEqual(Beer.objects.count(), 11)
+        queen: Beer = Beer.objects.get(name="Queen of Hops")
+        # this is presented as 5.6 IBU in Arryved. We store IBUs as ints, so
+        # validate the rounding.
+        self.assertEqual(queen.ibu, 6)
