@@ -1,5 +1,4 @@
 from django.urls import reverse
-from nose.tools import eq_
 from rest_framework.test import APITestCase
 from rest_framework import status
 from faker import Faker
@@ -22,11 +21,13 @@ class TestTapDetailTestCase(APITestCase):
 
     def test_get_request_returns_a_tap(self):
         response = self.client.get(self.url)
-        eq_(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_patch_rejects_default(self):
         other = TapFactory(venue=self.venue)
         payload = {"tap_number": other.tap_number}
 
         response = self.client.patch(self.url, payload)
-        eq_(response.status_code, status.HTTP_400_BAD_REQUEST, response.data)
+        self.assertEqual(
+            response.status_code, status.HTTP_400_BAD_REQUEST, response.data
+        )

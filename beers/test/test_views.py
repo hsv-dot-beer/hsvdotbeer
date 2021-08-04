@@ -4,7 +4,6 @@ from decimal import Decimal
 from dateutil.relativedelta import relativedelta
 from django.utils.timezone import now
 from django.urls import reverse
-from nose.tools import eq_
 from rest_framework.test import APITestCase
 from faker import Faker
 
@@ -30,8 +29,8 @@ class ManufacturerListTestCase(APITestCase):
 
     def test_list(self):
         response = self.client.get(self.url)
-        eq_(len(response.data["results"]), 1, response.data)
-        eq_(
+        self.assertEqual(len(response.data["results"]), 1, response.data)
+        self.assertEqual(
             response.data["results"],
             [ManufacturerSerializer(self.manufacturer).data],
         )
@@ -41,8 +40,8 @@ class ManufacturerListTestCase(APITestCase):
             "name": "beer company",
         }
         response = self.client.post(self.url, data)
-        eq_(response.status_code, 201)
-        eq_(response.data["name"], data["name"])
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data["name"], data["name"])
         self.assertNotEqual(response.data["id"], self.manufacturer.pk)
 
 
@@ -66,9 +65,9 @@ class ManufacturerDetailTestCase(APITestCase):
             "name": "other beer company",
         }
         response = self.client.patch(self.url, data)
-        eq_(response.status_code, 200)
-        eq_(response.data["name"], data["name"])
-        eq_(response.data["id"], self.manufacturer.pk)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["name"], data["name"])
+        self.assertEqual(response.data["id"], self.manufacturer.pk)
 
 
 class BeerDetailTestCase(APITestCase):
@@ -85,17 +84,19 @@ class BeerDetailTestCase(APITestCase):
 
     def test_style_embedded(self):
         response = self.client.get(self.url)
-        eq_(response.status_code, 200)
-        eq_(response.data["style"]["default_color"], self.style.default_color)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.data["style"]["default_color"], self.style.default_color
+        )
 
     def test_patch(self):
         data = {
             "name": "a beer",
         }
         response = self.client.patch(self.url, data)
-        eq_(response.status_code, 200)
-        eq_(response.data["name"], data["name"])
-        eq_(response.data["id"], self.beer.pk)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["name"], data["name"])
+        self.assertEqual(response.data["id"], self.beer.pk)
 
     def test_venues_at(self):
         # two where it's attached and one where it isn't
@@ -106,10 +107,10 @@ class BeerDetailTestCase(APITestCase):
         ]
         url = f"{self.url}placesavailable/"
         response = self.client.get(url)
-        eq_(response.status_code, 200)
-        eq_(len(response.data["results"]), 2, response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data["results"]), 2, response.data)
         venues = [i.venue for i in taps if i.beer == self.beer]
-        eq_(
+        self.assertEqual(
             {i.name for i in venues},
             {i["name"] for i in response.data["results"]},
             response.data,
@@ -124,8 +125,8 @@ class BeerListTestCase(APITestCase):
 
     def test_filter_no_match(self):
         response = self.client.get(f"{self.url}?name={self.beer.name}zzz")
-        eq_(response.status_code, 200)
-        eq_(response.data["results"], [])
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["results"], [])
 
     def test_filter_match(self):
         BeerFactory(name=f"aaaaaaa{self.beer.name[:10]}")
@@ -133,15 +134,17 @@ class BeerListTestCase(APITestCase):
         response = self.client.get(
             f"{self.url}?name__istartswith={self.beer.name[:5].lower()}"
         )
-        eq_(response.status_code, 200)
-        eq_(len(response.data["results"]), 1, response.data)
-        eq_(response.data["results"][0]["name"], self.beer.name, response.data)
-        eq_(
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data["results"]), 1, response.data)
+        self.assertEqual(
+            response.data["results"][0]["name"], self.beer.name, response.data
+        )
+        self.assertEqual(
             response.data["results"][0]["venues"][0]["id"],
             tap.venue.id,
             response.data,
         )
-        eq_(len(response.data["results"][0]["venues"]), 1, response.data)
+        self.assertEqual(len(response.data["results"][0]["venues"]), 1, response.data)
 
     def test_compound_match(self):
         """Test that searching for part of the beer name and mfg name works"""
@@ -150,15 +153,17 @@ class BeerListTestCase(APITestCase):
         response = self.client.get(
             f"{self.url}?search={query_string.upper()}",
         )
-        eq_(response.status_code, 200)
-        eq_(len(response.data["results"]), 1, response.data)
-        eq_(response.data["results"][0]["name"], self.beer.name, response.data)
-        eq_(
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data["results"]), 1, response.data)
+        self.assertEqual(
+            response.data["results"][0]["name"], self.beer.name, response.data
+        )
+        self.assertEqual(
             response.data["results"][0]["venues"][0]["id"],
             tap.venue.id,
             response.data,
         )
-        eq_(len(response.data["results"][0]["venues"]), 1, response.data)
+        self.assertEqual(len(response.data["results"][0]["venues"]), 1, response.data)
 
     def test_on_tap_no_dupes(self):
         # create two taps for the beer
@@ -167,9 +172,11 @@ class BeerListTestCase(APITestCase):
         # create another beer that isn't on tap
         BeerFactory()
         response = self.client.get(f"{self.url}?on_tap=True")
-        eq_(response.status_code, 200)
-        eq_(len(response.data["results"]), 1, response.data)
-        eq_(response.data["results"][0]["name"], self.beer.name, response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data["results"]), 1, response.data)
+        self.assertEqual(
+            response.data["results"][0]["name"], self.beer.name, response.data
+        )
 
     def test_sort_by_time_added(self):
         # create a tap for a second beer in between the two
@@ -193,12 +200,18 @@ class BeerListTestCase(APITestCase):
         # 5. prices
         with self.assertNumQueries(5):
             response = self.client.get(f"{self.url}?o=-most_recently_added")
-        eq_(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         # expected order is third_beer, self.beer, other_beer
-        eq_(len(response.data["results"]), 3, response.data)
-        eq_(response.data["results"][0]["name"], third_beer.name, response.data)
-        eq_(response.data["results"][1]["name"], self.beer.name, response.data)
-        eq_(response.data["results"][2]["name"], other_beer.name, response.data)
+        self.assertEqual(len(response.data["results"]), 3, response.data)
+        self.assertEqual(
+            response.data["results"][0]["name"], third_beer.name, response.data
+        )
+        self.assertEqual(
+            response.data["results"][1]["name"], self.beer.name, response.data
+        )
+        self.assertEqual(
+            response.data["results"][2]["name"], other_beer.name, response.data
+        )
 
     def test_filter_by_venue_slug(self):
         wanted_venue = VenueFactory(slug="slug-1")
@@ -225,9 +238,11 @@ class BeerListTestCase(APITestCase):
             # 4. prices
             # 5. taps
             response = self.client.get(url)
-        eq_(response.status_code, 200, response.data)
-        eq_(len(response.data["results"]), 2, json.dumps(response.data, indent=2))
-        eq_(
+        self.assertEqual(response.status_code, 200, response.data)
+        self.assertEqual(
+            len(response.data["results"]), 2, json.dumps(response.data, indent=2)
+        )
+        self.assertEqual(
             set(i["id"] for i in response.data["results"]),
             set(i.id for i in beers[:-1]),
         )
@@ -253,9 +268,13 @@ class BeerListTestCase(APITestCase):
             # 4. prices
             # 5. taps
             response = self.client.get(url)
-        eq_(response.status_code, 200, response.data)
-        eq_(len(response.data["results"]), 2, json.dumps(response.data, indent=2))
-        eq_(list(i["id"] for i in response.data["results"]), [i.id for i in beers])
+        self.assertEqual(response.status_code, 200, response.data)
+        self.assertEqual(
+            len(response.data["results"]), 2, json.dumps(response.data, indent=2)
+        )
+        self.assertEqual(
+            list(i["id"] for i in response.data["results"]), [i.id for i in beers]
+        )
 
     def test_sort_abv_descending(self):
         venue = VenueFactory()
@@ -278,9 +297,11 @@ class BeerListTestCase(APITestCase):
             # 4. prices
             # 5. taps
             response = self.client.get(url)
-        eq_(response.status_code, 200, response.data)
-        eq_(len(response.data["results"]), 2, json.dumps(response.data, indent=2))
-        eq_(
+        self.assertEqual(response.status_code, 200, response.data)
+        self.assertEqual(
+            len(response.data["results"]), 2, json.dumps(response.data, indent=2)
+        )
+        self.assertEqual(
             list(i["id"] for i in response.data["results"]),
             [i.id for i in reversed(beers)],
         )

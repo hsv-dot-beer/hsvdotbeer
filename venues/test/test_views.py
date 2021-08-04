@@ -1,7 +1,6 @@
 import json
 from django.urls import reverse
 from django.forms.models import model_to_dict
-from nose.tools import eq_
 from rest_framework.test import APITestCase
 from rest_framework import status
 from faker import Faker
@@ -35,7 +34,9 @@ class TestVenueListTestCase(APITestCase):
             json.dumps({}),
             content_type="application/json",
         )
-        eq_(response.status_code, status.HTTP_400_BAD_REQUEST, response.data)
+        self.assertEqual(
+            response.status_code, status.HTTP_400_BAD_REQUEST, response.data
+        )
 
     def test_post_request_with_valid_data_succeeds(self):
         response = self.client.post(
@@ -43,11 +44,11 @@ class TestVenueListTestCase(APITestCase):
             json.dumps(self.venue_data),
             content_type="application/json",
         )
-        eq_(response.status_code, status.HTTP_201_CREATED, response.data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.data)
 
         venue = Venue.objects.get(pk=response.data.get("id"))
-        eq_(venue.name, self.venue_data.get("name"))
-        eq_(venue.time_zone.zone, self.venue_data.get("time_zone"))
+        self.assertEqual(venue.name, self.venue_data.get("name"))
+        self.assertEqual(venue.time_zone.zone, self.venue_data.get("time_zone"))
 
     def test_filtering(self):
         beer = BeerFactory()
@@ -136,25 +137,25 @@ class TestVenueDetailTestCase(APITestCase):
 
     def test_get_request_returns_a_given_venue(self):
         response = self.client.get(self.url)
-        eq_(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_patch_request_updates_a_venue(self):
         new_name = fake.first_name()
         payload = {"name": new_name}
         response = self.client.patch(self.url, payload)
-        eq_(response.status_code, status.HTTP_200_OK, response.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
 
         venue = Venue.objects.get(pk=self.venue.id)
-        eq_(venue.name, new_name)
+        self.assertEqual(venue.name, new_name)
 
     def test_beers(self):
         tap = TapFactory(venue=self.venue, beer=BeerFactory())
         BeerFactory()
         url = f"{self.url}beers/"
         response = self.client.get(url)
-        eq_(response.status_code, status.HTTP_200_OK, response.data)
-        eq_(len(response.data["results"]), 1, response.data)
-        eq_(response.data["results"][0]["id"], tap.beer_id)
+        self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
+        self.assertEqual(len(response.data["results"]), 1, response.data)
+        self.assertEqual(response.data["results"][0]["id"], tap.beer_id)
 
 
 class VenueAPIConfigurationListTestCase(APITestCase):
@@ -172,15 +173,17 @@ class VenueAPIConfigurationListTestCase(APITestCase):
 
     def test_post_request_with_no_data_fails(self):
         response = self.client.post(self.url, {})
-        eq_(response.status_code, status.HTTP_400_BAD_REQUEST, response.data)
+        self.assertEqual(
+            response.status_code, status.HTTP_400_BAD_REQUEST, response.data
+        )
 
     def test_post_request_with_valid_data_succeeds(self):
         response = self.client.post(self.url, self.data)
-        eq_(response.status_code, status.HTTP_201_CREATED, response.data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.data)
 
         venue_config = VenueAPIConfiguration.objects.get(pk=response.data.get("id"))
-        eq_(venue_config.venue_id, self.venue.id)
-        eq_(venue_config.url, self.data["url"])
+        self.assertEqual(venue_config.venue_id, self.venue.id)
+        self.assertEqual(venue_config.url, self.data["url"])
 
 
 class VenueAPIConfigurationNormalUserTestCase(APITestCase):
@@ -198,4 +201,4 @@ class VenueAPIConfigurationNormalUserTestCase(APITestCase):
 
     def test_normal_user(self):
         response = self.client.post(self.url, self.data)
-        eq_(response.status_code, status.HTTP_403_FORBIDDEN, response.data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN, response.data)
