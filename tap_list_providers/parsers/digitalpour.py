@@ -234,6 +234,7 @@ class DigitalPourParser(BaseTapListProvider):
             "Brewery",
             "HardSeltzerMaker",
             "Company",
+            "Producer",  # Madison Taproom created their own entry for Bell's somehow
         ]
         url = ""
         for style in styles:
@@ -335,8 +336,7 @@ if __name__ == "__main__":
 
     locations = {
         "sta": ("5761f0a45e002c13703ed811", 1),
-        "wywbmad": ("57b130dd5e002c0388f8b686", 1),
-        "wywb805": ("57b130dd5e002c0388f8b686", 2),
+        "madtaproom": ("5c7e9f7635272613d8d70727", 1),
         "otbx": ("5502506cb3b70304a8f2e0d2", 1),
         "rccb": ("5aa1a8135e002c0924805971", 1),
         "bufeddies": ("5afe0f3a5e002c0b8060a5b8", 1),
