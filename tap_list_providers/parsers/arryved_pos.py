@@ -5,7 +5,7 @@ from decimal import Decimal
 import logging
 import os
 from uuid import uuid4
-from typing import Dict, Union, Any, List
+from typing import Any
 
 import requests
 import configurations
@@ -41,8 +41,8 @@ class ArryvedPOSParser(BaseTapListProvider):
         self,
         manufacturer: Manufacturer = None,
         location_id: str = None,
-        serving_sizes: List[str] = None,
-        menu_names: List[str] = None,
+        serving_sizes: list[str] = None,
+        menu_names: list[str] = None,
     ):
         self.location_id = location_id
         self.menu_names = set(menu_names or [])
@@ -119,9 +119,9 @@ class ArryvedPOSParser(BaseTapListProvider):
         self,
         beer: Beer,
         venue: Venue,
-        pricing_data: List[Dict],
-        serving_sizes: Dict[Decimal, ServingSize],
-    ) -> List[BeerPrice]:
+        pricing_data: list[dict],
+        serving_sizes: dict[Decimal, ServingSize],
+    ) -> list[BeerPrice]:
         result = []
         for size_dict in pricing_data:
             LOG.debug("size dict: %s", size_dict)
@@ -213,7 +213,7 @@ class ArryvedPOSParser(BaseTapListProvider):
         response.raise_for_status()
         return response.json()
 
-    def parse_json(self, json_data: Dict[str, Any]):
+    def parse_json(self, json_data: dict[str, Any]):
         beers = self.parse_items(json_data["menus"])
         return {
             "beers": beers,
@@ -221,8 +221,8 @@ class ArryvedPOSParser(BaseTapListProvider):
 
     def parse_items(
         self,
-        payload: Dict[str, Dict],
-    ) -> List[Dict[str, Union[str, int, float]]]:
+        payload: dict[str, dict],
+    ) -> list[dict[str, str | int | float]]:
         result = []
         for menu in payload["menuList"]:
             if menu["name"] not in self.menu_names:
@@ -247,9 +247,7 @@ class ArryvedPOSParser(BaseTapListProvider):
                 )
         return result
 
-    def parse_size(
-        self, serving_size: Dict[str, Union[int, str, List]]
-    ) -> Union[int, float]:
+    def parse_size(self, serving_size: dict[str, int | str | list]) -> int | float:
         raw_size = serving_size["displayName"].split("oz")[0]
         try:
             return int(raw_size)

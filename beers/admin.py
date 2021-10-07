@@ -170,7 +170,7 @@ class StyleAdmin(admin.ModelAdmin):
         )
 
         response = HttpResponse(content_type="text/csv")
-        response["Content-Disposition"] = "attachment; filename={}.csv".format(meta)
+        response["Content-Disposition"] = f"attachment; filename={meta}.csv"
         csv_writer = writer(response)
 
         csv_writer.writerow(header)

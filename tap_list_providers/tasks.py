@@ -111,7 +111,7 @@ def format_beer(beer, beer_str):
     taps = list(beer.taps.all())
     venues = list(
         sorted(
-            set(i.venue for i in taps),
+            {i.venue for i in taps},
             # sort by display order
             key=format_venue,
         )
@@ -179,13 +179,13 @@ def tweet_about_beers(self, beer_pks):
         )
         .order_by("id")
     )
-    already_tweeted_about = set(
+    already_tweeted_about = {
         i.id
         for i in Beer.objects.filter(
             tweeted_about=True,
             id__in=beer_pks,
         )
-    )
+    }
     unknown_pks = set(beer_pks).difference(already_tweeted_about)
     LOG.debug("Got %s beers", len(beers))
     if not beers:
@@ -209,7 +209,7 @@ def tweet_about_beers(self, beer_pks):
         messages = [
             MULTI_BEER_OUTER.format(
                 len(beers),
-                "({} still to come!)".format(extra_beers) if extra_beers > 0 else "",
+                f"({extra_beers} still to come!)" if extra_beers > 0 else "",
             ).strip()
         ] + format_beers(beers)
         if len(messages) == 1:

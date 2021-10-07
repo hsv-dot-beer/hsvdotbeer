@@ -243,8 +243,8 @@ class BeerListTestCase(APITestCase):
             len(response.data["results"]), 2, json.dumps(response.data, indent=2)
         )
         self.assertEqual(
-            set(i["id"] for i in response.data["results"]),
-            set(i.id for i in beers[:-1]),
+            {i["id"] for i in response.data["results"]},
+            {i.id for i in beers[:-1]},
         )
 
     def test_sort_abv_ascending(self):

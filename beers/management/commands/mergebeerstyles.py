@@ -78,7 +78,7 @@ class Command(BaseCommand):
                 alt_name_list += new_alt_names
             # because the name field is unique in the StyleAlternateName
             # model, we have to be careful not to have duplicates
-            alt_names_found = set(i.name for i in alt_name_list)
+            alt_names_found = {i.name for i in alt_name_list}
             if len(alt_names_found) != len(alt_name_list):
                 # crap! we have duplicates
                 alt_name_dict = {}
@@ -89,7 +89,7 @@ class Command(BaseCommand):
                         alt_name_dict[i.name.casefold()] = [i]
                 for name, entries in list(alt_name_dict.items()):
                     if len(entries) > 1:
-                        styles_mapped = set(i.style_id for i in entries)
+                        styles_mapped = {i.style_id for i in entries}
                         if len(styles_mapped) > 1:
                             raise ValueError(
                                 f"Found duplicate mappings for {name}: "

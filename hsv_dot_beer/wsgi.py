@@ -13,7 +13,7 @@ os.environ.setdefault("DJANGO_CONFIGURATION", "Production")
 from configurations.wsgi import get_wsgi_application  # noqa
 
 
-class CloudflareProxy(object):
+class CloudflareProxy:
     def __init__(self, app):
         self.app = app
 
