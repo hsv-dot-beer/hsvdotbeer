@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "44720b9bdb19804b86133fa6074462cfa9eeb8248660b999b036f5fe81f95aa2"
+            "sha256": "9ed9f5ef5b8b0f3d9e1df4f0e713160d236eec0345e5f1c118bce304c561e241"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.9"
+            "python_version": "3.10"
         },
         "sources": [
             {
@@ -49,19 +49,19 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:93a2b4b7bb5fd6e11b95ffe136040e9bd70e849482d7ba910fd196e8b33ebe2d",
-                "sha256:cfaf69059c2e8a4f111c8e33a1d773b05a7bfe15005b1fa74ce53d3db46b55d6"
+                "sha256:42828d83acddfa2361411b13683eedf7c1c0a15e896b45960ed04a26efe7adfb",
+                "sha256:d43e3651ad1b0b5de6f77df82df27e0f1e6cd854f725c808c70a1fb956f0b699"
             ],
             "index": "pypi",
-            "version": "==1.18.55"
+            "version": "==1.18.56"
         },
         "botocore": {
             "hashes": [
-                "sha256:0a7102556adcb2416d3a8deda42adf276b661dbd76073ea766250c9f5e208b80",
-                "sha256:93d72ed993f2065debc7bb90335c947f6ed6fb1b16863647b79ffe19abe2867b"
+                "sha256:43fab79905e3dfe56f92a137314ef1afbf040f7c06516a003351c24322cbfd7c",
+                "sha256:d712f572022670916bd77fbe421155dcf575398b9dced88035ed3658679883bd"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==1.21.55"
+            "version": "==1.21.56"
         },
         "celery": {
             "extras": [
@@ -102,7 +102,7 @@
                 "sha256:a0713dc7a1de3f06bc0df5a9567ad19ead2d3d5689b434768a6145bff77c0667",
                 "sha256:f184f0d851d96b6d29297354ed981b7dd71df7ff500d82fa6d11f0856bee8035"
             ],
-            "markers": "python_version < '4' and python_full_version >= '3.6.2'",
+            "markers": "python_full_version >= '3.6.2' and python_full_version < '4.0.0'",
             "version": "==0.3.0"
         },
         "click-plugins": {
@@ -208,11 +208,11 @@
         },
         "django-storages": {
             "hashes": [
-                "sha256:c823dbf56c9e35b0999a13d7e05062b837bae36c518a40255d522fbe3750fbb4",
-                "sha256:f28765826d507a0309cfaa849bd084894bc71d81bf0d09479168d44785396f80"
+                "sha256:b3fdb4337b1e54b8a23fe41c62d91648e26249f9fc00e882d1d09e16207aa204",
+                "sha256:b76fb6758ff6251565d07a18fe051ca1dc886921052cd5a7e373442449c72a4a"
             ],
             "index": "pypi",
-            "version": "==1.11.1"
+            "version": "==1.12"
         },
         "django-timezone-field": {
             "hashes": [
@@ -524,7 +524,7 @@
                 "sha256:4987c65554f7a2dbf30c18fd48778ef124af6fab771a377103da0585e2336ece",
                 "sha256:c4fdf4019605b6e5423637e01bc9fe4daef873709a7973e195ceba0a62bbc844"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_full_version < '4.0.0'",
             "version": "==1.26.7"
         },
         "vine": {
@@ -554,11 +554,11 @@
         },
         "astroid": {
             "hashes": [
-                "sha256:dcc06f6165f415220013801642bd6c9808a02967070919c4b746c6864c205471",
-                "sha256:fe81f80c0b35264acb5653302ffbd935d394f1775c5e4487df745bf9c2442708"
+                "sha256:304e99c129794f2cfda584a12b71fde85205da950e2f330f4be09150525ae949",
+                "sha256:9eaeaf92b3e21b70bec1a262e7eb118d2e96294892a5de595c92a12adc80dfc2"
             ],
             "markers": "python_version ~= '3.6'",
-            "version": "==2.8.0"
+            "version": "==2.8.2"
         },
         "backcall": {
             "hashes": [
@@ -600,11 +600,11 @@
         },
         "faker": {
             "hashes": [
-                "sha256:bb10913b9d3ac2aa37180f816c82040e81f9e0c32cb08445533f293cec8930bf",
-                "sha256:d70b375d0af0e4c3abd594003691a1055a96281a414884e623d27bccc7d781da"
+                "sha256:81c807d45b26d8f4916944621c8895d449b552f672267a01a3b0a90dc033fde0",
+                "sha256:eff29a0d71afe0c41d3f6a7d799c045e58c486d1d6621f386c2925b6cd1b6dff"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==8.16.0"
+            "version": "==9.0.0"
         },
         "flake8": {
             "hashes": [
@@ -650,7 +650,7 @@
                 "sha256:9c2ea1e62d871267b78307fe511c0838ba0da28698c5732d54e2790bf3ba9899",
                 "sha256:e17d6e2b81095c9db0a03a8025a957f334d6ea30b26f9ec70805411e5c7c81f2"
             ],
-            "markers": "python_version < '4' and python_full_version >= '3.6.1'",
+            "markers": "python_version < '4.0' and python_full_version >= '3.6.1'",
             "version": "==5.9.3"
         },
         "jedi": {
@@ -860,21 +860,12 @@
             "markers": "python_version >= '3.7'",
             "version": "==5.1.0"
         },
-        "typing-extensions": {
-            "hashes": [
-                "sha256:49f75d16ff11f1cd258e1b988ccff82a3ca5570217d7ad8c5f48205dd99a677e",
-                "sha256:d8226d10bc02a29bcc81df19a26e56a9647f8b0a6d4a83924139f4a8b01f17b7",
-                "sha256:f1d25edafde516b146ecd0613dabcc61409817af4766fbbcfb8d1ad4ec441a34"
-            ],
-            "markers": "python_version < '3.10'",
-            "version": "==3.10.0.2"
-        },
         "urllib3": {
             "hashes": [
                 "sha256:4987c65554f7a2dbf30c18fd48778ef124af6fab771a377103da0585e2336ece",
                 "sha256:c4fdf4019605b6e5423637e01bc9fe4daef873709a7973e195ceba0a62bbc844"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_full_version < '4.0.0'",
             "version": "==1.26.7"
         },
         "wcwidth": {
