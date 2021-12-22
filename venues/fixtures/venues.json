@@ -55,33 +55,6 @@
 },
 {
     "model": "venues.venue",
-    "pk": 4,
-    "fields": {
-        "name": "Old Town Beer Exchange",
-        "address": "301 Holmes Avenue",
-        "city": "Huntsville",
-        "state": "AL",
-        "postal_code": "35801",
-        "country": "US",
-        "time_zone": "America/Chicago",
-        "website": "http://otbxhsv.com",
-        "facebook_page": "https://www.facebook.com/OTBXHSV",
-        "twitter_handle": "OTBXHSV",
-        "instagram_handle": "otbxhsv",
-        "tap_list_provider": "digitalpour",
-        "untappd_url": null,
-        "email": "",
-        "phone_number": "2562707825",
-        "logo_url": "https://hsv-dot-beer.s3.amazonaws.com/venues/png/old-town-beer-exchange.png",
-        "slug": "otbx",
-        "on_downtown_craft_beer_trail": true,
-        "latitude": "34.73339800",
-        "longitude": "-86.58495300",
-        "twitter_short_location_description": ""
-    }
-},
-{
-    "model": "venues.venue",
     "pk": 5,
     "fields": {
         "name": "Rocket City Craft Beer",
@@ -486,26 +459,6 @@
         "url": null,
         "api_key": "",
         "digital_pour_venue_id": "5c7e9f7635272613d8d70727",
-        "digital_pour_location_number": 1,
-        "untappd_location": null,
-        "untappd_theme": null,
-        "untappd_categories": "[]",
-        "taphunter_location": "",
-        "taphunter_excluded_lists": "[]",
-        "taplist_io_display_id": "",
-        "taplist_io_access_code": "",
-        "beermenus_categories": "[]",
-        "beermenus_slug": ""
-    }
-},
-{
-    "model": "venues.venueapiconfiguration",
-    "pk": 4,
-    "fields": {
-        "venue": 4,
-        "url": null,
-        "api_key": "",
-        "digital_pour_venue_id": "5502506cb3b70304a8f2e0d2",
         "digital_pour_location_number": 1,
         "untappd_location": null,
         "untappd_theme": null,
