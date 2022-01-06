@@ -19,6 +19,7 @@ from celery.exceptions import MaxRetriesExceededError
 from tap_list_providers.models import APIRateLimitTimestamp
 from beers.models import (
     Beer,
+    Style,
     UntappdMetadata,
     BeerPrice,
     BeerAlternateName,
@@ -170,6 +171,15 @@ def prune_stale_data():
     result = UntappdMetadata.objects.filter(timestamp__lt=threshold).delete()
     LOG.info("Cleaned up old untappd data: %s", result)
 
+
+@shared_task
+def purge_unused_styles():
+    """
+    Styles get left behind after moderation. Let's purge those occasionally.
+    """
+    queryset = Style.objects.filter(beers__isnull=True)
+    result = queryset.delete()
+    LOG.info('Cleaned up unused styles: %s', result)
 
 @shared_task
 def purge_unused_prices():
