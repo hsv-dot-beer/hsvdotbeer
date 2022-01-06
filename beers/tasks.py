@@ -179,7 +179,8 @@ def purge_unused_styles():
     """
     queryset = Style.objects.filter(beers__isnull=True)
     result = queryset.delete()
-    LOG.info('Cleaned up unused styles: %s', result)
+    LOG.info("Cleaned up unused styles: %s", result)
+
 
 @shared_task
 def purge_unused_prices():
