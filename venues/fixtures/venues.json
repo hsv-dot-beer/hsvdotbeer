@@ -82,33 +82,6 @@
 },
 {
     "model": "venues.venue",
-    "pk": 5,
-    "fields": {
-        "name": "Rocket City Craft Beer",
-        "address": "1079 Balch Road, Suite F",
-        "city": "Madison",
-        "state": "AL",
-        "postal_code": "35758",
-        "country": "US",
-        "time_zone": "America/Chicago",
-        "website": "https://www.rocketcitycraftbeer.com/",
-        "facebook_page": "http://www.facebook.com/rocketcitycraftbeer",
-        "twitter_handle": "rccbhsv",
-        "instagram_handle": "rocketcitycraftbeer",
-        "tap_list_provider": "digitalpour",
-        "untappd_url": "https://untappd.com/v/rocket-city-craft-beer/7494975",
-        "email": "",
-        "phone_number": "2564890807",
-        "logo_url": "https://hsv-dot-beer.s3.amazonaws.com/venues/jpeg/rocket-city-craft-beer.jpeg",
-        "slug": "rocket-city-craft-beer",
-        "on_downtown_craft_beer_trail": false,
-        "latitude": "34.74765700",
-        "longitude": "-86.76637000",
-        "twitter_short_location_description": ""
-    }
-},
-{
-    "model": "venues.venue",
     "pk": 6,
     "fields": {
         "name": "Whole Foods",
@@ -506,26 +479,6 @@
         "url": null,
         "api_key": "",
         "digital_pour_venue_id": "5502506cb3b70304a8f2e0d2",
-        "digital_pour_location_number": 1,
-        "untappd_location": null,
-        "untappd_theme": null,
-        "untappd_categories": "[]",
-        "taphunter_location": "",
-        "taphunter_excluded_lists": "[]",
-        "taplist_io_display_id": "",
-        "taplist_io_access_code": "",
-        "beermenus_categories": "[]",
-        "beermenus_slug": ""
-    }
-},
-{
-    "model": "venues.venueapiconfiguration",
-    "pk": 5,
-    "fields": {
-        "venue": 5,
-        "url": null,
-        "api_key": "",
-        "digital_pour_venue_id": "5aa1a8135e002c0924805971",
         "digital_pour_location_number": 1,
         "untappd_location": null,
         "untappd_theme": null,
