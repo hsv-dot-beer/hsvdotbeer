@@ -85,7 +85,8 @@ class CommandsTestCase(TestCase):
             self.assertEqual(tap.beer.style.name, "Imperial Coffee Stout")
             self.assertEqual(
                 tap.beer.untappd_url,
-                "https://untappd.com/b/yellowhammer-brewing-coffee-perpetual-motion/4867930",
+                "https://untappd.com/b/"
+                "yellowhammer-brewing-coffee-perpetual-motion/4867930",
             )
             self.assertEqual(
                 tap.beer.manufacturer.untappd_url,
@@ -93,7 +94,8 @@ class CommandsTestCase(TestCase):
             )
             self.assertEqual(
                 tap.beer.logo_url,
-                "https://utfb-images.untappd.com/q98tv8f15r77u77h84wgfp0iavd2?auto=compress",
+                "https://utfb-images.untappd.com/"
+                "q98tv8f15r77u77h84wgfp0iavd2?auto=compress",
             )
             prices = {
                 Decimal(12): Decimal(8.0),
