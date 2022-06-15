@@ -1,6 +1,7 @@
 """Parse data from untappd"""
 import argparse
 import datetime
+from collections import Counter
 from decimal import Decimal, InvalidOperation
 from pprint import PrettyPrinter
 import logging
@@ -75,6 +76,15 @@ class UntappdParser(BaseTapListProvider):
         use_sequential_taps = any(
             tap_info["tap_number"] is None for tap_info in tap_list
         )
+        tap_counts = Counter(tap_info["tap_number"] for tap_info in tap_list)
+        if any(
+            tap_count > 1
+            for tap_number, tap_count in tap_counts.items()
+            if tap_number is not None
+        ):
+            LOG.warning("Found duplicate tap numbers. Omitting them")
+            use_sequential_taps = True
+
         LOG.debug("use sequential taps? %s", use_sequential_taps)
         if not use_sequential_taps:
             populated_taps: list[int] = [
