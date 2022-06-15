@@ -66,26 +66,27 @@ class CommandsTestCase(TestCase):
             opts = {}
             call_command("parseuntappd", *args, **opts)
 
-            self.assertEqual(Beer.objects.count(), 22)
+            self.assertEqual(Beer.objects.count(), 19)
             self.assertEqual(Manufacturer.objects.count(), 1)
-            self.assertEqual(Tap.objects.count(), 22)
+            self.assertEqual(Tap.objects.count(), 19)
             tap = (
                 Tap.objects.filter(
                     venue=self.venue,
-                    tap_number=22,
+                    tap_number=19,
                 )
                 .select_related(
                     "beer__style",
                 )
                 .get()
             )
-            self.assertEqual(tap.beer.name, "Tobacco Road")
-            self.assertEqual(tap.beer.abv, Decimal("9.4"))
+            self.assertEqual(tap.beer.name, "Coffee Perpetual Motion")
+            self.assertEqual(tap.beer.abv, Decimal("9.0"))
             self.assertEqual(tap.gas_type, "")
-            self.assertEqual(tap.beer.style.name, "Red Ale - Imperial / Double")
+            self.assertEqual(tap.beer.style.name, "Imperial Coffee Stout")
             self.assertEqual(
                 tap.beer.untappd_url,
-                "https://untappd.com/b/yellowhammer-brewing-tobacco-road/32727",
+                "https://untappd.com/b/"
+                "yellowhammer-brewing-coffee-perpetual-motion/4867930",
             )
             self.assertEqual(
                 tap.beer.manufacturer.untappd_url,
@@ -93,13 +94,13 @@ class CommandsTestCase(TestCase):
             )
             self.assertEqual(
                 tap.beer.logo_url,
-                "https://untappd.akamaized.net/site/beer_logos/"
-                "beer-_32727_63923de6f1587043d09e3a967cce.jpeg",
+                "https://utfb-images.untappd.com/"
+                "q98tv8f15r77u77h84wgfp0iavd2?auto=compress",
             )
             prices = {
-                Decimal(12): Decimal(6.0),
-                Decimal(4): Decimal(3.0),
-                Decimal(8): Decimal(5.0),
+                Decimal(12): Decimal(8.0),
+                Decimal(4): Decimal(5.0),
+                Decimal(8): Decimal(7.0),
             }
             price_instances = list(
                 tap.beer.prices.select_related("serving_size", "venue")
@@ -127,9 +128,9 @@ class CommandsTestCase(TestCase):
         possible_timestamps = [
             # HACK: if we run this in January, it'll say the last updated time
             # is nearly a year ago because Untappd doesn't give us a year in
-            # the timestamp (instead just "Feb 5, 6:55 PM CST") and we rewind
+            # the timestamp (instead just "Jun 14,  9:45 AM CDT") and we rewind
             # by a year to avoid showing a last updated time in the future
-            timezone("America/Chicago").localize(datetime.datetime(year, 2, 5, 18, 55))
+            timezone("America/Chicago").localize(datetime.datetime(year, 6, 14, 9, 45))
             for year in [now().year, now().year - 1]
         ]
         self.assertIn(self.venue.tap_list_last_update_time, possible_timestamps)
