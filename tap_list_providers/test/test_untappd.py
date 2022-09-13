@@ -11,7 +11,7 @@ import responses
 from pytz import timezone
 
 from beers.models import Beer, Manufacturer
-from beers.test.factories import StyleFactory, StyleAlternateNameFactory
+from beers.test.factories import StyleFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
@@ -141,8 +141,9 @@ class StyleParsingTestCase(TestCase):
     def setUpTestData(cls):
         cls.belgian_ipa = StyleFactory(name="Belgian IPA")
         cls.english_cider = StyleFactory(name="English Cider")
-        cls.farmhouse_ale = StyleFactory(name="foo")
-        StyleAlternateNameFactory(style=cls.farmhouse_ale, name="Farmhouse Ale - Other")
+        cls.farmhouse_ale = StyleFactory(
+            name="foo", alternate_names=["Farmhouse Ale - Other"]
+        )
         cls.parser = UntappdParser()
 
     def test_belgian_ipa(self):

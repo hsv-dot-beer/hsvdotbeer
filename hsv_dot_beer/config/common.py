@@ -44,6 +44,7 @@ class Common(Configuration):  # pylint: disable=no-init
         "django.contrib.sessions",
         "django.contrib.messages",
         "django.contrib.staticfiles",
+        "django.contrib.postgres",
         # Third party apps
         "corsheaders",
         "rest_framework",  # utilities for rest apis

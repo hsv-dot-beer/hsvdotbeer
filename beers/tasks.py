@@ -19,10 +19,9 @@ from celery.exceptions import MaxRetriesExceededError
 from tap_list_providers.models import APIRateLimitTimestamp
 from beers.models import (
     Beer,
+    Manufacturer,
     UntappdMetadata,
     BeerPrice,
-    BeerAlternateName,
-    ManufacturerAlternateName,
 )
 
 
@@ -183,12 +182,16 @@ def purge_unused_prices():
 
 @shared_task
 def purge_duplicate_alt_names():
-    beer_names_deleted = BeerAlternateName.objects.filter(
-        name=F("beer__name")
-    ).delete()[0]
-    mfg_names_deleted = ManufacturerAlternateName.objects.filter(
-        name=F("manufacturer__name")
-    ).delete()[0]
+    beer_names_deleted = 0
+    for beer in Beer.objects.filter(alternate_names__contains=[F("name")]):
+        beer.alternate_names.remove(beer.name)
+        beer.save()
+        beer_names_deleted += 1
+    mfg_names_deleted = 0
+    for mfg in Manufacturer.objects.filter(alternate_names__contains=[F("name")]):
+        mfg.alternate_names.remove(mfg.name)
+        mfg.save()
+        mfg_names_deleted += 1
     LOG.info(
         "Beer alt names deleted: %s, Mfg alt names %s",
         beer_names_deleted,

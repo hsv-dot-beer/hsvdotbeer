@@ -15,7 +15,7 @@
     {% csrf_token %}
     <select class="" name="beers">
       {% for beer in beers %}
-      <option value="{{ beer.id }}">{{ beer.name }} by {{ beer.manufacturer.name }}{% if beer.alternate_names.all %} ({{ beer.alternate_names.all | join:', ' }}){% endif %}</option>
+      <option value="{{ beer.id }}">{{ beer.name }} by {{ beer.manufacturer.name }}{% if beer.alternate_names %} ({{ beer.alternate_names | join:', ' }}){% endif %}</option>
       {% endfor %}
     </select>
     {% comment %}

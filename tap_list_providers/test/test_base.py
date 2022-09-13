@@ -7,7 +7,7 @@ from unittest import TestCase as UnittestTestCase
 from tap_list_providers.base import fix_urls, BaseTapListProvider
 from venues.test.factories import VenueFactory
 from beers.test.factories import ManufacturerFactory, StyleFactory
-from beers.models import Manufacturer, ManufacturerAlternateName
+from beers.models import Manufacturer
 
 
 class URLFixTestCase(UnittestTestCase):
@@ -43,11 +43,8 @@ class ManufacturerTestCase(TestCase):
             self.assertEqual(Manufacturer.objects.count(), 1, name)
 
     def test_mfg_duplicate_alt_name(self):
-        mfg = ManufacturerFactory(name="Founders")
-        ManufacturerAlternateName.objects.create(name=mfg.name, manufacturer=mfg)
-        ManufacturerAlternateName.objects.create(
-            name="Founders Brewing Co.",
-            manufacturer=mfg,
+        mfg = ManufacturerFactory(
+            name="Founders", alternate_names=["Founders Brewing Co.", "Founders"]
         )
         provider = BaseTapListProvider()
         looked_up = provider.get_manufacturer(name=mfg.name)

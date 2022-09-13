@@ -15,7 +15,7 @@
     {% csrf_token %}
     <select class="" name="styles">
       {% for style in styles %}
-      <option value="{{ style.id }}">{{ style.name }}{% if style.alternate_names.all %} ({{ style.alternate_names.all | join:', ' }}){% endif %}</option>
+      <option value="{{ style.id }}">{{ style.name }}{% if style.alternate_names %} ({{ style.alternate_names | join:', ' }}){% endif %}</option>
       {% endfor %}
     </select>
     {% comment %}

@@ -8,7 +8,7 @@ from django.test import TestCase
 from django.utils.timezone import now
 import responses
 
-from beers.models import Beer, Manufacturer, ManufacturerAlternateName
+from beers.models import Beer, Manufacturer
 from beers.test.factories import ManufacturerFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
@@ -58,19 +58,13 @@ class TaplistCommandsTestCase(TestCase):
         self.assertFalse(Manufacturer.objects.exists())
         mfg = ManufacturerFactory(
             name="InnerSpace",
-        )
-        ManufacturerAlternateName.objects.bulk_create(
-            ManufacturerAlternateName(
-                manufacturer=mfg,
-                name=name,
-            )
-            for name in [
+            alternate_names=[
                 "Isb",
                 "InnerSpace Brewing  Company",
                 "InnerSpace Brewing co",
-            ]
+            ],
         )
-        for dummy in range(2):
+        for _ in range(2):
             # running twice to make sure we're not double-creating
             args = []
             opts = {}

@@ -8,10 +8,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from . import models
 
 
-class BeerAlternateNameInline(admin.TabularInline):
-    model = models.BeerAlternateName
-
-
 class BeerAdmin(admin.ModelAdmin):
     def export_as_csv(self, request, queryset):
         queryset = (
@@ -20,9 +16,6 @@ class BeerAdmin(admin.ModelAdmin):
                 "style",
             )
             .annotate(taps_count=Count("taps"))
-            .prefetch_related(
-                "alternate_names",
-            )
             .order_by(
                 "manufacturer__name",
                 "name",
@@ -34,15 +27,9 @@ class BeerAdmin(admin.ModelAdmin):
             "Manufacturer": "manufacturer",
             "Style": "style",
             "Taps occupied": "taps_count",
+            "Alternate Names": "alternate_names",
         }
-        most_alt_names = max(len(i.alternate_names.all()) for i in queryset)
-        header = (
-            list(field_names.keys())
-            + [
-                "Alternate Names",
-            ]
-            + ([""] * (most_alt_names - 1))
-        )
+        header = list(field_names.keys())
 
         response = HttpResponse(content_type="text/csv")
         response["Content-Disposition"] = "attachment; filename={}.csv".format(
@@ -52,17 +39,13 @@ class BeerAdmin(admin.ModelAdmin):
 
         csv_writer.writerow(header)
         for obj in queryset:
-            alt_names = [i.name for i in obj.alternate_names.all()]
-            padding = [""] * (most_alt_names - len(alt_names))
             csv_writer.writerow(
                 [
                     getattr(obj, val)
-                    if val in {"id", "taps_count"}
+                    if val in {"id", "taps_count", "alternate_names"}
                     else str(getattr(obj, val))
                     for val in field_names.values()
                 ]
-                + alt_names
-                + padding,
             )
         return response
 
@@ -90,11 +73,6 @@ class BeerAdmin(admin.ModelAdmin):
     list_filter = ("manufacturer", "style")
     list_select_related = ("manufacturer", "style")
     search_fields = ("name", "manufacturer__name", "style__name")
-    inlines = [BeerAlternateNameInline]
-
-
-class ManufacturerAlternateNameInline(admin.TabularInline):
-    model = models.ManufacturerAlternateName
 
 
 class ManufacturerAdmin(admin.ModelAdmin):
@@ -108,25 +86,11 @@ class ManufacturerAdmin(admin.ModelAdmin):
             f"/manufacturers/merge/?ids={','.join(selected)}",
         )
 
-    inlines = [ManufacturerAlternateNameInline]
     merge_manufacturers.short_description = "Merge manufacturers"
     actions = ["merge_manufacturers"]
     list_display = ("name", "id")
     list_filter = ("name",)
     search_fields = ("name",)
-
-
-class BeerAlternateNameAdmin(admin.ModelAdmin):
-    list_display = ("name", "beer", "id")
-    list_select_related = ("beer", "beer__manufacturer")
-    list_filter = ("beer__name", "beer__manufacturer__name")
-    search_fields = ("name", "beer__name", "beer__manufacturer__name")
-
-
-class ManufacturerAlternateNameAdmin(admin.ModelAdmin):
-    list_display = ("name", "manufacturer")
-    list_select_related = ("manufacturer",)
-    search_fields = ("name", "manufacturer__name")
 
 
 class BeerPriceAdmin(admin.ModelAdmin):
@@ -138,14 +102,9 @@ class BeerPriceAdmin(admin.ModelAdmin):
     )
 
 
-class StyleAlternateNameInline(admin.TabularInline):
-    model = models.StyleAlternateName
-
-
 class StyleAdmin(admin.ModelAdmin):
-    inlines = [StyleAlternateNameInline]
     actions = ["export_as_csv", "merge_styles"]
-    search_fields = ("name", "alternate_names__name")
+    search_fields = ("name", "alternate_names")
     list_display = ("name", "id")
 
     def merge_styles(self, request, queryset):  # pylint: disable=unused-argument
@@ -155,19 +114,10 @@ class StyleAdmin(admin.ModelAdmin):
         )
 
     def export_as_csv(self, request, queryset):
-        queryset = queryset.prefetch_related(
-            "alternate_names",
-        ).annotate(names_count=Count("alternate_names__name"))
         meta = self.model._meta
-        most_alt_names = max(i.names_count for i in queryset)
+        queryset = list(queryset)
         field_names = [field.name for field in meta.fields]
-        header = (
-            field_names
-            + [
-                "Alternate Names",
-            ]
-            + ([""] * (most_alt_names - 1))
-        )
+        header = field_names
 
         response = HttpResponse(content_type="text/csv")
         response["Content-Disposition"] = "attachment; filename={}.csv".format(meta)
@@ -175,11 +125,7 @@ class StyleAdmin(admin.ModelAdmin):
 
         csv_writer.writerow(header)
         for obj in queryset:
-            alt_names = [i.name for i in obj.alternate_names.all()]
-            padding = [""] * (most_alt_names - len(alt_names))
-            csv_writer.writerow(
-                [getattr(obj, field) for field in field_names] + alt_names + padding,
-            )
+            csv_writer.writerow([getattr(obj, field) for field in field_names])
         return response
 
 
@@ -187,7 +133,5 @@ admin.site.register(models.Style, StyleAdmin)
 admin.site.register(models.Manufacturer, ManufacturerAdmin)
 admin.site.register(models.BeerPrice, BeerPriceAdmin)
 admin.site.register(models.ServingSize)
-admin.site.register(models.BeerAlternateName, BeerAlternateNameAdmin)
-admin.site.register(models.ManufacturerAlternateName, ManufacturerAlternateNameAdmin)
 admin.site.register(models.Beer, BeerAdmin)
 admin.site.register(models.UntappdMetadata)

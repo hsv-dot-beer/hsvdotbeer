@@ -1,7 +1,7 @@
 import factory
 import factory.fuzzy
 
-from beers.models import Manufacturer, Beer, Style, StyleAlternateName
+from beers.models import Manufacturer, Beer, Style
 
 
 class StyleFactory(factory.django.DjangoModelFactory):
@@ -11,16 +11,6 @@ class StyleFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Style
-
-
-class StyleAlternateNameFactory(factory.django.DjangoModelFactory):
-
-    name = factory.Sequence(lambda n: "style alt name %d" % n)
-
-    style = factory.SubFactory(StyleFactory)
-
-    class Meta:
-        model = StyleAlternateName
 
 
 class ManufacturerFactory(factory.django.DjangoModelFactory):
