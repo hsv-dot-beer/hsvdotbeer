@@ -38,7 +38,7 @@ class TaplistDotIOParser(BaseTapListProvider):
             self.URL.format(self.display_id),
             cookies={"taplist_access_code": self.taplist_access_code},
             headers={
-                "taplist-agent": "TaplistClient/5",
+                "taplist-agent": "TaplistClient/6",
                 "user-agent": "Python Requests - Alexa",
                 "referer": "https://taplist.io/display",
             },
@@ -54,9 +54,9 @@ class TaplistDotIOParser(BaseTapListProvider):
         self.taplist_access_code = venue.api_configuration.taplist_io_access_code
         self.fetch_data()
         taps = {i.tap_number: i for i in venue.taps.all()}
-        timestamp = parse(self._data["date_modified"])
-        for index, tap in enumerate(self._data["on_tap"]):
-            tap_dict = self.parse_tap(tap)
+        timestamp = parse(self._data["last_seen"])
+        for index, tap in enumerate(self._data["menu"]["sections"][0]["items"]):
+            tap_dict = self.parse_tap(tap["tap"])
             tap_number = tap_dict.pop("tap_number", index + 1)
             current_tap = taps.get(tap_number, Tap(tap_number=tap_number, venue=venue))
             if not tap_dict:
