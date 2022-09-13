@@ -205,7 +205,7 @@ class BeerMenusParser(BaseTapListProvider):
             target_div = parser.find_all("div", class_="splash-small")[0]
             beer_info = target_div.find_all("p", class_="mb-tiny")[0]
             try:
-                style, abv_raw, _ = [i.strip() for i in beer_info.text.split(MIDDOT)]
+                style, abv_raw, *_ = [i.strip() for i in beer_info.text.split(MIDDOT)]
             except ValueError:
                 LOG.error(
                     "Unable to parse info for %s: %r (%s)",
