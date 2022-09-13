@@ -401,11 +401,11 @@ class BaseTapListProvider:
                     )[0]
                     serving_sizes[price_info["volume_oz"]] = serving_size
                 try:
-                    BeerPrice.objects.create(
+                    BeerPrice.objects.get_or_create(
                         serving_size=serving_size,
                         beer=beer,
                         venue=venue,
-                        price=price_info["price"],
+                        defaults={"price": price_info["price"]},
                     )
                 except InvalidOperation:
                     LOG.error(
