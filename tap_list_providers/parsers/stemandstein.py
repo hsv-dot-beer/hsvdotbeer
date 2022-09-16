@@ -100,7 +100,7 @@ class StemAndSteinParser(BaseTapListProvider):
                     return (
                         Manufacturer.objects.filter(
                             Q(name__iexact=manufacturer)
-                            | Q(alternate_names__name__iexact=manufacturer)
+                            | Q(alternate_names__contains=[manufacturer])
                         )
                         .distinct()
                         .get()
@@ -110,15 +110,13 @@ class StemAndSteinParser(BaseTapListProvider):
             filter_str = "icontains" if use_contains else "istartswith"
             filter_expr = Q(**{f"name__{filter_str}": manufacturer,}) | Q(
                 **{
-                    f"alternate_names__name__{filter_str}": manufacturer,
+                    "alternate_names__contains": [manufacturer],
                 }
             )
             try:
                 return Manufacturer.objects.filter(filter_expr)[0]
             except IndexError:
                 continue
-        if not use_contains:
-            return self.guess_manufacturer(beer_name, use_contains=True)
         return None
 
     def guess_beer(self, beer_name):

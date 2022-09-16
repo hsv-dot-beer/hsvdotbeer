@@ -10,9 +10,7 @@ import responses
 from beers.models import (
     Beer,
     Manufacturer,
-    ManufacturerAlternateName,
     Style,
-    StyleAlternateName,
 )
 from beers.test.factories import ManufacturerFactory, BeerFactory
 from venues.test.factories import VenueFactory
@@ -98,13 +96,11 @@ class CommandsTestCase(TestCase):
         )
         mfg = ManufacturerFactory(name="Founders")
         beer = BeerFactory(name="Dirty Bastard", manufacturer=mfg)
-        other = Style.objects.create(name="other")
         # Create a fake shorter style name that the search for fruit ale should
         # ignore
-        StyleAlternateName.objects.create(name="t Ale", style=other)
-        style = Style.objects.create(name="Fruit Beer")
-        StyleAlternateName.objects.create(name="Fruit Ale", style=style)
-        for dummy in range(2):
+        Style.objects.create(name="other", alternate_names=["t Ale"])
+        style = Style.objects.create(name="Fruit Beer", alternate_names=["Fruit Ale"])
+        for _ in range(2):
             # running twice to make sure we're not double-creating
             args = []
             opts = {}
@@ -209,10 +205,8 @@ class CommandsTestCase(TestCase):
         self.assertIn(guessed, manufacturers)
 
     def test_guess_manufacturer_back_forty(self):
-        mfg = ManufacturerFactory(name="Back Forty")
-        ManufacturerAlternateName.objects.bulk_create(
-            ManufacturerAlternateName(name=name, manufacturer=mfg)
-            for name in ["Back Forty", "Back Forty Beer Co"]
+        mfg = ManufacturerFactory(
+            name="Back Forty", alternate_names=["Back Forty", "Back Forty Beer Co"]
         )
         parser = StemAndSteinParser()
         guessed = parser.guess_beer("Back Forty Truck Stop Honey Brown")

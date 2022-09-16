@@ -5,7 +5,7 @@ from django.core.management import call_command
 from django.test import TestCase
 
 from beers.models import Beer, Manufacturer
-from beers.test.factories import StyleFactory, StyleAlternateNameFactory
+from beers.test.factories import StyleFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
 from taps.models import Tap
@@ -21,10 +21,8 @@ class CommandsTestCase(TestCase):
             venue=cls.venue,
             url="https://localhost:8000",
         )
-        ipa = StyleFactory(name="American IPA")
-        StyleAlternateNameFactory(style=ipa, name="IPA - American")
-        stout = StyleFactory(name="Sweet Stout")
-        StyleAlternateNameFactory(style=stout, name="stout - milk")
+        StyleFactory(name="American IPA", alternate_names=["IPA - American"])
+        StyleFactory(name="Sweet Stout", alternate_names=["stout - milk"])
 
     def test_import_example_data(self):
         """Test parsing the JSON data"""

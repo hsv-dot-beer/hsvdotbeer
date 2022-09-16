@@ -15,7 +15,7 @@
     {% csrf_token %}
     <select class="" name="manufacturers">
       {% for manufacturer in manufacturers %}
-      <option value="{{ manufacturer.id }}">{{ manufacturer.name }}{% if manufacturer.alternate_names.all %} ({{ manufacturer.alternate_names.all | join:', ' }}){% endif %}</option>
+      <option value="{{ manufacturer.id }}">{{ manufacturer.name }}{% if manufacturer.alternate_names %} ({{ manufacturer.alternate_names | join:', ' }}){% endif %}</option>
       {% endfor %}
     </select>
     {% comment %}

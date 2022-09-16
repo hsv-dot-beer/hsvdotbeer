@@ -37,7 +37,7 @@ class VenueFilterSet(FilterSet):
         fields=[
             "name",
             "taps__beer__name" "taps__beer__style__name",
-            "taps__beer__style__alternate_names__name",
+            "taps__beer__style__alternate_names",
             "on_downtown_craft_beer_trail",
         ],
     )
@@ -47,7 +47,6 @@ class VenueFilterSet(FilterSet):
             "name": DEFAULT_STRING_FILTER_OPERATORS,
             "taps__beer__name": DEFAULT_STRING_FILTER_OPERATORS,
             "taps__beer__style__name": DEFAULT_STRING_FILTER_OPERATORS,
-            "taps__beer__style__alternate_names__name": DEFAULT_STRING_FILTER_OPERATORS,
             "on_downtown_craft_beer_trail": ["exact"],
         }
         model = models.Venue

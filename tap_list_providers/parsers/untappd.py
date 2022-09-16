@@ -216,7 +216,7 @@ class UntappdParser(BaseTapListProvider):
                 return self.parse_style(style.replace("-", " - "))
             # attempt 1: has the style been moderated already?
             try:
-                return Style.objects.get(alternate_names__name__iexact=style)
+                return Style.objects.get(alternate_names__contains=[style])
             except Style.DoesNotExist:
                 # don't care
                 pass
@@ -226,7 +226,7 @@ class UntappdParser(BaseTapListProvider):
                 return (
                     Style.objects.filter(
                         Q(name__iexact=candidate)
-                        | Q(alternate_names__name__iexact=candidate)
+                        | Q(alternate_names__contains=[candidate])
                     )
                     .distinct()
                     .get()
@@ -244,7 +244,7 @@ class UntappdParser(BaseTapListProvider):
             try:
                 return (
                     Style.objects.filter(
-                        Q(name__iexact=name) | Q(alternate_names__name__iexact=name)
+                        Q(name__iexact=name) | Q(alternate_names__contains=[name])
                     )
                     .distinct()
                     .get()
