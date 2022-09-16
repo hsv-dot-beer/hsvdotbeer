@@ -7,7 +7,7 @@ from django.test import TestCase
 from django.utils.timezone import now
 import responses
 
-from beers.models import Beer, Manufacturer, ManufacturerAlternateName
+from beers.models import Beer, Manufacturer
 from beers.test.factories import ManufacturerFactory
 from venues.test.factories import VenueFactory
 from venues.models import Venue, VenueAPIConfiguration
@@ -58,10 +58,8 @@ class CommandsTestCase(TestCase):
                 url = "https://www.beermenus.com/beers/" f'{name.split(".")[0]}'
                 with open(os.path.join(PATH, name)) as infile:
                     cls.locations.append((url, name, infile.read()))
-        rocket = ManufacturerFactory(name="Rocket Republic Brewing Company")
-        ManufacturerAlternateName.objects.create(
-            name="Rocket Republic",
-            manufacturer=rocket,
+        ManufacturerFactory(
+            name="Rocket Republic Brewing Company", alternate_names=["Rocket Republic"]
         )
 
     def beer_menu_callback(self, request):

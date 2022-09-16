@@ -68,7 +68,6 @@ class BeerViewSet(CachedListMixin, ModerationMixin, ModelViewSet):
             "style",
         )
         .prefetch_related(
-            "style__alternate_names",
             Prefetch(
                 "taps",
                 queryset=Tap.objects.select_related(
@@ -137,6 +136,7 @@ class BeerViewSet(CachedListMixin, ModerationMixin, ModelViewSet):
                 "taps_count",
                 "id",
                 "manufacturer__name",
+                "alternate_names",
             )
             .order_by("-taps_count", "manufacturer__name", "name", "id")[:10]
         )
@@ -153,6 +153,7 @@ class BeerViewSet(CachedListMixin, ModerationMixin, ModelViewSet):
                 "beers_count",
                 "id",
                 "taps_occupied",
+                "alternate_names",
             )
             .order_by("-taps_occupied", "-beers_count", "name")[:10]
         )
@@ -169,27 +170,13 @@ class BeerViewSet(CachedListMixin, ModerationMixin, ModelViewSet):
                 "beers_count",
                 "id",
                 "taps_occupied",
+                "alternate_names",
             )
             .order_by("-taps_occupied", "-beers_count", "name")[:10]
         )
-        alt_beer_qs = models.BeerAlternateName.objects.filter(
-            beer__id__in=[i["id"] for i in beer_qs],
-        )
-        alt_mfg_qs = models.ManufacturerAlternateName.objects.filter(
-            manufacturer__id__in=[i["id"] for i in mfg_qs],
-        )
-        alt_style_qs = models.StyleAlternateName.objects.filter(
-            style__id__in=[i["id"] for i in style_qs],
-        )
-        alt_beers = {i["id"]: [] for i in beer_qs}
-        alt_mfgs = {i["id"]: [] for i in mfg_qs}
-        alt_styles = {i["id"]: [] for i in style_qs}
-        for alt_beer in alt_beer_qs.all():
-            alt_beers[alt_beer.beer_id].append(alt_beer.name)
-        for alt_mfg in alt_mfg_qs.all():
-            alt_mfgs[alt_mfg.manufacturer_id].append(alt_mfg.name)
-        for alt_style in alt_style_qs.all():
-            alt_styles[alt_style.style_id].append(alt_style.name)
+        alt_beers = {i["id"]: i["alternate_names"] for i in beer_qs}
+        alt_mfgs = {i["id"]: i["alternate_names"] for i in mfg_qs}
+        alt_styles = {i["id"]: i["alternate_names"] for i in style_qs}
         result = {
             "beers": [
                 {
@@ -235,7 +222,7 @@ class StyleMergeView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["styles"] = models.Style.objects.filter(
             id__in=context["view"].request.GET["ids"].split(","),
-        ).prefetch_related("alternate_names")
+        )
         context["back_link"] = reverse("admin:beers_style_changelist")
 
         return context
@@ -247,7 +234,6 @@ class StyleMergeView(TemplateView):
         except (KeyError, ValueError):
             return HttpResponse("Invalid data received!", status=400)
         styles = models.Style.objects.filter(id__in=all_pks).prefetch_related(
-            "alternate_names",
             "beers",
         )
         try:
@@ -282,13 +268,9 @@ class BeerMergeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["beers"] = (
-            models.Beer.objects.filter(
-                id__in=context["view"].request.GET["ids"].split(","),
-            )
-            .prefetch_related("alternate_names")
-            .select_related("manufacturer")
-        )
+        context["beers"] = models.Beer.objects.filter(
+            id__in=context["view"].request.GET["ids"].split(","),
+        ).select_related("manufacturer")
         context["back_link"] = reverse("admin:beers_beer_changelist")
 
         return context
@@ -300,7 +282,6 @@ class BeerMergeView(TemplateView):
         except (KeyError, ValueError):
             return HttpResponse("Invalid data received!", status=400)
         beers = models.Beer.objects.filter(id__in=all_pks).prefetch_related(
-            "alternate_names",
             "taps",
         )
         try:
@@ -340,7 +321,7 @@ class ManufacturerMergeView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["manufacturers"] = models.Manufacturer.objects.filter(
             id__in=context["view"].request.GET["ids"].split(","),
-        ).prefetch_related("alternate_names")
+        )
         context["back_link"] = reverse("admin:beers_manufacturer_changelist")
 
         return context
@@ -353,8 +334,6 @@ class ManufacturerMergeView(TemplateView):
             return HttpResponse("Invalid data received!", status=400)
         manufacturers = models.Manufacturer.objects.filter(
             id__in=all_pks,
-        ).prefetch_related(
-            "alternate_names",
         )
         try:
             desired_manufacturer = [i for i in manufacturers if i.id == kept_pk][0]

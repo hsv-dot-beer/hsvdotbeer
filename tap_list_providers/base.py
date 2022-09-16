@@ -131,7 +131,7 @@ class BaseTapListProvider:
                 style = Style.objects.get(name=name)
             except Style.DoesNotExist:
                 try:
-                    style = Style.objects.get(alternate_names__name=name)
+                    style = Style.objects.get(alternate_names__contains=[name])
                 except Style.DoesNotExist:
                     style = Style.objects.create(name=name, default_color="")
         self.styles[name.casefold()] = style
@@ -162,9 +162,7 @@ class BaseTapListProvider:
                 return style
         alt_names = []
         for style in self.styles.values():
-            alt_names += list(
-                (i.name.casefold(), style) for i in style.alternate_names.all()
-            )
+            alt_names += list((i.casefold(), style) for i in style.alternate_names)
         for alt_name, style in sorted(
             alt_names,
             key=lambda k: len(k[0]),
@@ -178,11 +176,9 @@ class BaseTapListProvider:
     def fetch_styles(self):
         self.styles = {
             style.name.casefold(): style
-            for style in Style.objects.prefetch_related(
-                "alternate_names",
+            for style in Style.objects.annotate(name_chars=Length("name")).order_by(
+                "-name_chars"
             )
-            .annotate(name_chars=Length("name"))
-            .order_by("-name_chars")
         }
 
     def get_beer(self, name, manufacturer, pricing=None, venue=None, **defaults):
@@ -270,7 +266,7 @@ class BaseTapListProvider:
             try:
                 beer = (
                     Beer.objects.filter(
-                        Q(name=name) | Q(alternate_names__name=name),
+                        Q(name=name) | Q(alternate_names__contains=[name]),
                         manufacturer=manufacturer,
                     )
                     .distinct()
@@ -294,7 +290,7 @@ class BaseTapListProvider:
                         beer = (
                             Beer.objects.filter(
                                 Q(name=subbed_name)
-                                | Q(alternate_names__name=subbed_name),
+                                | Q(alternate_names__contains=[subbed_name]),
                                 manufacturer=manufacturer,
                             )
                             .distinct()
@@ -318,7 +314,7 @@ class BaseTapListProvider:
                 )
                 # just take the first one
                 beer = Beer.objects.filter(
-                    Q(name=name) | Q(alternate_names__name=name),
+                    Q(name=name) | Q(alternate_names__contains=[name]),
                     manufacturer=manufacturer,
                 )[0]
         needs_update = False
@@ -405,11 +401,11 @@ class BaseTapListProvider:
                     )[0]
                     serving_sizes[price_info["volume_oz"]] = serving_size
                 try:
-                    BeerPrice.objects.create(
+                    BeerPrice.objects.get_or_create(
                         serving_size=serving_size,
                         beer=beer,
                         venue=venue,
-                        price=price_info["price"],
+                        defaults={"price": price_info["price"]},
                     )
                 except InvalidOperation:
                     LOG.error(
@@ -470,7 +466,7 @@ class BaseTapListProvider:
                 elif options:
                     manufacturer = options[0]
         else:
-            filter_expr = Q(name=name) | Q(alternate_names__name=name)
+            filter_expr = Q(name=name) | Q(alternate_names__contains=[name])
         if not manufacturer:
             LOG.debug(
                 "looking up manufacturer with filter %s, args %s",

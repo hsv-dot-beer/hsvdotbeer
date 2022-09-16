@@ -1,6 +1,7 @@
 """Parse data from untappd"""
 import argparse
 import datetime
+from collections import Counter
 from decimal import Decimal, InvalidOperation
 from pprint import PrettyPrinter
 import logging
@@ -75,6 +76,15 @@ class UntappdParser(BaseTapListProvider):
         use_sequential_taps = any(
             tap_info["tap_number"] is None for tap_info in tap_list
         )
+        tap_counts = Counter(tap_info["tap_number"] for tap_info in tap_list)
+        if any(
+            tap_count > 1
+            for tap_number, tap_count in tap_counts.items()
+            if tap_number is not None
+        ):
+            LOG.warning("Found duplicate tap numbers. Omitting them")
+            use_sequential_taps = True
+
         LOG.debug("use sequential taps? %s", use_sequential_taps)
         if not use_sequential_taps:
             populated_taps: list[int] = [
@@ -206,7 +216,7 @@ class UntappdParser(BaseTapListProvider):
                 return self.parse_style(style.replace("-", " - "))
             # attempt 1: has the style been moderated already?
             try:
-                return Style.objects.get(alternate_names__name__iexact=style)
+                return Style.objects.get(alternate_names__contains=[style])
             except Style.DoesNotExist:
                 # don't care
                 pass
@@ -216,7 +226,7 @@ class UntappdParser(BaseTapListProvider):
                 return (
                     Style.objects.filter(
                         Q(name__iexact=candidate)
-                        | Q(alternate_names__name__iexact=candidate)
+                        | Q(alternate_names__contains=[candidate])
                     )
                     .distinct()
                     .get()
@@ -234,7 +244,7 @@ class UntappdParser(BaseTapListProvider):
             try:
                 return (
                     Style.objects.filter(
-                        Q(name__iexact=name) | Q(alternate_names__name__iexact=name)
+                        Q(name__iexact=name) | Q(alternate_names__contains=[name])
                     )
                     .distinct()
                     .get()
@@ -387,7 +397,7 @@ class UntappdParser(BaseTapListProvider):
         return tap_dict
 
     def parse_item_tap(self, entry):
-        beer_name_span = entry.find("span", {"class": "item"})
+        beer_name_span = entry.find("a", {"class": "item-title-color"})
         beer_info = beer_name_span.text
         LOG.debug("parsing beer %s", beer_info)
         tap_num = entry.find(
@@ -396,7 +406,7 @@ class UntappdParser(BaseTapListProvider):
         ).text.strip()
         beer_link = entry.find(
             "div",
-            {"class": "label-image-hideable beer-label pull-left"},
+            {"class": "label-image-hideable item-label pull-left"},
         )
         url = None
         beer_image = None
@@ -409,7 +419,7 @@ class UntappdParser(BaseTapListProvider):
         beer_style = (
             entry.find(
                 "span",
-                {"class": "beer-style"},
+                {"class": "item-style"},
             )
             .text.replace("•", "")
             .replace("\xa0", "")

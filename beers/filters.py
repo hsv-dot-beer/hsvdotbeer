@@ -55,7 +55,6 @@ class BeerFilterSet(FilterSet):
             "abv",
             "ibu",
             "style__name",
-            "style__alternate_names__name",
             "manufacturer__name",
             "most_recently_added",
         ],
@@ -77,7 +76,7 @@ class BeerFilterSet(FilterSet):
                     name__icontains=word,
                 )
                 | Q(
-                    alternate_names__name__icontains=word,
+                    alternate_names__contains=[word],
                 )
                 | Q(
                     manufacturer__name__icontains=word,
@@ -88,10 +87,10 @@ class BeerFilterSet(FilterSet):
                 )
                 | Q(
                     # the field is case-insensitive, so no need for icontains
-                    style__alternate_names__name=word,
+                    style__alternate_names__contains=[word],
                 )
                 | Q(
-                    manufacturer__alternate_names__name__icontains=word,
+                    manufacturer__alternate_names__contains=[word],
                 )
             )
         queryset = queryset.filter(base_cond).distinct()
@@ -108,7 +107,6 @@ class BeerFilterSet(FilterSet):
             "manufacturer__name": DEFAULT_NUMERIC_FILTER_OPERATORS,
             "taps__venue__name": DEFAULT_STRING_FILTER_OPERATORS,
             "style__name": DEFAULT_STRING_FILTER_OPERATORS,
-            "style__alternate_names__name": DEFAULT_STRING_FILTER_OPERATORS,
             "taps__venue__slug": DEFAULT_STRING_FILTER_OPERATORS,
         }
         model = models.Beer

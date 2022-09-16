@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from beers.models import Style, StyleAlternateName, Beer
+from beers.models import Style, Beer
 
 from .factories import BeerFactory, StyleFactory, ManufacturerFactory
 
@@ -16,7 +16,7 @@ class StyleMergeTestCase(TestCase):
         kept_style.merge_from(styles)
         kept_style.refresh_from_db()
         self.assertEqual(
-            kept_style.alternate_names.count(),
+            len(kept_style.alternate_names),
             9,
         )
         self.assertEqual(
@@ -30,9 +30,11 @@ class StyleMergeTestCase(TestCase):
         )
 
     def test_merge_duplicate_names(self):
-        styles = Style.objects.bulk_create(StyleFactory.build() for dummy in range(3))
-        StyleAlternateName.objects.bulk_create(
-            StyleAlternateName(name=i.name, style=styles[0]) for i in styles[1:]
+        styles: list[Style] = Style.objects.bulk_create(
+            StyleFactory.build() for _ in range(3)
         )
+        for style in styles[1:]:
+            style.alternate_names = [styles[0].name]
+            style.save()
         with self.assertRaises(ValueError):
-            styles[0].merge_from(styles)
+            styles[0].merge_from(styles[2:])

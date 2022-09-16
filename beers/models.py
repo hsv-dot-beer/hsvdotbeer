@@ -1,13 +1,15 @@
 import logging
+from typing import Iterable
 
-from django.contrib.postgres.fields import CITextField
+from django.contrib.postgres.fields import CITextField, ArrayField
 from django.db import models, transaction
 from django.db.utils import IntegrityError
 from django.utils.timezone import now
+from django.db.models import JSONField
 
 from taps.models import Tap
 from .utils import render_srm
-from django.db.models import JSONField
+
 
 LOG = logging.getLogger(__name__)
 
@@ -19,67 +21,38 @@ class Style(models.Model):
         max_length=9,  # #00112233 -> RGBA
         blank=True,
     )
+    alternate_names = ArrayField(CITextField(), default=list)
 
-    def merge_from(self, other_styles):
-        alt_names = []
+    def merge_from(self, other_styles: Iterable["Style"]):
         with transaction.atomic():
             for style in other_styles:
                 if style.id == self.id:
                     continue
-                alt_names.append(style.name)
+                self.alternate_names.append(style.name)
+                self.alternate_names.extend(style.alternate_names)
                 style.beers.all().update(style=self)
-                style.alternate_names.all().update(style=self)
                 style.delete()
-            try:
-                # need the second transaction so we can run a query in the
-                # event this fails. Because we're doing a raise in the except
-                # block, the outer transaction will still be aborted in case
-                # of failure.
-                with transaction.atomic():
-                    StyleAlternateName.objects.bulk_create(
-                        [
-                            StyleAlternateName(
-                                name=name,
-                                style=self,
-                            )
-                            for name in alt_names
-                        ]
-                    )
-            except IntegrityError as exc:
-                existing_names = [
-                    i.name
-                    for i in StyleAlternateName.objects.filter(
-                        name__in=alt_names,
-                    ).exclude(
-                        style=self,
-                    )
-                ]
+            self.alternate_names = sorted(set(self.alternate_names))
+            if duplicates := list(
+                Style.objects.filter(
+                    models.Q(alternate_names__contained_by=self.alternate_names)
+                    | models.Q(name__in=self.alternate_names)
+                ).exclude(id=self.id)
+            ):
                 raise ValueError(
-                    "These alternate names already exist: "
-                    f'{", ".join(existing_names)}'
-                ) from exc
+                    f"These styles share duplicate alternate names: {duplicates}"
+                )
+
+            self.save()
 
     def __str__(self):  # pylint: disable=invalid-str-returned
         return self.name
-
-
-class StyleAlternateName(models.Model):
-    name = CITextField()
-    style = models.ForeignKey(Style, models.CASCADE, related_name="alternate_names")
-
-    def __str__(self):  # pylint: disable=invalid-str-returned
-        return self.name
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=["name"], name="unique_alt_name_name")
-        ]
 
 
 class Manufacturer(models.Model):
     name = CITextField()
     url = models.URLField(blank=True)
-    location = models.CharField(blank=True, max_length=50)
+    location = models.CharField(blank=True, max_length=250)
     logo_url = models.URLField(blank=True)
     facebook_url = models.URLField(blank=True)
     twitter_handle = models.CharField(max_length=50, blank=True)
@@ -90,6 +63,7 @@ class Manufacturer(models.Model):
     taplist_io_pk = models.PositiveIntegerField(blank=True, null=True)
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
     beermenus_slug = models.CharField(max_length=250, blank=True, null=True)
+    alternate_names = ArrayField(CITextField(), default=list)
 
     class Meta:
         constraints = [
@@ -117,12 +91,12 @@ class Manufacturer(models.Model):
             self.untappd_url = None
         return super().save(*args, **kwargs)
 
-    def merge_from(self, other):
+    def merge_from(self, other: "Manufacturer"):
         """Merge the data from other into self"""
         LOG.info("merging %s into %s", other, self)
         with transaction.atomic():
-            other_beers = list(other.beers.all())
-            my_beers = {i.name.casefold(): i for i in self.beers.all()}
+            other_beers: list[Beer] = list(other.beers.all())
+            my_beers: dict[str, Beer] = {i.name.casefold(): i for i in self.beers.all()}
             for beer in other_beers:
                 beer.manufacturer = self
                 if beer.name.casefold() in my_beers:
@@ -135,15 +109,15 @@ class Manufacturer(models.Model):
                 else:
                     # good
                     beer.save()
-
-            ManufacturerAlternateName.objects.filter(
-                manufacturer=other,
-            ).update(manufacturer=self)
+            self.alternate_names.extend(other.alternate_names)
+            self.alternate_names.append(other.name)
+            self.alternate_names = sorted(set(self.alternate_names))
             excluded_fields = {
                 "name",
                 "automatic_updates_blocked",
                 "id",
                 "time_first_seen",
+                "alternate_names",
             }
             for field in self._meta.fields:
                 field_name = field.name
@@ -156,10 +130,6 @@ class Manufacturer(models.Model):
                     continue
                 setattr(self, field_name, other_value)
             self.automatic_updates_blocked = True
-            ManufacturerAlternateName.objects.update_or_create(
-                name=other.name,
-                manufacturer=self,
-            )
             other.delete()
             if other.time_first_seen:
                 if (
@@ -235,6 +205,7 @@ class Beer(models.Model):
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
     tweeted_about = models.BooleanField(default=False)
     beermenus_slug = models.CharField(max_length=250, blank=True, null=True)
+    alternate_names = ArrayField(CITextField(), default=list)
 
     class Meta:
         indexes = [
@@ -317,11 +288,11 @@ class Beer(models.Model):
             return self.color_html
         return render_srm(self.color_srm)
 
-    def merge_from(self, other):
+    def merge_from(self, other: "Beer"):
         LOG.info("merging %s into %s", other, self)
         with transaction.atomic():
             Tap.objects.filter(beer=other).update(beer=self)
-            BeerAlternateName.objects.filter(beer=other).update(beer=self)
+            self.alternate_names.extend(other.alternate_names)
             try:
                 with transaction.atomic():
                     BeerPrice.objects.filter(beer=other).update(beer=self)
@@ -349,6 +320,7 @@ class Beer(models.Model):
                 "manufacturer",
                 "id",
                 "time_first_seen",
+                "alternate_names",
             }
             for field in self._meta.fields:
                 field_name = field.name
@@ -363,10 +335,8 @@ class Beer(models.Model):
             self.automatic_updates_blocked = True
             if other.name != self.name:
                 # this will only not happen if manufacturers aren't the same
-                BeerAlternateName.objects.update_or_create(
-                    name=other.name,
-                    beer=self,
-                )
+                self.alternate_names.append(other.name)
+            self.alternate_names = sorted(set(self.alternate_names))
             if other.time_first_seen:
                 if (
                     not self.time_first_seen
@@ -375,24 +345,6 @@ class Beer(models.Model):
                     self.time_first_seen = other.time_first_seen
             other.delete()
             self.save()
-
-
-class BeerAlternateName(models.Model):
-    beer = models.ForeignKey(Beer, models.CASCADE, related_name="alternate_names")
-    name = CITextField()
-
-    def __str__(self):
-        return f"{self.name} for {self.beer_id}"
-
-
-class ManufacturerAlternateName(models.Model):
-    manufacturer = models.ForeignKey(
-        Manufacturer, models.CASCADE, related_name="alternate_names"
-    )
-    name = CITextField()
-
-    def __str__(self):
-        return f"{self.name} for {self.manufacturer_id}"
 
 
 class ServingSize(models.Model):

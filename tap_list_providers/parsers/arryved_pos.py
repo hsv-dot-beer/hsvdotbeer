@@ -83,7 +83,7 @@ class ArryvedPOSParser(BaseTapListProvider):
                 try:
                     tap.beer = Beer.objects.get(
                         manufacturer=self.manufacturer,
-                        alternate_names__name=beer["name"],
+                        alternate_names__contains=[beer["name"]],
                     )
                 except Beer.DoesNotExist:
                     LOG.info("Creating beer %s for %s", beer["name"], self.manufacturer)
