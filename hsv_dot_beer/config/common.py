@@ -243,6 +243,9 @@ class Common(Configuration):  # pylint: disable=no-init
         ),
     }
 
+    # Auto field (new in Django 3.2)
+    DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
     # Default Venue time zone
     DEFAULT_VENUE_TIME_ZONE = "America/Chicago"
 
