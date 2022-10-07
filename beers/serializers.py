@@ -18,8 +18,6 @@ class UntappdMetadataSerializer(serializers.ModelSerializer):
 
 
 class StyleSerializer(serializers.ModelSerializer):
-    alternate_names = serializers.StringRelatedField(many=True)
-
     class Meta:
         model = models.Style
         fields = "__all__"

@@ -50,7 +50,7 @@ class TaphunterParser(BaseTapListProvider):
         manufacturers = {}
 
         use_sequential_taps = any(
-            (tap_info["serving_info"]["tap_number"] == "" for tap_info in data["taps"])
+            tap_info["serving_info"]["tap_number"] == "" for tap_info in data["taps"]
         )
         latest_timestamp = UTC.localize(datetime.datetime(1970, 1, 1, 12))
         for index, entry in enumerate(data["taps"]):

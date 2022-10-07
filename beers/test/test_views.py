@@ -196,9 +196,8 @@ class BeerListTestCase(APITestCase):
         # 1. count of results
         # 2. beers
         # 3. taps
-        # 4. alt names
         # 5. prices
-        with self.assertNumQueries(5):
+        with self.assertNumQueries(4):
             response = self.client.get(f"{self.url}?o=-most_recently_added")
         self.assertEqual(response.status_code, 200)
         # expected order is third_beer, self.beer, other_beer
@@ -231,10 +230,9 @@ class BeerListTestCase(APITestCase):
             )
         )
         url = f"{self.url}?taps__venue__slug__icontains=SLUG&on_tap=True"
-        with self.assertNumQueries(5):
+        with self.assertNumQueries(4):
             # 1. count
             # 2. beer + style
-            # 3. style alt names
             # 4. prices
             # 5. taps
             response = self.client.get(url)
@@ -243,8 +241,8 @@ class BeerListTestCase(APITestCase):
             len(response.data["results"]), 2, json.dumps(response.data, indent=2)
         )
         self.assertEqual(
-            set(i["id"] for i in response.data["results"]),
-            set(i.id for i in beers[:-1]),
+            {i["id"] for i in response.data["results"]},
+            {i.id for i in beers[:-1]},
         )
 
     def test_sort_abv_ascending(self):
@@ -261,10 +259,9 @@ class BeerListTestCase(APITestCase):
             TapFactory.build(beer=beer, venue=venue) for beer in beers
         )
         url = f"{self.url}?o=abv&on_tap=True"
-        with self.assertNumQueries(5):
+        with self.assertNumQueries(4):
             # 1. count
             # 2. beer + style
-            # 3. style alt names
             # 4. prices
             # 5. taps
             response = self.client.get(url)
@@ -290,10 +287,9 @@ class BeerListTestCase(APITestCase):
             TapFactory.build(beer=beer, venue=venue) for beer in beers
         )
         url = f"{self.url}?o=-abv&on_tap=True"
-        with self.assertNumQueries(5):
+        with self.assertNumQueries(4):
             # 1. count
             # 2. beer + style
-            # 3. style alt names
             # 4. prices
             # 5. taps
             response = self.client.get(url)

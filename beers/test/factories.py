@@ -1,26 +1,16 @@
 import factory
 import factory.fuzzy
 
-from beers.models import Manufacturer, Beer, Style, StyleAlternateName
+from beers.models import Manufacturer, Beer, Style
 
 
 class StyleFactory(factory.django.DjangoModelFactory):
 
     name = factory.Sequence(lambda n: "style %d" % n)
-    default_color = factory.Sequence(lambda n: "#{:0>6X}".format(n))
+    default_color = factory.Sequence(lambda n: f"#{n:0>6X}")
 
     class Meta:
         model = Style
-
-
-class StyleAlternateNameFactory(factory.django.DjangoModelFactory):
-
-    name = factory.Sequence(lambda n: "style alt name %d" % n)
-
-    style = factory.SubFactory(StyleFactory)
-
-    class Meta:
-        model = StyleAlternateName
 
 
 class ManufacturerFactory(factory.django.DjangoModelFactory):

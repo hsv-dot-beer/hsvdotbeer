@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
             )
             kept = beer_list[0]
             for beer in beer_list[1:]:
-                print("merging %s into %s" % (beer.name, kept.name))
+                print(f"merging {beer.name} into {kept.name}")
                 merge_beer(kept, beer)
 
     def merge_case_matching_mfgs(apps, schema_editor):
@@ -63,7 +63,7 @@ class Migration(migrations.Migration):
             )
             kept = mfg_list[0]
             for mfg in mfg_list[1:]:
-                print("merging mfg %s into %s" % (mfg.name, kept.name))
+                print(f"merging mfg {mfg.name} into {kept.name}")
                 merge_mfg(kept, mfg)
 
     operations = [

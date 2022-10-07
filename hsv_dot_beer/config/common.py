@@ -44,6 +44,7 @@ class Common(Configuration):  # pylint: disable=no-init
         "django.contrib.sessions",
         "django.contrib.messages",
         "django.contrib.staticfiles",
+        "django.contrib.postgres",
         # Third party apps
         "corsheaders",
         "rest_framework",  # utilities for rest apis
@@ -241,6 +242,9 @@ class Common(Configuration):  # pylint: disable=no-init
             "django_filters.rest_framework.DjangoFilterBackend",
         ),
     }
+
+    # Auto field (new in Django 3.2)
+    DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
     # Default Venue time zone
     DEFAULT_VENUE_TIME_ZONE = "America/Chicago"

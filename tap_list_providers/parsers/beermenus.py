@@ -5,7 +5,6 @@ import datetime
 from dataclasses import dataclass
 import logging
 import os
-from typing import List, Union
 
 from dateutil.parser import parse
 import requests
@@ -63,8 +62,8 @@ class BeerMenusParser(BaseTapListProvider):
 
     def __init__(
         self,
-        slug: Union[str, None] = None,
-        categories: Union[List[str], None] = None,
+        slug: str | None = None,
+        categories: list[str] | None = None,
         save_fetched_data: bool = False,
     ):
         self.location_url = None
@@ -93,7 +92,7 @@ class BeerMenusParser(BaseTapListProvider):
                 outfile.write(response.text)
         return response.text
 
-    def parse_html(self, data: str) -> List[BeerData]:
+    def parse_html(self, data: str) -> list[BeerData]:
         self.soup = BeautifulSoup(data, "lxml")
         # the last updated time is only a date
         # it's in a <span> in the form "Updated: M/D/YYYY"
@@ -183,7 +182,7 @@ class BeerMenusParser(BaseTapListProvider):
         LOG.debug("Found %s beers", len(beers))
         return beers
 
-    def parse_beers(self, beers: List[BeerData]) -> None:
+    def parse_beers(self, beers: list[BeerData]) -> None:
         # we have a list of BeerData instances
         # modify them in place to get the other data
         for beer in beers:
@@ -205,7 +204,7 @@ class BeerMenusParser(BaseTapListProvider):
             target_div = parser.find_all("div", class_="splash-small")[0]
             beer_info = target_div.find_all("p", class_="mb-tiny")[0]
             try:
-                style, abv_raw, _ = [i.strip() for i in beer_info.text.split(MIDDOT)]
+                style, abv_raw, *_ = (i.strip() for i in beer_info.text.split(MIDDOT))
             except ValueError:
                 LOG.error(
                     "Unable to parse info for %s: %r (%s)",
@@ -272,7 +271,7 @@ class BeerMenusParser(BaseTapListProvider):
 def parse_beer_tag(tag: Tag) -> BeerData:
     try:
         price_p = tag.find_all("p", class_="caption text-right mb-0")[0]
-        capacity, price = [i.strip() for i in price_p.text.split("$")]
+        capacity, price = (i.strip() for i in price_p.text.split("$"))
     except IndexError:
         LOG.warning("Missing price info for %s", tag)
         price = None
