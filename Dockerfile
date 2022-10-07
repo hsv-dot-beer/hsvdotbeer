@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.10
 ENV PYTHONUNBUFFERED 1
 
 # Allows docker to cache installed dependencies between builds

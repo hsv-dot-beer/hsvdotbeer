@@ -84,7 +84,7 @@ def merge_common_ending_breweries(apps, schema_editor):
                 kept = other
                 print(kept.id)
         for mfg in mfg_list[1:]:
-            print("merging mfg %s into %s" % (mfg.name, kept.name))
+            print(f"merging mfg {mfg.name} into {kept.name}")
             merge_mfg(kept, mfg)
 
 

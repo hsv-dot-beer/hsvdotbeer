@@ -16,9 +16,9 @@ class ExampleTapListProvider(BaseTapListProvider):
 
     def __init__(self, json_file):
         try:
-            with open(json_file, "r") as input_file:
+            with open(json_file) as input_file:
                 self.json_dict = json.loads(input_file.read())
-        except (json.JSONDecodeError, IOError) as exc:
+        except (json.JSONDecodeError, OSError) as exc:
             print(f"Unable to read input file {json_file}: {exc}")
             raise
         super().__init__()
@@ -26,7 +26,7 @@ class ExampleTapListProvider(BaseTapListProvider):
     def handle_venue(self, venue):
         LOG.info("Handling venue %s", venue)
         taps = {tap.tap_number: tap for tap in venue.taps.all()}
-        names = set(i["brewery"] for i in self.json_dict["taps"].values())
+        names = {i["brewery"] for i in self.json_dict["taps"].values()}
         LOG.debug("Breweries: %s", names)
         manufacturers_qs = Manufacturer.objects.filter(
             name__in=list(names),

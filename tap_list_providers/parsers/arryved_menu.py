@@ -4,7 +4,7 @@ import datetime
 from decimal import Decimal
 import logging
 import os
-from typing import Dict, Union, Any, List
+from typing import Any
 
 import requests
 import configurations
@@ -40,7 +40,7 @@ class ArryvedMenuParser(BaseTapListProvider):
         manufacturer: Manufacturer = None,
         location_id: str = None,
         menu_id: str = None,
-        serving_sizes: List[str] = None,
+        serving_sizes: list[str] = None,
     ):
         self.location_id = location_id
         self.menu_id = menu_id
@@ -128,9 +128,9 @@ class ArryvedMenuParser(BaseTapListProvider):
         self,
         beer: Beer,
         venue: Venue,
-        pricing_data: List[Dict],
-        serving_sizes: Dict[Decimal, ServingSize],
-    ) -> List[BeerPrice]:
+        pricing_data: list[dict],
+        serving_sizes: dict[Decimal, ServingSize],
+    ) -> list[BeerPrice]:
         result = []
         for size_dict in pricing_data:
             LOG.debug("size dict: %s", size_dict)
@@ -183,7 +183,7 @@ class ArryvedMenuParser(BaseTapListProvider):
         response.raise_for_status()
         return response.json()
 
-    def parse_json(self, json_data: Dict[str, Any]):
+    def parse_json(self, json_data: dict[str, Any]):
         payload = json_data["payload"]
         sizes = self.parse_sizes(payload)
         item_types = self.parse_item_types(payload)
@@ -197,9 +197,7 @@ class ArryvedMenuParser(BaseTapListProvider):
             "item_types": item_types,
         }
 
-    def parse_sizes(
-        self, payload: Dict[str, Dict]
-    ) -> Dict[str, Union[str, int, float]]:
+    def parse_sizes(self, payload: dict[str, dict]) -> dict[str, str | int | float]:
         """Parse serving sizes"""
         result = {
             short_code: {
@@ -212,7 +210,7 @@ class ArryvedMenuParser(BaseTapListProvider):
         }
         return result
 
-    def parse_item_types(self, payload: Dict[str, Dict]) -> Dict[str, str]:
+    def parse_item_types(self, payload: dict[str, dict]) -> dict[str, str]:
         return {
             short_code: data["name"].title()
             for short_code, data in payload["itemTypes"].items()
@@ -220,8 +218,8 @@ class ArryvedMenuParser(BaseTapListProvider):
         }
 
     def parse_item_available_sizes(
-        self, payload: Dict[str, Dict]
-    ) -> Dict[str, List[Dict[str, Union[str, int, float]]]]:
+        self, payload: dict[str, dict]
+    ) -> dict[str, list[dict[str, str | int | float]]]:
         sizes = self.parse_sizes(payload)
         result = defaultdict(list)
         for line in payload["activeItemSizes"]:
@@ -231,9 +229,9 @@ class ArryvedMenuParser(BaseTapListProvider):
 
     def parse_items(
         self,
-        payload: Dict[str, Dict],
-        sizes: Dict[str, Union[str, int, float]],
-    ) -> List[Dict[str, Union[str, int, float]]]:
+        payload: dict[str, dict],
+        sizes: dict[str, str | int | float],
+    ) -> list[dict[str, str | int | float]]:
         result = []
         for item in payload["items"]:
             result.append(
@@ -258,7 +256,7 @@ class ArryvedMenuParser(BaseTapListProvider):
             )
         return result
 
-    def get_ibu(self, attributes: List[Dict[str, str]]) -> Union[int, None]:
+    def get_ibu(self, attributes: list[dict[str, str]]) -> int | None:
         try:
             value = [i["value"] for i in attributes if i["type"] == "IBU"][0]
             return int(value)
@@ -268,7 +266,7 @@ class ArryvedMenuParser(BaseTapListProvider):
             LOG.warning("Unable to parse IBU value in %s: %s", attributes, exc)
             return None
 
-    def get_abv(self, attributes: List[Dict[str, str]]) -> Union[Decimal, None]:
+    def get_abv(self, attributes: list[dict[str, str]]) -> Decimal | None:
         try:
             value = [i["value"] for i in attributes if i["type"] == "ABV"][0].replace(
                 "%", ""
