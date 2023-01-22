@@ -10,6 +10,7 @@ processes = []
   DJANGO_AWS_STORAGE_BUCKET_NAME = "hsv-dot-beer"
   DJANGO_PAGINATION_LIMIT = 25
   WEB_CONCURRENCY = 2
+  PORT=8080
 
 [experimental]
   auto_rollback = true
