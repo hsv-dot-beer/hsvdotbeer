@@ -25,6 +25,4 @@ RUN pipenv install
 EXPOSE 8000
 
 # Migrates the database, builds CSS, uploads staticfiles, and runs the production server
-CMD npm run build && pipenv run ./manage.py migrate && \
-    pipenv run ./manage.py collectstatic --noinput && \
-    pipenv run newrelic-admin run-program gunicorn --bind 0.0.0.0:8080 --access-logfile - hsv_dot_beer.wsgi:application
+CMD bash bin/entry-point.sh
