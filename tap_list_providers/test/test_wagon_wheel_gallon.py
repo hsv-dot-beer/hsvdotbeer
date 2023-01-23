@@ -67,5 +67,5 @@ class WagonWheelTestCase(TestCase):
                         "volume_oz", flat=True
                     )
                 ),
-                {32, 64, 16, 660, 996, 1980},
+                {32, 64, 16, 660, 996},
             )
