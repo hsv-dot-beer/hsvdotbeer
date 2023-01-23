@@ -50,6 +50,7 @@ class UntappdParser(BaseTapListProvider):
         self.categories = [i.casefold() for i in cats] if cats else []
         self.soup = None
         self.taplists = []
+        self.venue_name = ''
         super().__init__()
 
     def fetch_data(self):
@@ -63,6 +64,7 @@ class UntappdParser(BaseTapListProvider):
             i.casefold() for i in venue.api_configuration.untappd_categories
         ]
         LOG.debug("Categories: %s", self.categories)
+        self.venue_name = venue.name
         self.location_url = self.URL.format(
             venue.api_configuration.untappd_location,
             venue.api_configuration.untappd_theme,
@@ -400,10 +402,10 @@ class UntappdParser(BaseTapListProvider):
         beer_name_span = entry.find("a", {"class": "item-title-color"})
         beer_info = beer_name_span.text
         LOG.debug("parsing beer %s", beer_info)
-        tap_num = entry.find(
-            "span",
-            {"class": "tap-number-hideable"},
-        ).text.strip()
+        if tap_span := entry.find("span", {"class": "tap-number-hideable"}):
+            tap_num: str = tap_span.text.strip()
+        else:
+            tap_num = ""
         beer_link = entry.find(
             "div",
             {"class": "label-image-hideable item-label pull-left"},
@@ -425,12 +427,15 @@ class UntappdParser(BaseTapListProvider):
             .replace("\xa0", "")
             .strip()
         )
-        brewery_span = entry.find("span", {"class": "brewery"})
-        brewery = brewery_span.text.strip()
-        brewery_url_a = brewery_span.find("a")
-        brewery_url = None
-        if brewery_url_a:
-            brewery_url = brewery_url_a.attrs["href"]
+        if brewery_span := entry.find("span", {"class": "brewery"}):
+            brewery = brewery_span.text.strip()
+
+            brewery_url = None
+            if brewery_url_a := brewery_span.find("a"):
+                brewery_url = brewery_url_a.attrs["href"]
+        else:
+            brewery = self.venue_name
+            brewery_url = ''
 
         location_span = entry.find("span", {"class": "location"})
         if location_span:
