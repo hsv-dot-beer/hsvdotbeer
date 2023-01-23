@@ -174,15 +174,18 @@ class TaphunterParser(BaseTapListProvider):
             t["tap_number"] = tap["serving_info"]["tap_number"]
         return t
 
-    def parse_size(self, size):
-        if size == "1/6 Barrel":
-            return 660
-        elif size == "1/4 Barrel":
-            return 996
-        elif size == "1/2 Barrel":
-            return 1980
-        else:
-            return int(size.split("oz")[0])
+    def parse_size(self, size: str) -> int:
+        match size:
+            case "1/6 Barrel":
+                return 660
+            case "1/4 Barrel":
+                return 996
+            case "1/2 Barrel":
+                return 996
+            case "1 gal":
+                return 128
+            case _:
+                return int(size.split("oz")[0])
 
     def parse_price(self, price):
         price = price.replace("$", "")
@@ -236,6 +239,7 @@ def main():
     t = TaphunterParser(locations[args.location])
 
     if args.dump:
+        t.fetch()
         print(json.dumps(t.json, indent=4))
     else:
         for tap in t.taps():
