@@ -49,15 +49,20 @@ class DigitalPourParser(BaseTapListProvider):
         location_number = venue.api_configuration.digital_pour_location_number
         self.url = self.URL.format(venue_id, location_number, self.APIKEY)
         data = self.fetch()
-        taps = {tap.tap_number: tap for tap in venue.taps.all()}
+        taps: dict[int, Tap] = {tap.tap_number: tap for tap in venue.taps.all()}
         self.update_date = UTC.localize(datetime.datetime(1970, 1, 1, 0, 0, 0))
         manufacturers = {}
+        tap_numbers_seen: set[int] = set()
         for entry in data:
             if not entry["Active"]:
                 # in the cooler, not on tap
                 continue
             # 1. parse the tap
             tap_info = self.parse_tap(entry)
+            while tap_info["tap_number"] in tap_numbers_seen:
+                # work around duplicates by adding one
+                tap_info["tap_number"] += 1
+            tap_numbers_seen.add(tap_info["tap_number"])
             try:
                 tap = taps[tap_info["tap_number"]]
             except KeyError:
@@ -126,6 +131,9 @@ class DigitalPourParser(BaseTapListProvider):
             # 4. assign the beer to the tap
             tap.beer = beer
             tap.save()
+        for tap_number, tap in taps.items():
+            if tap_number not in tap_numbers_seen:
+                tap.delete()
         return self.update_date
 
     def parse_beer(self, entry):
