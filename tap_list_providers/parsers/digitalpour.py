@@ -59,10 +59,10 @@ class DigitalPourParser(BaseTapListProvider):
                 continue
             # 1. parse the tap
             tap_info = self.parse_tap(entry)
-            while tap_info['tap_number'] in tap_numbers_seen:
+            while tap_info["tap_number"] in tap_numbers_seen:
                 # work around duplicates by adding one
                 tap_info["tap_number"] += 1
-            tap_numbers_seen.add(tap_info['tap_number'])
+            tap_numbers_seen.add(tap_info["tap_number"])
             try:
                 tap = taps[tap_info["tap_number"]]
             except KeyError:
