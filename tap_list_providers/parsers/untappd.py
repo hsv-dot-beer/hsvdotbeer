@@ -50,7 +50,7 @@ class UntappdParser(BaseTapListProvider):
         self.categories = [i.casefold() for i in cats] if cats else []
         self.soup = None
         self.taplists = []
-        self.venue_name = ''
+        self.venue_name = ""
         super().__init__()
 
     def fetch_data(self):
@@ -435,7 +435,7 @@ class UntappdParser(BaseTapListProvider):
                 brewery_url = brewery_url_a.attrs["href"]
         else:
             brewery = self.venue_name
-            brewery_url = ''
+            brewery_url = ""
 
         location_span = entry.find("span", {"class": "location"})
         if location_span:
