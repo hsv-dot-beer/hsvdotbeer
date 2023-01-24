@@ -33,7 +33,7 @@ class WagonWheelTestCase(TestCase):
                 os.path.dirname(BASE_DIR),
                 "tap_list_providers",
                 "example_data",
-                "wagon_wheel.json",
+                "wagonwheel_1_gal.json",
             ),
             "rb",
         ) as json_file:
@@ -58,14 +58,14 @@ class WagonWheelTestCase(TestCase):
             opts = {}
             call_command("parsetaphunter", *args, **opts)
 
-            self.assertEqual(Beer.objects.count(), 39)
-            self.assertEqual(Manufacturer.objects.count(), 24)
-            self.assertEqual(Tap.objects.count(), 39)
+            self.assertEqual(Beer.objects.count(), 23)
+            self.assertEqual(Manufacturer.objects.count(), 19)
+            self.assertEqual(Tap.objects.count(), 24)
             self.assertEqual(
                 set(
                     ServingSize.objects.exclude(beer_prices__isnull=True).values_list(
                         "volume_oz", flat=True
                     )
                 ),
-                {32, 64, 16, 660, 996},
+                {32, 64, 128},
             )

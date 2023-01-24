@@ -1,0 +1,3881 @@
+{
+    "bottles": [],
+    "cocktails": [],
+    "events": [],
+    "nonalcoholic": [],
+    "ondeck": [
+        {
+            "beer": {
+                "abv": "8.1",
+                "beer_name": "Space Lettuce",
+                "ibu": "70",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICA8J3j1PcJDA",
+                "logo_url": "https://lh3.googleusercontent.com/Lssjqs6aeei8FKWCyqXXEw2i9NDHuup8-F1ZOKuNNvwq-gboh1MtxnG2Mh2UyAYGAvAFR8_W9lZhw0CEYVX19E_DEQUW1Xg=s150",
+                "name": "Monday Night Space Lettuce",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/monday-night-space-lettuce/5592829971398656",
+                "style": "Double IPA",
+                "style_category": "IPAs",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY5bXZEQw"
+            },
+            "brewery": {
+                "city": "Atlanta",
+                "common_name": "Monday Night",
+                "country": "United States",
+                "distance": 132.47783093790767,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgMDApesLDA",
+                "logo_url": "https://lh3.googleusercontent.com/IvvkuhHAjNj4rcTO1ZQXeFAMqWAuI-gnNKLEf6qA1oPMtY4znxFa9WEEhHEeh9JhqxFPJHt111XLXWCIoFgqXX1h1lnCHw=s150",
+                "market": "Atlanta",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGQsSEHRhcGh1bnRlcl9tYXJrZXQYpa-7GAw",
+                "name": "Monday Night Brewing",
+                "origin": "Atlanta, GA",
+                "public_url": "https://www.taphunter.com/brewery/monday-night-brewing/6664329088729088",
+                "state": "GA"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "05/19/2022",
+            "date_to_live": "",
+            "date_to_live_iso8601": null,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "An intensely hoppy pale ale with minimal malt character, designed to showcase its strong hop flavors.",
+                "short_description_override": null,
+                "short_description_with_backup": "An intensely hoppy pale ale with minimal malt character, designed to showcase its strong hop flavors.",
+                "style_description": "An intensely hoppy pale ale with minimal malt character, designed to showcase its strong hop flavors."
+            },
+            "featured": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyKQsSHHRhcGh1bnRlcl9mdXR1cmVsb2NhdGlvbmJlZXIYgIDYmfqUqwgM",
+            "list": {
+                "key": "",
+                "name": ""
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "public": true,
+            "serving_info": {
+                "display_pricing": true,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_pricing": [
+                    {
+                        "price": "$11.99",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$23.98",
+                        "size": "64 oz"
+                    }
+                ],
+                "tap_number": 4,
+                "type": "Tap"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "5.5",
+                "beer_name": "Toucan Slam",
+                "ibu": "",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAmJni8d4JDA",
+                "logo_url": "",
+                "name": "Salty Nut Toucan Slam",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/salty-nut-toucan-slam/5483874962767872",
+                "style": "American IPA",
+                "style_category": "IPAs",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY7Y_aEQw"
+            },
+            "brewery": {
+                "city": "Huntsville",
+                "common_name": "Salty Nut",
+                "country": "United States",
+                "distance": 7.156254291432001,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgIa0oLsIDA",
+                "logo_url": "https://lh3.googleusercontent.com/ctfCTX_EBIRn3MGVPAX79tb8YsfAJX491muRp72Th9x963lgbFuhaIu2Tzmu4OEYer7ZA4KNGUfWQtF-uFtfzqGj9eY7=s150",
+                "market": "Huntsville",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgICA-MiiwggM",
+                "name": "Salty Nut Brewery",
+                "origin": "Huntsville, AL",
+                "public_url": "https://www.taphunter.com/brewery/salty-nut-brewery/4764197854380032",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "04/08/2022",
+            "date_to_live": "",
+            "date_to_live_iso8601": null,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character.",
+                "short_description_override": null,
+                "short_description_with_backup": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character.",
+                "style_description": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character."
+            },
+            "featured": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyKQsSHHRhcGh1bnRlcl9mdXR1cmVsb2NhdGlvbmJlZXIYgIDY7p-YrgsM",
+            "list": {
+                "key": "",
+                "name": ""
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "public": true,
+            "serving_info": {
+                "display_pricing": true,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_pricing": [
+                    {
+                        "price": "$7.99",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$15.98",
+                        "size": "64 oz"
+                    }
+                ],
+                "tap_number": 7,
+                "type": "Tap"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "7.25",
+                "beer_name": "Monkeynaut IPA",
+                "ibu": "70",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAgPjU1MkIDA",
+                "logo_url": "",
+                "name": "Straight To Ale Monkeynaut IPA",
+                "pintley_id": "19910",
+                "public_url": "https://www.taphunter.com/beer/straight-to-ale-monkeynaut-ipa/4827566040940544",
+                "style": "American IPA",
+                "style_category": "IPAs",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY7Y_aEQw"
+            },
+            "brewery": {
+                "city": "Huntsville",
+                "common_name": "Straight To Ale",
+                "country": "United States",
+                "distance": 6.890419848564115,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgJi598cKDA",
+                "logo_url": "https://lh3.googleusercontent.com/qQHku058jm_2bUGVvS72HZ9fY-9JGHowOkRiQkEWmFjujwhT-vZAbFAbtFn_ooDD2rN9V4y5mkA12JuboLdZRbECvbwa_3A=s150",
+                "market": "Huntsville",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgICA-MiiwggM",
+                "name": "Straight To Ale",
+                "origin": "Huntsville, AL",
+                "public_url": "https://www.taphunter.com/brewery/straight-to-ale/5945864996519936",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "11/24/2022",
+            "date_to_live": "",
+            "date_to_live_iso8601": null,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "This hoppy little monkey of a beer has a citrusy, floral hop aroma with a strong malt body and a crisp finish!",
+                "short_description_override": null,
+                "short_description_with_backup": "This hoppy little monkey of a beer has a citrusy, floral hop aroma with a strong malt body and a crisp finish!",
+                "style_description": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character."
+            },
+            "featured": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyKQsSHHRhcGh1bnRlcl9mdXR1cmVsb2NhdGlvbmJlZXIYgIDYt9SFgQgM",
+            "list": {
+                "key": "",
+                "name": ""
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "public": true,
+            "serving_info": {
+                "display_pricing": true,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_pricing": [
+                    {
+                        "price": "$6.99",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$13.98",
+                        "size": "64 oz"
+                    },
+                    {
+                        "price": "$26.99",
+                        "size": "1 gal"
+                    }
+                ],
+                "tap_number": 13,
+                "type": "Tap"
+            },
+            "tags": []
+        }
+    ],
+    "spirits": [
+        {
+            "abv": 46.5,
+            "bev_type": "spirits",
+            "beverage_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSD2JldmF0b19iZXZlcmFnZRiAgOCc5aPzCww",
+            "category_id": 6272405162688512,
+            "category_name": "American Whiskey",
+            "category_sort": 2,
+            "date_added": "2017-07-16",
+            "descriptions": {
+                "food_pairings": "",
+                "long_description": "",
+                "short_description": ""
+            },
+            "featured": true,
+            "ingredients": [],
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF2JldmF0b19sb2NhdGlvbmJldmVyYWdlGICA8JaZw_kJDA",
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 1,
+                    "spirits": 11,
+                    "tap_cask": 39,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "03/10/2018 09:26 AM",
+                "update_slang": {
+                    "digit": 3,
+                    "text": "Sorta Recently"
+                },
+                "update_timestamp": 1520695564.0,
+                "update_timestamp_iso8601": "2018-03-10T15:26:04Z"
+            },
+            "logo_url": "https://lh3.googleusercontent.com/JcZVCEqi719z8KD13QV6-llH4zildrRaQX03HuJrs2TFF38pSZhVRaTGMAv87_PBCDI11olJMXs6TssW1114qiIouRQ0=s750",
+            "name": "Blanton's",
+            "owner_logo_url": "https://lh3.googleusercontent.com/QrkfUDVavfR33A3g1WKlH92VXvF2UHcL_wjRBufUWw3qSugPAffevU7gvyCp2bLZY6TOtbYGlMPpPrnqiJnAb_zc3l61sw=s750",
+            "producer": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDmJldmF0b19jb21wYW55GICA4OzNraIKDA",
+                "name": "Blanton Distilling Co. ",
+                "origin": "Frankfort, KY",
+                "region": null,
+                "subregion": null
+            },
+            "proof": 93.0,
+            "serving_info": {
+                "age": "",
+                "barrel": null,
+                "batch": null,
+                "calories": "",
+                "display_pricing": true,
+                "price": null,
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": null,
+                "vintage": null
+            },
+            "type_name": "Straight Bourbon Whiskey"
+        },
+        {
+            "abv": 45.0,
+            "bev_type": "spirits",
+            "beverage_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSD2JldmF0b19iZXZlcmFnZRiAgIDw2ti7Cww",
+            "category_id": 6272405162688512,
+            "category_name": "American Whiskey",
+            "category_sort": 2,
+            "date_added": "2017-08-01",
+            "descriptions": {
+                "food_pairings": "",
+                "long_description": "This deep amber whiskey has a complex aroma of vanilla, mint and molasses. Pleasantly sweet to the taste with notes of brown sugar and spice give way to oak, toffee, dark fruit and anise. Finishes long and smooth with serious depth.",
+                "short_description": "Pleasantly sweet to the taste with notes of brown sugar and spice give way to oak, toffee, dark fruit and anise."
+            },
+            "featured": true,
+            "ingredients": [],
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF2JldmF0b19sb2NhdGlvbmJldmVyYWdlGICA8PbHjt4LDA",
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 0,
+                    "spirits": 11,
+                    "tap_cask": 35,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "08/15/2021 05:19 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1629065954.0,
+                "update_timestamp_iso8601": "2021-08-15T22:19:14Z"
+            },
+            "logo_url": "https://lh3.googleusercontent.com/61lEijtV0XpXKjaKxk-FIMcQhBNE7d2CQ2ydwoEXDLyt5p9AAISab9OLL6VcRt9xnSxhnsvDBgNR5EIo2Mu4Umyo9DBt=s750",
+            "name": "Buffalo Trace",
+            "owner_logo_url": "https://lh3.googleusercontent.com/61lEijtV0XpXKjaKxk-FIMcQhBNE7d2CQ2ydwoEXDLyt5p9AAISab9OLL6VcRt9xnSxhnsvDBgNR5EIo2Mu4Umyo9DBt=s750",
+            "producer": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDmJldmF0b19jb21wYW55GICAgPDG3KgKDA",
+                "name": "Buffalo Trace Distillery",
+                "origin": "Frankfort, KY",
+                "region": null,
+                "subregion": null
+            },
+            "proof": 90.0,
+            "serving_info": {
+                "age": "",
+                "barrel": null,
+                "batch": null,
+                "calories": "",
+                "display_pricing": true,
+                "price": null,
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": null,
+                "vintage": null
+            },
+            "type_name": "Straight Bourbon Whiskey"
+        },
+        {
+            "abv": 50.0,
+            "bev_type": "spirits",
+            "beverage_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSD2JldmF0b19iZXZlcmFnZRiAgIDw2vvZCAw",
+            "category_id": 6272405162688512,
+            "category_name": "American Whiskey",
+            "category_sort": 2,
+            "date_added": "2017-08-04",
+            "descriptions": {
+                "food_pairings": "",
+                "long_description": "",
+                "short_description": ""
+            },
+            "featured": false,
+            "ingredients": [],
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF2JldmF0b19sb2NhdGlvbmJldmVyYWdlGICA8O7i66YKDA",
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 0,
+                    "spirits": 11,
+                    "tap_cask": 36,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "02/15/2020 01:35 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1581795354.0,
+                "update_timestamp_iso8601": "2020-02-15T19:35:54Z"
+            },
+            "logo_url": "https://lh3.googleusercontent.com/61lEijtV0XpXKjaKxk-FIMcQhBNE7d2CQ2ydwoEXDLyt5p9AAISab9OLL6VcRt9xnSxhnsvDBgNR5EIo2Mu4Umyo9DBt=s750",
+            "name": "Colonel E.H. Taylor Single Barrel",
+            "owner_logo_url": "https://lh3.googleusercontent.com/61lEijtV0XpXKjaKxk-FIMcQhBNE7d2CQ2ydwoEXDLyt5p9AAISab9OLL6VcRt9xnSxhnsvDBgNR5EIo2Mu4Umyo9DBt=s750",
+            "producer": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDmJldmF0b19jb21wYW55GICAgPDG3KgKDA",
+                "name": "Buffalo Trace Distillery",
+                "origin": "Frankfort, KY",
+                "region": null,
+                "subregion": null
+            },
+            "proof": 100.0,
+            "serving_info": {
+                "age": "",
+                "barrel": null,
+                "batch": null,
+                "calories": "",
+                "display_pricing": true,
+                "price": null,
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": null,
+                "vintage": null
+            },
+            "type_name": "Straight Bourbon Whiskey"
+        },
+        {
+            "abv": 50.0,
+            "bev_type": "spirits",
+            "beverage_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSD2JldmF0b19iZXZlcmFnZRiAgIDa0cKWCAw",
+            "category_id": 6272405162688512,
+            "category_name": "American Whiskey",
+            "category_sort": 2,
+            "date_added": "2017-08-04",
+            "descriptions": {
+                "food_pairings": "",
+                "long_description": "",
+                "short_description": ""
+            },
+            "featured": false,
+            "ingredients": [],
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF2JldmF0b19sb2NhdGlvbmJldmVyYWdlGICA8O6ZrYALDA",
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 0,
+                    "spirits": 11,
+                    "tap_cask": 35,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/18/2020 05:11 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1579389066.0,
+                "update_timestamp_iso8601": "2020-01-18T23:11:06Z"
+            },
+            "logo_url": "https://lh3.googleusercontent.com/a_gCrh2n3aGPHewbLg4q9f5qIqzMl4hcxIPUzRxCgi7yWDovlPABqhWa_j1ggjIAZtRcOlLp8JaFo4Ta3UB8Zg320v16ghU=s750",
+            "name": "Colonel E.H. Taylor Small Batch Bottled In Bond",
+            "owner_logo_url": "",
+            "producer": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDmJldmF0b19jb21wYW55GICAgPCO_PELDA",
+                "name": "Old Fashioned Copper Distillery",
+                "origin": "",
+                "region": null,
+                "subregion": null
+            },
+            "proof": 100.0,
+            "serving_info": {
+                "age": "",
+                "barrel": null,
+                "batch": null,
+                "calories": "",
+                "display_pricing": true,
+                "price": null,
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": null,
+                "vintage": null
+            },
+            "type_name": "Straight Bourbon Whiskey"
+        },
+        {
+            "abv": 45.0,
+            "bev_type": "spirits",
+            "beverage_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSD2JldmF0b19iZXZlcmFnZRiAgOC8qcyVCgw",
+            "category_id": 6272405162688512,
+            "category_name": "American Whiskey",
+            "category_sort": 2,
+            "date_added": "2017-08-04",
+            "descriptions": {
+                "food_pairings": "",
+                "long_description": "",
+                "short_description": ""
+            },
+            "featured": false,
+            "ingredients": [],
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF2JldmF0b19sb2NhdGlvbmJldmVyYWdlGICA8K753ewIDA",
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 0,
+                    "spirits": 11,
+                    "tap_cask": 30,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "12/19/2020 04:06 PM",
+                "update_slang": {
+                    "digit": 3,
+                    "text": "Sorta Recently"
+                },
+                "update_timestamp": 1608415565.0,
+                "update_timestamp_iso8601": "2020-12-19T22:06:05Z"
+            },
+            "logo_url": "https://lh3.googleusercontent.com/1iX3l6OuTqk__EjSIcObuS4q19n8cpwZHQC9wA-qUy8CLU56Snyu5KeHPgVscuZD7zrObtoxUAkY0L85Zg50-A1QjqSC=s750",
+            "name": "Eagle Rare",
+            "owner_logo_url": "https://lh3.googleusercontent.com/61lEijtV0XpXKjaKxk-FIMcQhBNE7d2CQ2ydwoEXDLyt5p9AAISab9OLL6VcRt9xnSxhnsvDBgNR5EIo2Mu4Umyo9DBt=s750",
+            "producer": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDmJldmF0b19jb21wYW55GICAgPDG3KgKDA",
+                "name": "Buffalo Trace Distillery",
+                "origin": "Frankfort, KY",
+                "region": null,
+                "subregion": null
+            },
+            "proof": 90.0,
+            "serving_info": {
+                "age": "",
+                "barrel": null,
+                "batch": null,
+                "calories": "",
+                "display_pricing": true,
+                "price": null,
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": null,
+                "vintage": null
+            },
+            "type_name": "Straight Bourbon Whiskey"
+        },
+        {
+            "abv": 49.3,
+            "bev_type": "spirits",
+            "beverage_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSD2JldmF0b19iZXZlcmFnZRiAgKDL08OCCww",
+            "category_id": 6272405162688512,
+            "category_name": "American Whiskey",
+            "category_sort": 2,
+            "date_added": "2018-02-06",
+            "descriptions": {
+                "food_pairings": "",
+                "long_description": "",
+                "short_description": ""
+            },
+            "featured": false,
+            "ingredients": [],
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF2JldmF0b19sb2NhdGlvbmJldmVyYWdlGICA8Nu-rp8IDA",
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 0,
+                    "spirits": 11,
+                    "tap_cask": 34,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "12/10/2019 04:36 PM",
+                "update_slang": {
+                    "digit": 5,
+                    "text": "Recently"
+                },
+                "update_timestamp": 1576017382.0,
+                "update_timestamp_iso8601": "2019-12-10T22:36:22Z"
+            },
+            "logo_url": "https://lh3.googleusercontent.com/ti3ghR6Vnc6wrYuJc5CosWWskHTJk1ukyJeEL_5RB07FAb3dEgSPz2wBsqwM7YMaH_XgfsUJuWWeLSd8sNS0LlAXAXRU=s750",
+            "name": "High West A Midwinter Nights Dram",
+            "owner_logo_url": "https://lh3.googleusercontent.com/ti3ghR6Vnc6wrYuJc5CosWWskHTJk1ukyJeEL_5RB07FAb3dEgSPz2wBsqwM7YMaH_XgfsUJuWWeLSd8sNS0LlAXAXRU=s750",
+            "producer": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDmJldmF0b19jb21wYW55GICAgPCO_NEJDA",
+                "name": "High West Distillery",
+                "origin": "Salt Lake City, Utah",
+                "region": null,
+                "subregion": null
+            },
+            "proof": 98.6,
+            "serving_info": {
+                "age": "",
+                "barrel": null,
+                "batch": null,
+                "calories": "",
+                "display_pricing": true,
+                "price": null,
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": null,
+                "vintage": null
+            },
+            "type_name": "American Whiskey"
+        },
+        {
+            "abv": 46.0,
+            "bev_type": "spirits",
+            "beverage_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSD2JldmF0b19iZXZlcmFnZRiAgIDw2sKFCww",
+            "category_id": 6272405162688512,
+            "category_name": "American Whiskey",
+            "category_sort": 2,
+            "date_added": "2018-03-02",
+            "descriptions": {
+                "food_pairings": "",
+                "long_description": "",
+                "short_description": ""
+            },
+            "featured": false,
+            "ingredients": [],
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF2JldmF0b19sb2NhdGlvbmJldmVyYWdlGICA8Lfi4KgJDA",
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 0,
+                    "spirits": 11,
+                    "tap_cask": 40,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "04/12/2019 06:02 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1555110171.0,
+                "update_timestamp_iso8601": "2019-04-12T23:02:51Z"
+            },
+            "logo_url": "https://lh3.googleusercontent.com/ti3ghR6Vnc6wrYuJc5CosWWskHTJk1ukyJeEL_5RB07FAb3dEgSPz2wBsqwM7YMaH_XgfsUJuWWeLSd8sNS0LlAXAXRU=s750",
+            "name": "High West Bourye",
+            "owner_logo_url": "https://lh3.googleusercontent.com/ti3ghR6Vnc6wrYuJc5CosWWskHTJk1ukyJeEL_5RB07FAb3dEgSPz2wBsqwM7YMaH_XgfsUJuWWeLSd8sNS0LlAXAXRU=s750",
+            "producer": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDmJldmF0b19jb21wYW55GICAgPCO_NEJDA",
+                "name": "High West Distillery",
+                "origin": "Salt Lake City, Utah",
+                "region": null,
+                "subregion": null
+            },
+            "proof": 92.0,
+            "serving_info": {
+                "age": "",
+                "barrel": null,
+                "batch": null,
+                "calories": "",
+                "display_pricing": true,
+                "price": null,
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": null,
+                "vintage": null
+            },
+            "type_name": "American Blended Whiskey"
+        },
+        {
+            "abv": 46.0,
+            "bev_type": "spirits",
+            "beverage_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSD2JldmF0b19iZXZlcmFnZRiAgIDw2vu9CQw",
+            "category_id": 6272405162688512,
+            "category_name": "American Whiskey",
+            "category_sort": 2,
+            "date_added": "2017-09-01",
+            "descriptions": {
+                "food_pairings": "",
+                "long_description": "",
+                "short_description": ""
+            },
+            "featured": false,
+            "ingredients": [],
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF2JldmF0b19sb2NhdGlvbmJldmVyYWdlGICA8IHtnucIDA",
+            "location": {
+                "address": ", Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "ondeck": 0,
+                    "spirits": 8,
+                    "tap_cask": 32,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.674075,-86.490475",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/HIWTS2hbLASJsZOJobthRhZ4rcvo5dvaxS32UUSI-4f9BD-R-mjyq5aGYDCkkT1TB5TfO49G8aCTG0GzRez27uOC8FJk=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/HIWTS2hbLASJsZOJobthRhZ4rcvo5dvaxS32UUSI-4f9BD-R-mjyq5aGYDCkkT1TB5TfO49G8aCTG0GzRez27uOC8FJk=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "09/13/2017 09:16 AM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1505312214.0,
+                "update_timestamp_iso8601": "2017-09-13T14:16:54Z"
+            },
+            "logo_url": "https://lh3.googleusercontent.com/ti3ghR6Vnc6wrYuJc5CosWWskHTJk1ukyJeEL_5RB07FAb3dEgSPz2wBsqwM7YMaH_XgfsUJuWWeLSd8sNS0LlAXAXRU=s750",
+            "name": "High West Campfire Whiskey",
+            "owner_logo_url": "https://lh3.googleusercontent.com/ti3ghR6Vnc6wrYuJc5CosWWskHTJk1ukyJeEL_5RB07FAb3dEgSPz2wBsqwM7YMaH_XgfsUJuWWeLSd8sNS0LlAXAXRU=s750",
+            "producer": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDmJldmF0b19jb21wYW55GICAgPCO_NEJDA",
+                "name": "High West Distillery",
+                "origin": "Salt Lake City, Utah",
+                "region": null,
+                "subregion": null
+            },
+            "proof": 92.0,
+            "serving_info": {
+                "age": "5 yr",
+                "barrel": null,
+                "batch": null,
+                "calories": "",
+                "display_pricing": true,
+                "price": null,
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": null,
+                "vintage": null
+            },
+            "type_name": "American Blended Whiskey"
+        },
+        {
+            "abv": null,
+            "bev_type": "spirits",
+            "beverage_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSD2JldmF0b19iZXZlcmFnZRiAgPD-xaL4CAw",
+            "category_id": 6272405162688512,
+            "category_name": "American Whiskey",
+            "category_sort": 2,
+            "date_added": "2017-09-02",
+            "descriptions": {
+                "food_pairings": "",
+                "long_description": "",
+                "short_description": ""
+            },
+            "featured": true,
+            "ingredients": [],
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF2JldmF0b19sb2NhdGlvbmJldmVyYWdlGICA8KGmsvsIDA",
+            "location": {
+                "address": ", Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "ondeck": 0,
+                    "spirits": 8,
+                    "tap_cask": 32,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.674075,-86.490475",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/HIWTS2hbLASJsZOJobthRhZ4rcvo5dvaxS32UUSI-4f9BD-R-mjyq5aGYDCkkT1TB5TfO49G8aCTG0GzRez27uOC8FJk=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/HIWTS2hbLASJsZOJobthRhZ4rcvo5dvaxS32UUSI-4f9BD-R-mjyq5aGYDCkkT1TB5TfO49G8aCTG0GzRez27uOC8FJk=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "09/13/2017 09:16 AM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1505312214.0,
+                "update_timestamp_iso8601": "2017-09-13T14:16:54Z"
+            },
+            "logo_url": "https://lh3.googleusercontent.com/P3-Etso-6sfnCLIPmKR7WokLqkdkmvNWCBir0SIhsVCqlCtmzuNF0RRQkkypkSkjpGB2QvNOkQTDQ8rfwQs5_ekmqV6P=s750",
+            "name": "Jefferson's Grand Selection Chatea",
+            "owner_logo_url": "",
+            "producer": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDmJldmF0b19jb21wYW55GICA8IGfyuILDA",
+                "name": "Jefferson's Grand Selection Chatea",
+                "origin": "United States",
+                "region": null,
+                "subregion": null
+            },
+            "proof": null,
+            "serving_info": {
+                "age": "",
+                "barrel": null,
+                "batch": null,
+                "calories": "",
+                "display_pricing": true,
+                "price": null,
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": null,
+                "vintage": null
+            },
+            "type_name": "Straight Bourbon Whiskey"
+        },
+        {
+            "abv": 53.5,
+            "bev_type": "spirits",
+            "beverage_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSD2JldmF0b19iZXZlcmFnZRiAgIDw7PuwCAw",
+            "category_id": 6272405162688512,
+            "category_name": "American Whiskey",
+            "category_sort": 2,
+            "date_added": "2017-09-01",
+            "descriptions": {
+                "food_pairings": "",
+                "long_description": "",
+                "short_description": ""
+            },
+            "featured": false,
+            "ingredients": [],
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF2JldmF0b19sb2NhdGlvbmJldmVyYWdlGICA8P6vjoQJDA",
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 1,
+                    "spirits": 11,
+                    "tap_cask": 38,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "08/18/2018 09:30 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1534645828.0,
+                "update_timestamp_iso8601": "2018-08-19T02:30:28Z"
+            },
+            "logo_url": "https://lh3.googleusercontent.com/61lEijtV0XpXKjaKxk-FIMcQhBNE7d2CQ2ydwoEXDLyt5p9AAISab9OLL6VcRt9xnSxhnsvDBgNR5EIo2Mu4Umyo9DBt=s750",
+            "name": "Old Weller Antique",
+            "owner_logo_url": "https://lh3.googleusercontent.com/61lEijtV0XpXKjaKxk-FIMcQhBNE7d2CQ2ydwoEXDLyt5p9AAISab9OLL6VcRt9xnSxhnsvDBgNR5EIo2Mu4Umyo9DBt=s750",
+            "producer": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDmJldmF0b19jb21wYW55GICAgPDG3KgKDA",
+                "name": "Buffalo Trace Distillery",
+                "origin": "Frankfort, KY",
+                "region": null,
+                "subregion": null
+            },
+            "proof": 107.0,
+            "serving_info": {
+                "age": "7 yr",
+                "barrel": null,
+                "batch": null,
+                "calories": "",
+                "display_pricing": true,
+                "price": null,
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": null,
+                "vintage": null
+            },
+            "type_name": "Straight Bourbon Whiskey"
+        },
+        {
+            "abv": 31.0,
+            "bev_type": "spirits",
+            "beverage_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSD2JldmF0b19iZXZlcmFnZRiAgICTztfrCQw",
+            "category_id": 5803208573976576,
+            "category_name": "Cordial/Liqueur",
+            "category_sort": 8,
+            "date_added": "2017-12-14",
+            "descriptions": {
+                "food_pairings": "",
+                "long_description": "",
+                "short_description": ""
+            },
+            "featured": true,
+            "ingredients": [],
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF2JldmF0b19sb2NhdGlvbmJldmVyYWdlGICA8L2y0_kLDA",
+            "location": {
+                "address": ", Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 0,
+                    "spirits": 9,
+                    "tap_cask": 31,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.674075,-86.490475",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/HIWTS2hbLASJsZOJobthRhZ4rcvo5dvaxS32UUSI-4f9BD-R-mjyq5aGYDCkkT1TB5TfO49G8aCTG0GzRez27uOC8FJk=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/HIWTS2hbLASJsZOJobthRhZ4rcvo5dvaxS32UUSI-4f9BD-R-mjyq5aGYDCkkT1TB5TfO49G8aCTG0GzRez27uOC8FJk=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "12/14/2017 07:19 AM",
+                "update_slang": {
+                    "digit": 5,
+                    "text": "Recently"
+                },
+                "update_timestamp": 1513257545.0,
+                "update_timestamp_iso8601": "2017-12-14T13:19:05Z"
+            },
+            "logo_url": "",
+            "name": "Licor 43",
+            "owner_logo_url": "",
+            "producer": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDmJldmF0b19jb21wYW55GICAgNPB1ogIDA",
+                "name": "Licor 43",
+                "origin": "United States",
+                "region": null,
+                "subregion": null
+            },
+            "proof": 62.0,
+            "serving_info": {
+                "age": "",
+                "barrel": null,
+                "batch": null,
+                "calories": "",
+                "display_pricing": true,
+                "price": null,
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": null,
+                "vintage": null
+            },
+            "type_name": "Cordial/Liqueur"
+        }
+    ],
+    "taps": [
+        {
+            "beer": {
+                "abv": "7.0",
+                "beer_name": "Lemon Berry Mosa",
+                "ibu": "",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICA2KnynukIDA",
+                "logo_url": "",
+                "name": "Back Forty Lemon Berry Mosa",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/back-forty-lemon-berry-mosa/4966455992254464",
+                "ratebeer_id": null,
+                "ratebeer_overall_pctl": null,
+                "ratebeer_style_pctl": null,
+                "srm": "",
+                "style": "",
+                "style_category": "",
+                "style_key": ""
+            },
+            "brewery": {
+                "city": "Gadsden",
+                "common_name": "Back Forty",
+                "country": "United States",
+                "distance": 51.89388577302027,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgIC64LEKDA",
+                "logo_url": "https://lh3.googleusercontent.com/8t6OUwXr4IUED8fY0gz4m7wu6iFU0uRm_NJeuK8-bKekFYX58M2h51m_VKSnN2nEz0gn98g707fAHW5_Wvenw87GcRA90ho=s150",
+                "market": "",
+                "market_key": "",
+                "name": "Back Forty Beer Co.",
+                "origin": "Gadsden, AL",
+                "public_url": "https://www.taphunter.com/brewery/back-forty-beer-co/5848317917396992",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "05/20/2022",
+            "date_added_iso8601": "2022-05-20T19:13:21Z",
+            "date_added_timestamp": 1653074001.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "",
+                "short_description_override": null,
+                "short_description_with_backup": "",
+                "style_description": ""
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": true,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA2Omwn6MJDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8IOApOYLDA",
+                "name": "Growlers"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [
+                    {
+                        "calories": "",
+                        "size": "32 oz"
+                    },
+                    {
+                        "calories": "",
+                        "size": "64 oz"
+                    },
+                    {
+                        "calories": "",
+                        "size": "1 gal"
+                    }
+                ],
+                "sized_pricing": [
+                    {
+                        "price": "$11.99",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$23.98",
+                        "size": "64 oz"
+                    },
+                    {
+                        "price": "$47.96",
+                        "size": "1 gal"
+                    }
+                ],
+                "tap_number": 11,
+                "type": "Tap"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "4.2",
+                "beer_name": "Bud Light",
+                "ibu": "10",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyFgsSDnRhcGh1bnRlcl9iZWVyGI3WBww",
+                "logo_url": "https://lh3.googleusercontent.com/ttDRTSW8Rddre5WapDf9woY9MYDe5fdBdem82MnV_GnxmbUyo21pEB83uAQvYa63ITYTNKf3Sh4pQXiDM8Wfl6ehTAOu=s150",
+                "name": "Bud Light",
+                "pintley_id": "100",
+                "public_url": "https://www.taphunter.com/beer/bud-light/125709",
+                "ratebeer_id": 474,
+                "ratebeer_overall_pctl": 2.69234510544812e-08,
+                "ratebeer_style_pctl": 0.735580719727025,
+                "srm": "",
+                "style": "American Light Lager",
+                "style_category": "Pilsners and Pale Lagers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYlv_ZEQw"
+            },
+            "brewery": {
+                "city": "St. Louis",
+                "common_name": "Anheuser-Busch",
+                "country": "United States",
+                "distance": 342.09881757773644,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGQsSEXRhcGh1bnRlcl9icmV3ZXJ5GIzWBww",
+                "logo_url": "https://lh3.googleusercontent.com/vag--YPVVyh_RxrJuMZ6U7ytbGCJrOvNPiQ0_gTx_ldWYURdtiyvHUktcnELrYxJEsLemuR085eSeIcCL6LcUBxa8lxqTcwQW-A7PygLhQ=s150",
+                "market": "St. Louis",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGQsSEHRhcGh1bnRlcl9tYXJrZXQY8Y22GAw",
+                "name": "Anheuser-Busch, Inc.",
+                "origin": "St. Louis, MO",
+                "public_url": "https://www.taphunter.com/brewery/anheuser-busch-inc/125708",
+                "state": "MO"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "12/19/2017",
+            "date_added_iso8601": "2017-12-19T23:14:18Z",
+            "date_added_timestamp": 1513725258.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "Brewed with a malt and hops ratio different from Budweiser for a distinctively crisp taste with fewer calories.",
+                "short_description_override": null,
+                "short_description_with_backup": "Brewed with a malt and hops ratio different from Budweiser for a distinctively crisp taste with fewer calories.",
+                "style_description": "A light-bodied and very refreshing lager."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA8P2s4KAKDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "6.2",
+                "beer_name": "Sweet Baby Jesus",
+                "ibu": "33",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAgIDkuZkKDA",
+                "logo_url": "",
+                "name": "DuClaw Sweet Baby Jesus",
+                "pintley_id": "24899",
+                "public_url": "https://www.taphunter.com/beer/duclaw-sweet-baby-jesus/5741436045623296",
+                "ratebeer_id": 196264,
+                "ratebeer_overall_pctl": 88.5451869125017,
+                "ratebeer_style_pctl": 82.2994078313608,
+                "srm": "",
+                "style": "American Porter",
+                "style_category": "Porters and Stouts",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYtpzaEQw"
+            },
+            "brewery": {
+                "city": "Bel Air",
+                "common_name": "DuClaw",
+                "country": "United States",
+                "distance": 651.2634914903093,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgIDU75oIDA",
+                "logo_url": "https://lh3.googleusercontent.com/NlmvaKnJmLcD7Ma1_hhdSSqDWNHzkqmw_eRCA6h0jHh6yGicSv13k-kafuqss1zHKIUPmUcIJJyPeP1xT0bcCxJncClIpA=s150",
+                "market": "Baltimore",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgICgjL2mmgoM",
+                "name": "DuClaw Brewing Company",
+                "origin": "Bel Air, MD",
+                "public_url": "https://www.taphunter.com/brewery/duclaw-brewing-company/4621785316196352",
+                "state": "MD"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "09/17/2022",
+            "date_added_iso8601": "2022-09-17T00:04:25Z",
+            "date_added_timestamp": 1663373065.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "Sweet Baby Jesus finishes smooth, dry, and roasty with lingering notes of chocolate and peanut butter so savory, you will exclaim its name!",
+                "short_description_override": null,
+                "short_description_with_backup": "Sweet Baby Jesus finishes smooth, dry, and roasty with lingering notes of chocolate and peanut butter so savory, you will exclaim its name!",
+                "style_description": "A complex, malty dark beer with a lightly burnt character."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA2OOo6PULDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8IOApOYLDA",
+                "name": "Growlers"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": true,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [
+                    {
+                        "calories": 545,
+                        "size": "32 oz"
+                    },
+                    {
+                        "calories": 1085,
+                        "size": "64 oz"
+                    },
+                    {
+                        "calories": 2175,
+                        "size": "1 gal"
+                    }
+                ],
+                "sized_pricing": [
+                    {
+                        "price": "$8.29",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$16.58",
+                        "size": "64 oz"
+                    },
+                    {
+                        "price": "$32.99",
+                        "size": "1 gal"
+                    }
+                ],
+                "tap_number": 3,
+                "type": "Tap"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "4.7",
+                "beer_name": "All Day IPA",
+                "ibu": "42",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyFwsSDnRhcGh1bnRlcl9iZWVyGNGoiREM",
+                "logo_url": "https://lh3.googleusercontent.com/Lij8Clxb1bzfey0RnxAhLgvwFAjJsd8omcKRAdE4JVMIFbHVNndnuuRY85cEv06g0nri6dDITqahxph8Mkwo3fXUwnPdxNY=s150",
+                "name": "Founders All Day IPA",
+                "pintley_id": "23435",
+                "public_url": "https://www.taphunter.com/beer/founders-all-day-ipa/35804241",
+                "ratebeer_id": 141611,
+                "ratebeer_overall_pctl": 90.332459451075,
+                "ratebeer_style_pctl": 97.5924333188217,
+                "srm": "",
+                "style": "Session IPA",
+                "style_category": "IPAs",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY7Y_aEQw"
+            },
+            "brewery": {
+                "city": "Grand Rapids",
+                "common_name": "Founders",
+                "country": "United States",
+                "distance": 575.639860130683,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGgsSEXRhcGh1bnRlcl9icmV3ZXJ5GKLflQEM",
+                "logo_url": "https://lh3.googleusercontent.com/IjgloMjxO7_9fkF97P2SWnVgxg4rJttCOqkz_Wru3evAGRosLiz3HwTm8fhJH8lLWMj6tpAp7_ZPTK_24kvs3ydd-wfcdg=s150",
+                "market": "Grand Rapids",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgIDAtOWbqwkM",
+                "name": "Founders Brewing Company",
+                "origin": "Grand Rapids, MI",
+                "public_url": "https://www.taphunter.com/brewery/founders-brewing-company/2453410",
+                "state": "MI"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "12/31/2017",
+            "date_added_iso8601": "2017-12-31T21:28:08Z",
+            "date_added_timestamp": 1514755688.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "Keeps your taste satisfied while keeping your senses sharp. An all-day IPA naturally brewed with a complex array of malts, grains and hops.",
+                "short_description_override": null,
+                "short_description_with_backup": "Keeps your taste satisfied while keeping your senses sharp. An all-day IPA naturally brewed with a complex array of malts, grains and hops.",
+                "style_description": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA8KOo2LIIDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "6.2",
+                "beer_name": "Project Infinite Coast",
+                "ibu": "",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAmKeC2IwIDA",
+                "logo_url": "",
+                "name": "Fractal Project Infinite Coast",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/fractal-project-infinite-coast/4559400461533184",
+                "ratebeer_id": 929220,
+                "ratebeer_overall_pctl": null,
+                "ratebeer_style_pctl": null,
+                "srm": "",
+                "style": "American IPA",
+                "style_category": "IPAs",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY7Y_aEQw"
+            },
+            "brewery": {
+                "city": "Huntsville",
+                "common_name": "Fractal Project",
+                "country": "United States",
+                "distance": 7.746262726989156,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICA6KC248sIDA",
+                "logo_url": "https://lh3.googleusercontent.com/7IzGZp7zT5HGWChSKaVjuufnILy_OcBVwSAKHlenextOwrgyW96l4xvxHD9pmxgg9Kg4fld7kmQHFw26IraCCxW4PZdOhJg=s150",
+                "market": "",
+                "market_key": "",
+                "name": "Fractal Brewing Project",
+                "origin": "Huntsville, AL",
+                "public_url": "https://www.taphunter.com/brewery/fractal-brewing-project/4836869294129152",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "09/17/2022",
+            "date_added_iso8601": "2022-09-17T00:02:10Z",
+            "date_added_timestamp": 1663372930.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character.",
+                "short_description_override": null,
+                "short_description_with_backup": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character.",
+                "style_description": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": true,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA2KP8ybwKDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8IOApOYLDA",
+                "name": "Growlers"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 22,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/06/2023 03:01 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673038863.0,
+                "update_timestamp_iso8601": "2023-01-06T21:01:03Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": true,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [
+                    {
+                        "calories": 515,
+                        "size": "32 oz"
+                    },
+                    {
+                        "calories": 1030,
+                        "size": "64 oz"
+                    },
+                    {
+                        "calories": 2065,
+                        "size": "1 gal"
+                    }
+                ],
+                "sized_pricing": [
+                    {
+                        "price": "$8.29",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$16.58",
+                        "size": "64 oz"
+                    },
+                    {
+                        "price": "$32.99",
+                        "size": "1 gal"
+                    }
+                ],
+                "tap_number": 5,
+                "type": "Tap"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "4.6",
+                "beer_name": "Blood Orange Berliner-Weisse",
+                "ibu": "",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICA8PvB9rIIDA",
+                "logo_url": "",
+                "name": "Goat Island Blood Orange Berliner-Weisse",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/goat-island-blood-orange-berliner-weisse/4727574110142464",
+                "ratebeer_id": null,
+                "ratebeer_overall_pctl": null,
+                "ratebeer_style_pctl": null,
+                "srm": "",
+                "style": "Berliner Weisse",
+                "style_category": "Sour and Fruit Beers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYte7aEQw"
+            },
+            "brewery": {
+                "city": "Cullman",
+                "common_name": "Goat Island",
+                "country": "United States",
+                "distance": 40.41179997699508,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAkKff2_gIDA",
+                "logo_url": "https://lh3.googleusercontent.com/M3_xtdzo7s27XoQDV30Vqf-AWNcW8mbaoYbC5FhrAbmHoXXXY6a2L-0qv_byGVlxSQHqFb6JzOxIum8odEyq6uixQ1ZbUQ=s150",
+                "market": "Birmingham",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgIDA3YDs6QkM",
+                "name": "Goat Island",
+                "origin": "Cullman, AL",
+                "public_url": "https://www.taphunter.com/brewery/goat-island/5034517528313856",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "03/02/2021",
+            "date_added_iso8601": "2021-03-02T10:05:44Z",
+            "date_added_timestamp": 1614679544.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "A very pale wheat beer low in alcohol with light bread and clean lactic sour flavors.",
+                "short_description_override": null,
+                "short_description_with_backup": "A very pale wheat beer low in alcohol with light bread and clean lactic sour flavors.",
+                "style_description": "A very pale wheat beer low in alcohol with light bread and clean lactic sour flavors."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": true,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICAmPWG5PkIDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 3,
+                    "text": "Sorta Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [
+                    {
+                        "calories": 325,
+                        "size": "32 oz"
+                    },
+                    {
+                        "calories": 650,
+                        "size": "64 oz"
+                    }
+                ],
+                "sized_pricing": [
+                    {
+                        "price": "$9.49",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$18.98",
+                        "size": "64 oz"
+                    }
+                ],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "4.6",
+                "beer_name": "Blood Orange Berliner-Weisse",
+                "ibu": "",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICA8PvB9rIIDA",
+                "logo_url": "",
+                "name": "Goat Island Blood Orange Berliner-Weisse",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/goat-island-blood-orange-berliner-weisse/4727574110142464",
+                "ratebeer_id": null,
+                "ratebeer_overall_pctl": null,
+                "ratebeer_style_pctl": null,
+                "srm": "",
+                "style": "Berliner Weisse",
+                "style_category": "Sour and Fruit Beers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYte7aEQw"
+            },
+            "brewery": {
+                "city": "Cullman",
+                "common_name": "Goat Island",
+                "country": "United States",
+                "distance": 40.41179997699508,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAkKff2_gIDA",
+                "logo_url": "https://lh3.googleusercontent.com/M3_xtdzo7s27XoQDV30Vqf-AWNcW8mbaoYbC5FhrAbmHoXXXY6a2L-0qv_byGVlxSQHqFb6JzOxIum8odEyq6uixQ1ZbUQ=s150",
+                "market": "Birmingham",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgIDA3YDs6QkM",
+                "name": "Goat Island",
+                "origin": "Cullman, AL",
+                "public_url": "https://www.taphunter.com/brewery/goat-island/5034517528313856",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "09/14/2022",
+            "date_added_iso8601": "2022-09-14T18:51:11Z",
+            "date_added_timestamp": 1663181471.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "A very pale wheat beer low in alcohol with light bread and clean lactic sour flavors.",
+                "short_description_override": null,
+                "short_description_with_backup": "A very pale wheat beer low in alcohol with light bread and clean lactic sour flavors.",
+                "style_description": "A very pale wheat beer low in alcohol with light bread and clean lactic sour flavors."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": true,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA2MOQxu8LDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8IOApOYLDA",
+                "name": "Growlers"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 3,
+                    "text": "Sorta Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [
+                    {
+                        "calories": 325,
+                        "size": "32 oz"
+                    },
+                    {
+                        "calories": 650,
+                        "size": "64 oz"
+                    },
+                    {
+                        "calories": 1300,
+                        "size": "1 gal"
+                    }
+                ],
+                "sized_pricing": [
+                    {
+                        "price": "$8.49",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$16.98",
+                        "size": "64 oz"
+                    },
+                    {
+                        "price": "$32.99",
+                        "size": "1 gal"
+                    }
+                ],
+                "tap_number": 12,
+                "type": "Tap"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "7.1",
+                "beer_name": "IPA",
+                "ibu": "75.5",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAwLDX3JsLDA",
+                "logo_url": "",
+                "name": "Good People IPA",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/good-people-ipa/6314381294960640",
+                "ratebeer_id": 92158,
+                "ratebeer_overall_pctl": 74.3038106768851,
+                "ratebeer_style_pctl": 66.3243931635172,
+                "srm": "",
+                "style": "American IPA",
+                "style_category": "IPAs",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY7Y_aEQw"
+            },
+            "brewery": {
+                "city": "Birmingham",
+                "common_name": "Good People",
+                "country": "United States",
+                "distance": 81.61405292908307,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgNqe-5ILDA",
+                "logo_url": "https://lh6.ggpht.com/8zFL0Rx8WcWux2AG7V7VGZkkRmG_52PoGOlCu_HbvLoRzxIBsQXeeU-391_pT3cy1uJvQQOZS99-7mFSorIhOjqN5oyFmQ=s150",
+                "market": "Birmingham",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgIDA3YDs6QkM",
+                "name": "Good People Brewing Company",
+                "origin": "Birmingham, AL",
+                "public_url": "https://www.taphunter.com/brewery/good-people-brewing-company/6275848814460928",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "12/31/2017",
+            "date_added_iso8601": "2017-12-31T20:55:15Z",
+            "date_added_timestamp": 1514753715.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "Our unfiltered, dry-hopped IPA packs a copper-colored aromatic punch. Bold herbal and earthy hops are offset by light caramel flavors!",
+                "short_description_override": null,
+                "short_description_with_backup": "Our unfiltered, dry-hopped IPA packs a copper-colored aromatic punch. Bold herbal and earthy hops are offset by light caramel flavors!",
+                "style_description": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA8KPBz-UIDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 3,
+                    "text": "Sorta Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "5.8",
+                "beer_name": "Oktoberfest",
+                "ibu": "20",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAiNny8MkIDA",
+                "logo_url": "",
+                "name": "Good People Oktoberfest",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/good-people-oktoberfest/4828536101797888",
+                "ratebeer_id": null,
+                "ratebeer_overall_pctl": null,
+                "ratebeer_style_pctl": null,
+                "srm": "",
+                "style": "M\u00e4rzen",
+                "style_category": "Amber and Dark Lagers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYpYDaEQw"
+            },
+            "brewery": {
+                "city": "Birmingham",
+                "common_name": "Good People",
+                "country": "United States",
+                "distance": 81.61405292908307,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgNqe-5ILDA",
+                "logo_url": "https://lh6.ggpht.com/8zFL0Rx8WcWux2AG7V7VGZkkRmG_52PoGOlCu_HbvLoRzxIBsQXeeU-391_pT3cy1uJvQQOZS99-7mFSorIhOjqN5oyFmQ=s150",
+                "market": "Birmingham",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgIDA3YDs6QkM",
+                "name": "Good People Brewing Company",
+                "origin": "Birmingham, AL",
+                "public_url": "https://www.taphunter.com/brewery/good-people-brewing-company/6275848814460928",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "09/14/2022",
+            "date_added_iso8601": "2022-09-14T18:45:37Z",
+            "date_added_timestamp": 1663181137.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "A malty, German-style amber lager with a toasty and bready flavor, restrained bitterness with a dry finish.",
+                "short_description_override": null,
+                "short_description_with_backup": "A malty, German-style amber lager with a toasty and bready flavor, restrained bitterness with a dry finish.",
+                "style_description": "A malty, German-style amber lager with a toasty and bready flavor, restrained bitterness with a dry finish."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA2P3-jpILDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8IOApOYLDA",
+                "name": "Growlers"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [
+                    {
+                        "calories": 495,
+                        "size": "32 oz"
+                    },
+                    {
+                        "calories": 985,
+                        "size": "64 oz"
+                    },
+                    {
+                        "calories": 1975,
+                        "size": "1 gal"
+                    }
+                ],
+                "sized_pricing": [
+                    {
+                        "price": "$8.39",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$16.78",
+                        "size": "64 oz"
+                    },
+                    {
+                        "price": "$32.99",
+                        "size": "1 gal"
+                    }
+                ],
+                "tap_number": 14,
+                "type": "Tap"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "5.8",
+                "beer_name": "Pale Ale",
+                "ibu": "38",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAwJDo5MwLDA",
+                "logo_url": "",
+                "name": "Good People Pale Ale",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/good-people-pale-ale/6530164948205568",
+                "ratebeer_id": 89047,
+                "ratebeer_overall_pctl": 51.3238890081313,
+                "ratebeer_style_pctl": 48.9932286996957,
+                "srm": "",
+                "style": "American Pale Ale",
+                "style_category": "Blonde and Pale Ales",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYg7zZEQw"
+            },
+            "brewery": {
+                "city": "Birmingham",
+                "common_name": "Good People",
+                "country": "United States",
+                "distance": 81.61405292908307,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgNqe-5ILDA",
+                "logo_url": "https://lh6.ggpht.com/8zFL0Rx8WcWux2AG7V7VGZkkRmG_52PoGOlCu_HbvLoRzxIBsQXeeU-391_pT3cy1uJvQQOZS99-7mFSorIhOjqN5oyFmQ=s150",
+                "market": "Birmingham",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgIDA3YDs6QkM",
+                "name": "Good People Brewing Company",
+                "origin": "Birmingham, AL",
+                "public_url": "https://www.taphunter.com/brewery/good-people-brewing-company/6275848814460928",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "12/31/2017",
+            "date_added_iso8601": "2017-12-31T20:55:17Z",
+            "date_added_timestamp": 1514753717.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "Our flagship brew balances the subtle caramel tones of 2-Row & 5 Specialty Malts with just the right amount of hops. Complex and versatile, it\u2019s good anytime, anywhere for any occasion.",
+                "short_description_override": null,
+                "short_description_with_backup": "Our flagship brew balances the subtle caramel tones of 2-Row & 5 Specialty Malts with just the right amount of hops. Complex and versatile, it\u2019s good anytime, anywhere for any occasion.",
+                "style_description": "A moderate, refreshing ale with noticeable hop aroma balanced by supporting malt flavors."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA8OPwkcoLDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "5.0",
+                "beer_name": "Heineken",
+                "ibu": "23",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyFwsSDnRhcGh1bnRlcl9iZWVyGPWNuQgM",
+                "logo_url": "https://lh3.googleusercontent.com/peoUvDvm3taeHYeHqMjnjSp3MGlebLgmXpsPFzal0SXecrCxazuW-imw8CwP5DrVJ1Lm3JHGXB7g-rHa9dS9sLFlJDKf=s150",
+                "name": "Heineken",
+                "pintley_id": "5683",
+                "public_url": "https://www.taphunter.com/beer/heineken/17712885",
+                "ratebeer_id": 37,
+                "ratebeer_overall_pctl": 2.93999927737499,
+                "ratebeer_style_pctl": 20.0384672738528,
+                "srm": "",
+                "style": "International Pale Lager",
+                "style_category": "Pilsners and Pale Lagers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY-PjZEQw"
+            },
+            "brewery": {
+                "city": "",
+                "common_name": "Heineken",
+                "country": "Netherlands",
+                "distance": 4444.339875446601,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGgsSEXRhcGh1bnRlcl9icmV3ZXJ5GIzjmQEM",
+                "logo_url": "https://lh3.googleusercontent.com/jWsMGr5FEXpq-wsQi00XBb_P9A-v107pvlQQ-GLFxAIKH1grxbCJ0m1t6mD3aJYZ5YElYGj8U7nQ9NYEs4TBYPLtVbtWL30fpE3G6wqzgcM=s150",
+                "market": "",
+                "market_key": "",
+                "name": "Heineken Nederland B.V.",
+                "origin": "Netherlands",
+                "public_url": "https://www.taphunter.com/brewery/heineken-nederland-bv/2519436",
+                "state": ""
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "03/02/2021",
+            "date_added_iso8601": "2021-03-02T10:04:52Z",
+            "date_added_timestamp": 1614679492.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "Mildly bitter taste, fresh, fruity aroma, bright color and clarity are obtained using only the purest water, hops and barley malt.",
+                "short_description_override": null,
+                "short_description_with_backup": "Mildly bitter taste, fresh, fruity aroma, bright color and clarity are obtained using only the purest water, hops and barley malt.",
+                "style_description": "A highly carbonated, medium-bodied lager that is well-balanced."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICAmJ3gtLcJDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 22,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/06/2023 03:01 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673038863.0,
+                "update_timestamp_iso8601": "2023-01-06T21:01:03Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "6.3",
+                "beer_name": "Oktoberfest",
+                "ibu": "26",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyFgsSDnRhcGh1bnRlcl9iZWVyGPyeCgw",
+                "logo_url": "https://lh3.googleusercontent.com/4otXfMyzGwTmKeqk0M34EAV3EvluLT1NaRC7b8Y8jShIdIFKg3x_M6EIT7ZyZ9g_hhpdReZVl0owE0ro7A-UiuzueJdeeA=s750",
+                "name": "Hofbrau Oktoberfest",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/hofbrau-oktoberfest/167804",
+                "ratebeer_id": 8823,
+                "ratebeer_overall_pctl": 28.8193757178883,
+                "ratebeer_style_pctl": 45.5543759391312,
+                "srm": "",
+                "style": "M\u00e4rzen",
+                "style_category": "Amber and Dark Lagers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYpYDaEQw"
+            },
+            "brewery": {
+                "city": "Munchen",
+                "common_name": "Hofbrau Munchen",
+                "country": "Germany",
+                "distance": 4817.746076593072,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGQsSEXRhcGh1bnRlcl9icmV3ZXJ5GLfAAgw",
+                "logo_url": "https://lh3.googleusercontent.com/69bYyZCgNxCoYV0p77gcbOWkRYDHJAo4JAALaiOGHya7wmv1836xr136ohLn7QPIvK6wq_z4yIXyN9lPPyj7w0wZbDcn=s150",
+                "market": "",
+                "market_key": "",
+                "name": "Hofbrau Munchen",
+                "origin": "Munchen, Germany",
+                "public_url": "https://www.taphunter.com/brewery/hofbrau-munchen/41015",
+                "state": ""
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "09/14/2022",
+            "date_added_iso8601": "2022-09-14T18:43:17Z",
+            "date_added_timestamp": 1663180997.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "As unique as the Oktoberfest itself! Hofbr\u00e4u imports the same beer, from the same batches that are made for its own tent at the Oktoberfest.",
+                "short_description_override": null,
+                "short_description_with_backup": "As unique as the Oktoberfest itself! Hofbr\u00e4u imports the same beer, from the same batches that are made for its own tent at the Oktoberfest.",
+                "style_description": "A malty, German-style amber lager with a toasty and bready flavor, restrained bitterness with a dry finish."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA2KPVp_sIDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8IOApOYLDA",
+                "name": "Growlers"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [
+                    {
+                        "calories": 520,
+                        "size": "32 oz"
+                    },
+                    {
+                        "calories": 1040,
+                        "size": "64 oz"
+                    },
+                    {
+                        "calories": 2080,
+                        "size": "1 gal"
+                    }
+                ],
+                "sized_pricing": [
+                    {
+                        "price": "$4.99",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$9.98",
+                        "size": "64 oz"
+                    },
+                    {
+                        "price": "$19.96",
+                        "size": "1 gal"
+                    }
+                ],
+                "tap_number": 8,
+                "type": "Tap"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "4.2",
+                "beer_name": "Michelob Ultra",
+                "ibu": "10",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAgOzu1pcKDA",
+                "logo_url": "https://lh3.googleusercontent.com/EPdUTRm_nZBcCkl3mYPxayhr78xEjvW040gNzueegQatukaX5rQ_HnGH7nhP4vhptE2DscJ5xWi3IaAIXrvk31uphj8E=s150",
+                "name": "Michelob Ultra",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/michelob-ultra/5733639295860736",
+                "ratebeer_id": 12963,
+                "ratebeer_overall_pctl": 2.69234510544812e-08,
+                "ratebeer_style_pctl": 0.441363324622712,
+                "srm": "",
+                "style": "American Light Lager",
+                "style_category": "Pilsners and Pale Lagers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYlv_ZEQw"
+            },
+            "brewery": {
+                "city": "St Louis",
+                "common_name": "Michelob",
+                "country": "United States",
+                "distance": 343.07784157105607,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgOzuh8EJDA",
+                "logo_url": "https://lh3.ggpht.com/cO4vcLa3YIImk0Hp0iBCbIkhxPXP8L5HbWC2hKpuzIUlqE0innuh1QMuR2hWeQoAI-xUkiZMs3dpIWNu3mxOQ2Owj6b8yA=s150",
+                "market": "St. Louis",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGQsSEHRhcGh1bnRlcl9tYXJrZXQY8Y22GAw",
+                "name": "Michelob",
+                "origin": "St Louis, MO",
+                "public_url": "https://www.taphunter.com/brewery/michelob/5352692876574720",
+                "state": "MO"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "12/19/2017",
+            "date_added_iso8601": "2017-12-19T23:17:25Z",
+            "date_added_timestamp": 1513725445.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "Michelob Ultra appeals to beer drinkers interested in a superior tasting light beer that promotes an active, social lifestyle.",
+                "short_description_override": null,
+                "short_description_with_backup": "Michelob Ultra appeals to beer drinkers interested in a superior tasting light beer that promotes an active, social lifestyle.",
+                "style_description": "A light-bodied and very refreshing lager."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA8P3z8ZYIDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "4.4",
+                "beer_name": "Modelo Especial",
+                "ibu": "3.2",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyFwsSDnRhcGh1bnRlcl9iZWVyGKmw5wIM",
+                "logo_url": "https://lh3.googleusercontent.com/zVm31X7-8uEt6BslYW7tcTJfxf738eoB_JImm2p6wwPzBJTdZrJd3GQUzQPre61EhbvhcccYU1ShEeI3AHBvjWIyZB-z9A=s750",
+                "name": "Modelo Especial",
+                "pintley_id": "133",
+                "public_url": "https://www.taphunter.com/beer/modelo-especial/5888041",
+                "ratebeer_id": 744,
+                "ratebeer_overall_pctl": 2.49958368292428,
+                "ratebeer_style_pctl": 40.7031043023679,
+                "srm": "",
+                "style": "International Pale Lager",
+                "style_category": "Pilsners and Pale Lagers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY-PjZEQw"
+            },
+            "brewery": {
+                "city": "Mazatlan",
+                "common_name": "Modelo",
+                "country": "Mexico",
+                "distance": 1435.3391155907823,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICA8IHUgpkKDA",
+                "logo_url": "https://lh3.googleusercontent.com/i4Lfaysrv-GVUYny2JMS4ZIYmTkaT1QPobiP3gwhdNJn5Jn-TTS9jtPUOb-HL5ha8pPU_6lX2ubyh9n19d7tSePyCzkxtA=s150",
+                "market": "",
+                "market_key": "",
+                "name": "Grupo Modelo",
+                "origin": "Mazatlan, Mexico",
+                "public_url": "https://www.taphunter.com/brewery/grupo-modelo/5739541968977920",
+                "state": ""
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "03/02/2021",
+            "date_added_iso8601": "2021-03-02T10:03:10Z",
+            "date_added_timestamp": 1614679390.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "With inspiration from German brewmasters, we created a consistently crisp and well-balanced beer that we fittingly named Modelo Especial.",
+                "short_description_override": null,
+                "short_description_with_backup": "With inspiration from German brewmasters, we created a consistently crisp and well-balanced beer that we fittingly named Modelo Especial.",
+                "style_description": "A highly carbonated, medium-bodied lager that is well-balanced."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICAmI3W28EIDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 3,
+                    "text": "Sorta Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "13.0",
+                "beer_name": "Garage Stranger Danger",
+                "ibu": "",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAqN22w5YIDA",
+                "logo_url": "",
+                "name": "Monday Night Garage Stranger Danger",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/monday-night-garage-stranger-danger/4602673444290560",
+                "ratebeer_id": 771438,
+                "ratebeer_overall_pctl": null,
+                "ratebeer_style_pctl": null,
+                "srm": "",
+                "style": "Sweet Stout",
+                "style_category": "Porters and Stouts",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYsszZEQw"
+            },
+            "brewery": {
+                "city": "Atlanta",
+                "common_name": "Monday Night",
+                "country": "United States",
+                "distance": 132.47783093790767,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgMDApesLDA",
+                "logo_url": "https://lh3.googleusercontent.com/IvvkuhHAjNj4rcTO1ZQXeFAMqWAuI-gnNKLEf6qA1oPMtY4znxFa9WEEhHEeh9JhqxFPJHt111XLXWCIoFgqXX1h1lnCHw=s150",
+                "market": "Atlanta",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGQsSEHRhcGh1bnRlcl9tYXJrZXQYpa-7GAw",
+                "name": "Monday Night Brewing",
+                "origin": "Atlanta, GA",
+                "public_url": "https://www.taphunter.com/brewery/monday-night-brewing/6664329088729088",
+                "state": "GA"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "11/17/2022",
+            "date_added_iso8601": "2022-11-17T10:48:29Z",
+            "date_added_timestamp": 1668682109.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "A very dark, full-bodied stout with creamy notes that soften its roasted, coffee-flavored qualities.",
+                "short_description_override": null,
+                "short_description_with_backup": "A very dark, full-bodied stout with creamy notes that soften its roasted, coffee-flavored qualities.",
+                "style_description": "A very dark, full-bodied stout with creamy notes that soften its roasted, coffee-flavored qualities."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA2JfTyNsLDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8IOApOYLDA",
+                "name": "Growlers"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 3,
+                    "text": "Sorta Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [
+                    {
+                        "calories": 910,
+                        "size": "32 oz"
+                    },
+                    {
+                        "calories": 1820,
+                        "size": "64 oz"
+                    },
+                    {
+                        "calories": 3645,
+                        "size": "1 gal"
+                    }
+                ],
+                "sized_pricing": [
+                    {
+                        "price": "$15.99",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$31.98",
+                        "size": "64 oz"
+                    },
+                    {
+                        "price": "$63.96",
+                        "size": "1 gal"
+                    }
+                ],
+                "tap_number": 1,
+                "type": "Tap"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "5.2",
+                "beer_name": "Cave City Lager",
+                "ibu": "21",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAgLinhuELDA",
+                "logo_url": "",
+                "name": "Old Black Bear Cave City Lager",
+                "pintley_id": "24619",
+                "public_url": "https://www.taphunter.com/beer/old-black-bear-cave-city-lager/6619276744065024",
+                "ratebeer_id": 165221,
+                "ratebeer_overall_pctl": 46.078368246395,
+                "ratebeer_style_pctl": 29.584232511589,
+                "srm": "",
+                "style": "International Dark Lager",
+                "style_category": "Amber and Dark Lagers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYgMPZEQw"
+            },
+            "brewery": {
+                "city": "Huntsville",
+                "common_name": "Old Black Bear",
+                "country": "United States",
+                "distance": 7.7986116565996495,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgNjbk9IIDA",
+                "logo_url": "https://lh5.ggpht.com/l-J57SxRdaqZyEhXYP612CUq5jV2VRgEJaHO2EcRS7Ro5e96ELRxnVKBo6mkw6sD3IDl_dDdjMKqkoJPHkCDJZSznKQLkg=s150",
+                "market": "Huntsville",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgICA-MiiwggM",
+                "name": "Old Black Bear Brewing Co.",
+                "origin": "Huntsville, AL",
+                "public_url": "https://www.taphunter.com/brewery/old-black-bear-brewing-co/4864916888485888",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "11/17/2022",
+            "date_added_iso8601": "2022-11-17T10:32:28Z",
+            "date_added_timestamp": 1668681148.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "A dark and sweet international pale lager that is full-bodied with malt as the primary flavor element.",
+                "short_description_override": null,
+                "short_description_with_backup": "A dark and sweet international pale lager that is full-bodied with malt as the primary flavor element.",
+                "style_description": "A dark and sweet international pale lager that is full-bodied with malt as the primary flavor element."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": true,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA2NeFjNMKDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8IOApOYLDA",
+                "name": "Growlers"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": true,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [
+                    {
+                        "calories": 435,
+                        "size": "32 oz"
+                    },
+                    {
+                        "calories": 870,
+                        "size": "64 oz"
+                    },
+                    {
+                        "calories": 1735,
+                        "size": "1 gal"
+                    }
+                ],
+                "sized_pricing": [
+                    {
+                        "price": "$8.99",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$17.98",
+                        "size": "64 oz"
+                    },
+                    {
+                        "price": "$35.96",
+                        "size": "1 gal"
+                    }
+                ],
+                "tap_number": 2,
+                "type": "Tap"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "5.2",
+                "beer_name": "Belgian White",
+                "ibu": "20",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAgNygvNsJDA",
+                "logo_url": "",
+                "name": "Shock Top Belgian White",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/shock-top-belgian-white/5468842180476928",
+                "ratebeer_id": 81108,
+                "ratebeer_overall_pctl": 8.90469406495718,
+                "ratebeer_style_pctl": 5.42792072433486,
+                "srm": "",
+                "style": "American Wheat Beer",
+                "style_category": "Wheat Beers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY8KbZEQw"
+            },
+            "brewery": {
+                "city": "St. Louis",
+                "common_name": "Shock Top",
+                "country": "United States",
+                "distance": 343.07784157105607,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgJy_oscJDA",
+                "logo_url": "https://lh3.ggpht.com/S2lANZ7MmRyAmEc8Uc9oAN1340x_Pe7Dsxh5rQKb392JWtp52YQQYqOJOP_JtvXC6tZqlG6XOCWxZ0M9BDP5A_WkpihC=s150",
+                "market": "St. Louis",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGQsSEHRhcGh1bnRlcl9tYXJrZXQY8Y22GAw",
+                "name": "Shock Top Brewing Co.",
+                "origin": "St. Louis, MO",
+                "public_url": "https://www.taphunter.com/brewery/shock-top-brewing-co/5379996084338688",
+                "state": "MO"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "06/03/2018",
+            "date_added_iso8601": "2018-06-03T12:44:27Z",
+            "date_added_timestamp": 1528029867.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "This uniquely-crafted and award-winning wheat beer is unfiltered to create a brew that is naturally cloudy with a light golden color and a smooth, refreshing finish.",
+                "short_description_override": null,
+                "short_description_with_backup": "This uniquely-crafted and award-winning wheat beer is unfiltered to create a brew that is naturally cloudy with a light golden color and a smooth, refreshing finish.",
+                "style_description": "A refreshing wheat beer that favors hoppy notes over yeast character."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICAiPyIiuYLDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 22,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/06/2023 03:01 PM",
+                "update_slang": {
+                    "digit": 5,
+                    "text": "Recently"
+                },
+                "update_timestamp": 1673038863.0,
+                "update_timestamp_iso8601": "2023-01-06T21:01:03Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "7.4",
+                "beer_name": "Dankful IPA",
+                "ibu": "55",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAmNitnIgJDA",
+                "logo_url": "",
+                "name": "Sierra Nevada Dankful IPA",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/sierra-nevada-dankful-ipa/5102708290093056",
+                "ratebeer_id": null,
+                "ratebeer_overall_pctl": null,
+                "ratebeer_style_pctl": null,
+                "srm": "",
+                "style": "American IPA",
+                "style_category": "IPAs",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY7Y_aEQw"
+            },
+            "brewery": {
+                "city": "Chico",
+                "common_name": "Sierra Nevada",
+                "country": "United States",
+                "distance": 1963.0742614729775,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGAsSEXRhcGh1bnRlcl9icmV3ZXJ5GM4IDA",
+                "logo_url": "https://lh3.googleusercontent.com/54I5dJ_1gfS7phJsWVQj0yrje4ZqW9xdw6riZr4bQH933kgslLeQZ8cli5nu5zCP4m5wTEoVQVhHu2oCjpeENXVHvvX5=s150",
+                "market": "Sacramento",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgICAiMi2rAsM",
+                "name": "Sierra Nevada Brewing Company",
+                "origin": "Chico, CA",
+                "public_url": "https://www.taphunter.com/brewery/sierra-nevada-brewing-company/1102",
+                "state": "CA"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "09/14/2022",
+            "date_added_iso8601": "2022-09-14T18:44:12Z",
+            "date_added_timestamp": 1663181052.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "A dank, resinous west coast IPA with seven different hop varieties.",
+                "short_description_override": null,
+                "short_description_with_backup": "A dank, resinous west coast IPA with seven different hop varieties.",
+                "style_description": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA2P3jiYQKDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8IOApOYLDA",
+                "name": "Growlers"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 3,
+                    "text": "Sorta Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [
+                    {
+                        "calories": 580,
+                        "size": "32 oz"
+                    },
+                    {
+                        "calories": 1155,
+                        "size": "64 oz"
+                    },
+                    {
+                        "calories": 2315,
+                        "size": "1 gal"
+                    }
+                ],
+                "sized_pricing": [
+                    {
+                        "price": "$6.99",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$13.98",
+                        "size": "64 oz"
+                    },
+                    {
+                        "price": "$23.99",
+                        "size": "1 gal"
+                    }
+                ],
+                "tap_number": 9,
+                "type": "Tap"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "5.2",
+                "beer_name": "Lager",
+                "ibu": "25",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAwJ3hvp4KDA",
+                "logo_url": "https://lh3.googleusercontent.com/fmOuXrsQc3QA2IUbCNXglDZyb8Sv_zhuAefe7G4Nhh1OaKIATISk7cpFAz7mHKeYfPucwNSUZ-MEnB4IOZixHuEeMoy8qw=s150",
+                "name": "Stella Artois Lager",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/stella-artois-lager/5763597333430272",
+                "ratebeer_id": 1478,
+                "ratebeer_overall_pctl": 7.60707709640131,
+                "ratebeer_style_pctl": 45.7886330819106,
+                "srm": "",
+                "style": "International Pale Lager",
+                "style_category": "Pilsners and Pale Lagers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY-PjZEQw"
+            },
+            "brewery": {
+                "city": "Leuven",
+                "common_name": "Stella Artois",
+                "country": "Belgium",
+                "distance": 4456.739752089133,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGQsSEXRhcGh1bnRlcl9icmV3ZXJ5GOmcAQw",
+                "logo_url": "https://lh3.googleusercontent.com/YgJ2CJNTsA-HmHTIKXbZXxgv1lOmCKFanDoMxH__2OvcUHK8TDKsRwl5hMqQSjfjQY6IfSUuEq1I5e1GGeMBIaoC0vQYMME=s150",
+                "market": "",
+                "market_key": "",
+                "name": "Stella Artois",
+                "origin": "Leuven, Belgium",
+                "public_url": "https://www.taphunter.com/brewery/stella-artois/20073",
+                "state": null
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "03/02/2021",
+            "date_added_iso8601": "2021-03-02T09:58:18Z",
+            "date_added_timestamp": 1614679098.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "One of the World's best selling beers, enjoyed in more than 80 countries.  Low malt sweetness with a crisp finish.",
+                "short_description_override": null,
+                "short_description_with_backup": "One of the World's best selling beers, enjoyed in more than 80 countries.  Low malt sweetness with a crisp finish.",
+                "style_description": "A highly carbonated, medium-bodied lager that is well-balanced."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICAmM3-l-MJDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 3,
+                    "text": "Sorta Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "4.5",
+                "beer_name": "Chill Pils",
+                "ibu": "15",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAyOnhwcYJDA",
+                "logo_url": "",
+                "name": "Straight To Ale Chill Pils",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/straight-to-ale-chill-pils/5376672479182848",
+                "ratebeer_id": null,
+                "ratebeer_overall_pctl": null,
+                "ratebeer_style_pctl": null,
+                "srm": "",
+                "style": "German Pils",
+                "style_category": "Pilsners and Pale Lagers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYubTZEQw"
+            },
+            "brewery": {
+                "city": "Huntsville",
+                "common_name": "Straight To Ale",
+                "country": "United States",
+                "distance": 6.890419848564115,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgJi598cKDA",
+                "logo_url": "https://lh3.googleusercontent.com/qQHku058jm_2bUGVvS72HZ9fY-9JGHowOkRiQkEWmFjujwhT-vZAbFAbtFn_ooDD2rN9V4y5mkA12JuboLdZRbECvbwa_3A=s150",
+                "market": "Huntsville",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgICA-MiiwggM",
+                "name": "Straight To Ale",
+                "origin": "Huntsville, AL",
+                "public_url": "https://www.taphunter.com/brewery/straight-to-ale/5945864996519936",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "04/02/2022",
+            "date_added_iso8601": "2022-04-02T14:53:54Z",
+            "date_added_timestamp": 1648911234.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "A gold-colored, light-bodied German-style beer with crisp, floral hop aroma.",
+                "short_description_override": null,
+                "short_description_with_backup": "A gold-colored, light-bodied German-style beer with crisp, floral hop aroma.",
+                "style_description": "A gold-colored, light-bodied German-style beer with crisp, floral hop aroma."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": true,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA2M7OlJMJDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 3,
+                    "text": "Sorta Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "7.25",
+                "beer_name": "Monkeynaut IPA",
+                "ibu": "70",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAgPjU1MkIDA",
+                "logo_url": "",
+                "name": "Straight To Ale Monkeynaut IPA",
+                "pintley_id": "19910",
+                "public_url": "https://www.taphunter.com/beer/straight-to-ale-monkeynaut-ipa/4827566040940544",
+                "ratebeer_id": 122298,
+                "ratebeer_overall_pctl": 88.1380790576388,
+                "ratebeer_style_pctl": 86.8753403913456,
+                "srm": "",
+                "style": "American IPA",
+                "style_category": "IPAs",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY7Y_aEQw"
+            },
+            "brewery": {
+                "city": "Huntsville",
+                "common_name": "Straight To Ale",
+                "country": "United States",
+                "distance": 6.890419848564115,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgJi598cKDA",
+                "logo_url": "https://lh3.googleusercontent.com/qQHku058jm_2bUGVvS72HZ9fY-9JGHowOkRiQkEWmFjujwhT-vZAbFAbtFn_ooDD2rN9V4y5mkA12JuboLdZRbECvbwa_3A=s150",
+                "market": "Huntsville",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgICA-MiiwggM",
+                "name": "Straight To Ale",
+                "origin": "Huntsville, AL",
+                "public_url": "https://www.taphunter.com/brewery/straight-to-ale/5945864996519936",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "12/31/2017",
+            "date_added_iso8601": "2017-12-31T21:05:08Z",
+            "date_added_timestamp": 1514754308.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "This hoppy little monkey of a beer has a citrusy, floral hop aroma with a strong malt body and a crisp finish!",
+                "short_description_override": null,
+                "short_description_with_backup": "This hoppy little monkey of a beer has a citrusy, floral hop aroma with a strong malt body and a crisp finish!",
+                "style_description": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": true,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA8KPRpcUIDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "5.6",
+                "beer_name": "Festbier",
+                "ibu": "20",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyFgsSDnRhcGh1bnRlcl9iZWVyGN-ODAw",
+                "logo_url": "https://lh3.googleusercontent.com/n7GGfWkS653afP0SEdVA62Q4K1uILF4lAhysmWxqtQg-drAlLB0T1IfA6IYVfua0PHpMfgjpfjeLvL8ewGdY7Z0rq9YHHA=s150",
+                "name": "Victory Festbier",
+                "pintley_id": "7279",
+                "public_url": "https://www.taphunter.com/beer/victory-festbier/198495",
+                "ratebeer_id": 622,
+                "ratebeer_overall_pctl": 47.2623988948084,
+                "ratebeer_style_pctl": 87.6405039380828,
+                "srm": "",
+                "style": "M\u00e4rzen",
+                "style_category": "Amber and Dark Lagers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYpYDaEQw"
+            },
+            "brewery": {
+                "city": "Downingtown",
+                "common_name": "Victory",
+                "country": "United States",
+                "distance": 697.310376752671,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGAsSEXRhcGh1bnRlcl9icmV3ZXJ5GPIJDA",
+                "logo_url": "https://lh3.googleusercontent.com/s4KnIhplxj4egrEjyIsQOIa_SI5uRrcWcJvnnj0JgcHU5SfxHmOLJxvCZXqxXk1SFt3mhQGjLd1Ww1kbG_yk7DnQHQkwRA=s150",
+                "market": "Philadelphia",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGAsSEHRhcGh1bnRlcl9tYXJrZXQY_7NIDA",
+                "name": "Victory Brewing Company",
+                "origin": "Downingtown, PA",
+                "public_url": "https://www.taphunter.com/brewery/victory-brewing-company/1266",
+                "state": "PA"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "09/14/2022",
+            "date_added_iso8601": "2022-09-14T18:47:43Z",
+            "date_added_timestamp": 1663181263.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "Seductively smooth, this medium-bodied amber beauty is akin to the great Oktoberfest beers of Munich. All German hops make this lager true to style. Patient cold aging makes it wonderfully smooth",
+                "short_description_override": null,
+                "short_description_with_backup": "Seductively smooth, this medium-bodied amber beauty is akin to the great Oktoberfest beers of Munich. All German hops make this lager true to style. Patient cold aging makes it wonderfully smooth",
+                "style_description": "A malty, German-style amber lager with a toasty and bready flavor, restrained bitterness with a dry finish."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": false,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA2KP005IIDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8IOApOYLDA",
+                "name": "Growlers"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [
+                    {
+                        "calories": 485,
+                        "size": "32 oz"
+                    },
+                    {
+                        "calories": 965,
+                        "size": "64 oz"
+                    },
+                    {
+                        "calories": 1930,
+                        "size": "1 gal"
+                    }
+                ],
+                "sized_pricing": [
+                    {
+                        "price": "$7.99",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$15.98",
+                        "size": "64 oz"
+                    },
+                    {
+                        "price": "$30.99",
+                        "size": "1 gal"
+                    }
+                ],
+                "tap_number": 15,
+                "type": "Tap"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "4.8",
+                "beer_name": "Belgian White Ale",
+                "ibu": "8",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAgNjbhb0JDA",
+                "logo_url": "",
+                "name": "Yellowhammer Belgian White Ale",
+                "pintley_id": "21697",
+                "public_url": "https://www.taphunter.com/beer/yellowhammer-belgian-white-ale/5335026828836864",
+                "ratebeer_id": 134805,
+                "ratebeer_overall_pctl": 47.5924332929673,
+                "ratebeer_style_pctl": 79.0393567800356,
+                "srm": "",
+                "style": "Witbier",
+                "style_category": "Wheat Beers",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUYpObaEQw"
+            },
+            "brewery": {
+                "city": "Huntsville",
+                "common_name": "Yellowhammer",
+                "country": "United States",
+                "distance": 8.306522415494214,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgPi60LQIDA",
+                "logo_url": "https://lh3.googleusercontent.com/KZczU9xTHqrX-Ul24rgYzQ7UmJod3gCORpmoBFZt3kU1JO5WGxoXZB4zwjzG4HDHyXhremrJ45AINVWkzSYWbtSyxg=s150",
+                "market": "Huntsville",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgICA-MiiwggM",
+                "name": "Yellowhammer Brewing",
+                "origin": "Huntsville, AL",
+                "public_url": "https://www.taphunter.com/brewery/yellowhammer-brewing/4735062645932032",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "12/31/2017",
+            "date_added_iso8601": "2017-12-31T20:59:13Z",
+            "date_added_timestamp": 1514753953.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "This White derives a hint of spice from Kaffir lime leaves and fresh ginger (instead of orange and coriander). A perfect beer on a hot day!",
+                "short_description_override": null,
+                "short_description_with_backup": "This White derives a hint of spice from Kaffir lime leaves and fresh ginger (instead of orange and coriander). A perfect beer on a hot day!",
+                "style_description": "A refreshing wheat ale very pale in color"
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": true,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICA8KO0t_wJDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8P2d59AJDA",
+                "name": "Kegs to Go"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 23,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 4,
+                    "text": "Kinda Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [],
+                "sized_pricing": [],
+                "tap_number": "",
+                "type": "Cask"
+            },
+            "tags": []
+        },
+        {
+            "beer": {
+                "abv": "6.4",
+                "beer_name": "Cheatin Heart",
+                "ibu": "",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyGwsSDnRhcGh1bnRlcl9iZWVyGICAsIjywP4JDA",
+                "logo_url": "",
+                "name": "Yellowhammer Cheatin Heart",
+                "pintley_id": "",
+                "public_url": "https://www.taphunter.com/beer/yellowhammer-cheatin-heart/5622933083652096",
+                "ratebeer_id": null,
+                "ratebeer_overall_pctl": null,
+                "ratebeer_style_pctl": null,
+                "srm": "",
+                "style": "American IPA",
+                "style_category": "IPAs",
+                "style_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHAsSE3RhcGh1bnRlcl9iZWVyc3R5bGUY7Y_aEQw"
+            },
+            "brewery": {
+                "city": "Huntsville",
+                "common_name": "Yellowhammer",
+                "country": "United States",
+                "distance": 8.306522415494214,
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHgsSEXRhcGh1bnRlcl9icmV3ZXJ5GICAgPi60LQIDA",
+                "logo_url": "https://lh3.googleusercontent.com/KZczU9xTHqrX-Ul24rgYzQ7UmJod3gCORpmoBFZt3kU1JO5WGxoXZB4zwjzG4HDHyXhremrJ45AINVWkzSYWbtSyxg=s150",
+                "market": "Huntsville",
+                "market_key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHQsSEHRhcGh1bnRlcl9tYXJrZXQYgICA-MiiwggM",
+                "name": "Yellowhammer Brewing",
+                "origin": "Huntsville, AL",
+                "public_url": "https://www.taphunter.com/brewery/yellowhammer-brewing/4735062645932032",
+                "state": "AL"
+            },
+            "category": {
+                "id": null,
+                "name": "",
+                "order": ""
+            },
+            "date_added": "01/11/2023",
+            "date_added_iso8601": "2023-01-11T01:17:39Z",
+            "date_added_timestamp": 1673399859.0,
+            "descriptions": {
+                "food_pairings": "",
+                "short_description": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character.",
+                "short_description_override": null,
+                "short_description_with_backup": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character.",
+                "style_description": "A bitter, moderately strong American pale ale that uses its clean, supporting malt to showcase its hop character."
+            },
+            "dm_tags": [],
+            "featured": false,
+            "is_local": true,
+            "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJAsSF3RhcGh1bnRlcl9sb2NhdGlvbmJlZXJzGICAuMDzsLUJDA",
+            "list": {
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyJwsSGnRhcGh1bnRlcl9sb2NhdGlvbmJlZXJsaXN0GICA8IOApOYLDA",
+                "name": "Growlers"
+            },
+            "location": {
+                "address": "6846 US-431, Owens Cross Roads, AL",
+                "counts": {
+                    "bottle_can": 0,
+                    "cocktails": 0,
+                    "generic_items": 0,
+                    "ondeck": 3,
+                    "spirits": 11,
+                    "tap_cask": 22,
+                    "wines": 0
+                },
+                "facebook_id": "325048740219",
+                "foursquare_id": "4e8f8021be7b7962e928f0c1",
+                "geo": "34.6560751,-86.4818568",
+                "key": "ahJzfnRoZXRhcGh1bnRlci1ocmRyHwsSEnRhcGh1bnRlcl9sb2NhdGlvbhiAgPCs0PnmCgw",
+                "location_type": "Bottle Shop",
+                "logo": {
+                    "logo": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s150",
+                    "logo_small": "https://lh3.googleusercontent.com/pFFOIzydBtpJU71EyxyNGDnBEH1o3DvcvrcfTv28TRAPITPG9CFWCFSYQA9AL_LeTcjD08X3mOAj5uQQddwKQ2Lf70GwWwg=s50"
+                },
+                "name": "Wagon Wheel Liquors",
+                "update": "01/10/2023 07:17 PM",
+                "update_slang": {
+                    "digit": 5,
+                    "text": "Recently"
+                },
+                "update_timestamp": 1673399861.0,
+                "update_timestamp_iso8601": "2023-01-11T01:17:41Z"
+            },
+            "reported_out": 0,
+            "serving_info": {
+                "calories": "",
+                "display_pricing": true,
+                "growler_fills": false,
+                "multiple_pour_sizes_list": [
+                    "32 oz",
+                    "64 oz",
+                    "1 gal"
+                ],
+                "price": "",
+                "size": "",
+                "sized_calories": [
+                    {
+                        "calories": 525,
+                        "size": "32 oz"
+                    },
+                    {
+                        "calories": 1050,
+                        "size": "64 oz"
+                    },
+                    {
+                        "calories": 2105,
+                        "size": "1 gal"
+                    }
+                ],
+                "sized_pricing": [
+                    {
+                        "price": "$7.39",
+                        "size": "32 oz"
+                    },
+                    {
+                        "price": "$14.78",
+                        "size": "64 oz"
+                    },
+                    {
+                        "price": "$28.99",
+                        "size": "1 gal"
+                    }
+                ],
+                "tap_number": 16,
+                "type": "Tap"
+            },
+            "tags": []
+        }
+    ],
+    "wines": []
+}
