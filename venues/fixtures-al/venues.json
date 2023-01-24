@@ -88,35 +88,6 @@
     },
     {
         "model": "venues.venue",
-        "pk": 23,
-        "fields": {
-            "name": "Fractal Brewing Project",
-            "address": "3200 Leeman Ferry Road",
-            "city": "Huntsville",
-            "state": "AL",
-            "postal_code": "35802",
-            "country": "US",
-            "time_zone": "America/Chicago",
-            "website": "https://fractalbrewing.com",
-            "facebook_page": "https://www.facebook.com/FractalBrewing/",
-            "twitter_handle": "",
-            "instagram_handle": "fractalbrewing",
-            "tap_list_provider": "untappd",
-            "untappd_url": "https://untappd.com/FractalBrewingProject",
-            "email": "info@fractalbrewing.com",
-            "phone_number": "2564895520",
-            "logo_url": "https://hsv-dot-beer.s3.amazonaws.com/venues/png/fractalbrewing.png",
-            "slug": "fractalbrewing",
-            "on_downtown_craft_beer_trail": true,
-            "latitude": "34.69483820",
-            "longitude": "-86.59375800",
-            "twitter_short_location_description": "",
-            "tap_list_last_check_time": null,
-            "tap_list_last_update_time": null
-        }
-    },
-    {
-        "model": "venues.venue",
         "pk": 24,
         "fields": {
             "name": "Goat Island Brewing",
@@ -490,31 +461,6 @@
             "taplist_io_access_code": "",
             "beermenus_categories": "[]",
             "beermenus_slug": ""
-        }
-    },
-    {
-        "model": "venues.venueapiconfiguration",
-        "pk": 23,
-        "fields": {
-            "venue": 23,
-            "url": null,
-            "api_key": "",
-            "digital_pour_venue_id": "",
-            "digital_pour_location_number": null,
-            "untappd_location": 28327,
-            "untappd_theme": 108878,
-            "untappd_categories": "[\"Beer on Tap at Fractal Brewing Project\"]",
-            "taphunter_location": "",
-            "taphunter_excluded_lists": "[]",
-            "taplist_io_display_id": "",
-            "taplist_io_access_code": "",
-            "beermenus_categories": "[]",
-            "beermenus_slug": "",
-            "arryved_location_id": "",
-            "arryved_menu_id": "",
-            "arryved_manufacturer_name": "",
-            "arryved_serving_sizes": "[]",
-            "arryved_pos_menu_names": "[]"
         }
     },
     {

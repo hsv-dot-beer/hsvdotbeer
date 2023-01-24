@@ -82,33 +82,6 @@
 },
 {
     "model": "venues.venue",
-    "pk": 6,
-    "fields": {
-        "name": "Whole Foods",
-        "address": "2501 Memorial Parkway SW",
-        "city": "Huntsville",
-        "state": "AL",
-        "postal_code": "35801",
-        "country": "US",
-        "time_zone": "America/Chicago",
-        "website": "https://www.wholefoodsmarket.com/shop/HSV",
-        "facebook_page": "",
-        "twitter_handle": "",
-        "instagram_handle": "",
-        "tap_list_provider": "taphunter",
-        "untappd_url": "https://untappd.com/v/whole-foods-market/3882150",
-        "email": "",
-        "phone_number": "2568013741",
-        "logo_url": "https://hsv-dot-beer.s3.amazonaws.com/venues/png/whole-foods.png",
-        "slug": "whole-foods-hsv",
-        "on_downtown_craft_beer_trail": false,
-        "latitude": "34.71222600",
-        "longitude": "-86.58991600",
-        "twitter_short_location_description": ""
-    }
-},
-{
-    "model": "venues.venue",
     "pk": 7,
     "fields": {
         "name": "Liquor Express",
@@ -352,33 +325,6 @@
 },
 {
     "model": "venues.venue",
-    "pk": 23,
-    "fields": {
-        "name": "Fractal Brewing Project",
-        "address": "3200 Leeman Ferry Road",
-        "city": "Huntsville",
-        "state": "AL",
-        "postal_code": "35802",
-        "country": "US",
-        "time_zone": "America/Chicago",
-        "website": "https://fractalbrewing.com",
-        "facebook_page": "https://www.facebook.com/FractalBrewing/",
-        "twitter_handle": "",
-        "instagram_handle": "fractalbrewing",
-        "tap_list_provider": "untappd",
-        "untappd_url": "https://untappd.com/FractalBrewingProject",
-        "email": "info@fractalbrewing.com",
-        "phone_number": "2564895520",
-        "logo_url": "https://hsv-dot-beer.s3.amazonaws.com/venues/png/fractalbrewing.png",
-        "slug": "fractalbrewing",
-        "on_downtown_craft_beer_trail": true,
-        "latitude": "34.6948382",
-        "longitude": "-86.593758",
-        "twitter_short_location_description": ""
-    }
-},
-{
-    "model": "venues.venue",
     "pk": 35,
     "fields": {
         "name": "Chandlers Ford Brewing",
@@ -457,26 +403,6 @@
         "untappd_theme": null,
         "untappd_categories": "[]",
         "taphunter_location": "",
-        "taphunter_excluded_lists": "[]",
-        "taplist_io_display_id": "",
-        "taplist_io_access_code": "",
-        "beermenus_categories": "[]",
-        "beermenus_slug": ""
-    }
-},
-{
-    "model": "venues.venueapiconfiguration",
-    "pk": 6,
-    "fields": {
-        "venue": 6,
-        "url": null,
-        "api_key": "",
-        "digital_pour_venue_id": "",
-        "digital_pour_location_number": null,
-        "untappd_location": null,
-        "untappd_theme": null,
-        "untappd_categories": "[]",
-        "taphunter_location": "5963904507707392",
         "taphunter_excluded_lists": "[]",
         "taplist_io_display_id": "",
         "taplist_io_access_code": "",
@@ -662,26 +588,6 @@
         "taplist_io_access_code": "",
         "beermenus_categories": "[\"on_tap\", \"featured\"]",
         "beermenus_slug": "64594-bad-daddy-s-burger-bar-huntsville"
-    }
-},
-{
-    "model": "venues.venueapiconfiguration",
-    "pk": 23,
-    "fields": {
-        "venue": 23,
-        "url": null,
-        "api_key": "",
-        "digital_pour_venue_id": "",
-        "digital_pour_location_number": null,
-        "untappd_location": 28327,
-        "untappd_theme": 108878,
-        "untappd_categories": "[\"Beer on Tap at Fractal Brewing Project\"]",
-        "taphunter_location": "",
-        "taphunter_excluded_lists": "[]",
-        "taplist_io_display_id": "",
-        "taplist_io_access_code": "",
-        "beermenus_categories": "[]",
-        "beermenus_slug": ""
     }
 },
 {
