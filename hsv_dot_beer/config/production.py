@@ -64,6 +64,7 @@ class Production(Common):
         "https://hsv.beer",
         "https://dev.hsv.beer",
         "https://nuxt.hsv.beer",
+        "https://blue-shape-1075.fly.dev",
     )
 
     CORS_ORIGIN_REGEX_WHITELIST = [
