@@ -402,7 +402,10 @@ class UntappdParser(BaseTapListProvider):
         beer_name_span = entry.find("a", {"class": "item-title-color"})
         beer_info = beer_name_span.text
         LOG.debug("parsing beer %s", beer_info)
-        if tap_span := entry.find("span", {"class": "tap-number-hideable"}):
+        if tap_span := (
+            entry.find("span", {"class": "tap-number-hideable"})
+            or entry.find("span", {"class": "item-tap-number"})
+        ):
             tap_num: str = tap_span.text.strip()
         else:
             tap_num = ""
