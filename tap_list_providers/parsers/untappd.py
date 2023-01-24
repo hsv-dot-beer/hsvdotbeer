@@ -559,6 +559,24 @@ def main():
         ),
         "goat": ("4632", "14806", ["Goat Island Brewing"]),
         "chatt": ("1827", "3788", ["Menu"]),
+        "isb": (
+            "33847",
+            "130917",
+            [
+                "IPAs",
+                "Saisons",
+                "Fruity & Fresh",
+                "The Dark Side",
+                "Pale Ales",
+                "Reds, Ambers, and Browns",
+                "English Styles",
+                "Lagers",
+                "Wheats",
+                "German Styles",
+                "Ciders",
+                "Sours",
+            ],
+        ),
     }
 
     parser = argparse.ArgumentParser()
