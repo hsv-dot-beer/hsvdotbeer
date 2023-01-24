@@ -33,7 +33,7 @@ class WagonWheelTestCase(TestCase):
                 os.path.dirname(BASE_DIR),
                 "tap_list_providers",
                 "example_data",
-                "wagon_wheel.json",
+                "wagonwheel_1_gal.json",
             ),
             "rb",
         ) as json_file:
