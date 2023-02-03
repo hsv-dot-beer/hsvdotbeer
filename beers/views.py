@@ -376,7 +376,6 @@ def beer_form(request, beer_id=None):
         else:
             beer = None
     else:
-
         beer = None
         if beer_id:
             beer = dj_get_or_404(models.Beer, id=beer_id)
@@ -402,7 +401,6 @@ def style_form(request, style_id=None):
         else:
             style = None
     else:
-
         style = None
         if style_id:
             style = dj_get_or_404(models.Style, id=style_id)

@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("venues", "0031_auto_20201119_2230"),
         ("venues", "0028_create_venue_manager_model"),

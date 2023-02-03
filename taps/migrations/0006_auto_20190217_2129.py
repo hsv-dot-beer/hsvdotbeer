@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("venues", "0009_venue_untappd_url"),
         ("taps", "0005_move_taps_to_venue"),

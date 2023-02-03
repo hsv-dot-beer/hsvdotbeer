@@ -108,7 +108,11 @@ class StemAndSteinParser(BaseTapListProvider):
                 except Manufacturer.DoesNotExist:
                     continue
             filter_str = "icontains" if use_contains else "istartswith"
-            filter_expr = Q(**{f"name__{filter_str}": manufacturer,}) | Q(
+            filter_expr = Q(
+                **{
+                    f"name__{filter_str}": manufacturer,
+                }
+            ) | Q(
                 **{
                     "alternate_names__contains": [manufacturer],
                 }
@@ -225,7 +229,9 @@ class StemAndSteinParser(BaseTapListProvider):
             tap.save()
             taps_hit.append(tap.tap_number)
         LOG.debug("Deleting all taps except %s", taps_hit)
-        Tap.objects.filter(venue=venue,).exclude(
+        Tap.objects.filter(
+            venue=venue,
+        ).exclude(
             tap_number__in=taps_hit,
         ).delete()
         return latest_time

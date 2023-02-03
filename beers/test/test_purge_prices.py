@@ -11,7 +11,6 @@ from beers.test.factories import BeerFactory, ManufacturerFactory, StyleFactory
 
 
 class PricePurgeTestCase(TestCase):
-
     fixtures = ["serving_sizes"]
 
     def setUp(self):

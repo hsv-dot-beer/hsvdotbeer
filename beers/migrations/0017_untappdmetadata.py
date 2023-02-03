@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("beers", "0016_beer_stem_and_stein_pk"),
     ]

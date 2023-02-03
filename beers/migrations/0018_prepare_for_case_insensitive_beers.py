@@ -9,7 +9,6 @@ LOG = logging.getLogger(name=__name__)
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("beers", "0017_untappdmetadata"),
     ]

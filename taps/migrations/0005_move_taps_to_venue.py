@@ -24,7 +24,6 @@ def reverse(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("taps", "0004_tap_venue"),
     ]

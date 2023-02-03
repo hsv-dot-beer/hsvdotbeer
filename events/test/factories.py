@@ -9,7 +9,6 @@ from venues.test.factories import VenueFactory
 
 
 class EventFactory(factory.django.DjangoModelFactory):
-
     venue = factory.SubFactory(VenueFactory)
     title = factory.Sequence(lambda n: f"event {n}")
     description = FuzzyText(length=100)

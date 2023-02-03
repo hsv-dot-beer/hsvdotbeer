@@ -63,7 +63,6 @@ def forwards(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("beers", "0026_auto_20190502_0247"),
     ]

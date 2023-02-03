@@ -34,7 +34,6 @@ def populate_slugs(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("venues", "0014_venue_slug"),
     ]

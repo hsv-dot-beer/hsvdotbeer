@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     replaces = [
         ("beers", "0025_auto_20190409_0145"),
         ("beers", "0026_auto_20190409_0146"),

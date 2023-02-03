@@ -21,7 +21,6 @@ from hsv_dot_beer.config.local import BASE_DIR
 
 
 class CommandsTestCase(TestCase):
-
     fixtures = ["serving_sizes"]
 
     @classmethod

@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("tap_list_providers", "0004_auto_20201115_1459"),
     ]

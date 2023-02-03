@@ -3,7 +3,6 @@ from django.utils import timezone
 
 
 class Tap(models.Model):
-
     GAS_CHOICES = [
         ("co2", "CO₂"),
         ("nitro", "Nitro"),

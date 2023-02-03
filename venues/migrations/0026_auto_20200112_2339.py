@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("venues", "0025_venue_twitter_short_location_description"),
     ]

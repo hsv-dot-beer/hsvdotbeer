@@ -17,7 +17,6 @@ from tap_list_providers.parsers.arryved_menu import ArryvedMenuParser
 
 
 class CommandsTestCase(TestCase):
-
     fixtures = ["serving_sizes"]
 
     @classmethod

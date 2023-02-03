@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("venues", "0030_venueapiconfiguration_arryved_serving_sizes"),
     ]

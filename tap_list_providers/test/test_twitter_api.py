@@ -49,7 +49,6 @@ class TestThreadedApi(TestCase):
             self.assertLess(len(tweet), CHARACTER_LIMIT, tweet)
 
     def test_long_tweet(self):
-
         words = [
             "".join(self.rng.choices(ascii_lowercase, k=25)) for dummy in range(25)
         ]
