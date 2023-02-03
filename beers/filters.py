@@ -48,7 +48,6 @@ class BeerOrderingFilter(OrderingFilter):
 
 
 class BeerFilterSet(FilterSet):
-
     o = BeerOrderingFilter(
         fields=[
             "name",

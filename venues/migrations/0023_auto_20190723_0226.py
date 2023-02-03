@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("venues", "0022_venueapiconfiguration_taphunter_excluded_lists"),
     ]

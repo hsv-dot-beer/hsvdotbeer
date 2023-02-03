@@ -89,7 +89,6 @@ def merge_common_ending_breweries(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("beers", "0021_auto_20190328_2039"),
     ]

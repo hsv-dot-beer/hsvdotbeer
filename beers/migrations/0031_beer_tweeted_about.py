@@ -9,7 +9,6 @@ def set_beers_tweeted_about(apps, schema_editors):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("beers", "0030_auto_20190807_2142"),
     ]

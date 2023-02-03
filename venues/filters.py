@@ -32,7 +32,6 @@ DEFAULT_STRING_FILTER_OPERATORS = [
 
 
 class VenueFilterSet(FilterSet):
-
     o = OrderingFilter(
         fields=[
             "name",

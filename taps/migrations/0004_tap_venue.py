@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("venues", "0009_venue_untappd_url"),
         ("taps", "0003_auto_20190201_1431"),

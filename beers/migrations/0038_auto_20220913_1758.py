@@ -58,7 +58,6 @@ def populate_alternate_names_fk(apps: Apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("beers", "0037_merge_20201114_1252"),
     ]

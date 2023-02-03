@@ -4,7 +4,6 @@ from . import models
 
 
 class TapAdmin(admin.ModelAdmin):
-
     list_display = ("tap_number", "venue", "beer", "id")
     list_filter = ("venue",)
     list_select_related = ("venue", "beer")

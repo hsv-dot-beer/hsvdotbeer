@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     replaces = [
         ("venues", "0029_auto_20201115_1459"),
         ("venues", "0030_venueapiconfiguration_arryved_serving_sizes"),

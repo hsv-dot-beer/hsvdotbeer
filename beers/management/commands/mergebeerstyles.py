@@ -40,7 +40,9 @@ class Command(BaseCommand):
         style_mods = {
             row[0].casefold(): (row[1], tuple(i for i in row[2:] if i)) for row in csv
         }
-        styles = Style.objects.prefetch_related("beers",).filter(
+        styles = Style.objects.prefetch_related(
+            "beers",
+        ).filter(
             name__in=style_mods,
         )
         names_found = set()

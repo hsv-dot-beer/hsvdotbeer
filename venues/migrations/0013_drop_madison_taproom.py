@@ -11,7 +11,6 @@ def drop_madison_taproom(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("venues", "0012_auto_20190328_1915"),
     ]

@@ -17,7 +17,6 @@ from tap_list_providers.parsers.arryved_pos import ArryvedPOSParser
 
 
 class CommandsTestCase(TestCase):
-
     fixtures = ["serving_sizes"]
 
     @classmethod
@@ -91,7 +90,6 @@ class CommandsTestCase(TestCase):
 
 
 class FractionalIBUTestCase(TestCase):
-
     fixtures = ["serving_sizes"]
 
     @classmethod

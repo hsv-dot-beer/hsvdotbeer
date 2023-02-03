@@ -544,7 +544,6 @@ class UntappdParser(BaseTapListProvider):
 
 
 def main():
-
     logging.basicConfig(level=logging.DEBUG)
 
     locations = {

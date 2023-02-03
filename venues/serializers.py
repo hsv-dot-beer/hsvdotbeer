@@ -9,7 +9,6 @@ from . import models
 
 
 class VenueSerializer(CountryFieldMixin, serializers.ModelSerializer):
-
     time_zone = TimeZoneField(
         required=False,
         allow_blank=False,

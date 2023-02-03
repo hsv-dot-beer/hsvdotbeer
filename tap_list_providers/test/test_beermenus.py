@@ -26,7 +26,6 @@ BAD_DADDYS_SLUG = "64594-bad-daddy-s-burger-bar-huntsville"
 
 
 class CommandsTestCase(TestCase):
-
     fixtures = ["serving_sizes"]
 
     @classmethod
