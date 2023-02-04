@@ -5,19 +5,19 @@ model.
 """
 
 from rest_framework.serializers import CharField, ValidationError
-import pytz
+import zoneinfo
 
 
 class TimeZoneField(CharField):
-    def to_internal_value(self, value):
+    def to_internal_value(self, value: str) -> zoneinfo.ZoneInfo | str:
         if value:
             try:
-                return pytz.timezone(value)
-            except pytz.UnknownTimeZoneError:
+                return zoneinfo.ZoneInfo(value)
+            except zoneinfo.ZoneInfoNotFoundError:
                 raise ValidationError(f"Unknown time zone {value}")
         return ""
 
-    def to_representation(self, value):
+    def to_representation(self, value: zoneinfo.ZoneInfo) -> str:
         if value:
-            return value.zone
+            return str(value)
         return ""

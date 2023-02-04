@@ -3,12 +3,12 @@ import os
 import datetime
 from decimal import Decimal
 from unittest import mock
+import zoneinfo
 
 from django.core.management import call_command
 from django.test import TestCase
 from django.utils.timezone import now
 import responses
-from pytz import timezone
 
 from beers.models import Beer, Manufacturer
 from beers.test.factories import StyleFactory
@@ -130,7 +130,9 @@ class CommandsTestCase(TestCase):
             # is nearly a year ago because Untappd doesn't give us a year in
             # the timestamp (instead just "Jun 14,  9:45 AM CDT") and we rewind
             # by a year to avoid showing a last updated time in the future
-            timezone("America/Chicago").localize(datetime.datetime(year, 6, 14, 9, 45))
+            datetime.datetime(
+                year, 6, 14, 9, 45, tzinfo=zoneinfo.ZoneInfo("America/Chicago")
+            )
             for year in [now().year, now().year - 1]
         ]
         self.assertIn(self.venue.tap_list_last_update_time, possible_timestamps)

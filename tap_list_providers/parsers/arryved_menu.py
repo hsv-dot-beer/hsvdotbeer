@@ -9,7 +9,6 @@ from typing import Any
 import requests
 import configurations
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
-from pytz import UTC
 
 # boilerplate code necessary for launching outside manage.py
 try:
@@ -25,6 +24,7 @@ from taps.models import Tap
 from venues.models import Venue
 
 
+UTC = datetime.timezone.utc
 LOG = logging.getLogger(__name__)
 
 
@@ -68,7 +68,7 @@ class ArryvedMenuParser(BaseTapListProvider):
             beer.name: beer
             for beer in Beer.objects.filter(manufacturer=self.manufacturer)
         }
-        last_updated = UTC.localize(datetime.datetime(1970, 1, 1, 0))
+        last_updated = datetime.datetime(1970, 1, 1, 0, tzinfo=UTC)
         prices = []
         serving_sizes = {i.volume_oz: i for i in ServingSize.objects.all()}
         tap_number = 1

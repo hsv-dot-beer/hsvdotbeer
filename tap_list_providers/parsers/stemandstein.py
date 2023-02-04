@@ -5,11 +5,11 @@ from html import unescape
 from decimal import Decimal
 import logging
 import os
+import zoneinfo
 
 from bs4 import BeautifulSoup
 import requests
 import configurations
-import pytz
 from dateutil.parser import parse
 from django.db.models import Q
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
@@ -27,7 +27,7 @@ from beers.models import Manufacturer, Beer, ServingSize, BeerPrice
 from taps.models import Tap
 
 
-CENTRAL_TIME = pytz.timezone("America/Chicago")
+CENTRAL_TIME = zoneinfo.ZoneInfo("America/Chicago")
 LOG = logging.getLogger(__name__)
 
 
@@ -201,7 +201,7 @@ class StemAndSteinParser(BaseTapListProvider):
         for row in tap_body.find_all("tr"):
             cells = list(row.find_all("td"))
             if cells[-1].text.endswith("(so far)"):
-                time_tapped = CENTRAL_TIME.localize(parse(cells[0].text))
+                time_tapped = parse(cells[0].text).replace(tzinfo=CENTRAL_TIME)
         return time_tapped
 
     def handle_venue(self, venue):
@@ -212,7 +212,7 @@ class StemAndSteinParser(BaseTapListProvider):
         existing_taps = {i.tap_number: i for i in venue.taps.all()}
         LOG.debug("existing taps %s", existing_taps)
         taps_hit = []
-        latest_time = CENTRAL_TIME.localize(datetime.datetime(1970, 1, 1, 0))
+        latest_time = datetime.datetime(1970, 1, 1, 0, tzinfo=CENTRAL_TIME)
         for tap_number, beer in taps.items():
             time_tapped = self.fill_in_beer_details(beer)
             if time_tapped > latest_time:

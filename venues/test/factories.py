@@ -1,5 +1,7 @@
+import zoneinfo
+
 import factory
-import pytz
+
 
 from venues.models import Venue
 
@@ -9,5 +11,5 @@ class VenueFactory(factory.django.DjangoModelFactory):
         model = Venue
 
     name = factory.Sequence(lambda n: f"venue {n}")
-    time_zone = factory.Iterator(pytz.all_timezones)
+    time_zone = factory.Iterator(zoneinfo.available_timezones())
     slug = factory.Sequence(lambda n: f"venue-{n}")

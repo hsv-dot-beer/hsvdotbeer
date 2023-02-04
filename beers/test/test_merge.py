@@ -1,7 +1,6 @@
 import datetime
 
 from django.test import TestCase
-from pytz import UTC
 
 from beers.models import (
     Beer,
@@ -20,7 +19,14 @@ from .factories import BeerFactory, ManufacturerFactory
 class BeerTestCase(TestCase):
     def setUp(self):
         self.manufacturer: Manufacturer = ManufacturerFactory()
-        self.new_time = UTC.localize(datetime.datetime(2018, 4, 3, 6, 2))
+        self.new_time = datetime.datetime(
+            2018,
+            4,
+            3,
+            6,
+            2,
+            tzinfo=datetime.timezone.utc,
+        )
         self.other_time = self.new_time + datetime.timedelta(days=30)
         self.beer1: Beer = BeerFactory(
             manufacturer=self.manufacturer,
@@ -96,7 +102,7 @@ class BeerTestCase(TestCase):
 
 class ManufacturerTestCase(TestCase):
     def test_merge(self):
-        new_time = UTC.localize(datetime.datetime(2018, 4, 3, 6, 2))
+        new_time = datetime.datetime(2018, 4, 3, 6, 2, tzinfo=datetime.timezone.utc)
         other_time = new_time + datetime.timedelta(days=30)
         mfg1: Manufacturer = ManufacturerFactory(
             untappd_url="http://localhost/123456",
