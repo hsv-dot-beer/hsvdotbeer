@@ -9,6 +9,9 @@ from . import models
 
 
 class BeerAdmin(admin.ModelAdmin):
+    @admin.action(
+        description="Export as CSV"
+    )
     def export_as_csv(self, request, queryset):
         queryset = (
             queryset.select_related(
@@ -49,6 +52,9 @@ class BeerAdmin(admin.ModelAdmin):
             )
         return response
 
+    @admin.action(
+        description="Merge beers"
+    )
     def merge_beers(self, request, queryset):  # pylint: disable=unused-argument
         selected = request.POST.getlist(ACTION_CHECKBOX_NAME)
         return HttpResponseRedirect(
@@ -66,8 +72,6 @@ class BeerAdmin(admin.ModelAdmin):
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-    merge_beers.short_description = "Merge beers"
-    export_as_csv.short_description = "Export as CSV"
     actions = ["merge_beers", "export_as_csv"]
     list_display = ("name", "manufacturer", "style", "id")
     list_filter = ("manufacturer", "style")
@@ -80,13 +84,15 @@ class ManufacturerAdmin(admin.ModelAdmin):
         fields = [i.name for i in manufacturer._meta.fields if i.name.endswith("_url")]
         return sum(bool(getattr(manufacturer, field)) for field in fields)
 
+    @admin.action(
+        description="Merge manufacturers"
+    )
     def merge_manufacturers(self, request, queryset):  # pylint: disable=unused-argument
         selected = request.POST.getlist(ACTION_CHECKBOX_NAME)
         return HttpResponseRedirect(
             f"/manufacturers/merge/?ids={','.join(selected)}",
         )
 
-    merge_manufacturers.short_description = "Merge manufacturers"
     actions = ["merge_manufacturers"]
     list_display = ("name", "id")
     list_filter = ("name",)

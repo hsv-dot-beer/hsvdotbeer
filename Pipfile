@@ -44,6 +44,7 @@ pylint-django = "*"
 responses = "*"
 freezegun = "*"
 black = "*"
+django-upgrade = "*"
 
 [requires]
 python_version = "3.10"
