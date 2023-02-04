@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pytz = ">=2018.7"
 django-configurations = "*"
 gunicorn = "*"
 newrelic = "*"
@@ -16,7 +15,7 @@ djangorestframework = "*"
 django-filter = "*"
 django-storages = "*"
 "boto3" = "*"
-Django = "<4.0"
+Django = "<4.1"
 Markdown = "*"
 django-timezone-field = "*"
 django-countries = "*"
@@ -45,6 +44,8 @@ pylint-django = "*"
 responses = "*"
 freezegun = "*"
 black = "*"
+django-upgrade = "*"
+pyupgrade = "*"
 
 [requires]
 python_version = "3.10"

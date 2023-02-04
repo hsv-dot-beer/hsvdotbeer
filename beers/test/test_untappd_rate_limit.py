@@ -2,7 +2,6 @@ from unittest.mock import patch
 import datetime
 import json
 
-from pytz import UTC
 from django.test import TestCase
 import responses
 from celery import Task
@@ -75,7 +74,7 @@ class TestUntappdRateLimit(TestCase):
         untappd_timestamp = APIRateLimitTimestamp.objects.get()
         self.assertEqual(
             untappd_timestamp.rate_limit_expires_at,
-            UTC.localize(datetime.datetime(2019, 11, 15, 3, 0, 0)),
+            datetime.datetime(2019, 11, 15, 3, 0, 0, tzinfo=datetime.timezone.utc),
         )
 
     @freeze_time("2019-11-15 02:30:00")
@@ -83,8 +82,14 @@ class TestUntappdRateLimit(TestCase):
     def test_retry_lockout_active(self):
         APIRateLimitTimestamp.objects.create(
             api_type="untappd",
-            rate_limit_expires_at=UTC.localize(
-                datetime.datetime(2019, 11, 15, 3, 0, 0)
+            rate_limit_expires_at=datetime.datetime(
+                2019,
+                11,
+                15,
+                3,
+                0,
+                0,
+                tzinfo=datetime.timezone.utc,
             ),
         )
         responses.add(
@@ -101,7 +106,15 @@ class TestUntappdRateLimit(TestCase):
         untappd_timestamp = APIRateLimitTimestamp.objects.get()
         self.assertEqual(
             untappd_timestamp.rate_limit_expires_at,
-            UTC.localize(datetime.datetime(2019, 11, 15, 3, 0, 0)),
+            datetime.datetime(
+                2019,
+                11,
+                15,
+                3,
+                0,
+                0,
+                tzinfo=datetime.timezone.utc,
+            ),
         )
 
     @freeze_time("2019-11-15 03:00:01")
@@ -109,8 +122,14 @@ class TestUntappdRateLimit(TestCase):
     def test_retry_lockout_expired(self):
         APIRateLimitTimestamp.objects.create(
             api_type="untappd",
-            rate_limit_expires_at=UTC.localize(
-                datetime.datetime(2019, 11, 15, 3, 0, 0)
+            rate_limit_expires_at=datetime.datetime(
+                2019,
+                11,
+                15,
+                3,
+                0,
+                0,
+                tzinfo=datetime.timezone.utc,
             ),
         )
         responses.add(

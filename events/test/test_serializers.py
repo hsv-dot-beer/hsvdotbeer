@@ -1,6 +1,5 @@
 import datetime
 
-from pytz import UTC
 from django.test import TestCase
 from rest_framework.serializers import DateTimeField
 
@@ -8,6 +7,8 @@ from events.serializers import EventSerializer
 from events.models import Event
 from venues.serializers import VenueSerializer
 from venues.test.factories import VenueFactory
+
+UTC = datetime.timezone.utc
 
 
 class EventSerializerTestCase(TestCase):
@@ -49,8 +50,8 @@ class EventSerializerTestCase(TestCase):
         instance = Event.objects.create(
             title="test",
             venue=self.venue,
-            start_time=UTC.localize(datetime.datetime(2018, 11, 20, 12)),
-            end_time=UTC.localize(datetime.datetime(2018, 11, 20, 16)),
+            start_time=datetime.datetime(2018, 11, 20, 12, tzinfo=UTC),
+            end_time=datetime.datetime(2018, 11, 20, 16, tzinfo=UTC),
         )
         serializer = EventSerializer(instance=instance)
         for field, value in serializer.data.items():

@@ -10,7 +10,6 @@ import configurations
 import requests
 from dateutil.parser import parse
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
-from pytz import UTC
 
 # boilerplate code necessary for launching outside manage.py
 try:
@@ -24,6 +23,7 @@ except (ImproperlyConfigured, AppRegistryNotReady):
 from taps.models import Tap
 
 
+UTC = datetime.timezone.utc
 LOG = logging.getLogger(__name__)
 
 
@@ -52,7 +52,7 @@ class TaphunterParser(BaseTapListProvider):
         use_sequential_taps = any(
             tap_info["serving_info"]["tap_number"] == "" for tap_info in data["taps"]
         )
-        latest_timestamp = UTC.localize(datetime.datetime(1970, 1, 1, 12))
+        latest_timestamp = datetime.datetime(1970, 1, 1, 12, tzinfo=UTC)
         for index, entry in enumerate(data["taps"]):
             # 1. parse the tap
             tap_info = self.parse_tap(entry)

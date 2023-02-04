@@ -11,7 +11,6 @@ import requests
 import configurations
 from django.utils.timezone import now
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
-from pytz import UTC
 
 # boilerplate code necessary for launching outside manage.py
 try:
@@ -26,6 +25,7 @@ from taps.models import Tap
 from venues.models import Venue
 
 
+UTC = datetime.timezone.utc
 LOG = logging.getLogger(__name__)
 
 
@@ -50,7 +50,7 @@ class DigitalPourParser(BaseTapListProvider):
         self.url = self.URL.format(venue_id, location_number, self.APIKEY)
         data = self.fetch()
         taps: dict[int, Tap] = {tap.tap_number: tap for tap in venue.taps.all()}
-        self.update_date = UTC.localize(datetime.datetime(1970, 1, 1, 0, 0, 0))
+        self.update_date = datetime.datetime(1970, 1, 1, 0, 0, 0).replace(tzinfo=UTC)
         manufacturers = {}
         tap_numbers_seen: set[int] = set()
         for entry in data:
@@ -296,7 +296,7 @@ class DigitalPourParser(BaseTapListProvider):
         if refresh_ts := tap.get("LastRefreshDateTime"):
             ret["updated"] = dateutil.parser.parse(refresh_ts)
             if not ret["updated"].tzinfo:
-                ret["updated"] = UTC.localize(ret["updated"])
+                ret["updated"] = ret["updated"].replace(tzinfo=UTC)
             LOG.debug("Tap time updated set to %s", ret["updated"])
         return ret
 

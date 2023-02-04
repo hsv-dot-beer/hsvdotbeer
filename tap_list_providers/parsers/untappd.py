@@ -16,7 +16,6 @@ import configurations
 from django.utils.timezone import now
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
 from django.db.models import Q
-from pytz import UTC
 
 # boilerplate code necessary for launching outside manage.py
 try:
@@ -30,6 +29,8 @@ except (ImproperlyConfigured, AppRegistryNotReady):
 from beers.models import Style
 from taps.models import Tap
 
+
+UTC = datetime.timezone.utc
 LOG = logging.getLogger(__name__)
 ABV_REGEX = re.compile(r"\d{1,2}(\.\d{1,3})?")
 IBU_REGEX = re.compile(r"\d{1,3}(\.\d{1,3})?")
@@ -112,8 +113,7 @@ class UntappdParser(BaseTapListProvider):
                 cleared,
                 sorted(populated_taps),
             )
-        # pylint: disable=no-value-for-parameter
-        latest_timestamp = UTC.localize(datetime.datetime(1970, 1, 1, 12))
+        latest_timestamp = datetime.datetime(1970, 1, 1, 12, tzinfo=UTC)
         for index, tap_info in enumerate(tap_list):
             # 1. get the tap
             # if the venue doesn't give tap numbers, just use a 1-based
@@ -169,7 +169,7 @@ class UntappdParser(BaseTapListProvider):
             # 4. assign the beer to the tap
             tap.beer = beer
             tap.save()
-        if latest_timestamp == UTC.localize(datetime.datetime(1970, 1, 1, 12)):
+        if latest_timestamp == datetime.datetime(1970, 1, 1, 12, tzinfo=UTC):
             return None
         return latest_timestamp
 

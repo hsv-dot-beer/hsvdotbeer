@@ -48,7 +48,7 @@ class TestVenueListTestCase(APITestCase):
 
         venue = Venue.objects.get(pk=response.data.get("id"))
         self.assertEqual(venue.name, self.venue_data.get("name"))
-        self.assertEqual(venue.time_zone.zone, self.venue_data.get("time_zone"))
+        self.assertEqual(str(venue.time_zone), self.venue_data.get("time_zone"))
 
     def test_filtering(self):
         beer = BeerFactory()

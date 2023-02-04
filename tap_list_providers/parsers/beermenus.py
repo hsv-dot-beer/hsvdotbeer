@@ -10,7 +10,6 @@ from dateutil.parser import parse
 import requests
 from bs4 import BeautifulSoup
 from bs4.element import Tag
-from pytz import UTC
 import configurations
 from django.core.exceptions import ImproperlyConfigured, AppRegistryNotReady
 
@@ -27,6 +26,8 @@ except (ImproperlyConfigured, AppRegistryNotReady):
 from venues.models import Venue
 from taps.models import Tap
 
+
+UTC = datetime.timezone.utc
 LOG = logging.getLogger(__name__)
 MIDDOT = chr(183)
 
@@ -103,12 +104,11 @@ class BeerMenusParser(BaseTapListProvider):
         )[0]
         # they just give us a date. I'm going to arbitrarily declare that to be
         # midnight UTC because who cares if we're off by a day
-        self.updated_date = UTC.localize(
-            parse(
-                updated_span.text.split()[1],
-                dayfirst=False,
-            )
-        )
+        self.updated_date = parse(
+            updated_span.text.split()[1],
+            dayfirst=False,
+        ).replace(tzinfo=UTC)
+
         # TODO save this to the venue
         LOG.debug("Last updated: %s", self.updated_date)
 
