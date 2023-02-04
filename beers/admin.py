@@ -9,9 +9,7 @@ from . import models
 
 
 class BeerAdmin(admin.ModelAdmin):
-    @admin.action(
-        description="Export as CSV"
-    )
+    @admin.action(description="Export as CSV")
     def export_as_csv(self, request, queryset):
         queryset = (
             queryset.select_related(
@@ -52,9 +50,7 @@ class BeerAdmin(admin.ModelAdmin):
             )
         return response
 
-    @admin.action(
-        description="Merge beers"
-    )
+    @admin.action(description="Merge beers")
     def merge_beers(self, request, queryset):  # pylint: disable=unused-argument
         selected = request.POST.getlist(ACTION_CHECKBOX_NAME)
         return HttpResponseRedirect(
@@ -84,9 +80,7 @@ class ManufacturerAdmin(admin.ModelAdmin):
         fields = [i.name for i in manufacturer._meta.fields if i.name.endswith("_url")]
         return sum(bool(getattr(manufacturer, field)) for field in fields)
 
-    @admin.action(
-        description="Merge manufacturers"
-    )
+    @admin.action(description="Merge manufacturers")
     def merge_manufacturers(self, request, queryset):  # pylint: disable=unused-argument
         selected = request.POST.getlist(ACTION_CHECKBOX_NAME)
         return HttpResponseRedirect(
