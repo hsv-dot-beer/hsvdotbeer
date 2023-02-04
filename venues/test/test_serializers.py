@@ -15,14 +15,14 @@ class VenueSerializerTestCase(TestCase):
         }
         serializer = VenueSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        instance = serializer.save()
+        instance: Venue = serializer.save()
         self.assertIsInstance(instance, Venue)
         for field, value in data.items():
             with self.subTest(field=field):
                 if field != "time_zone":
                     self.assertEqual(getattr(instance, field), value)
                 else:
-                    self.assertEqual(instance.time_zone.zone, value)
+                    self.assertEqual(str(instance.time_zone), value)
 
     def test_display_tap_list_provider(self):
         data = {
