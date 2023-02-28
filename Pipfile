@@ -32,6 +32,7 @@ python-binary-memcached = "*"
 python-twitter = "*"
 crispy-tailwind = "*"
 django-crispy-forms = "*"
+crispy-bootstrap3 = "*"
 
 [dev-packages]
 ipdb = "*"

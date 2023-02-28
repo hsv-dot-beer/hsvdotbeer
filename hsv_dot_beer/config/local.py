@@ -1,4 +1,6 @@
 import os
+import sys
+
 from .common import Common
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -14,4 +16,10 @@ class Local(Common):
     # CORS!
     CORS_ORIGIN_WHITELIST = ("https://localhost:8000",)
 
-    CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
+    # only use locmemcache for manage.py test
+    if sys.argv[1:2] == ["test"]:
+        CACHES = {
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            },
+        }
