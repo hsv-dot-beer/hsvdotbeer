@@ -2,30 +2,6 @@ import os
 from .common import Common
 
 
-def get_cache():
-    try:
-        servers = os.environ["MEMCACHIER_SERVERS"]
-        username = os.environ["MEMCACHIER_USERNAME"]
-        password = os.environ["MEMCACHIER_PASSWORD"]
-    except KeyError:
-        return {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
-    return {
-        "default": {
-            "BACKEND": "django_bmemcached.memcached.BMemcached",
-            # TIMEOUT is not the connection timeout! It's the default
-            # expiration
-            # timeout that should be applied to keys! Setting it to `None`
-            # disables expiration.
-            "TIMEOUT": None,
-            "LOCATION": servers,
-            "OPTIONS": {
-                "username": username,
-                "password": password,
-            },
-        }
-    }
-
-
 class Production(Common):
     INSTALLED_APPS = Common.INSTALLED_APPS
     SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
@@ -74,5 +50,3 @@ class Production(Common):
     ]
 
     SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
-
-    CACHES = get_cache()

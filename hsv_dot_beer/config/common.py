@@ -32,6 +32,13 @@ def get_redis_url() -> str:
     return "redis://redis:6379/"
 
 
+def get_cache_url() -> str:
+    """Get the redis cache URL based on the raw environment"""
+    base_cache = get_redis_url()
+
+    return base_cache
+
+
 class Common(Configuration):  # pylint: disable=no-init
     """Base configuration data"""
 
@@ -53,6 +60,7 @@ class Common(Configuration):  # pylint: disable=no-init
         "django_countries",  # for ease of using countries
         "django_celery_beat",  # use django admin to set up scheduled tasks
         "crispy_forms",
+        "crispy_bootstrap3",
         "crispy_tailwind",
         # Your apps
         "hsv_dot_beer.users",
@@ -261,3 +269,10 @@ class Common(Configuration):  # pylint: disable=no-init
     TWITTER_CONSUMER_SECRET = os.environ.get("TWITTER_CONSUMER_SECRET")
     TWITTER_ACCESS_TOKEN_KEY = os.environ.get("TWITTER_ACCESS_TOKEN_KEY")
     TWITTER_ACCESS_TOKEN_SECRET = os.environ.get("TWITTER_ACCESS_TOKEN_SECRET")
+
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": get_cache_url(),
+        }
+    }

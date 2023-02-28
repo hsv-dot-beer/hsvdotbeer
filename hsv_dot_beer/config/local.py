@@ -13,5 +13,3 @@ class Local(Common):
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
     # CORS!
     CORS_ORIGIN_WHITELIST = ("https://localhost:8000",)
-
-    CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
