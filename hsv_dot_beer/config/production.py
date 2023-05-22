@@ -11,11 +11,18 @@ class Production(Common):
     INSTALLED_APPS += ("gunicorn",)
 
     # Static files (CSS, JavaScript, Images)
-    # https://docs.djangoproject.com/en/2.0/howto/static-files/
+    # https://docs.djangoproject.com/en/4.2/howto/static-files/
     # http://django-storages.readthedocs.org/en/latest/index.html
     INSTALLED_APPS += ("storages",)
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        },
+        "staticfiles": {
+            # Leave whatever setting you already have here, e.g.:
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        },
+    }
     AWS_ACCESS_KEY_ID = os.getenv("DJANGO_AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.getenv("DJANGO_AWS_SECRET_ACCESS_KEY")
     AWS_STORAGE_BUCKET_NAME = os.getenv("DJANGO_AWS_STORAGE_BUCKET_NAME")
