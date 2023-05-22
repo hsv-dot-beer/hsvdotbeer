@@ -24,6 +24,12 @@ class Production(Common):
     AWS_QUERYSTRING_AUTH = False
     MEDIA_URL = f"https://s3.amazonaws.com/{AWS_STORAGE_BUCKET_NAME}/"
 
+    CSRF_TRUSTED_ORIGINS = [
+        "https://dev.hsv.beer",
+        "https://hsv-dot-beer.fly.dev/",
+        "https://hsv.beer",
+    ]
+
     # noqa
     # https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#cache-control
     # Response can be cached by browser and any intermediary caches (i.e. it is
