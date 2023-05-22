@@ -3,7 +3,7 @@
 from django.db import models
 from django.conf import settings
 from django.shortcuts import reverse
-from django.contrib.postgres.fields import ArrayField, CITextField
+from django.contrib.postgres.fields import ArrayField
 from django.utils.text import gettext_lazy as _
 from timezone_field.fields import TimeZoneField
 from django_countries.fields import CountryField
@@ -135,7 +135,9 @@ class VenueAPIConfiguration(models.Model):
     beermenus_slug = models.CharField(max_length=250, blank=True)
     arryved_location_id = models.CharField(max_length=50, blank=True)
     arryved_menu_id = models.CharField(max_length=50, blank=True)
-    arryved_manufacturer_name = CITextField(blank=True)
+    arryved_manufacturer_name = models.TextField(
+        db_collation="case_insensitive", blank=True
+    )
     arryved_serving_sizes = ArrayField(
         models.TextField(),
         default=list,

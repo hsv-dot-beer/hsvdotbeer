@@ -1,7 +1,7 @@
 import logging
 from typing import Iterable
 
-from django.contrib.postgres.fields import CITextField, ArrayField
+from django.contrib.postgres.fields import ArrayField
 from django.db import models, transaction
 from django.db.utils import IntegrityError
 from django.utils.timezone import now
@@ -15,13 +15,15 @@ LOG = logging.getLogger(__name__)
 
 
 class Style(models.Model):
-    name = CITextField(unique=True)
+    name = models.TextField(unique=True, db_collation="case_insensitive")
     default_color = models.CharField(
         "HTML color (in hex) to use if the beer has no known color",
         max_length=9,  # #00112233 -> RGBA
         blank=True,
     )
-    alternate_names = ArrayField(CITextField(), default=list)
+    alternate_names = ArrayField(
+        models.TextField(db_collation="case_insensitive"), default=list
+    )
 
     def merge_from(self, other_styles: Iterable["Style"]):
         with transaction.atomic():
@@ -50,7 +52,7 @@ class Style(models.Model):
 
 
 class Manufacturer(models.Model):
-    name = CITextField()
+    name = models.TextField(db_collation="case_insensitive")
     url = models.URLField(blank=True)
     location = models.CharField(blank=True, max_length=250)
     logo_url = models.URLField(blank=True)
@@ -63,7 +65,9 @@ class Manufacturer(models.Model):
     taplist_io_pk = models.PositiveIntegerField(blank=True, null=True)
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
     beermenus_slug = models.CharField(max_length=250, blank=True, null=True)
-    alternate_names = ArrayField(CITextField(), default=list)
+    alternate_names = ArrayField(
+        models.TextField(db_collation="case_insensitive"), default=list
+    )
 
     class Meta:
         constraints = [
@@ -144,7 +148,7 @@ class Manufacturer(models.Model):
 
 
 class Beer(models.Model):
-    name = CITextField()
+    name = models.TextField(db_collation="case_insensitive")
     style = models.ForeignKey(
         Style,
         models.DO_NOTHING,
@@ -205,7 +209,9 @@ class Beer(models.Model):
     time_first_seen = models.DateTimeField(blank=True, null=True, default=now)
     tweeted_about = models.BooleanField(default=False)
     beermenus_slug = models.CharField(max_length=250, blank=True, null=True)
-    alternate_names = ArrayField(CITextField(), default=list)
+    alternate_names = ArrayField(
+        models.TextField(db_collation="case_insensitive"), default=list
+    )
 
     class Meta:
         indexes = [
