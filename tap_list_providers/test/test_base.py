@@ -93,6 +93,10 @@ class FixBeerNameTestCase(TestCase):
         name = provider.reformat_beer_name("Yazoo Brewing Company Hefeweizen", "Yazoo")
         self.assertEqual(name, "Hefeweizen")
 
+    def test_brewery_equals_beer(self):
+        provider = BaseTapListProvider()
+        name = provider.reformat_beer_name('Weihenstephan', 'Weihenstephan')
+        self.assertEqual(name, 'Weihenstephan')
 
 class TimestampTestCase(TestCase):
     def setUp(self):

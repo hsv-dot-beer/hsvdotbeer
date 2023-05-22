@@ -147,6 +147,9 @@ class BaseTapListProvider:
         if name.startswith(tuple("/-_")):
             # it's likely a collaboration beer. Put the manufacturer back in there.
             name = original_name
+        if not name:
+            # brewery name and beer name are the same? Probably bad data but oh well
+            name = original_name
         return name
 
     def guess_style(self, beer_name):
