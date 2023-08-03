@@ -166,6 +166,9 @@ class UntappdParser(BaseTapListProvider):
                 pricing=tap_info["pricing"],
                 **tap_info["beer"],
             )
+            if beer and tap.beer_id != beer.id and tap_info["added"]:
+                # only change the time added if the beer on tap changed
+                tap.time_added = tap_info["added"]
             # 4. assign the beer to the tap
             tap.beer = beer
             tap.save()

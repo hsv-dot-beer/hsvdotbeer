@@ -64,10 +64,12 @@ class TaplistDotIOParser(BaseTapListProvider):
                 current_tap.time_updated = timestamp
                 current_tap.save()
                 continue
-            current_tap.time_added = tap_dict.pop("time_added")
+            time_added = tap_dict.pop("time_added")
             mfg_dict = tap_dict.pop("manufacturer")
             manufacturer = self.get_manufacturer(**mfg_dict)
             beer = self.get_beer(manufacturer=manufacturer, venue=venue, **tap_dict)
+            if beer and current_tap.beer_id != beer.id:
+                current_tap.time_added = time_added
             current_tap.beer = beer
             if current_tap.time_updated != timestamp:
                 current_tap.time_updated = timestamp

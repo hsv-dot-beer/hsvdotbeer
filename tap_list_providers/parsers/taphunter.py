@@ -75,7 +75,6 @@ class TaphunterParser(BaseTapListProvider):
                 tap = taps[tap_number]
             except KeyError:
                 tap = Tap(venue=venue, tap_number=tap_number)
-            tap.time_added = tap_info["added"]
             tap.time_updated = tap_info["updated"]
             parsed_time = parse(tap_info["updated"])
             if parsed_time > latest_timestamp:
@@ -127,6 +126,9 @@ class TaphunterParser(BaseTapListProvider):
                 venue=venue,
                 **parsed_beer,
             )
+            if beer and tap.beer_id != beer.id:
+                tap.time_added = tap_info["added"]
+
             # 4. assign the beer to the tap
             tap.beer = beer
             tap.save()
